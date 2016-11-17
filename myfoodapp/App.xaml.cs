@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using myfoodapp.Views;
 using myfoodapp.Common;
 using GalaSoft.MvvmLight.Messaging;
+using myfoodapp.WebApp;
 
 namespace myfoodapp
 {
@@ -19,6 +20,9 @@ namespace myfoodapp
     /// </summary>
     sealed partial class App : Application
     {
+        private LogModel logModel = LogModel.GetInstance;
+        private HTTPServer webServer;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -31,6 +35,11 @@ namespace myfoodapp
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            logModel.AppendLog(Log.CreateLog("Local Webserver starting...", Log.LogType.System));
+            webServer = new HTTPServer();
+            webServer.Initialise();
+            logModel.AppendLog(Log.CreateLog("Local Webserver initialized", Log.LogType.System));
 
             Messenger.Default.Register<RefreshDashboardMessage>(this, (mess) =>
             {

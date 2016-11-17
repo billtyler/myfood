@@ -1,4 +1,6 @@
-﻿using myfoodapp.Common;
+﻿using myfoodapp.Business;
+using myfoodapp.Business.Sensor;
+using myfoodapp.Common;
 using myfoodapp.Model;
 using System;
 using System.Collections.Generic;
@@ -10,12 +12,14 @@ using System.Threading.Tasks;
 using Windows.Networking.Sockets;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using static myfoodapp.Business.Log;
 
 namespace myfoodapp.WebApp
 {
     public class HTTPServer
     {
         private StorageFolder folder = ApplicationData.Current.LocalFolder;
+        private LogModel logModel = LogModel.GetInstance;
 
         public HTTPServer()
         {
@@ -176,6 +180,16 @@ namespace myfoodapp.WebApp
 
                     listMes.ForEach(m => response += String.Format("{0} {1};{2};{3}\r\n", m.captureDate.ToString("d"), m.captureDate.ToString("t"), m.value, m.sensor.Id));
                 }
+                else if (request.ToString().Contains("factory.html"))
+                {
+                    var listMes = new List<Measure>();
+
+                    var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+                    mesureBackgroundTask.Completed += ResetHardwareBackgroundTask_Completed;
+                    mesureBackgroundTask.Stop();
+
+                    response = "<html><body>RESET SENSORS TO FACTORY SETTINGS DONE</body></html>";
+                }
                 else
                 {
                     response = File.ReadAllText(String.Format("Assets\\Web\\{0}", request));
@@ -192,8 +206,6 @@ namespace myfoodapp.WebApp
           
         }
 
-        private int requestCount = 0;
-
         private string ParseRequest(string buffer)
         {
             string request = "ERROR";
@@ -209,6 +221,26 @@ namespace myfoodapp.WebApp
             }
 
             return request;
+        }
+
+        private void ResetHardwareBackgroundTask_Completed(object sender, EventArgs e)
+        {
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            mesureBackgroundTask.Completed -= ResetHardwareBackgroundTask_Completed;
+
+            try
+            {
+                AtlasSensorManager.GetInstance.ResetSensorsToFactory();
+                mesureBackgroundTask.Run();
+            }
+            catch (Exception ex)
+            {
+                logModel.AppendLog(Log.CreateErrorLog("Exception on Reset Hardware", ex));
+            }
+            finally
+            {
+                logModel.AppendLog(Log.CreateLog("Hardware reset ended", LogType.Information));
+            }
         }
 
         private StreamSocketListener listener; // the socket listner to listen for TCP requests

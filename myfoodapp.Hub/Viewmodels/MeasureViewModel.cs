@@ -1,4 +1,5 @@
-﻿using System;
+﻿using myfoodapp.Hub.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,8 +37,12 @@ namespace myfoodapp.Hub.Models
         public decimal DOvalue { get; set; }
         public decimal airTempvalue { get; set; }
         public decimal humidityvalue { get; set; }
-
     }
 
-
+    public class Rule
+    {
+        public string ruleEvaluator { get; set; }
+        public string warningContent { get; set; }
+        public string bindingPropertyValue { get; set; }
+    }
 }

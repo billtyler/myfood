@@ -1,7 +1,11 @@
-﻿using myfoodapp.Hub.Models;
+﻿using myfoodapp.Hub.Business;
+using myfoodapp.Hub.Common;
+using myfoodapp.Hub.Models;
 using Newtonsoft.Json.Linq;
+using SimpleExpressionEvaluator;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -11,7 +15,6 @@ namespace myfoodapp.Hub.Controllers.Api
 {
     public class MessagesController : ApiController
     {
-
         // POST api/<controller>
         public void Post([FromBody]JObject data)
         {
@@ -36,13 +39,16 @@ namespace myfoodapp.Hub.Controllers.Api
 
             try
             {
-                var productionUnit = db.ProductionUnits.Where(p => p.reference == device).FirstOrDefault();
+                var productionUnit = db.ProductionUnits.Include("owner.user").Where(p => p.reference == device).FirstOrDefault();
+                var productionUnitOwnerMail = productionUnit.owner.user.Email;
 
-                if(productionUnit == null)
+                if (productionUnit == null)
                 {
                     db.Logs.Add(Log.CreateLog(String.Format("Production Unit not found - {0}", device), Log.LogType.Warning));
                     db.SaveChanges();
                 }
+
+                var currentMeasures = new GroupedMeasure();
 
                 var phContent = content.Substring(0, 4).Insert(3,".");
                 var waterTempContent = content.Substring(4, 4).Insert(3, ".");
@@ -60,124 +66,82 @@ namespace myfoodapp.Hub.Controllers.Api
 
                 if(!phContent.Contains("a"))
                 {
-                    decimal phValue = 0;
-                    if(decimal.TryParse(phContent, out phValue))
+                    decimal pHvalue = 0;
+                    if(decimal.TryParse(phContent, out pHvalue))
                     {
-                        if (phValue < 8 || phValue > 5.5M)
-                        {
-                            var message = String.Format("pH value is out of range - {0}", phValue);
-                            SendMail("mickael@myfood.eu", "Warning from myfood Hub", message);
-                        }
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = phSensor, value = phValue });
+                        currentMeasures.pHvalue = pHvalue;
+
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = phSensor, value = pHvalue });
                         db.SaveChanges();
                     }       
                 }
 
                 if (!waterTempContent.Contains("a"))
                 {
-                    decimal waterTempValue = 0;
-                    if (decimal.TryParse(waterTempContent, out waterTempValue))
+                    decimal waterTempvalue = 0;
+                    if (decimal.TryParse(waterTempContent, out waterTempvalue))
                     {
-                      if (waterTempValue < 0 || waterTempValue > 40)
-                      {
-                            var message = String.Format("water temperature value is out of range - {0}", waterTempValue);
-                            SendMail("mickael@myfood.eu", "Warning from myfood Hub", message);
-                      }
-                      db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = waterTemperatureSensor, value = waterTempValue });
+                        currentMeasures.waterTempvalue = waterTempvalue;
+
+                      db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = waterTemperatureSensor, value = waterTempvalue });
                       db.SaveChanges();
                     }          
                 }
 
                 if (!orpContent.Contains("a"))
                 {
-                    decimal orpValue = 0;
-                    if (decimal.TryParse(orpContent, out orpValue))
+                    decimal ORPvalue = 0;
+                    if (decimal.TryParse(orpContent, out ORPvalue))
                     {
-                        if (orpValue < 300 || orpValue > 450)
-                        {
-                            var message = String.Format("ORP value is out of range - {0}", orpValue);
-                            SendMail("mickael@myfood.eu", "Warning from myfood Hub", message);
-                        }
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = ORPSensor, value = orpValue });
+                        currentMeasures.ORPvalue = ORPvalue;
+
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = ORPSensor, value = ORPvalue });
                         db.SaveChanges();
                     }                       
                 }
 
                 if (!dissolvedOxyContent.Contains("a"))
                 {
-                    decimal dissolvedOxyValue = 0;
-                    if (decimal.TryParse(dissolvedOxyContent, out dissolvedOxyValue))
+                    decimal DOvalue = 0;
+                    if (decimal.TryParse(dissolvedOxyContent, out DOvalue))
                     {
-                        if (dissolvedOxyValue < 4)
-                        {
-                            var message = String.Format("Dissolved Oxygene value is out of range - {0}", dissolvedOxyValue);
-                            SendMail("mickael@myfood.eu", "Warning from myfood Hub", message);
-                        }
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = dissolvedOxySensor, value = dissolvedOxyValue });
+                        currentMeasures.DOvalue = DOvalue;
+
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = dissolvedOxySensor, value = DOvalue });
                         db.SaveChanges();
                     }
                 }
 
                 if (!airTempContent.Contains("a"))
                 {
-                    decimal airTempValue = 0;
-                    if (decimal.TryParse(airTempContent, out airTempValue))
+                    decimal airTempvalue = 0;
+                    if (decimal.TryParse(airTempContent, out airTempvalue))
                     {
-                        if (airTempValue < 0 || airTempValue > 40)
-                        {
-                            var message = String.Format("Air Temperature value is out of range - {0}", airTempValue);
-                            SendMail("mickael@myfood.eu", "Warning from myfood Hub", message);
-                        }
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = airTemperatureSensor, value = airTempValue });
+                        currentMeasures.airTempvalue = airTempvalue;
+
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = airTemperatureSensor, value = airTempvalue });
                         db.SaveChanges();
                     }
                 }
 
                 if (!airHumidityContent.Contains("a"))
                 {
-                    decimal airHumidityValue = 0;
-                    if (decimal.TryParse(airHumidityContent, out airHumidityValue))
+                    decimal humidityvalue = 0;
+                    if (decimal.TryParse(airHumidityContent, out humidityvalue))
                     {
-                        if (airHumidityValue < 10 || airHumidityValue > 90)
-                        {
-                            var message = String.Format("Air Humidity value is out of range - {0}", airHumidityValue);
-                            SendMail("mickael@myfood.eu", "Warning from myfood Hub", message);
-                        }
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = airHumidity, value = airHumidityValue });
+                        currentMeasures.humidityvalue = humidityvalue;
+
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = airHumidity, value = humidityvalue });
                         db.SaveChanges();
                     }                     
-                }         
+                }
+
+                AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail); 
             }
             catch (Exception ex)
             {
                 db.Logs.Add(Log.CreateErrorLog("Error on Convert Measures from Sigfox", ex));
             }
-        }
-
-        private void SendMail(string receiver, string subject, string body)
-        {
-            var message = new MailMessage();
-            message.To.Add(new MailAddress(receiver));  // replace with valid value 
-            message.From = new MailAddress("hub@myfood.eu");  // replace with valid value
-            message.Subject = subject;
-            message.Body = body;
-            message.IsBodyHtml = false;
-
-            using (var smtp = new SmtpClient())
-            {
-                var credential = new NetworkCredential
-                {
-                    UserName = "info@myfood.eu",  // replace with valid value
-                    Password = "hubapp_123"  // replace with valid value
-                };
-                smtp.Credentials = credential;
-                smtp.Host = "ssl0.ovh.net";
-                smtp.Port = 587;
-                smtp.EnableSsl = false;
-                smtp.Send(message);
-
-            }
-
         }
     }
 }

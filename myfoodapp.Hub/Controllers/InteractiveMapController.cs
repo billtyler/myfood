@@ -119,7 +119,7 @@ namespace myfoodapp.Hub.Controllers
             var totalFarm = rslt.Where(p => p.productionUnitType.Id == 5).Count();
 
             var totalMonthlyProduction = totalBalcony * 5 + totalCity * 10 + totalFamily14 * 15 + totalFamily22 * 25 + totalFarm * 50;
-            var totalMonthlySparedCO2 = totalMonthlyProduction * 0.3;
+            var totalMonthlySparedCO2 = Math.Round(totalMonthlyProduction * 0.3,0);
 
             return Json(new
             {

@@ -112,6 +112,10 @@
     <EmbeddedResource Include="Properties\myfoodapp.WebApp.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\myfoodapp.Business\myfoodapp.Business.csproj">
+      <Project>{ad00c69b-4b59-4553-89ea-49822a91edfd}</Project>
+      <Name>myfoodapp.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\myfoodapp.Common\myfoodapp.Common.csproj">
       <Project>{36b938d0-85a3-47ac-9ef1-00668307430e}</Project>
       <Name>myfoodapp.Common</Name>

@@ -6,9 +6,9 @@ window.onload = function onLoad(e) {
             dataType: "json",
             type: "POST",
             success: function (response) {
-                $("#ProductionUnitNumber").text('TOTAL CONNECTED: ' + response.ProductionUnitNumber);
-                $("#TotalMonthlyProduction").text('TOTAL EST. PROD. PER MONTH: ' + response.TotalMonthlyProduction + 'kg');
-                $("#TotalMonthlySparedCO2").text('TOTAL CO2 NOT RELEASED PER MONTH: ' + response.TotalMonthlySparedCO2 + 'kg');
+                $("#ProductionUnitNumber").text(response.ProductionUnitNumber);
+                $("#TotalMonthlyProduction").text(response.TotalMonthlyProduction + 'kg');
+                $("#TotalMonthlySparedCO2").text(response.TotalMonthlySparedCO2 + 'kg');
             }
         });
     }
@@ -82,19 +82,25 @@ window.onload = function onLoad(e) {
 <div id="pioneer-network" style="height:660px" class="main-section-content">
     <div id="map-wrapper" class="row">
         <div id="picturesContainer" class="col-xs-4">
-            <h3 class="section-header">Picture</h3>
-            <img id="ProductionUnitPicture" width="400" />
+            <div class="widget">
+                <h3><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp; Picture</h3>
+                <div style="margin: 25px;">
+                    <img id="ProductionUnitPicture" style='height: 100%; width: 100%; object-fit: contain'/>
+                </div>
+            </div>
         </div>
         <div id="map-container" class="col-xs-8">
-            <h3 font-size="36" class="section-header">Pioneer Citizen Map</h3>
-            @model myfoodapp.Hub.Models.Map
+            <div class="widget">
+                <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; Pioneer Citizen Map</h3>
+                <div class="maps">
+                    @model myfoodapp.Hub.Models.Map
 
-            @(Html.Kendo().Map()
-            .Name(Model.Name)
-            .Center(Model.CenterLatitude, Model.CenterLongitude)
-            .Zoom(Model.Zoom)
-            .Zoomable(false)
-            .Layers(layers =>
+                    @(Html.Kendo().Map()
+                .Name(Model.Name)
+                .Center(Model.CenterLatitude, Model.CenterLongitude)
+                .Zoom(Model.Zoom)
+                .Zoomable(false)
+                .Layers(layers =>
                     {
                         layers.Add()
                             .Style(style => style
@@ -107,54 +113,75 @@ window.onload = function onLoad(e) {
                                 .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
                             );
                     })
-            .Markers(markers =>
-            {
-                foreach (var marker in Model.Markers)
-                {
-                    markers.Add()
-                    .Location(marker.latlng)
-                    .Shape(marker.shape)
-                    .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
-                    .Tooltip(t => t.Events(e => e.Show("onShow")))
-                    .Title(marker.name);
-                }
-            })
-            .Events(events => events
-                              .ShapeCreated("onShapeCreated")
-                              .ShapeMouseEnter("onShapeMouseEnter")
-                              .ShapeMouseLeave("onShapeMouseLeave")
-                )
-            )
+                    .Markers(markers =>
+                    {
+                        foreach (var marker in Model.Markers)
+                        {
+                            markers.Add()
+                            .Location(marker.latlng)
+                            .Shape(marker.shape)
+                            .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
+                            .Tooltip(t => t.Events(e => e.Show("onShow")))
+                            .Title(marker.name);
+                        }
+                    })
+                    .Events(events => events
+                                      .ShapeCreated("onShapeCreated")
+                                      .ShapeMouseEnter("onShapeMouseEnter")
+                                      .ShapeMouseLeave("onShapeMouseLeave")
+                        )
+                    )
+                </div>
+            </div>
         </div>
     </div>
     <div id="map-wrapper" class="row">
         <div id="map-info" class="col-xs-4">
-            <h3 class="section-header">Network Info</h3>
-            <div>
-                <h2 id="ProductionUnitNumber"></h2>
-                <h2 id="TotalMonthlyProduction"></h2>
-                <h2 id="TotalMonthlySparedCO2"></h2>
+            <div class="widget" style="height:200px">
+                <h3><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; Network Info</h3>
+                <div style="margin: 25px;">
+                    <div class="column-left">
+                        <h2 style="margin:7px;text-align: center;">TOTAL<br/>CONNECTED <br/>PROD. UNITS </h2>
+                        <h1 id="ProductionUnitNumber" style="font-size:xx-large;text-align: center;"></h1>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;">TOTAL<br/>EST. PROD. <br/>PER MONTH</h2>
+                        <h1 id="TotalMonthlyProduction" style="font-size:xx-large;text-align: center;"></h1>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;">TOTAL<br/>CO2 SAVED<br/>PER MONTH</h2>
+                        <h1 id="TotalMonthlySparedCO2" style="font-size:xx-large;text-align: center;"></h1>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="map-details" class="col-xs-4">
-            <h3 class="section-header">Details</h3>
-            <h2 id="PioneerCitizenName"></h2>
-            <h2 id="PioneerCitizenNumber"><span></span></h2>
-            <h2 id="ProductionUnitType"><span></span></h2>
-            <h2 id="ProductionUnitVersion"><span></span></h2>
-            <h2 id="ProductionUnitStartDate"><span></span></h2>
+            <div class="widget" style="height:200px">
+                <h3><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp; Details</h3>
+                <div style="margin: 25px;">
+                    <h2 id="PioneerCitizenName"></h2>
+                    <h2 id="PioneerCitizenNumber"><span></span></h2>
+                    <h2 id="ProductionUnitType"><span></span></h2>
+                    <h2 id="ProductionUnitVersion"><span></span></h2>
+                    <h2 id="ProductionUnitStartDate"><span></span></h2>
+                </div>
+            </div>
         </div>
         <div id="map-options" class="col-xs-4">
-            <h2 class="section-header">Options</h2>
-            @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
-            .Name("OptionList")
-            .TagName("div")
-            .ClientTemplateId("templateOption")
-            .DataSource(dataSource => dataSource
-              .Read(read => read.Action("Option_Read", "InteractiveMap"))
-            )
-            )
-        </div>
+            <div class="widget" style="height:200px">
+                <h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Options</h3>
+                <div style="margin: 25px;">
+                    @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
+                .Name("OptionList")
+                .TagName("div")
+                .ClientTemplateId("templateOption")
+                .DataSource(dataSource => dataSource
+                  .Read(read => read.Action("Option_Read", "InteractiveMap"))
+                )
+                    )
+                </div>
+            </div>
+       </div>
     </div>   
 </div>
 <div style="text-align: center">
@@ -162,20 +189,48 @@ window.onload = function onLoad(e) {
 </div>
 <style>
 
+.column-left{ float: left; width: 33%; }
+.column-right{ float: right; width: 33%; }
+.column-center{ display: inline-block; width: 33%; }
+
+    /* WIDGETS */
+        .widget {
+            margin: 0 0 0px;
+            padding: 0;
+            background-color: #ffffff;
+            border: 1px solid #e7e7e7;
+            border-radius: 3px;
+            height:380px;
+        }
+
+        .widget div {
+            padding: 0;
+        }
+
+        .widget h3 {
+            font-size: 12px;
+            padding: 8px 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e7e7e7;
+        }
+
+        .widget h3 span {
+            float: right;
+        }
+
+        .widget h3 span:hover {
+            cursor: pointer;
+            background-color: #e7e7e7;
+            border-radius: 20px;
+        }
 
     h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans';
 }
-    .section-header{
-    font-size: 30px;
+    .maps{
     color: #35373d;
-}
-
-    h2 {
-    display: block;
-    font-size: 1.3em;
-    margin-left: 0;
-    margin-right: 0;
+    padding-bottom: 1.091em;
+    padding: 15px 0;
 }
 
     #OptionList {
@@ -219,6 +274,17 @@ window.onload = function onLoad(e) {
     .k-loading-mask {
         opacity: 0;
     }
+
+    @@media only screen and (max-width: 800) {
+    #picturesContainer {
+        display: none;
+        visibility: hidden;
+    }
+    #map-options {
+        display: none;
+        visibility: hidden;
+    }
+}
 
 </style>
 
