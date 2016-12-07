@@ -5,6 +5,11 @@
     "bindingPropertyValue": "pHvalue"
   },
   {
+    "ruleEvaluator": "(pHvalue != 0) && (lastDayPHvariation != 0) && (lastDayPHvariation > 0.5)",
+    "warningContent": "Ph value is moving fast since 24h: {0}",
+    "bindingPropertyValue": "pHvalue"
+  },
+  {
     "ruleEvaluator": "hydroponicTypeName = 'Aquaponics - Carp' && ((waterTempvalue < 0) || (waterTempvalue > 30))",
     "warningContent": "Water Temperature value is out of range for Carps: {0}",
     "bindingPropertyValue": "waterTempvalue"
@@ -40,7 +45,17 @@
     "bindingPropertyValue": "ORPvalue"
   },
   {
-    "ruleEvaluator": "(DOvalue < 4)",
+    "ruleEvaluator": "hydroponicTypeName = 'Aquaponics - Carp' && (DOvalue < 5)",
+    "warningContent": "Dissolved Oxygen value is out of range : {0}",
+    "bindingPropertyValue": "DOvalue"
+  },
+  {
+    "ruleEvaluator": "hydroponicTypeName = 'Aquaponics - Tilapia' && (DOvalue < 4)",
+    "warningContent": "Dissolved Oxygen value is out of range : {0}",
+    "bindingPropertyValue": "DOvalue"
+  },
+  {
+    "ruleEvaluator": "hydroponicTypeName = 'Aquaponics - Trout' && (DOvalue < 6)",
     "warningContent": "Dissolved Oxygen value is out of range : {0}",
     "bindingPropertyValue": "DOvalue"
   },

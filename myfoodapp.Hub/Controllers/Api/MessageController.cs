@@ -39,24 +39,19 @@ namespace myfoodapp.Hub.Controllers.Api
 
             try
             {
-                var productionUnit = db.ProductionUnits.Include("owner.user").Include("hydroponicType").Where(p => p.reference == device).FirstOrDefault();
-                var productionUnitOwnerMail = productionUnit.owner.user.Email;
+                var currentProductionUnit = db.ProductionUnits.Include("owner.user").Include("hydroponicType").Where(p => p.reference == device).FirstOrDefault();
+                
 
-                if (productionUnit == null)
+                if (currentProductionUnit == null)
                 {
                     db.Logs.Add(Log.CreateLog(String.Format("Production Unit not found - {0}", device), Log.LogType.Warning));
                     db.SaveChanges();
                 }
 
-                var currentMeasures = new GroupedMeasure();
-                currentMeasures.hydroponicTypeName = productionUnit.hydroponicType.name;
+                var productionUnitOwnerMail = currentProductionUnit.owner.user.Email;
 
-                var phContent = content.Substring(0, 4).Insert(3,".");
-                var waterTempContent = content.Substring(4, 4).Insert(3, ".");
-                var dissolvedOxyContent  = content.Substring(8, 4).Insert(3, ".");
-                var orpContent = content.Substring(12, 4).Insert(3, ".");
-                var airTempContent = content.Substring(16, 4).Insert(3, ".");
-                var airHumidityContent = content.Substring(20, 4).Insert(3, ".");
+                var currentMeasures = new GroupedMeasure();
+                currentMeasures.hydroponicTypeName = currentProductionUnit.hydroponicType.name;
 
                 var phSensor = db.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
                 var waterTemperatureSensor = db.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
@@ -65,6 +60,13 @@ namespace myfoodapp.Hub.Controllers.Api
                 var airTemperatureSensor = db.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
                 var airHumidity = db.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
 
+                var phContent = content.Substring(0, 4).Insert(3,".");
+                var waterTempContent = content.Substring(4, 4).Insert(3, ".");
+                var dissolvedOxyContent  = content.Substring(8, 4).Insert(3, ".");
+                var orpContent = content.Substring(12, 4).Insert(3, ".");
+                var airTempContent = content.Substring(16, 4).Insert(3, ".");
+                var airHumidityContent = content.Substring(20, 4).Insert(3, ".");
+
                 if(!phContent.Contains("a"))
                 {
                     decimal pHvalue = 0;
@@ -72,7 +74,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     {
                         currentMeasures.pHvalue = pHvalue;
 
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = phSensor, value = pHvalue });
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = phSensor, value = pHvalue });
                         db.SaveChanges();
                     }       
                 }
@@ -84,7 +86,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     {
                         currentMeasures.waterTempvalue = waterTempvalue;
 
-                      db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = waterTemperatureSensor, value = waterTempvalue });
+                      db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = waterTemperatureSensor, value = waterTempvalue });
                       db.SaveChanges();
                     }          
                 }
@@ -96,7 +98,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     {
                         currentMeasures.DOvalue = DOvalue;
 
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = dissolvedOxySensor, value = DOvalue });
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = dissolvedOxySensor, value = DOvalue });
                         db.SaveChanges();
                     }
                 }
@@ -108,7 +110,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     {
                         currentMeasures.ORPvalue = ORPvalue;
 
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = ORPSensor, value = ORPvalue });
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = ORPSensor, value = ORPvalue });
                         db.SaveChanges();
                     }
                 }
@@ -120,7 +122,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     {
                         currentMeasures.airTempvalue = airTempvalue;
 
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = airTemperatureSensor, value = airTempvalue });
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = airTemperatureSensor, value = airTempvalue });
                         db.SaveChanges();
                     }
                 }
@@ -132,10 +134,19 @@ namespace myfoodapp.Hub.Controllers.Api
                     {
                         currentMeasures.humidityvalue = humidityvalue;
 
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = airHumidity, value = humidityvalue });
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = airHumidity, value = humidityvalue });
                         db.SaveChanges();
                     }                     
                 }
+
+                var currentLastDayPHValue = db.Measures.Where(m => m.captureDate > date.AddDays(-1) &&
+                                                   m.productionUnit == currentProductionUnit &&
+                                                   m.sensor == phSensor).OrderBy(m => m.Id).FirstOrDefault();
+
+                if (currentLastDayPHValue == null)
+                    currentMeasures.lastDayPHvariation = 0;
+                else
+                    currentMeasures.lastDayPHvariation = Math.Abs(currentLastDayPHValue.value - currentMeasures.pHvalue);
 
                 AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail); 
             }
