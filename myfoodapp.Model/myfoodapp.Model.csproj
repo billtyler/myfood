@@ -110,6 +110,7 @@
     <Compile Include="Business\Actions.cs" />
     <Compile Include="Business\Event.cs" />
     <Compile Include="Business\Log.cs" />
+    <Compile Include="Business\Message.cs" />
     <Compile Include="Business\UserSettings.cs" />
     <Compile Include="DatabaseModel.cs" />
     <Compile Include="LocalDataContext.cs" />

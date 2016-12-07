@@ -65,6 +65,8 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.ProductionUnitOwner> ProductionUnitOwners { get; set; }
 
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.HydroponicType> HydroponicTypes { get; set; }
+
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Log> Logs { get; set; }
 
     }

@@ -15,9 +15,10 @@ namespace myfoodapp.Hub.Business
 {
     public class AquaponicsRulesManager
     {
-        public static void ValidateRules(GroupedMeasure currentMeasures, string productionUnitOwnerMail)
+        public static bool ValidateRules(GroupedMeasure currentMeasures, string productionUnitOwnerMail)
         {
             Evaluator evaluator = new Evaluator();
+            bool isValid = true;
             var mailSubject = "Warning from myfood Hub";
 
             var data = File.ReadAllText("Content/AquaponicsRules.json");
@@ -34,6 +35,8 @@ namespace myfoodapp.Hub.Business
                     {
                         var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
                         mailContent.AppendLine(String.Format(rule.warningContent, bindingValue) + "<br>");
+
+                        isValid = false;
                     }
                 }
                 catch (Exception ex)
@@ -44,6 +47,7 @@ namespace myfoodapp.Hub.Business
             }
 
             MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
+            return isValid;
         }
     }
 }

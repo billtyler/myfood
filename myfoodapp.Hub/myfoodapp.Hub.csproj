@@ -382,17 +382,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201610100931060_Init.cs" />
-    <Compile Include="Migrations\201610100931060_Init.Designer.cs">
-      <DependentUpon>201610100931060_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610140429333_initial_4.cs" />
-    <Compile Include="Migrations\201610140429333_initial_4.Designer.cs">
-      <DependentUpon>201610140429333_initial_4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610170927231_Init_5.cs" />
-    <Compile Include="Migrations\201610170927231_Init_5.Designer.cs">
-      <DependentUpon>201610170927231_Init_5.cs</DependentUpon>
+    <Compile Include="Migrations\201612071150184_Init.cs" />
+    <Compile Include="Migrations\201612071150184_Init.Designer.cs">
+      <DependentUpon>201612071150184_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -758,16 +750,21 @@
     <Content Include="Content\kendo\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\Pictures\BivilleFamily22.JPG" />
+    <Content Include="Content\Pictures\BoisColombesCity.jpg" />
     <Content Include="Content\Pictures\BraineFamily22.JPG" />
+    <Content Include="Content\Pictures\BronFamily14.JPG" />
     <Content Include="Content\Pictures\CannesFamily14.JPG" />
     <Content Include="Content\Pictures\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\GuerpontFamily22.jpg" />
+    <Content Include="Content\Pictures\LauterbourgFamily22.png" />
     <Content Include="Content\Pictures\LeCeillierFamily22.JPG" />
     <Content Include="Content\Pictures\MelinFamily22.JPG" />
+    <Content Include="Content\Pictures\MerigniacFamily22.JPG" />
     <Content Include="Content\Pictures\MezelFamily22.JPG" />
     <Content Include="Content\Pictures\OberpallenFamily22.jpg" />
     <Content Include="Content\Pictures\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\PavillyFamily22.JPG" />
+    <Content Include="Content\Pictures\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\SainteBarbeFamily22.JPG" />
     <Content Include="Content\Pictures\TarragonaFamily14.JPG" />
     <Content Include="Content\Pictures\VillevaudeFamily22.jpg" />
@@ -2180,14 +2177,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610100931060_Init.resx">
-      <DependentUpon>201610100931060_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610140429333_initial_4.resx">
-      <DependentUpon>201610140429333_initial_4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201610170927231_Init_5.resx">
-      <DependentUpon>201610170927231_Init_5.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612071150184_Init.resx">
+      <DependentUpon>201612071150184_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

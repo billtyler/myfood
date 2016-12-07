@@ -30,15 +30,19 @@ namespace myfoodapp.WebApp
         {
             listener = new StreamSocketListener();
 
-            // listen on port 80, this is the standard HTTP port (use a different port if you have a service already running on 80)
-            listener.BindServiceNameAsync("5000");
-
-            listener.ConnectionReceived += async (sender, args) =>
+            var t = Task.Run(async() =>
             {
-                // call the handle request function when a request comes in
-                HandleRequest(sender, args);
-            };
+                // listen on port 80, this is the standard HTTP port (use a different port if you have a service already running on 80)
+                await listener.BindServiceNameAsync("5000");
 
+                listener.ConnectionReceived += (sender, args) =>
+                {
+                    // call the handle request function when a request comes in
+                    HandleRequest(sender, args);
+                };
+            });
+
+            t.Wait();
         }
 
         public async void HandleRequest(StreamSocketListener sender, StreamSocketListenerConnectionReceivedEventArgs args)
@@ -182,13 +186,19 @@ namespace myfoodapp.WebApp
                 }
                 else if (request.ToString().Contains("factory.html"))
                 {
-                    var listMes = new List<Measure>();
-
                     var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
                     mesureBackgroundTask.Completed += ResetHardwareBackgroundTask_Completed;
                     mesureBackgroundTask.Stop();
 
                     response = "<html><body>RESET SENSORS TO FACTORY SETTINGS DONE</body></html>";
+                }
+                else if (request.ToString().Contains("setphatseven.html"))
+                {
+                    var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+                    mesureBackgroundTask.Completed += SetPhAtSevenBackgroundTask_Completed;
+                    mesureBackgroundTask.Stop();
+
+                    response = "<html><body>SET PH SENSOR TO 7 DONE</body></html>";
                 }
                 else
                 {
@@ -243,8 +253,27 @@ namespace myfoodapp.WebApp
             }
         }
 
-        private StreamSocketListener listener; // the socket listner to listen for TCP requests
-                                               // Note: this has to stay in scope!
+        private void SetPhAtSevenBackgroundTask_Completed(object sender, EventArgs e)
+        {
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            mesureBackgroundTask.Completed -= SetPhAtSevenBackgroundTask_Completed;
+
+            try
+            {
+                AtlasSensorManager.GetInstance.SetCalibration(SensorTypeEnum.ph, AtlasSensorManager.CalibrationType.Mid);
+                mesureBackgroundTask.Run();
+            }
+            catch (Exception ex)
+            {
+                logModel.AppendLog(Log.CreateErrorLog("Exception on Set pH to 7", ex));
+            }
+            finally
+            {
+                logModel.AppendLog(Log.CreateLog("Set pH to 7 ended", LogType.Information));
+            }
+        }
+
+        private StreamSocketListener listener;                                               
 
         private const uint BufferSize = 8192; // this is the max size of the buffer in bytes 
 

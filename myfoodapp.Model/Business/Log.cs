@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace myfoodapp.Business
 {
@@ -42,6 +38,5 @@ namespace myfoodapp.Business
                 type = LogType.Error
             };
         }
-
     }
 }

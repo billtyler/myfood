@@ -18,6 +18,8 @@ namespace myfoodapp.Hub.Models
         [Required]
         public ProductionUnitType productionUnitType { get; set; }
         [Required]
+        public HydroponicType hydroponicType { get; set; }
+        [Required]
         public double locationLatitude { get; set; }
         [Required]
         public double locationLongitude { get; set; }
@@ -47,6 +49,14 @@ namespace myfoodapp.Hub.Models
     }
 
     public class ProductionUnitType
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+    }
+
+    public class HydroponicType
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace myfoodapp.Business
+﻿namespace myfoodapp.Business
 {
     public class UserSettings
     {
@@ -12,7 +6,10 @@ namespace myfoodapp.Business
         public bool isScreenSaverEnable { get; set; }
         public bool isSleepModeEnable { get; set; }
         public bool isSigFoxComEnable { get; set; }
-        public bool isVerboseLogEnable { get; set; }
+        public bool isDiagnosticModeEnable { get; set; }
         public bool isTempHumiditySensorEnable { get; set; }
+        public int measureFrequency { get; set; }
+        public string productionSiteId { get; set; }
+        public string hubMessageAPI { get; set; }
     }
 }

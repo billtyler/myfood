@@ -51,8 +51,11 @@ namespace myfoodapp.Model
                         isScreenSaverEnable = false,
                         isSigFoxComEnable = false,
                         isSleepModeEnable = false,
-                        isTempHumiditySensorEnable = false,
-                        isVerboseLogEnable = false
+                        isTempHumiditySensorEnable = true,
+                        isDiagnosticModeEnable = false,
+                        measureFrequency = 60000,
+                        productionSiteId = "74711",
+                        hubMessageAPI = "http://myfoodapphub.azurewebsites.net/api/Messages"
                     };
 #endif
 
@@ -64,7 +67,10 @@ namespace myfoodapp.Model
                         isSigFoxComEnable = false,
                         isSleepModeEnable = false,
                         isTempHumiditySensorEnable = false,
-                        isVerboseLogEnable = false
+                        isDiagnosticModeEnable = false,
+                        measureFrequency = 600000,
+                        productionSiteId = "74711",
+                        hubMessageAPI = "http://myfoodapphub.azurewebsites.net/api/Messages"
                     };
 #endif
 

@@ -1,23 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using myfoodapp.Business;
-using myfoodapp.Business.Clock;
 using myfoodapp.Business.Sensor;
 using myfoodapp.Common;
 using myfoodapp.Model;
-using myfoodapp.Views;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.Data.Json;
-using Windows.Data.Xml.Dom;
 using Windows.Storage;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using static myfoodapp.Business.Log;
 
@@ -106,14 +95,14 @@ namespace myfoodapp.ViewModel
             }
         }
 
-        private bool isVerboseLogEnable = false;
-        public bool IsVerboseLogEnable
+        private bool isDiagnosticModeEnable = false;
+        public bool IsDiagnosticModeEnable
         {
-            get { return isVerboseLogEnable; }
+            get { return isDiagnosticModeEnable; }
             set
             {
-                isVerboseLogEnable = value;
-                OnPropertyChanged("IsVerboseLogEnable");
+                isDiagnosticModeEnable = value;
+                OnPropertyChanged("IsDiagnosticModeEnable");
             }
         }
 
@@ -127,6 +116,10 @@ namespace myfoodapp.ViewModel
                 OnPropertyChanged("IsTempHumiditySensorEnable");
             }
         }
+
+        private int MeasureFrequency;
+        private string ProductionSiteId;
+        private string HubMessageAPI;
 
         public AdvancedSettingsViewModel()
         {
@@ -152,8 +145,12 @@ namespace myfoodapp.ViewModel
             IsSigFoxComEnable = currentUserSettings.isSigFoxComEnable;
             IsSleepModeEnable = currentUserSettings.isSleepModeEnable;
             IsTempHumiditySensorEnable = currentUserSettings.isTempHumiditySensorEnable;
-            IsVerboseLogEnable = currentUserSettings.isVerboseLogEnable;
-            IsDebugLedEnable = currentUserSettings.isDebugLedEnable;          
+            IsDiagnosticModeEnable = currentUserSettings.isDiagnosticModeEnable;
+            IsDebugLedEnable = currentUserSettings.isDebugLedEnable;
+            MeasureFrequency = currentUserSettings.measureFrequency;
+            ProductionSiteId = currentUserSettings.productionSiteId;
+            HubMessageAPI = currentUserSettings.hubMessageAPI;
+
         }
 
         public async Task<UInt64> GetFreeSpace()
@@ -283,10 +280,14 @@ namespace myfoodapp.ViewModel
 
                 newUserSettings.isScreenSaverEnable = IsScreenSaverEnable;
                 newUserSettings.isSigFoxComEnable = IsSigFoxComEnable;
-                newUserSettings.isSleepModeEnable = isSleepModeEnable;
+                newUserSettings.isSleepModeEnable = IsSleepModeEnable;
                 newUserSettings.isTempHumiditySensorEnable = IsTempHumiditySensorEnable;
-                newUserSettings.isVerboseLogEnable = IsVerboseLogEnable;
+                newUserSettings.isDiagnosticModeEnable = IsDiagnosticModeEnable;
                 newUserSettings.isDebugLedEnable = IsDebugLedEnable;
+
+                newUserSettings.measureFrequency = MeasureFrequency;
+                newUserSettings.productionSiteId = ProductionSiteId;
+                newUserSettings.hubMessageAPI = HubMessageAPI;
 
                 var taskUserSync = Task.Run(async () =>
                     {

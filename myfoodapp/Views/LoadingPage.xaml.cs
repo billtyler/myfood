@@ -36,22 +36,22 @@ namespace myfoodapp.Views
 
         private void AboutPage_Loaded(object sender, RoutedEventArgs e)
         {
-            txtInfo.Text = "Database creation";
-
+            var logModel = LogModel.GetInstance;
+      
+            logModel.AppendLog(Log.CreateLog("Database starting...", Log.LogType.System));
             using (var db = new LocalDataContext())
             {
                 db.Database.Migrate();
                 LocalDataContextExtension.EnsureSeedData(db);
             }
+            logModel.AppendLog(Log.CreateLog("Database initialized", Log.LogType.System));
 
-            txtInfo.Text = "User Settings Init";
+            logModel.AppendLog(Log.CreateLog("User Settings Init", Log.LogType.System));
 
             var taskUserFile = Task.Run(async () => { await UserSettingsModel.GetInstance.InitFileFolder(); });
             taskUserFile.Wait();
 
-            Task.Delay(5000);
-
-            txtInfo.Text = "Background Service Init";
+            logModel.AppendLog(Log.CreateLog("Background Service Init", Log.LogType.System));
 
             var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
             mesureBackgroundTask.Run();

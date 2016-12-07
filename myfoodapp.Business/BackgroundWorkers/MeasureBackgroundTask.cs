@@ -4,13 +4,14 @@ using myfoodapp.Business.Sensor;
 using myfoodapp.Business.Sensor.HumidityTemperature;
 using myfoodapp.Common;
 using myfoodapp.Model;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Text;
 using System.Threading.Tasks;
-using Windows.Networking.Connectivity;
-using Windows.Networking.NetworkOperators;
-using System.Linq;
 
 namespace myfoodapp.Business
 {
@@ -23,6 +24,9 @@ namespace myfoodapp.Business
         private UserSettingsModel userSettingsModel = UserSettingsModel.GetInstance;
         private LogModel logModel = LogModel.GetInstance;
         private DatabaseModel databaseModel = DatabaseModel.GetInstance;
+
+        private int TICKSPERCYCLE = 600000;
+        private int TICKSPERCYCLE_DIAGNOTIC_MODE = 60000;
 
         public event EventHandler Completed;
 
@@ -39,14 +43,6 @@ namespace myfoodapp.Business
                 return instance;
             }
         }
-
-#if DEBUG
-        private int TICKSPERCYCLE = 600000;
-#endif
-
-#if !DEBUG
-        private int TICKSPERCYCLE = 600000;
-#endif
 
         private MeasureBackgroundTask()
         {
@@ -92,6 +88,12 @@ namespace myfoodapp.Business
 
             var taskUser = Task.Run(async () => { userSettings = await userSettingsModel.GetUserSettingsAsync(); });
             taskUser.Wait();
+
+            if(userSettings.measureFrequency >= 60000)
+            TICKSPERCYCLE = userSettings.measureFrequency;
+
+            if (userSettings.isDiagnosticModeEnable)
+                TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOTIC_MODE;
 
             var clockManager = ClockManager.GetInstance;
 
@@ -159,12 +161,12 @@ namespace myfoodapp.Business
 
                             if (sensorManager.isSensorOnline(SensorTypeEnum.waterTemperature))
                             {
-                                if (userSettings.isVerboseLogEnable)
+                                if (userSettings.isDiagnosticModeEnable)
                                     logModel.AppendLog(Log.CreateLog("Water Temperature capturing", Log.LogType.Information));
 
                                 decimal capturedValue = 0;
                                 capturedValue = sensorManager.RecordSensorsMeasure(SensorTypeEnum.waterTemperature, userSettings.isSleepModeEnable);
-                                sensorManager.SetWaterTemperatureForSensors(capturedValue);
+                                sensorManager.SetWaterTemperatureForPHSensor(capturedValue);
 
                                 if(capturedValue > -20 && capturedValue < 80 )
                                 {
@@ -174,8 +176,12 @@ namespace myfoodapp.Business
                                     });
                                     task.Wait();
 
-                                    if (userSettings.isVerboseLogEnable)
-                                        logModel.AppendLog(Log.CreateLog("Water Temperature captured", Log.LogType.Information));
+                                    if (userSettings.isDiagnosticModeEnable)
+                                    {
+                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
+                                        var status = sensorManager.GetSensorStatus(SensorTypeEnum.waterTemperature, userSettings.isSleepModeEnable);
+                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature status : {0}", status), Log.LogType.System));
+                                    }     
                                 }
                                 else
                                 logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature value out of range - {0}", capturedValue), Log.LogType.Warning));
@@ -184,7 +190,7 @@ namespace myfoodapp.Business
 
                             if (sensorManager.isSensorOnline(SensorTypeEnum.ph))
                             {
-                                if (userSettings.isVerboseLogEnable)
+                                if (userSettings.isDiagnosticModeEnable)
                                     logModel.AppendLog(Log.CreateLog("pH capturing", Log.LogType.Information));
 
                                 decimal capturedValue = 0;
@@ -198,8 +204,12 @@ namespace myfoodapp.Business
                                     });
                                     task.Wait();
 
-                                    if (userSettings.isVerboseLogEnable)
-                                        logModel.AppendLog(Log.CreateLog("pH captured", Log.LogType.Information));
+                                    if (userSettings.isDiagnosticModeEnable)
+                                    {
+                                        logModel.AppendLog(Log.CreateLog(String.Format("pH captured : {0}", capturedValue), Log.LogType.Information));
+                                        var status = sensorManager.GetSensorStatus(SensorTypeEnum.ph, userSettings.isSleepModeEnable);
+                                        logModel.AppendLog(Log.CreateLog(String.Format("pH status : {0}", status), Log.LogType.System));
+                                    }              
                                 }
                                 else
                                 logModel.AppendLog(Log.CreateLog(String.Format("pH value out of range - {0}", capturedValue), Log.LogType.Warning));
@@ -207,7 +217,7 @@ namespace myfoodapp.Business
 
                             if (sensorManager.isSensorOnline(SensorTypeEnum.orp))
                             {
-                                if (userSettings.isVerboseLogEnable)
+                                if (userSettings.isDiagnosticModeEnable)
                                    logModel.AppendLog(Log.CreateLog("ORP capturing", Log.LogType.Information));
 
                                 decimal capturedValue = 0;
@@ -221,16 +231,20 @@ namespace myfoodapp.Business
                                     });
                                     task.Wait();
 
-                                    if (userSettings.isVerboseLogEnable)
-                                        logModel.AppendLog(Log.CreateLog("ORP captured", Log.LogType.Information));
-                            }
-                            else
-                                logModel.AppendLog(Log.CreateLog(String.Format("ORP value out of range - {0}", capturedValue), Log.LogType.Warning));
+                                    if (userSettings.isDiagnosticModeEnable)
+                                    {
+                                        logModel.AppendLog(Log.CreateLog(String.Format("ORP captured : {0}", capturedValue), Log.LogType.Information));
+                                        var status = sensorManager.GetSensorStatus(SensorTypeEnum.orp, userSettings.isSleepModeEnable);
+                                        logModel.AppendLog(Log.CreateLog(String.Format("ORP status : {0}", status), Log.LogType.System));
+                                    }
+                                }
+                                else
+                                    logModel.AppendLog(Log.CreateLog(String.Format("ORP value out of range - {0}", capturedValue), Log.LogType.Warning));
                             }  
 
                             if (sensorManager.isSensorOnline(SensorTypeEnum.dissolvedOxygen))
                             {
-                                if (userSettings.isVerboseLogEnable)
+                                if (userSettings.isDiagnosticModeEnable)
                                   logModel.AppendLog(Log.CreateLog("DO capturing", Log.LogType.Information));
 
                                 decimal capturedValue = 0;
@@ -244,8 +258,12 @@ namespace myfoodapp.Business
                                     });
                                     task.Wait();
 
-                                    if (userSettings.isVerboseLogEnable)
-                                        logModel.AppendLog(Log.CreateLog("DO captured", Log.LogType.Information));
+                                    if (userSettings.isDiagnosticModeEnable)
+                                    {
+                                        logModel.AppendLog(Log.CreateLog(String.Format("DO captured : {0}", capturedValue), Log.LogType.Information));
+                                        var status = sensorManager.GetSensorStatus(SensorTypeEnum.dissolvedOxygen, userSettings.isSleepModeEnable);
+                                        logModel.AppendLog(Log.CreateLog(String.Format("DO status : {0}", status), Log.LogType.System));
+                                    }
                                 }
                                 else
                                 logModel.AppendLog(Log.CreateLog(String.Format("DO value out of range - {0}", capturedValue), Log.LogType.Warning));
@@ -255,24 +273,24 @@ namespace myfoodapp.Business
                             {
                                 try
                                 {
-                                    if (userSettings.isVerboseLogEnable)
+                                    if (userSettings.isDiagnosticModeEnable)
                                         logModel.AppendLog(Log.CreateLog("Air Temperature capturing", Log.LogType.Information));
 
-                                    decimal capturedAirTemperature = (decimal)humTempManager.Temperature;
+                                    decimal capturedValue = (decimal)humTempManager.Temperature;
 
-                                if (capturedAirTemperature > 0 && capturedAirTemperature < 100)
+                                if (capturedValue > 0 && capturedValue < 100)
                                 {
                                     var taskTemp = Task.Run(async () =>
                                     {
-                                        await databaseModel.AddMesure(captureDateTime, capturedAirTemperature, SensorTypeEnum.airTemperature);
+                                        await databaseModel.AddMesure(captureDateTime, capturedValue, SensorTypeEnum.airTemperature);
                                     });
                                     taskTemp.Wait();
 
-                                    if (userSettings.isVerboseLogEnable)
-                                        logModel.AppendLog(Log.CreateLog("Air Temperature captured", Log.LogType.Information));
+                                    if (userSettings.isDiagnosticModeEnable)
+                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
                                 }
                                 else
-                                    logModel.AppendLog(Log.CreateLog(String.Format("Air Temperature out of range - {0}", capturedAirTemperature), Log.LogType.Warning));
+                                    logModel.AppendLog(Log.CreateLog(String.Format("Air Temperature out of range - {0}", capturedValue), Log.LogType.Warning));
                                 }
                                 catch (Exception ex)
                                 {
@@ -281,24 +299,24 @@ namespace myfoodapp.Business
 
                                 try
                                 {
-                                    if (userSettings.isVerboseLogEnable)
+                                    if (userSettings.isDiagnosticModeEnable)
                                         logModel.AppendLog(Log.CreateLog("Humidity capturing", Log.LogType.Information));
 
-                                    decimal capturedHumidity = (decimal)humTempManager.Humidity;
+                                    decimal capturedValue = (decimal)humTempManager.Humidity;
 
-                                if (capturedHumidity > 0 && capturedHumidity < 100)
+                                if (capturedValue > 0 && capturedValue < 100)
                                 {
                                     var taskHum = Task.Run(async () =>
                                     {
-                                        await databaseModel.AddMesure(captureDateTime, capturedHumidity, SensorTypeEnum.humidity);
+                                        await databaseModel.AddMesure(captureDateTime, capturedValue, SensorTypeEnum.humidity);
                                     });
                                     taskHum.Wait();
 
-                                    if (userSettings.isVerboseLogEnable)
-                                        logModel.AppendLog(Log.CreateLog("Humidity captured", Log.LogType.Information));
+                                    if (userSettings.isDiagnosticModeEnable)
+                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
                                 }
                                 else
-                                    logModel.AppendLog(Log.CreateLog(String.Format("Air Humidity out of range - {0}", capturedHumidity), Log.LogType.Warning));
+                                    logModel.AppendLog(Log.CreateLog(String.Format("Air Humidity out of range - {0}", capturedValue), Log.LogType.Warning));
                                 }
                                 catch (Exception ex)
                                 {
@@ -308,7 +326,7 @@ namespace myfoodapp.Business
 
                            logModel.AppendLog(Log.CreateLog(String.Format("Measures captured in {0} sec.", watchMesures.ElapsedMilliseconds / 1000), Log.LogType.System));  
                         
-                        if(userSettings.isSigFoxComEnable && sigfoxManager.isInitialized)
+                        if(userSettings.isSigFoxComEnable && sigfoxManager.isInitialized && TICKSPERCYCLE >= 600000)
                         {
                             watchMesures.Restart();
 
@@ -322,10 +340,53 @@ namespace myfoodapp.Business
 
                             sigfoxManager.SendMessage(sigFoxSignature);
 
-                            if (userSettings.isVerboseLogEnable)
+                            if (userSettings.isDiagnosticModeEnable)
                                 sigfoxManager.Listen();
 
-                            logModel.AppendLog(Log.CreateLog(String.Format("Data sent to Azure in {0} sec.", watchMesures.ElapsedMilliseconds / 1000), Log.LogType.System));
+                            logModel.AppendLog(Log.CreateLog(String.Format("Data sent to Azure via Sigfox in {0} sec.", watchMesures.ElapsedMilliseconds / 1000), Log.LogType.System));
+                        }
+
+                        if (!userSettings.isSigFoxComEnable && NetworkInterface.GetIsNetworkAvailable())
+                        {
+                            string sigFoxSignature = String.Empty;
+
+                            var taskSig = Task.Run(async () =>
+                            {
+                                sigFoxSignature = await databaseModel.GetLastMesureSignature();
+                            });
+                            taskSig.Wait();
+
+                            using (var client = new HttpClient())
+                            {
+                                var request = new Message()
+                                {
+                                    content = sigFoxSignature,
+                                    device = userSettings.productionSiteId,
+                                    date = DateTime.Now.ToString(),
+                                };
+
+                                var taskWeb = Task.Run(async () =>
+                                {
+                                    try
+                                    {
+                                        var response = await client.PostAsync(userSettings.hubMessageAPI,
+                                       new StringContent(JsonConvert.SerializeObject(request).ToString(),
+                                       Encoding.UTF8, "application/json"));
+
+                                        if (response.IsSuccessStatusCode)
+                                        {
+                                            logModel.AppendLog(Log.CreateLog("Measures sent to Azure via Internet", Log.LogType.Information));
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        logModel.AppendLog(Log.CreateErrorLog("Exception on Measures to Azure", ex));
+                                    }
+                                   
+                                });
+
+                                taskWeb.Wait();           
+                            }
                         }
 
                         bw.ReportProgress(33);         
@@ -339,4 +400,5 @@ namespace myfoodapp.Business
             watch.Stop();
         }
     }
+
 }

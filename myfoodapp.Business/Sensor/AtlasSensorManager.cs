@@ -358,7 +358,7 @@ namespace myfoodapp.Business.Sensor
             }
         }
 
-        public bool SetWaterTemperatureForSensors(decimal waterTemperature)
+        public bool SetWaterTemperatureForPHSensor(decimal waterTemperature)
         {
             var phSensor = this.GetSensor(SensorTypeEnum.ph);
 
@@ -483,6 +483,50 @@ namespace myfoodapp.Business.Sensor
             }
 
             return 0;
+        }
+
+        public string GetSensorStatus(SensorTypeEnum sensorType, bool isSleepModeActivated)
+        {
+            var currentSensor = this.GetSensor(sensorType);
+
+            if (currentSensor != null)
+            {
+                string strResult = String.Empty;
+
+                //if (isSleepModeActivated)
+                //{
+                //    var taskWakeUp = Task.Run(async () =>
+                //    {
+                //        await WriteAsync(wakeupCommand, currentSensor);
+
+                //        await Task.Delay(1000);
+                //    });
+
+                //    taskWakeUp.Wait();
+                //}
+
+                var taskStatus = Task.Run(async () => {
+                    await WriteAsync(getStatusCommand, currentSensor)
+                         .ContinueWith((a) => strResult = ReadAsync(ReadCancellationTokenSource.Token, currentSensor).Result);
+
+                });
+
+                taskStatus.Wait();
+
+                //if (isSleepModeActivated)
+                //{
+                //    var taskSleep = Task.Run(async () =>
+                //    {
+                //        await WriteAsync(sleepModeCommand, currentSensor);
+                //    });
+
+                //    taskSleep.Wait();
+                //}
+
+                return strResult;
+            }
+
+            return string.Empty;
         }
 
         private async Task<string> WriteAsync(string command, AtlasSensor currentSensor)

@@ -37,6 +37,7 @@ namespace myfoodapp.Hub.Models
         public decimal DOvalue { get; set; }
         public decimal airTempvalue { get; set; }
         public decimal humidityvalue { get; set; }
+        public string hydroponicTypeName { get; set; }
     }
 
     public class Rule

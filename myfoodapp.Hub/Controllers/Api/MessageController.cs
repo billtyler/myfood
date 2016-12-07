@@ -39,7 +39,7 @@ namespace myfoodapp.Hub.Controllers.Api
 
             try
             {
-                var productionUnit = db.ProductionUnits.Include("owner.user").Where(p => p.reference == device).FirstOrDefault();
+                var productionUnit = db.ProductionUnits.Include("owner.user").Include("hydroponicType").Where(p => p.reference == device).FirstOrDefault();
                 var productionUnitOwnerMail = productionUnit.owner.user.Email;
 
                 if (productionUnit == null)
@@ -49,11 +49,12 @@ namespace myfoodapp.Hub.Controllers.Api
                 }
 
                 var currentMeasures = new GroupedMeasure();
+                currentMeasures.hydroponicTypeName = productionUnit.hydroponicType.name;
 
                 var phContent = content.Substring(0, 4).Insert(3,".");
                 var waterTempContent = content.Substring(4, 4).Insert(3, ".");
-                var orpContent = content.Substring(8, 4).Insert(3, ".");
-                var dissolvedOxyContent = content.Substring(12, 4).Insert(3, ".");
+                var dissolvedOxyContent  = content.Substring(8, 4).Insert(3, ".");
+                var orpContent = content.Substring(12, 4).Insert(3, ".");
                 var airTempContent = content.Substring(16, 4).Insert(3, ".");
                 var airHumidityContent = content.Substring(20, 4).Insert(3, ".");
 
@@ -88,18 +89,6 @@ namespace myfoodapp.Hub.Controllers.Api
                     }          
                 }
 
-                if (!orpContent.Contains("a"))
-                {
-                    decimal ORPvalue = 0;
-                    if (decimal.TryParse(orpContent, out ORPvalue))
-                    {
-                        currentMeasures.ORPvalue = ORPvalue;
-
-                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = ORPSensor, value = ORPvalue });
-                        db.SaveChanges();
-                    }                       
-                }
-
                 if (!dissolvedOxyContent.Contains("a"))
                 {
                     decimal DOvalue = 0;
@@ -108,6 +97,18 @@ namespace myfoodapp.Hub.Controllers.Api
                         currentMeasures.DOvalue = DOvalue;
 
                         db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = dissolvedOxySensor, value = DOvalue });
+                        db.SaveChanges();
+                    }
+                }
+
+                if (!orpContent.Contains("a"))
+                {
+                    decimal ORPvalue = 0;
+                    if (decimal.TryParse(orpContent, out ORPvalue))
+                    {
+                        currentMeasures.ORPvalue = ORPvalue;
+
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = productionUnit, sensor = ORPSensor, value = ORPvalue });
                         db.SaveChanges();
                     }
                 }
@@ -140,7 +141,7 @@ namespace myfoodapp.Hub.Controllers.Api
             }
             catch (Exception ex)
             {
-                db.Logs.Add(Log.CreateErrorLog("Error on Convert Measures from Sigfox", ex));
+                db.Logs.Add(Log.CreateErrorLog("Error on Convert Message into Measure", ex));
             }
         }
     }

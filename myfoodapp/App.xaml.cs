@@ -6,8 +6,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using myfoodapp.Model;
-using Microsoft.Data.Entity;
-using System.Threading.Tasks;
 using myfoodapp.Views;
 using myfoodapp.Common;
 using GalaSoft.MvvmLight.Messaging;
