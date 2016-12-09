@@ -1,13 +1,27 @@
 ﻿@using myfoodapp.Hub.Models
 @model LoginViewModel
-<div id="center">
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
+
+@{
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="logo">
+            <img src="https://myfood.eu/wp-content/uploads/2015/10/logoMyFoodHeader.png" />
+        </div>
+
+        <br />
+        <div class="login-panel panel panel-default">
+            <div class="panel-body">
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                     @Html.AntiForgeryToken()
-                    <h1>Login</h1>
+                    <p style="font-size:large">Please Sign In</p>
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
@@ -45,19 +59,19 @@
                             @Html.ActionLink("Forgot your password?", "ForgotPassword")
                         </p>*@
                 }
-            </section>
+            </div>
         </div>
     </div>
 </div>
 
 <style type="text/css">
     #center {
-    margin: auto;
-    width: 50%;
-    border: 3px solid green;
-    padding: 10px;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
+        margin: auto;
+        width: 50%;
+        border: 3px solid green;
+        padding: 10px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 </style>

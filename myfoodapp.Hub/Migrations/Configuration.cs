@@ -30,13 +30,14 @@ namespace myfoodapp.Hub.Migrations
             context.Messages.RemoveRange(context.Messages);
             context.MessageTypes.RemoveRange(context.MessageTypes);
 
+            context.ProductionUnits.RemoveRange(context.ProductionUnits);
+
             context.ProductionUnitOwners.RemoveRange(context.ProductionUnitOwners);
             context.ProductionUnitTypes.RemoveRange(context.ProductionUnitTypes);
             context.HydroponicTypes.RemoveRange(context.HydroponicTypes);
 
-            context.Options.RemoveRange(context.Options);
-
             context.OptionLists.RemoveRange(context.OptionLists);
+            context.Options.RemoveRange(context.Options);
 
             context.SaveChanges();
 
