@@ -1,5 +1,9 @@
 ﻿<script type="text/javascript">
-window.onload = function onLoad(e) {
+    window.onload = function onLoad(e) {
+
+        var OptionList = $("#OptionList").data("kendoListView");
+        var currentProductionUnitLat;
+        var currentProductionUnitLong;
 
         $.ajax({
             url: "@Url.Action("GetNetworkStats", "InteractiveMap")",
@@ -11,7 +15,38 @@ window.onload = function onLoad(e) {
                 $("#TotalMonthlySparedCO2").text(response.TotalMonthlySparedCO2 + 'kg');
             }
         });
-    }
+
+        $.ajax({
+            url: "@Url.Action("GetRandomProductionUnitDetail", "InteractiveMap")",
+            dataType: "json",
+            type: "POST",
+            success: function (response) {
+                $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
+                $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
+                $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
+                $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+                $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
+
+                currentProductionUnitLat = response.LocationLatitude;
+                currentProductionUnitLong = response.LocationLongitude;
+
+                OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
+
+                if (response.PicturePath === null)
+                {
+                    $("#ProductionUnitPicture").hide();
+                    $("#PerfChart").hide();
+                }
+                else
+                {
+                    $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
+                    $("#ProductionUnitPicture").show();
+                    $("#PerfChart").show();
+                }           
+            }
+    });
+
+}
 
     function onShow(e) {
 
@@ -42,8 +77,7 @@ window.onload = function onLoad(e) {
                 $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
                 $("#ProductionUnitPicture").show();
                 $("#PerfChart").show();
-            }
-            //$("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
+            }           
         }
     });
 
@@ -79,7 +113,7 @@ window.onload = function onLoad(e) {
     </div>
 </script>
 
-<div id="pioneer-network" style="height:660px" class="main-section-content">
+<div id="pioneer-network" style="height:100%" class="main-section-content">
     <div id="map-wrapper" class="row">
         <div id="picturesContainer" class="col-md-4">
             <div class="widget">
@@ -96,40 +130,40 @@ window.onload = function onLoad(e) {
                     @model myfoodapp.Hub.Models.Map
 
                     @(Html.Kendo().Map()
-                .Name(Model.Name)
-                .Center(Model.CenterLatitude, Model.CenterLongitude)
-                .Zoom(Model.Zoom)
-                .Zoomable(false)
-                .Layers(layers =>
-                    {
-                        layers.Add()
-                            .Style(style => style
-                                .Fill(fill => fill.Color("#018001").Opacity(0.7))
-                                .Stroke(stroke => stroke.Color("#FFFFFF"))
-                            )
-                            .Type(MapLayerType.Shape)
-                            .DataSource(dataSource => dataSource
-                                .GeoJson()
-                                .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
-                            );
-                    })
-                    .Markers(markers =>
-                    {
-                        foreach (var marker in Model.Markers)
+                    .Name(Model.Name)
+                    .Center(Model.CenterLatitude, Model.CenterLongitude)
+                    .Zoom(Model.Zoom)
+                    .Zoomable(false)
+                    .Layers(layers =>
                         {
-                            markers.Add()
-                            .Location(marker.latlng)
-                            .Shape(marker.shape)
-                            .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
-                            .Tooltip(t => t.Events(e => e.Show("onShow")))
-                            .Title(marker.name);
-                        }
-                    })
-                    .Events(events => events
-                                      .ShapeCreated("onShapeCreated")
-                                      .ShapeMouseEnter("onShapeMouseEnter")
-                                      .ShapeMouseLeave("onShapeMouseLeave")
-                        )
+                            layers.Add()
+                                .Style(style => style
+                                    .Fill(fill => fill.Color("#018001").Opacity(0.7))
+                                    .Stroke(stroke => stroke.Color("#FFFFFF"))
+                                )
+                                .Type(MapLayerType.Shape)
+                                .DataSource(dataSource => dataSource
+                                    .GeoJson()
+                                    .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
+                                );
+                        })
+                        .Markers(markers =>
+                        {
+                            foreach (var marker in Model.Markers)
+                            {
+                                markers.Add()
+                                .Location(marker.latlng)
+                                .Shape(marker.shape)
+                                .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
+                                .Tooltip(t => t.Events(e => e.Show("onShow")))
+                                .Title(marker.name);
+                            }
+                        })
+                        .Events(events => events
+                                          .ShapeCreated("onShapeCreated")
+                                          .ShapeMouseEnter("onShapeMouseEnter")
+                                          .ShapeMouseLeave("onShapeMouseLeave")
+                            )
                     )
                 </div>
             </div>
@@ -167,26 +201,27 @@ window.onload = function onLoad(e) {
                 </div>
             </div>
         </div>
-        <div id="map-options" class="col-xs-4">
+        <div id="map-options" class="col-md-4">
             <div class="widget" style="height:200px">
                 <h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Options</h3>
                 <div style="margin: 25px;">
                     @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
-                .Name("OptionList")
-                .TagName("div")
-                .ClientTemplateId("templateOption")
-                .DataSource(dataSource => dataSource
-                  .Read(read => read.Action("Option_Read", "InteractiveMap"))
-                )
+                    .Name("OptionList")
+                    .TagName("div")
+                    .ClientTemplateId("templateOption")
+                    .DataSource(dataSource => dataSource
+                      .Read(read => read.Action("Option_Read", "InteractiveMap"))
+                    )
                     )
                 </div>
             </div>
        </div>
     </div>   
+    <div style="text-align: center">
+        <h4>.:myfoodapphub is licensed under a <a style="color:forestgreen" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Attribution-NonCommercial-ShareAlike 4.0 International</a> licence:.</h4>
+    </div>
 </div>
-<div style="text-align: center">
-    <h4>.:myfoodapphub is licensed under a <a style="color:forestgreen" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Attribution-NonCommercial-ShareAlike 4.0 International</a> licence:.</h4>
-</div>
+
 <style>
 
 .column-left{ float: left; width: 33%; }
@@ -274,17 +309,6 @@ window.onload = function onLoad(e) {
     .k-loading-mask {
         opacity: 0;
     }
-
-    @@media only screen and (max-width: 800) {
-    #picturesContainer {
-        display: none;
-        visibility: hidden;
-    }
-    #map-options {
-        display: none;
-        visibility: hidden;
-    }
-}
 
 </style>
 

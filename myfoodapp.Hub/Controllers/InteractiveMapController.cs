@@ -89,6 +89,31 @@ namespace myfoodapp.Hub.Controllers
                             }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetRandomProductionUnitDetail()
+        {
+            var db = new ApplicationDbContext();
+
+            var prodUnitList = db.ProductionUnits.Where(p => p.picturePath != null).Count();
+            var random = new Random();
+            int randomIndex = random.Next(0, prodUnitList - 1);
+
+            var rslt = db.ProductionUnits.Include("owner.user")
+                                         .Include("productionUnitType")
+                                         .Where(p => p.picturePath != null).ToList()[randomIndex];
+
+            return Json(new
+            {
+                PioneerCitizenName = rslt.owner.pioneerCitizenName,
+                PioneerCitizenNumber = rslt.owner.pioneerCitizenNumber,
+                ProductionUnitVersion = rslt.version,
+                ProductionUnitStartDate = rslt.startDate,
+                ProductionUnitType = rslt.productionUnitType.name,
+                PicturePath = rslt.picturePath,
+                LocationLatitude = rslt.locationLatitude,
+                LocationLongitude = rslt.locationLongitude,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Option_Read([DataSourceRequest] DataSourceRequest request, double SelectedProductionUnitLat, double SelectedProductionUnitLong)
         {
             var db = new ApplicationDbContext();

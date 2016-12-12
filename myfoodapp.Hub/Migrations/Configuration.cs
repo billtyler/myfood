@@ -587,7 +587,7 @@ namespace myfoodapp.Hub.Migrations
                 {
                     locationLatitude = 48.9196549,  
                     locationLongitude = 2.3526728,
-                    reference = "768EA",
+                    reference = "1ACDC8",
                     info = "Public Exhibition",
                     startDate = new DateTime(2016, 12, 01),
                     version = "2",
