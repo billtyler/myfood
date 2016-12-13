@@ -61,14 +61,13 @@
     }
 
     function onViewEventsClick() {
-        var Measures = $("#Measures").data("kendoChart");
-
-        var items = Measures.dataSource.data().length;
-        $("#MeasureNoData").toggle(items === 0);
+        var productionUnitId = $('#routeDataId').val();
+        window.location = window.location.origin + "/ProductionUnits/Events/" + productionUnitId;
     }
 
     function onManageUnitClick() {
-        dialog.data("kendoDialog").open();
+        var productionUnitId = $('#routeDataId').val();
+        window.location = window.location.origin + "/ProductionUnits/Update/" + productionUnitId;
     }
 
 </script>

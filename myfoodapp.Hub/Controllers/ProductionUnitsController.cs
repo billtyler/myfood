@@ -64,6 +64,21 @@ namespace myfoodapp.Hub.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Events(int id)
+        {
+            ViewBag.Title = "Production Unit Detail Page";
+
+            return View();
+        }
+
+        public ActionResult Update(int id)
+        {
+            ViewBag.Title = "Production Unit Detail Page";
+
+            return View();
+        }
+
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
             ApplicationDbContext db = new ApplicationDbContext();
