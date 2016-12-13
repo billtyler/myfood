@@ -1,25 +1,23 @@
-﻿using Microsoft.ApplicationInsights.Extensibility.Implementation;
-using myfoodapp.Hub.Common;
+﻿using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
 using Newtonsoft.Json;
 using SimpleExpressionEvaluator;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Script.Serialization;
 
 namespace myfoodapp.Hub.Business
 {
     public class AquaponicsRulesManager
     {
-        public static bool ValidateRules(GroupedMeasure currentMeasures, string productionUnitOwnerMail)
+        public static bool ValidateRules(GroupedMeasure currentMeasures, int productionUnitId, string productionUnitOwnerMail)
         {
             Evaluator evaluator = new Evaluator();
             bool isValid = true;
             var mailSubject = "Warning from myfood Hub";
+
+            ApplicationDbContext db = new ApplicationDbContext();
 
             var data = File.ReadAllText("Content/AquaponicsRules.json");
             var rulesList = JsonConvert.DeserializeObject<List<Rule>>(data);
@@ -34,19 +32,41 @@ namespace myfoodapp.Hub.Business
                     if (rslt)
                     {
                         var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
-                        mailContent.AppendLine(String.Format(rule.warningContent, bindingValue) + "<br>");
+                        var message = String.Format(rule.warningContent, bindingValue);
+                        mailContent.AppendLine(message + "<br>");
+
+                        db.Events.Add(new Event() { date = DateTime.Now, description = message });
 
                         isValid = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
-                    //db.Logs.Add(Log.CreateLog(String.Format("Error with Rule Manager - {0}", rule.ruleEvaluator), Log.LogType.Warning));
+                    db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                    db.SaveChanges();
                 }
             }
 
-            MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
+            try
+            {
+                MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
+            }
+            catch (Exception ex)
+            {
+                db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
+                db.SaveChanges();
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Save Events"), ex));
+                db.SaveChanges();
+            }
+
             return isValid;
         }
     }

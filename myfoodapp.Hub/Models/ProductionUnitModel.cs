@@ -71,4 +71,16 @@ namespace myfoodapp.Hub.Models
         public string name { get; set; }
         public string description { get; set; }
     }
+
+    public class Event
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [Required]
+        public DateTime date { get; set; }
+        [Required]
+        public string description { get; set; }
+        [Required]
+        public ProductionUnit productionUnit { get; set; }
+    }
 }

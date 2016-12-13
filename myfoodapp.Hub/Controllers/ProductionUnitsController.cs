@@ -1,21 +1,33 @@
-﻿using System;
+﻿using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using myfoodapp.Hub.Models;
+using myfoodapp.Hub.Services;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using myfoodapp.Hub.Models;
-using Kendo.Mvc.UI;
-using Kendo.Mvc.Extensions;
-using myfoodapp.Hub.Services;
 
 namespace myfoodapp.Hub.Controllers
 {
     public class ProductionUnitsController : Controller
     {
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         // GET: ProductionUnits
         public async Task<ActionResult> Index()
         {
@@ -26,9 +38,29 @@ namespace myfoodapp.Hub.Controllers
             return View(await db.ProductionUnits.ToListAsync());
         }
 
+        [Authorize]
         public ActionResult Details(int id)
         {
+            ViewBag.DisplayManagementBtn = "None";
+
+            var currentUser = this.User.Identity.GetUserName();
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
+            if (isAdmin)
+                ViewBag.DisplayManagementBtn = "All";
+            else
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var currentProductionUnit = db.ProductionUnits.Include("owner.user").Where(p => p.Id == id).FirstOrDefault();
+                if(currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser)
+                {
+                    ViewBag.DisplayManagementBtn = "All";
+                }
+            }
+
             ViewBag.Title = "Production Unit Detail Page";
+
             return View();
         }
 

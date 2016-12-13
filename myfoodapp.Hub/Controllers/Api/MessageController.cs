@@ -1,14 +1,8 @@
 ﻿using myfoodapp.Hub.Business;
-using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
 using Newtonsoft.Json.Linq;
-using SimpleExpressionEvaluator;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Web.Http;
 
 namespace myfoodapp.Hub.Controllers.Api
@@ -148,7 +142,7 @@ namespace myfoodapp.Hub.Controllers.Api
                 else
                     currentMeasures.lastDayPHvariation = Math.Abs(currentLastDayPHValue.value - currentMeasures.pHvalue);
 
-                AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail); 
+                AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id, productionUnitOwnerMail); 
             }
             catch (Exception ex)
             {

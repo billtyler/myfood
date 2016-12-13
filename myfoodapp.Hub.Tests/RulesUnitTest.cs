@@ -2,13 +2,22 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
+using System.Linq;
 
 namespace myfoodapp.Hub.Tests
 {
     [TestClass]
     public class RulesUnitTest
     {
-        string productionUnitOwnerMail = "foo@myfood.eu";
+        private string productionUnitOwnerMail = "foo@myfood.eu";
+        private int productionUnitId;
+
+        [TestInitialize()]
+        private void Init()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            productionUnitId = db.ProductionUnits.FirstOrDefault().Id;
+        }
 
         [TestMethod]
         public void TestMethodTempMiniCarp()
@@ -17,7 +26,7 @@ namespace myfoodapp.Hub.Tests
             currentMeasures.waterTempvalue = -10;
             currentMeasures.hydroponicTypeName = "Aquaponics - Carp";
 
-           Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail));
+            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitId, productionUnitOwnerMail));
         }
 
         [TestMethod]
@@ -27,7 +36,7 @@ namespace myfoodapp.Hub.Tests
             currentMeasures.waterTempvalue = 32;
             currentMeasures.hydroponicTypeName = "Aquaponics - Carp";
 
-            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail));
+            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitId, productionUnitOwnerMail));
         }
 
         [TestMethod]
@@ -38,7 +47,7 @@ namespace myfoodapp.Hub.Tests
             currentMeasures.humidityvalue = 90;
             currentMeasures.hydroponicTypeName = "Not applicable";
 
-            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail));
+            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitId, productionUnitOwnerMail));
         }
 
         [TestMethod]
@@ -49,7 +58,7 @@ namespace myfoodapp.Hub.Tests
             currentMeasures.humidityvalue = 95;
             currentMeasures.hydroponicTypeName = "Not applicable";
 
-            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail));
+            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitId, productionUnitOwnerMail));
         }
 
         [TestMethod]
@@ -60,7 +69,7 @@ namespace myfoodapp.Hub.Tests
             currentMeasures.humidityvalue = 99;
             currentMeasures.hydroponicTypeName = "Not applicable";
 
-            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitOwnerMail));
+            Assert.IsFalse(AquaponicsRulesManager.ValidateRules(currentMeasures, productionUnitId, productionUnitOwnerMail));
         }
     }
 }

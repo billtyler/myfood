@@ -40,6 +40,7 @@ namespace myfoodapp.Hub.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            this.Configuration.LazyLoadingEnabled = true;
         }
         
         public static ApplicationDbContext Create()
@@ -68,6 +69,8 @@ namespace myfoodapp.Hub.Models
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.HydroponicType> HydroponicTypes { get; set; }
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Log> Logs { get; set; }
+
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Event> Events { get; set; }
 
     }
 }

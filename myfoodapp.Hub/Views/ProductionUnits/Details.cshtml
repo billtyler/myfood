@@ -31,10 +31,10 @@
                 if (response.PicturePath === null)
                 {
                     $("#ProductionUnitPicture").hide();
-                    $("#PerfChart").hide();  
+                    $("#PerfChart").hide();
                 }
                 else
-                {     
+                {
                     $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
                     $("#ProductionUnitPicture").show();
                     $("#PerfChart").show();
@@ -42,11 +42,15 @@
                 $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
             }
         });
-        
-        Measures.dataSource.read({ id: productionUnitId });
-        AdvancedMeasures.dataSource.read({ id: productionUnitId });
 
-        OptionList.dataSource.read({id: productionUnitId});
+        Measures.dataSource.read({ id: productionUnitId });
+        OptionList.dataSource.read({ id: productionUnitId });
+
+        var myVal = $("#displayManagementBtn").val();
+        if (myVal === 'None')
+        {
+            $("#managementButton").hide();
+        }
     }
 
     function onMeasuresDataBound() {
@@ -55,6 +59,18 @@
         var items = Measures.dataSource.data().length;
         $("#MeasureNoData").toggle(items === 0);
     }
+
+    function onViewEventsClick() {
+        var Measures = $("#Measures").data("kendoChart");
+
+        var items = Measures.dataSource.data().length;
+        $("#MeasureNoData").toggle(items === 0);
+    }
+
+    function onManageUnitClick() {
+        dialog.data("kendoDialog").open();
+    }
+
 </script>
 
 <script type="text/x-kendo-tmpl" id="templateOption">
@@ -64,6 +80,7 @@
 </script>
 
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
+<input type="hidden" id="displayManagementBtn" value="@ViewBag.DisplayManagementBtn" />
 
 <div id="main-section-header" class="row">
     <h2 id="team-efficiency" class="col-xs-3">Production Unit Details</h2>
@@ -72,12 +89,12 @@
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-xs-2">
-        </br>
+        <br/>
         <div>
             <h2 id="AverageMonthlyProduction"></h2>
             <h2 id="AverageMonthlySparedCO2"></h2>
         </div>
-        <br />
+        <br/>
         <h2 id="PioneerCitizenName"></h2>
         <div id="PioneerCitizenNumber"><span></span></div>
         <div id="ProductionUnitType"><span></span></div>
@@ -92,9 +109,25 @@
               .Read(read => read.Action("Option_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
             )
         )
-    </div>
 
-    
+        <br/>
+
+        <div id="managementButton">
+            @(Html.Kendo().Button()
+            .Name("viewEventsButton")
+            .HtmlAttributes(new { type = "button" })
+            .Content("View Events")
+            .Events(ev => ev.Click("onViewEventsClick")))
+
+            @(Html.Kendo().Button()
+            .Name("manageUnitButton")
+            .HtmlAttributes(new { type = "button" })
+            .Content("Manage Unit")
+            .Events(ev => ev.Click("onManageUnitClick")))
+        </div>
+
+</div>
+   
 <div id="measures-container" class="col-xs-10">
     <h3 class="section-header">Last week measures</h3>
     <span id="graphLabel"></span>
@@ -219,6 +252,7 @@
     </div>
 
 </div>
+
 </div>
 
 <style>

@@ -424,6 +424,10 @@
     <Compile Include="Migrations\201612071150184_Init.Designer.cs">
       <DependentUpon>201612071150184_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612121600315_Add-Event.cs" />
+    <Compile Include="Migrations\201612121600315_Add-Event.Designer.cs">
+      <DependentUpon>201612121600315_Add-Event.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2920,6 +2924,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612071150184_Init.resx">
       <DependentUpon>201612071150184_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612121600315_Add-Event.resx">
+      <DependentUpon>201612121600315_Add-Event.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
