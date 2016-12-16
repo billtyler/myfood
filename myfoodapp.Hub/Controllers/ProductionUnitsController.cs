@@ -72,11 +72,48 @@ namespace myfoodapp.Hub.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Update(int id)
         {
-            ViewBag.Title = "Production Unit Detail Page";
+            var currentUser = this.User.Identity.GetUserName();
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
 
-            return View();
+            var db = new ApplicationDbContext();
+            var productionUnitService = new ProductionUnitService(db);
+
+            var currentProductionUnit = db.ProductionUnits.Include("owner.user").Include("options").Where(p => p.Id == id).FirstOrDefault();
+            if (currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser || isAdmin)
+            {
+                var currentProductionUnitViewModel = productionUnitService.One(id);
+                return View(currentProductionUnitViewModel);
+            }
+
+            return Redirect("Home/Index");
+        }
+
+        [HttpPost]
+        [Authorize]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Update(ProductionUnitViewModel model, string returnUrl)
+        {
+            //if (ModelState.IsValid)
+            //{
+                var db = new ApplicationDbContext();
+                var productionUnitService = new ProductionUnitService(db);
+
+                productionUnitService.Update(model);
+            // }
+
+            return Redirect("/ProductionUnits/Details/" + model.Id);
+        }
+
+        public ActionResult Event_Read([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var rslt = db.Events.Where(e => e.productionUnit.Id == id).ToList();
+
+            return Json(rslt.ToDataSourceResult(request));
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
@@ -170,6 +207,16 @@ namespace myfoodapp.Hub.Controllers
                         .OrderBy(e => e.pioneerCitizenNumber);
 
             ViewData["owners"] = owners;
+        }
+
+        public ActionResult HydroponicTypes_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            MeasureService measureService = new MeasureService(db);
+
+            var rslt = db.HydroponicTypes;
+
+            return Json(rslt, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Measures_Read([DataSourceRequest] DataSourceRequest request, int id)

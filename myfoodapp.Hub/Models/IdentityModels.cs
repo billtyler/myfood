@@ -72,5 +72,7 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Event> Events { get; set; }
 
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Recipes> Recipes { get; set; }
+
     }
 }

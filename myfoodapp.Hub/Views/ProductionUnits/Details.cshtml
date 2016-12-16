@@ -87,7 +87,7 @@
 </div>
 
 <div id="productionUnits-grid" class="main-section-content row">
-    <div id="productionUnits-details" class="col-xs-2">
+    <div id="productionUnits-details" class="col-md-2">
         <br/>
         <div>
             <h2 id="AverageMonthlyProduction"></h2>
@@ -110,19 +110,23 @@
         )
 
         <br/>
-
+        
         <div id="managementButton">
-            @(Html.Kendo().Button()
+            <p>
+                @(Html.Kendo().Button()
             .Name("viewEventsButton")
-            .HtmlAttributes(new { type = "button" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
             .Content("View Events")
             .Events(ev => ev.Click("onViewEventsClick")))
-
-            @(Html.Kendo().Button()
+            </p>
+         
+            <p>
+                @(Html.Kendo().Button()
             .Name("manageUnitButton")
-            .HtmlAttributes(new { type = "button" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
             .Content("Manage Unit")
             .Events(ev => ev.Click("onManageUnitClick")))
+            </p>
         </div>
 
 </div>

@@ -20,9 +20,9 @@ namespace myfoodapp.Hub
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            //bundles.Add(new StyleBundle("~/Content/css").Include(
+            //          "~/Content/bootstrap.css",
+            //          "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles").Include(
                     "~/Scripts/kendo/kendo.all.js",

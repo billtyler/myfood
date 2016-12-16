@@ -1,4 +1,113 @@
-﻿<script type="text/javascript">
+﻿@{
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+<style>
+    .column-left {
+        float: left;
+        width: 33%;
+    }
+
+    .column-right {
+        float: right;
+        width: 33%;
+    }
+
+    .column-center {
+        display: inline-block;
+        width: 33%;
+    }
+
+    /* WIDGETS */
+    .widget {
+        margin: 0 0 0px;
+        padding: 0;
+        background-color: #ffffff;
+        border: 1px solid #e7e7e7;
+        border-radius: 3px;
+        height: 380px;
+    }
+
+        .widget div {
+            padding: 0;
+        }
+
+        .widget h3 {
+            font-size: 12px;
+            padding: 8px 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e7e7e7;
+        }
+
+            .widget h3 span {
+                float: right;
+            }
+
+                .widget h3 span:hover {
+                    cursor: pointer;
+                    background-color: #e7e7e7;
+                    border-radius: 20px;
+                }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Open Sans';
+    }
+
+    .maps {
+        color: #35373d;
+        padding-bottom: 1.091em;
+        padding: 15px 0;
+    }
+
+    #OptionList {
+        background: transparent;
+        border-color: transparent;
+        color: #333;
+    }
+
+    .k-listview:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .k-map .k-marker-red-marker {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoMDSM0TTMGvAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAHUlEQVQ4y2M8Iy7OQC5gYqAAjGoe1TyqeVQz5ZoBCogBIhwXVIUAAAAASUVORK5CYII=');
+        width: 10px;
+        height: 10px;
+        margin: -5px 0 0 -5px;
+    }
+
+    .k-map .k-marker-green-marker {
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoMDSQlaMKwiQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAHUlEQVQ4y2OUSFNnIBcwMVAARjWPah7VPKqZcs0AdTwAzRyc6rgAAAAASUVORK5CYII=');
+        width: 10px;
+        height: 10px;
+        margin: -5px 0 0 -5px;
+    }
+
+    .k-tooltip-content {
+        background-color: #018001;
+        stroke: black;
+    }
+
+    .k-widget.k-tooltip {
+        background-color: #018001;
+        stroke: black;
+    }
+
+    .k-loading-mask {
+        opacity: 0;
+    }
+</style>
+
+<link href="~/Content/lightbox/lightbox.css" rel="stylesheet" />
+
+@*<script src="~/Scripts/jquery-3.1.1.js"></script>*@
+<script src="~/Scripts/lightbox/lightbox.js"></script>
+
+<script type="text/javascript">
     window.onload = function onLoad(e) {
 
         var OptionList = $("#OptionList").data("kendoListView");
@@ -9,7 +118,7 @@
             url: "@Url.Action("GetNetworkStats", "InteractiveMap")",
             dataType: "json",
             type: "POST",
-            success: function (response) {
+            success: function(response) {
                 $("#ProductionUnitNumber").text(response.ProductionUnitNumber);
                 $("#TotalMonthlyProduction").text(response.TotalMonthlyProduction + 'kg');
                 $("#TotalMonthlySparedCO2").text(response.TotalMonthlySparedCO2 + 'kg');
@@ -20,7 +129,7 @@
             url: "@Url.Action("GetRandomProductionUnitDetail", "InteractiveMap")",
             dataType: "json",
             type: "POST",
-            success: function (response) {
+            success: function(response) {
                 $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
                 $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
                 $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
@@ -32,21 +141,25 @@
 
                 OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
 
-                if (response.PicturePath === null)
-                {
+                if (response.PicturePath === null) {
+                    $("#ProductionUnitPictureLink").hide();
                     $("#ProductionUnitPicture").hide();
                     $("#PerfChart").hide();
-                }
-                else
-                {
+                } else {
+                    $("#ProductionUnitPictureLink").attr("href", "/Content/Pictures/" + response.PicturePath);
                     $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
+                    $("#ProductionUnitPictureLink").show();
                     $("#ProductionUnitPicture").show();
                     $("#PerfChart").show();
-                }           
+                }
             }
-    });
+        });
 
-}
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true
+        });
+    }
 
     function onShow(e) {
 
@@ -59,27 +172,27 @@
             url: "@Url.Action("GetProductionUnitDetail", "InteractiveMap")",
             dataType: "json",
             data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
-        type: "POST",
-        success: function (response) {
-            $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
-            $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
-            $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
-            $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
-            $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
+            type: "POST",
+            success: function(response) {
+                $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
+                $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
+                $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
+                $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+                $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
 
-            if (response.PicturePath === null)
-            {
-                $("#ProductionUnitPicture").hide();
-                $("#PerfChart").hide();
+                if (response.PicturePath === null) {
+                    $("#ProductionUnitPictureLink").hide();
+                    $("#ProductionUnitPicture").hide();
+                    $("#PerfChart").hide();
+                } else {
+                    $("#ProductionUnitPictureLink").attr("href", "/Content/Pictures/" + response.PicturePath);
+                    $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
+                    $("#ProductionUnitPictureLink").show();
+                    $("#ProductionUnitPicture").show();
+                    $("#PerfChart").show();
+                }
             }
-            else
-            {
-                $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
-                $("#ProductionUnitPicture").show();
-                $("#PerfChart").show();
-            }           
-        }
-    });
+        });
 
         OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
     }
@@ -103,15 +216,12 @@
 
 </script>
 
-@{
-    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
-}
-
 <script type="text/x-kendo-tmpl" id="templateOption">
     <div class="option">
         <h2>&bull; #:name#</h2>
     </div>
 </script>
+
 
 <div id="pioneer-network" style="height:100%" class="main-section-content">
     <div id="map-wrapper" class="row">
@@ -119,7 +229,9 @@
             <div class="widget">
                 <h3><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp; Picture</h3>
                 <div style="margin: 25px;">
-                    <img id="ProductionUnitPicture" style='height: 100%; width: 100%; object-fit: contain'/>
+                    <a id="ProductionUnitPictureLink" class="example-image-link" data-lightbox="example-1">
+                        <img class="example-image" id="ProductionUnitPicture" alt="image-1" style='height: 100%; width: 100%; object-fit: contain' />
+                    </a>
                 </div>
             </div>
         </div>
@@ -128,7 +240,6 @@
                 <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; Pioneer Citizen Map</h3>
                 <div class="maps">
                     @model myfoodapp.Hub.Models.Map
-
                     @(Html.Kendo().Map()
                     .Name(Model.Name)
                     .Center(Model.CenterLatitude, Model.CenterLongitude)
@@ -175,15 +286,15 @@
                 <h3><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; Network Info</h3>
                 <div style="margin: 25px;">
                     <div class="column-left">
-                        <h2 style="margin:7px;text-align: center;">TOTAL<br/>CONNECTED <br/>PROD. UNITS </h2>
+                        <h2 style="margin:7px;text-align: center;">TOTAL<br />CONNECTED <br />PROD. UNITS </h2>
                         <h1 id="ProductionUnitNumber" style="font-size:xx-large;text-align: center;"></h1>
                     </div>
                     <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                        <h2 style="margin:7px;text-align: center;">TOTAL<br/>EST. PROD. <br/>PER MONTH</h2>
+                        <h2 style="margin:7px;text-align: center;">TOTAL<br />EST. PROD. <br />PER MONTH</h2>
                         <h1 id="TotalMonthlyProduction" style="font-size:xx-large;text-align: center;"></h1>
                     </div>
                     <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                        <h2 style="margin:7px;text-align: center;">TOTAL<br/>CO2 SAVED<br/>PER MONTH</h2>
+                        <h2 style="margin:7px;text-align: center;">TOTAL<br />CO2 SAVED<br />PER MONTH</h2>
                         <h1 id="TotalMonthlySparedCO2" style="font-size:xx-large;text-align: center;"></h1>
                     </div>
                 </div>
@@ -215,103 +326,11 @@
                     )
                 </div>
             </div>
-       </div>
-    </div>   
+        </div>
+    </div>
     <div style="text-align: center">
         <h4>.:myfoodapphub is licensed under a <a style="color:forestgreen" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Attribution-NonCommercial-ShareAlike 4.0 International</a> licence:.</h4>
     </div>
 </div>
-
-<style>
-
-.column-left{ float: left; width: 33%; }
-.column-right{ float: right; width: 33%; }
-.column-center{ display: inline-block; width: 33%; }
-
-    /* WIDGETS */
-        .widget {
-            margin: 0 0 0px;
-            padding: 0;
-            background-color: #ffffff;
-            border: 1px solid #e7e7e7;
-            border-radius: 3px;
-            height:380px;
-        }
-
-        .widget div {
-            padding: 0;
-        }
-
-        .widget h3 {
-            font-size: 12px;
-            padding: 8px 10px;
-            text-transform: uppercase;
-            border-bottom: 1px solid #e7e7e7;
-        }
-
-        .widget h3 span {
-            float: right;
-        }
-
-        .widget h3 span:hover {
-            cursor: pointer;
-            background-color: #e7e7e7;
-            border-radius: 20px;
-        }
-
-    h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans';
-}
-    .maps{
-    color: #35373d;
-    padding-bottom: 1.091em;
-    padding: 15px 0;
-}
-
-    #OptionList {
-        background: transparent;
-        border-color: transparent;
-        color: #333      
-    }
-
-    .k-listview:after {
-        content: ".";
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-    }
-
-    .k-map .k-marker-red-marker {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoMDSM0TTMGvAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAHUlEQVQ4y2M8Iy7OQC5gYqAAjGoe1TyqeVQz5ZoBCogBIhwXVIUAAAAASUVORK5CYII=');
-        width: 10px;
-        height: 10px;
-        margin: -5px 0 0 -5px;
-    }
-
-    .k-map .k-marker-green-marker {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoMDSQlaMKwiQAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAHUlEQVQ4y2OUSFNnIBcwMVAARjWPah7VPKqZcs0AdTwAzRyc6rgAAAAASUVORK5CYII=');
-        width: 10px;
-        height: 10px;
-        margin: -5px 0 0 -5px;
-    }
-
-    .k-tooltip-content {
-        background-color:#018001;
-        stroke:black;  
-    }
-
-    .k-widget.k-tooltip {
-        background-color:#018001;
-        stroke:black;  
-    }
-
-    .k-loading-mask {
-        opacity: 0;
-    }
-
-</style>
-
-
 
 

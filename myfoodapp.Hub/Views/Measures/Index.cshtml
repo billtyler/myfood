@@ -4,18 +4,96 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@functions {
+    private DateTime getThisWeekMonday()
+    {
+        DateTime input = DateTime.Now;
+        int delta = DayOfWeek.Monday - input.DayOfWeek;
+        DateTime monday = input.AddDays(delta);
+        return monday;
+    }}
 
+<script>
+    $(function () {
+                    $(".toggleButton").kendoButton({
+
+                    });
+
+                    kendo.init("#buttonContainer");
+
+                    $(".toggleButton").click(function () {
+                        $(".toggleButton").removeClass("k-state-active");
+                        $(this).addClass("k-state-active");
+                        var filteredDate="";
+                        if ($(this).attr("id") === "thisWeek") {
+                            filteredDate = getThisWeekMonday();
+                        }
+                        else if ($(this).attr("id") === "lastMonth") {
+                            filteredDate = getThisMonthFirstDay();
+                        }
+                        filterGrid(filteredDate);
+                    });
+
+                    function getThisMonthFirstDay() {
+                        var curr = new Date;
+                        var firstDay = new Date(curr.getFullYear(), curr.getMonth(), 1).toUTCString();
+                        return firstDay;
+                    }
+
+                    function getThisWeekMonday() {
+                        var curr = new Date;
+                        var first = curr.getDate() - curr.getDay();
+                        first = first + 2;
+                        var monday = new Date(curr.getFullYear(), curr.getMonth(), first).toUTCString();
+                        return monday;
+                    }
+
+                    function filterGrid(filteredDate) {
+                        var gridListFilter = { filters: [] };
+                        var gridDataSource = $("#grid").data("kendoGrid").dataSource;
+
+                        gridListFilter.logic = "and";   // a different logic 'or' can be selected
+                        if ($.trim(filteredDate).length > 0) {
+                            gridListFilter.filters.push({ field: "captureDate", operator: "gte", value: new Date(filteredDate) });
+                        }
+
+                        gridDataSource.filter(gridListFilter);
+                        gridDataSource.read();
+                    }
+                });
+</script>
+
+<style>
+    .timeline-section p {
+        line-height: 70px;
+        margin: 10px;
+    }
+
+        .timeline-section p .k-button {
+            height: 50px;
+        }
+</style>
 
 <div id="main-section-header" class="row">
-    <h2 id="team-efficiency" class="col-xs-3">Measures Monitoring</h2>
-    <div style="clear:both;"></div>
+    <h2 id="team-efficiency">Measures Monitoring</h2>
 </div>
 
 <div id="measure-grid" class="main-section-content row">
-    <div id="message-details" class="col-xs-2">
-        <h3 class="section-header">Manage Measures from sensors</h3>
+    <div id="message-details" class="col-md-2">
+        <div class="timeline-section">
+            <h3 class="section-header">Manage Measures from sensors</h3>
+            <p>
+                <button type="button" id="thisWeek" name="thisWeek" class="toggleButton k-state-active btn-block">This Week</button>
+            </p>
+            <p>
+                <button type="button" id="lastMonth" name="lastMonth" class="toggleButton btn-block">Last Month</button>
+            </p>
+            <p>
+                <button type="button" id="all" name="all" class="toggleButton btn-block">All</button>
+            </p>
+        </div>
     </div>
-    <div id="grid-container" class="col-xs-10">
+    <div id="grid-container" class="col-md-10">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.MeasureViewModel>()
         .Name("grid")
         .Columns(columns =>
@@ -32,7 +110,7 @@
         //    toolbar.Create();
         //    toolbar.Save();
         //})
-        .HtmlAttributes(new { style = "height: 700px;" })
+        .HtmlAttributes(new { style = "height: 550px;" })
         .Editable(editable => editable.Mode(GridEditMode.InCell))
         .Navigatable()
         .Sortable()
@@ -47,6 +125,7 @@
         .DataSource(dataSource => dataSource
             .Ajax()
             .Batch(true)
+            .Filter(f => f.Add(a => a.captureDate).IsGreaterThan(getThisWeekMonday()))
             .PageSize(20)
             .ServerOperation(false)
             .Model(model =>

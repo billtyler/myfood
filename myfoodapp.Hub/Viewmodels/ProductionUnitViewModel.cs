@@ -14,6 +14,8 @@ namespace myfoodapp.Hub.Models
         public string reference { get; set; }
         public int productionUnitTypeId { get; set; }
         public ProductionUnitTypeViewModel productionUnitType { get; set; }
+        public int hydroponicTypeId { get; set; }
+        public HydroponicTypeViewModel hydroponicType { get; set; }
         public double locationLatitude { get; set; }
         public double locationLongitude { get; set; }
         public String info { get; set; }

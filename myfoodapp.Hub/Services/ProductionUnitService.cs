@@ -39,6 +39,14 @@ namespace myfoodapp.Hub.Services
                     Id = pu.productionUnitType.Id,
                     name = pu.productionUnitType.name
                 },
+
+                hydroponicTypeId = pu.hydroponicType.Id,
+                hydroponicType = new HydroponicTypeViewModel()
+                {
+                    Id = pu.productionUnitType.Id,
+                    name = pu.productionUnitType.name
+                },
+
                 ownerId = pu.owner.Id,
                 owner = new OwnerViewModel()
                 {
@@ -55,6 +63,51 @@ namespace myfoodapp.Hub.Services
         public IEnumerable<ProductionUnitViewModel> Read()
         {
             return GetAll();
+        }
+        public ProductionUnitViewModel One(int productionUnitId)
+        {
+            IList<ProductionUnitViewModel> result = new List<ProductionUnitViewModel>();
+
+            result = entities.ProductionUnits.Include(m => m.productionUnitType)
+                                             .Include(m => m.owner)
+                                             .Include(m => m.hydroponicType)
+                                             .Where(p => p.Id == productionUnitId).Select(pu => new ProductionUnitViewModel
+            {
+                Id = pu.Id,
+                startDate = pu.startDate,
+                locationLatitude = pu.locationLatitude,
+                locationLongitude = pu.locationLongitude,
+                version = pu.version,
+                info = pu.info,
+                options = pu.options,
+                reference = pu.reference,
+                picturePath = pu.picturePath,
+
+                productionUnitTypeId = pu.productionUnitType.Id,
+                productionUnitType = new ProductionUnitTypeViewModel()
+                {
+                    Id = pu.productionUnitType.Id,
+                    name = pu.productionUnitType.name
+                },
+
+                hydroponicTypeId = pu.hydroponicType.Id,
+                hydroponicType = new HydroponicTypeViewModel()
+                {
+                    Id = pu.hydroponicType.Id,
+                    name = pu.hydroponicType.name
+                },
+
+                ownerId = pu.owner.Id,
+                owner = new OwnerViewModel()
+                {
+                    Id = pu.owner.Id,
+                    pioneerCitizenName = pu.owner.pioneerCitizenName,
+                    pioneerCitizenNumber = pu.owner.pioneerCitizenNumber
+                }
+
+            }).ToList();
+
+            return result.FirstOrDefault();
         }
 
         public void Create(ProductionUnitViewModel productionUnit)
@@ -77,6 +130,12 @@ namespace myfoodapp.Hub.Services
                 entity.productionUnitType.Id = productionUnit.productionUnitTypeId;
             }
 
+            if (entity.hydroponicType == null)
+            {
+                entity.hydroponicType = new HydroponicType();
+                entity.hydroponicType.Id = productionUnit.hydroponicTypeId;
+            }
+
             if (entity.owner == null)
             {
                 entity.owner = new ProductionUnitOwner();
@@ -93,7 +152,8 @@ namespace myfoodapp.Hub.Services
         {
             ProductionUnit target = new ProductionUnit();
             target = entities.ProductionUnits.Where(p => p.Id == productionUnit.Id).Include(m => m.productionUnitType)
-                                                                                   .Include(m => m.owner).FirstOrDefault();
+                                                                                   .Include(m => m.owner)
+                                                                                   .Include(m => m.hydroponicType).FirstOrDefault();
 
             if (target != null)
             {
@@ -102,7 +162,7 @@ namespace myfoodapp.Hub.Services
                 target.locationLongitude = productionUnit.locationLongitude;
                 target.version = productionUnit.version;
                 target.info = productionUnit.info;
-                target.options = productionUnit.options;
+               // target.options = productionUnit.options;
                 target.reference = productionUnit.reference;
                 target.picturePath = productionUnit.picturePath;
 
@@ -111,13 +171,18 @@ namespace myfoodapp.Hub.Services
 
                 target.productionUnitType = currentProductionUnitType;
 
-                ProductionUnitOwner currentProductionUnitOwner = new ProductionUnitOwner();
-                currentProductionUnitOwner = entities.ProductionUnitOwners.Where(p => p.Id == productionUnit.ownerId).FirstOrDefault();
+                HydroponicType currentHydroponicType = new HydroponicType();
+                currentHydroponicType = entities.HydroponicTypes.Where(p => p.Id == productionUnit.hydroponicTypeId).FirstOrDefault();
 
-                target.owner = currentProductionUnitOwner;
-            }      
+                target.hydroponicType = currentHydroponicType;
 
-                entities.SaveChanges();  
+                //ProductionUnitOwner currentProductionUnitOwner = new ProductionUnitOwner();
+                //currentProductionUnitOwner = entities.ProductionUnitOwners.Where(p => p.Id == productionUnit.ownerId).FirstOrDefault();
+
+                //target.owner = currentProductionUnitOwner;
+            }
+
+                entities.SaveChanges();                 
         }
 
         public void Destroy(ProductionUnitViewModel message)

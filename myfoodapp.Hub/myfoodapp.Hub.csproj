@@ -404,11 +404,16 @@
     <Compile Include="Migrations\201612121600315_Add-Event.Designer.cs">
       <DependentUpon>201612121600315_Add-Event.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612132052268_Add-Recipe.cs" />
+    <Compile Include="Migrations\201612132052268_Add-Recipe.Designer.cs">
+      <DependentUpon>201612132052268_Add-Recipe.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Map.cs" />
+    <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\MeasureModel.cs" />
     <Compile Include="Models\ProductionUnitModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
@@ -422,6 +427,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
     <Compile Include="Viewmodels\OwnerViewModel.cs" />
+    <Compile Include="Viewmodels\HydroponicTypeViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitTypeViewModel.cs" />
     <Compile Include="Viewmodels\MessageTypeViewModel.cs" />
     <Compile Include="Viewmodels\MeasureViewModel.cs" />
@@ -1102,6 +1108,7 @@
     <Content Include="Content\kendo\Uniform\sprite_2x.png" />
     <Content Include="Content\kendo\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\Uniform\sprite_kpi_2x.png" />
+    <Content Include="Content\lightbox\lightbox.css" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\Pictures\BivilleFamily22.JPG" />
     <Content Include="Content\Pictures\BoisColombesCity.jpg" />
@@ -2111,6 +2118,7 @@
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-TW.min.js" />
     <Content Include="Scripts\kendo\pako_deflate.min.js" />
+    <Content Include="Scripts\lightbox\lightbox.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -2905,6 +2913,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612121600315_Add-Event.resx">
       <DependentUpon>201612121600315_Add-Event.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612132052268_Add-Recipe.resx">
+      <DependentUpon>201612132052268_Add-Recipe.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

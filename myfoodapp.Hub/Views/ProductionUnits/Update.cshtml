@@ -1,39 +1,65 @@
 ﻿@using myfoodapp.Hub.Models
-@model UserViewModel
+@model ProductionUnitViewModel
 <div id="center">
     <div class="row">
         <div class="col-md-8">
             <section id="loginForm">
-                @using (Html.BeginForm("Update", "MyInfo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("Update", "ProductionUnits", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.locationLatitude)
+                    @Html.HiddenFor(model => model.locationLongitude)
+                    @Html.HiddenFor(model => model.options)
+                    @Html.HiddenFor(model => model.picturePath)
+                   
+                    @Html.HiddenFor(model => model.productionUnitTypeId)
+                    @Html.HiddenFor(model => model.ownerId)
+                    @Html.HiddenFor(model => model.version)
+                    @Html.HiddenFor(model => model.startDate)
+                    @Html.HiddenFor(model => model.reference)
+
                         @Html.AntiForgeryToken()
-                        <h1>Change User Settings</h1>
+                        <h1>Change Production Unit Settings</h1>
                         <hr />
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                            @Html.LabelFor(m => m.info, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                @(Html.Kendo().TextBoxFor(model => model.info)
+                                .Name("info")
+                                .HtmlAttributes(new {@readonly = "true" })
+                                 )
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
+                            @Html.LabelFor(m => m.owner, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
-                                @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+                                @(Html.Kendo().TextBoxFor(model => model.owner.pioneerCitizenName)
+                                .HtmlAttributes(new { @readonly = "true" })
+                                )
                             </div>
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
+                            @Html.LabelFor(m => m.hydroponicType, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
-                                @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
-                            </div>
+                                @(Html.Kendo().DropDownListFor(m => m.hydroponicTypeId)
+                                  .DataTextField("name")
+                                  .DataValueField("Id")
+                                  .AutoBind(true)
+                                  .DataSource(source =>
+                                  {
+                                      source.Read(read =>
+                                      {
+                                          read.Action("HydroponicTypes_Read", "ProductionUnits");
+                                      });
+                                  })
+                                )
                         </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Save" class="btn btn-default" />
+                                <input type="submit" value="Save & Close" class="btn btn-default" />
                             </div>
                         </div>
                     }

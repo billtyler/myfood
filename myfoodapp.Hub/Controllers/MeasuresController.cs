@@ -67,9 +67,9 @@ namespace myfoodapp.Hub.Controllers
 
             if (messages != null && ModelState.IsValid)
             {
-                foreach (var product in messages)
+                foreach (var measure in messages)
                 {
-                    measureService.Update(product);
+                    measureService.Update(measure);
                 }
             }
 
