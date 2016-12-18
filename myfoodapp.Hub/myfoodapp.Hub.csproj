@@ -383,6 +383,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Business\AquaponicsRulesManager.cs" />
+    <Compile Include="Business\SensorValueSet.cs" />
     <Compile Include="Common\MailManager.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -396,17 +397,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612071150184_Init.cs" />
-    <Compile Include="Migrations\201612071150184_Init.Designer.cs">
-      <DependentUpon>201612071150184_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612121600315_Add-Event.cs" />
-    <Compile Include="Migrations\201612121600315_Add-Event.Designer.cs">
-      <DependentUpon>201612121600315_Add-Event.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612132052268_Add-Recipe.cs" />
-    <Compile Include="Migrations\201612132052268_Add-Recipe.Designer.cs">
-      <DependentUpon>201612132052268_Add-Recipe.cs</DependentUpon>
+    <Compile Include="Migrations\201612181635235_Init.cs" />
+    <Compile Include="Migrations\201612181635235_Init.Designer.cs">
+      <DependentUpon>201612181635235_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -1109,6 +1102,7 @@
     <Content Include="Content\kendo\Uniform\sprite_kpi.png" />
     <Content Include="Content\kendo\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\lightbox\lightbox.css" />
+    <Content Include="Content\logoMyfood.png" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\Pictures\BivilleFamily22.JPG" />
     <Content Include="Content\Pictures\BoisColombesCity.jpg" />
@@ -2908,14 +2902,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612071150184_Init.resx">
-      <DependentUpon>201612071150184_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612121600315_Add-Event.resx">
-      <DependentUpon>201612121600315_Add-Event.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612132052268_Add-Recipe.resx">
-      <DependentUpon>201612132052268_Add-Recipe.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612181635235_Init.resx">
+      <DependentUpon>201612181635235_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

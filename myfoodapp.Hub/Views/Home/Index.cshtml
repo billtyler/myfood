@@ -1,6 +1,10 @@
 ﻿<script type="text/javascript">
     window.onload = function onLoad(e) {
 
+        var OptionList = $("#OptionList").data("kendoListView");
+        var currentProductionUnitLat;
+        var currentProductionUnitLong;
+
         $.ajax({
             url: "@Url.Action("GetNetworkStats", "Home")",
             dataType: "json",
@@ -10,15 +14,54 @@
             $("#TotalMonthlyProduction").text('TOTAL EST. PROD. PER MONTH: ' + response.TotalMonthlyProduction + 'kg');
             $("#TotalMonthlySparedCO2").text('TOTAL CO2 NOT RELEASED PER MONTH: ' + response.TotalMonthlySparedCO2 + 'kg');
         }
-    });
+        });
+
+        $.ajax({
+            url: "@Url.Action("GetRandomProductionUnitDetail", "Home")",
+            dataType: "json",
+            type: "POST",
+            success: function (response) {
+            $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
+            $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
+            $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
+            $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+            $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
+
+            $("#CurrentPhValue").text(response.CurrentPhValue);
+            $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
+            $("#AverageHourPhValue").text(response.AverageHourPhValue);
+            $("#AverageDayPhValue").text(response.AverageDayPhValue);
+            $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
+
+            $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
+            $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
+            $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
+            $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
+            $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
+                
+            $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
+            $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
+            $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
+            $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
+            $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
+
+            $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
+            $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
+            $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
+            $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
+            $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
+
+            currentProductionUnitLat = response.LocationLatitude;
+            currentProductionUnitLong = response.LocationLongitude;
+
+            OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
+
+        }
+        });
+
     }
 
     function onShow(e) {
-
-        var PHMeasures = $("#PHMeasures").data("kendoChart");
-        var TempMeasures = $("#TempMeasures").data("kendoChart");
-        var ORPMeasures = $("#ORPMeasures").data("kendoChart");
-        var DissolvedOxyMeasures = $("#DissolvedOxyMeasures").data("kendoChart");
 
         var OptionList = $("#OptionList").data("kendoListView");
 
@@ -26,66 +69,44 @@
         var currentProductionUnitLong = this.marker.options.location[1];
 
         $.ajax({
-            url: "@Url.Action("GetProductionUnitDetail", "Home")",
-            dataType: "json",
-            data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
-        type: "POST",
-        success: function (response) {
-            $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
-            $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
-            $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
-            $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
-            $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));            
+                url: "@Url.Action("GetProductionUnitDetail", "Home")",
+                dataType: "json",
+                data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
+                type: "POST",
+                success: function (response) {
+                $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
+                $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
+                $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
+                $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+                $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
 
-            if (response.PicturePath === null)
-            {
-                $("#ProductionUnitPicture").hide();
-                $("#PerfChart").hide();  
-            }
-            else
-            {     
-                $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
-                $("#ProductionUnitPicture").show();
-                $("#PerfChart").show();
-            }
-            $("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
-        }
-    });
+                $("#CurrentPhValue").text(response.CurrentPhValue);
+                $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
+                $("#AverageHourPhValue").text(response.AverageHourPhValue);
+                $("#AverageDayPhValue").text(response.AverageDayPhValue);
+                $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
+
+                $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
+                $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
+                $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
+                $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
+                $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
+                
+                $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
+                $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
+                $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
+                $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
+                $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
+
+                $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
+                $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
+                $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
+                $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
+                $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
+                }
+            });
         
-        PHMeasures.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
-        TempMeasures.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
-        ORPMeasures.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
-        DissolvedOxyMeasures.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
-
         OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
-    }
-
-    function onPHMeasuresDataBound() {
-        var PHMeasures = $("#PHMeasures").data("kendoChart");
-
-        var items = PHMeasures.dataSource.data().length;
-        $("#PHMeasureNoData").toggle(items === 0);
-    }
-
-    function onTempMeasuresDataBound() {
-        var TempMeasures = $("#TempMeasures").data("kendoChart");
-
-        var items = TempMeasures.dataSource.data().length;
-        $("#TempMeasureNoData").toggle(items === 0);
-    }
-
-    function onORPMeasuresDataBound() {
-        var ORPMeasures = $("#ORPMeasures").data("kendoChart");
-
-        var items = ORPMeasures.dataSource.data().length;
-        $("#ORPMeasureNoData").toggle(items === 0);
-    }
-
-    function onDissolvedOxyMeasuresDataBound() {
-        var DissolvedOxyMeasures = $("#DissolvedOxyMeasures").data("kendoChart");
-
-        var items = DissolvedOxyMeasures.dataSource.data().length;
-        $("#DissolvedOxyNoData").toggle(items === 0);
     }
 
     function onShapeCreated(e) {
@@ -105,7 +126,6 @@
         e.shape.options.set("fill.opacity", 0.7);
     }
 
-
 </script>
 
 <script type="text/x-kendo-tmpl" id="templateOption">
@@ -115,13 +135,13 @@
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 id="title-pioneer" class="col-xs-3">Pioneer Citizen Network Preview</h2>
+    <h2 id="title-pioneer" class="col-md-3">Pioneer Citizen Network Preview</h2>
     <div style="clear:both;"></div>
 </div>
 
 <div id="pioneer-network" class="main-section-content row">
     <div id="map-wrapper" class="row">
-        <div id="map-details" class="col-xs-4">
+        <div id="map-details" class="col-md-4">
             <div>
                 <h2 id="ProductionUnitNumber"></h2>
                 <h2 id="TotalMonthlyProduction"></h2>
@@ -143,7 +163,7 @@
             )
             )
         </div>
-        <div id="map-container" class="col-xs-8">
+        <div id="map-container" class="col-md-8">
         @model myfoodapp.Hub.Models.Map
 
          @(Html.Kendo().Map()
@@ -186,180 +206,98 @@
 </div>
 
 <div id="statsContainer" class="row">
-        <div id="pHContainer" class="col-xs-3 stats-graph">
-            <h3 class="section-header">pH - Last 24h</h3>
-            <span id="pHLabel"></span>
+        <div id="pHContainer" class="col-md-3">
+            <h3 class="section-header" style="text-align:center;font-size:larger">pH</h3>
             <div class="sparkline-container">
-@(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
-            .Name("PHMeasures")
-            .Theme("metro")
-            .AutoBind(false)
-            .Legend(legend => legend
-                .Visible(false)
-                .Position(ChartLegendPosition.Top)
-            )
-            .Events(e => e.DataBound("onPHMeasuresDataBound"))
-            .ChartArea(ch => ch.Background("#eeeeee"))
-            .DataSource(ds => ds
-                .Read(read => read.Action("PHMeasure_Read", "Home")))
-                            .Series(series =>
-                            {
-                                series.Line(model => model.value, categoryExpression: model => model.captureDate).Color("#018001") ;
-                            })
-            .HtmlAttributes(new { @style = "height: 100px;" })
-            .CategoryAxis(axis => axis
-                .Date()
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Width(0))
-                .Labels(l => l.Visible(false))
-            )
-            .ValueAxis(axis => axis.Numeric()
-                .MajorUnit(1)
-                .MajorTicks(x => x.Visible(false))
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Visible(false))
-                .Labels(l => l.Visible(false))
-            )
-            .Tooltip(tooltip => tooltip
-                .Visible(true)
-                .Template("#= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#"))
- )
-                <div id="PHMeasureNoData" class="overlay">
-                    <div>No data available</div>
+                <div style="margin: 3px;">
+                    <div class="column-left">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                        <h1 id="CurrentPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="CurrentPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                        <h1 id="AverageHourPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                        <h1 id="AverageDayPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="LastDayPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
+                </div>    
+            </div>
+        </div>
+        <div id = "WaterTempContainer" class="col-md-3">
+            <h3 class="section-header" style="text-align:center;font-size:larger">Water Temperature (°C)</h3>
+            <div class="sparkline-container">
+                <div style="margin: 3px;">
+                    <div class="column-left">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                        <h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                        <h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                        <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div id="AirTempContainer" class="col-md-3">
+            <h3 class="section-header" style="text-align:center;font-size:larger">Air Temperature (°C)</h3>
+            <div class="sparkline-container">
+                <div style="margin: 3px;">
+                    <div class="column-left">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                        <h1 id="CurrentAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="CurrentAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                        <h1 id="AverageHourAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                        <h1 id="AverageDayAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="LastDayAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id = "TempContainer" class="col-xs-3 stats-graph">
-            <h3 class="section-header">Temperature - Last 24h</h3>
-            <span id = "TemperatureLabel"></span>
-            <div class="sparkline-container">
-@(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
-            .Name("TempMeasures")
-            .Theme("metro")
-            .AutoBind(false)
-            .Legend(legend => legend
-                .Visible(false)
-                .Position(ChartLegendPosition.Top)
-            )
-            .Events(e => e.DataBound("onTempMeasuresDataBound"))
-            .ChartArea(ch => ch.Background("#eeeeee"))
-            .DataSource(ds => ds
-                .Read(read => read.Action("TempMeasure_Read", "Home")))
-                            .Series(series =>
-                            {
-                                series.Line(model => model.value, categoryExpression: model => model.captureDate).Color("#018001");
-                            })
-            .HtmlAttributes(new { @style = "height: 100px;" })
-            .CategoryAxis(axis => axis
-                .Date()
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Width(0))
-                .Labels(l => l.Visible(false))
-            )
-            .ValueAxis(axis => axis.Numeric()
-                .MajorUnit(1)
-                .MajorTicks(x => x.Visible(false))
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Visible(false))
-                .Labels(l => l.Visible(false).Format("{0}°C"))
-            )
-            .Tooltip(tooltip => tooltip
-                .Visible(true)
-                .Template("#= kendo.toString(category, 't')# : #=kendo.format('{0}°C', data.value)#"))
-)
-                <div id="TempMeasureNoData" class="overlay"><div>No data available</div></div>
+    <div id="HumidityContainer" class="col-md-3">
+        <h3 class="section-header" style="text-align:center;font-size:larger">Humidity (%)</h3>
+        <div class="sparkline-container">
+            <div style="margin: 3px;">
+                <div class="column-left">
+                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                    <h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                    <h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                </div>
+                <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                    <h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                </div>
+                <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                    <h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                    <h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                </div>
             </div>
         </div>
-        <div id="ORPContainer" class="col-xs-3 stats-graph">
-            <h3 class="section-header">ORP - Last 24h</h3>
-            <span id="ORPLabel"></span>
-            <div class="sparkline-container">
-@(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
-            .Name("ORPMeasures")
-            .Theme("metro")
-            .AutoBind(false)
-            .Legend(legend => legend
-                .Visible(false)
-                .Position(ChartLegendPosition.Top)
-            )
-            .Events(e => e.DataBound("onORPMeasuresDataBound"))
-            .ChartArea(ch => ch.Background("#eeeeee"))
-            .DataSource(ds => ds
-                .Read(read => read.Action("ORPMeasure_Read", "Home")))
-                            .Series(series =>
-                            {
-                                series.Line(model => model.value, categoryExpression: model => model.captureDate).Color("#018001");
-                            })
-            .HtmlAttributes(new { @style = "height: 100px;" })
-            .CategoryAxis(axis => axis
-                .Date()
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Width(0))
-                .Labels(l => l.Visible(false))
-            )
-            .ValueAxis(axis => axis.Numeric()
-                .MajorUnit(1)
-                .MajorTicks(x => x.Visible(false))
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Visible(false))
-                .Labels(l => l.Visible(false).Format("{0}mV"))
-            )
-            .Tooltip(tooltip => tooltip
-                .Visible(true)
-                .Template("#= kendo.toString(category, 't')# : #=kendo.format('{0}mV', data.value)#"))
-)
-                <div id="ORPMeasureNoData" class="overlay"><div>No data available</div></div>
-            </div>
-        </div>
-        <div id="DissolvedOxyContainer" class="col-xs-3 stats-graph">
-            <h3 class="section-header">Dissolved Oxygen - Last 24h</h3>
-            <span id="DissolvedOxyLabel"></span>
-            <div class="sparkline-container">
-@(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
-            .Name("DissolvedOxyMeasures")
-            .Theme("metro")
-            .AutoBind(false)
-            .Legend(legend => legend
-                .Visible(false)
-                .Position(ChartLegendPosition.Top)
-            )
-            .Events(e => e.DataBound("onDissolvedOxyMeasuresDataBound"))
-            .ChartArea(ch => ch.Background("#eeeeee"))
-            .DataSource(ds => ds
-                .Read(read => read.Action("DissolvedOxyMeasure_Read", "Home")))
-                            .Series(series =>
-                            {
-                                series.Line(model => model.value, categoryExpression: model => model.captureDate).Color("#018001");
-                            })
-            .HtmlAttributes(new { @style = "height: 100px;" })
-            .CategoryAxis(axis => axis
-                .Date()
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Width(0))
-                .Labels(l => l.Visible(false))
-            )
-            .ValueAxis(axis => axis.Numeric()
-                .MajorUnit(1)
-                .MajorTicks(x => x.Visible(false))
-                .MajorGridLines(m => m.Visible(false))
-                .Line(l => l.Visible(false))
-                .Labels(l => l.Visible(false).Format("{0}%"))
-            )
-            .Tooltip(tooltip => tooltip
-                .Visible(true)
-                .Template("#= kendo.toString(category, 't')# : #=kendo.format('{0}mg/L', data.value)#"))
-)
-                <div id="DissolvedOxyNoData" class="overlay"><div>No data available</div></div>
-            </div>
-        </div>
+    </div>
 </div>
 
 <div id="performanceHealthAnalysis">
-    <div id="picturesContainer" class="col-xs-4">
-        <h3 class="section-header">On-site Pictures</h3>
-        <img id="ProductionUnitPicture" width="120" height="80"/>
-    </div>
-    <div id="performanceHealthAnalysisContainer" class="col-xs-4">
+    <div id="performanceHealthAnalysisContainer" class="col-md-4">
         <h3 class="section-header">Performance and Health Analysis</h3> 
         @*@(Html.Kendo().Chart()
             .Name("PerfChart")
@@ -396,7 +334,24 @@
     </div>
 </div>
 
+</div>
+
 <style>
+
+    .column-left {
+        float: left;
+        width: 33%;
+    }
+
+    .column-right {
+        float: right;
+        width: 33%;
+    }
+
+    .column-center {
+        display: inline-block;
+        width: 33%;
+    }
 
     #OptionList {
         background: transparent;
@@ -439,12 +394,6 @@
     .k-loading-mask {
         opacity: 0;
     }
-
-    /*.k-map .k-marker-green-marker .k-state-hover:hover {
-        background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOC4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTAgMTAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDEwIDEwIiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxjaXJjbGUgZmlsbD0iI0ZGMjUwMCIgY3g9IjUiIGN5PSI1IiByPSI1Ii8+DQo8L3N2Zz4NCg==');
-        width: 20px;
-        height: 20px;
-    }*/
 
 </style>
 

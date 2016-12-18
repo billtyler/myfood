@@ -95,7 +95,7 @@ namespace myfoodapp.Hub.Controllers
 
             var prodUnitList = db.ProductionUnits.Where(p => p.picturePath != null).Count();
             var random = new Random();
-            int randomIndex = random.Next(0, prodUnitList - 1);
+            int randomIndex = random.Next(0, prodUnitList);
 
             var rslt = db.ProductionUnits.Include("owner.user")
                                          .Include("productionUnitType")

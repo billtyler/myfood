@@ -166,26 +166,26 @@ namespace myfoodapp.Business
 
                                 decimal capturedValue = 0;
                                 capturedValue = sensorManager.RecordSensorsMeasure(SensorTypeEnum.waterTemperature, userSettings.isSleepModeEnable);
-                                sensorManager.SetWaterTemperatureForPHSensor(capturedValue);
 
-                                if(capturedValue > -20 && capturedValue < 80 )
+                                if (capturedValue > -20 && capturedValue < 80)
                                 {
-                                    var task = Task.Run(async () =>
-                                    {
-                                        await databaseModel.AddMesure(captureDateTime, capturedValue, SensorTypeEnum.waterTemperature);
-                                    });
-                                    task.Wait();
+                                    sensorManager.SetWaterTemperatureForPHSensor(capturedValue);
 
-                                    if (userSettings.isDiagnosticModeEnable)
-                                    {
-                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
-                                        var status = sensorManager.GetSensorStatus(SensorTypeEnum.waterTemperature, userSettings.isSleepModeEnable);
-                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature status : {0}", status), Log.LogType.System));
-                                    }     
+                                        var task = Task.Run(async () =>
+                                        {
+                                            await databaseModel.AddMesure(captureDateTime, capturedValue, SensorTypeEnum.waterTemperature);
+                                        });
+                                        task.Wait();
+                                
+                                        if (userSettings.isDiagnosticModeEnable)
+                                        {
+                                            logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
+                                            var status = sensorManager.GetSensorStatus(SensorTypeEnum.waterTemperature, userSettings.isSleepModeEnable);
+                                            logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature status : {0}", status), Log.LogType.System));
+                                        }     
                                 }
                                 else
                                 logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature value out of range - {0}", capturedValue), Log.LogType.Warning));
-
                            }
 
                             if (sensorManager.isSensorOnline(SensorTypeEnum.ph))

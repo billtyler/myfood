@@ -29,6 +29,7 @@ namespace myfoodapp.Hub.Models
         [Required]
         public ProductionUnitOwner owner { get; set; }
         public string picturePath { get; set; }
+        public List<Measure> measures { get; set; }
     }
 
     public class OptionList
