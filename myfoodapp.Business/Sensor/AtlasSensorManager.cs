@@ -43,7 +43,7 @@ namespace myfoodapp.Business.Sensor
         }
 
         //pH Sensors Commands
-        private string queryCalibrationCommand = "Cal,?\r";
+        //private string queryCalibrationCommand = "Cal,?\r";
         private string clearCalibrationCommand = "Cal,clear\r";
         private string midCalibrationCommand = "Cal,mid,7.00\r";
         private string lowCalibrationCommand = "Cal,low,4.00\r";
@@ -51,31 +51,31 @@ namespace myfoodapp.Business.Sensor
         private string setCalibrationCommand = "Cal,{0}\r";
 
         //Water Temperature Sensors commands
-        private string setCelsiusTemperatureCommand = "S,C\r";
-        private string setFahrenheitTemperatureCommand = "S,F\r";
-        private string setKelvinTemperatureCommand = "S,K\r";
+        //private string setCelsiusTemperatureCommand = "S,C\r";
+        //private string setFahrenheitTemperatureCommand = "S,F\r";
+        //private string setKelvinTemperatureCommand = "S,K\r";
 
         private string informationCommand = "I\r";
         private string resetFactoryCommand = "Factory\r";
         private string ledDebugCommand = "L,{0}\r";
         private string getStatusCommand = "Status\r";
-        private string sleepModeCommand = "Sleep\r";
+        //private string sleepModeCommand = "Sleep\r";
         private string readValueCommand = "R\r";
         private string setWaterTemperatureCommand = "T,{0}\r";
-        private string wakeupCommand = "W\r";
+        //private string wakeupCommand = "W\r";
         private string disableContinuousModeCommand = "C,0\r";
         private string disableAutomaticAnswerCommand = "RESPONSE,0\r";
-        
-        private string answersWrongCommand = "*ER";
-        private string answersOverVoltedCircuit = "*OV";
-        private string answersUnderVoltedCircuit = "*UV";
-        private string answersResetCircuit = "*RS";
-        private string answersBootUpCircuit = "*RE";
+
+        //private string answersWrongCommand = "*ER";
+        //private string answersOverVoltedCircuit = "*OV";
+        //private string answersUnderVoltedCircuit = "*UV";
+        //private string answersResetCircuit = "*RS";
+        //private string answersBootUpCircuit = "*RE";
         private string answersSleepMode = "*SL";
         private string answersWakeUpMode = "*WA";
 
         private AtlasSensorManager()
-        {         
+        {
         }
 
         public async Task InitSensors(bool isSleepModeActivated)
@@ -90,7 +90,7 @@ namespace myfoodapp.Business.Sensor
                 string aqs = SerialDevice.GetDeviceSelector();
                 var dis = await DeviceInformation.FindAllAsync(aqs);
 
-                logModel.AppendLog(Log.CreateLog(String.Format("Sensors found in {0} sec.",  watch.ElapsedMilliseconds / 1000), Log.LogType.System));
+                logModel.AppendLog(Log.CreateLog(String.Format("Sensors found in {0} sec.", watch.ElapsedMilliseconds / 1000), Log.LogType.System));
 
                 for (int i = 0; i < dis.Count; i++)
                 {
@@ -152,6 +152,21 @@ namespace myfoodapp.Business.Sensor
                                              .ContinueWith((are) => r = ReadAsync(ReadCancellationTokenSource.Token, newSensor).Result);
                                     });
                                     taskInformation.Wait();
+
+                                    if (r.Contains("*OK"))
+                                    {
+                                        var taskAuto = Task.Run(async () =>
+                                        {
+                                            await WriteAsync(disableAutomaticAnswerCommand, newSensor);
+                                        });
+                                        taskAuto.Wait();
+
+                                        var taskContinuous = Task.Run(async () =>
+                                        {
+                                            await WriteAsync(disableContinuousModeCommand, newSensor);
+                                        });
+                                        taskContinuous.Wait();
+                                    }
 
                                     //if (isSleepModeActivated)
                                     //{
@@ -226,7 +241,7 @@ namespace myfoodapp.Business.Sensor
 
         public bool isSensorOnline(SensorTypeEnum currentSensorType)
         {
-            return (sensorsList.Where(s => s.sensorType == currentSensorType).FirstOrDefault() != null) ? true: false;
+            return (sensorsList.Where(s => s.sensorType == currentSensorType).FirstOrDefault() != null) ? true : false;
         }
 
         public AtlasSensor GetSensor(SensorTypeEnum currentSensorType)
@@ -274,7 +289,7 @@ namespace myfoodapp.Business.Sensor
         {
             if (!isInitialized)
                 return;
-                      
+
             var currentSensor = this.GetSensor(sensorType);
 
             if (currentSensor != null)
@@ -317,7 +332,7 @@ namespace myfoodapp.Business.Sensor
 
             foreach (AtlasSensor currentSensor in sensorsList)
             {
-                
+
                 string strResult = String.Empty;
 
                 var taskDebugMode = Task.Run(async () => {
@@ -343,7 +358,7 @@ namespace myfoodapp.Business.Sensor
                 });
 
                 taskReset.Wait();
-                
+
                 var taskAuto = Task.Run(async () =>
                 {
                     await WriteAsync(disableAutomaticAnswerCommand, currentSensor);
@@ -407,14 +422,14 @@ namespace myfoodapp.Business.Sensor
                 //}
 
                 var taskMeasure = Task.Run(async () => {
-                        await WriteAsync(readValueCommand, currentSensor)
-                             .ContinueWith((a) => strResult = ReadAsync(ReadCancellationTokenSource.Token, currentSensor).Result);
-                        
-                        var boolMeasure = Decimal.TryParse(strResult.Replace("\r", "")
-                                                                    .Replace(answersSleepMode, "")
-                                                                    .Replace(answersWakeUpMode, "")
-                                                                    , out capturedMesure);
-                    });
+                    await WriteAsync(readValueCommand, currentSensor)
+                         .ContinueWith((a) => strResult = ReadAsync(ReadCancellationTokenSource.Token, currentSensor).Result);
+
+                    var boolMeasure = Decimal.TryParse(strResult.Replace("\r", "")
+                                                                .Replace(answersSleepMode, "")
+                                                                .Replace(answersWakeUpMode, "")
+                                                                , out capturedMesure);
+                });
 
                 taskMeasure.Wait();
 
@@ -464,7 +479,8 @@ namespace myfoodapp.Business.Sensor
                                                                                  .Replace(answersSleepMode, "")
                                                                                  .Replace(answersWakeUpMode, ""), out capturedMesure);
                         sumCapturedMesure += capturedMesure;
-                        strResult.Clear();});
+                        strResult.Clear();
+                    });
 
                     taskSumMeasure.Wait();
                 }
@@ -537,11 +553,11 @@ namespace myfoodapp.Business.Sensor
 
             storeAsyncTask = currentSensor.dataWriteObject.StoreAsync().AsTask();
 
-                UInt32 bytesWritten = await storeAsyncTask;
-                if (bytesWritten > 0)
-                {
-                  return command;
-                }
+            UInt32 bytesWritten = await storeAsyncTask;
+            if (bytesWritten > 0)
+            {
+                return command;
+            }
             return String.Empty;
         }
 
