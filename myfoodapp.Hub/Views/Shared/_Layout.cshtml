@@ -8,13 +8,13 @@
     <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.metro.min.css" rel="stylesheet">
     <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.dataviz.min.css" rel="stylesheet">
     <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.dataviz.metro.min.css" rel="stylesheet">
-    	<link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
-	<link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.dataviz.metro.min.css" rel="stylesheet" type="text/css" />
-	<script src="https://kendo.cdn.telerik.com/2016.3.1118/js/jquery.min.js"></script>
-	<script src="https://kendo.cdn.telerik.com/2016.3.1118/js/jszip.min.js"></script>
-	<script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.all.min.js"></script>
-	<script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.aspnetmvc.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.dataviz.metro.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.aspnetmvc.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 </head>
@@ -26,58 +26,60 @@
     </noscript>
     <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
     <!-- End Google Tag Manager -->
-    <div class="container-fluid">
-        <!--open container-->
-        <div class="row row-offcanvas row-offcanvas-left">
-            <!--open row-->
-            <div id="nav-section" class="col-xs-12 column">
-                <!--open nav column-->
-                <div class="navbar-default">
-                    <button id="toggle-button" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <h1 id="dash-logo" class="center-block" style="font-size:20px"><a href="@(Url.Action("Index", "Home"))">myfood&#183;IOT&#183;Hub</a></h1>
-                <div class="collapse navbar-collapse" id="sidebar-nav" role="navigation">
-                    <ul class="nav">
-                        @if (Request.IsAuthenticated)
-                        {
-                            <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; Messages</a></li>
-                            <li><a href="@(Url.Action("Index", "Measures"))"><i class="fa fa-thermometer-full" aria-hidden="true"></i>&nbsp; Measures</a></li>
-                            <li><a href="@(Url.Action("Index", "ProductionUnits"))"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; Production Units</a></li>
-                            <li><a href="@(Url.Action("Index", "Home"))"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; Performances &amp; Health</a></li>
-                            <li><a href="@(Url.Action("Index", "Home"))"><i class="fa fa-book" aria-hidden="true"></i>&nbsp; Recipes</a></li>
-                            <li><a href="@(Url.Action("Update", "MyInfo"))"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp; My Information</a></li>
-                        }
-                        <li id="About"><a href="@(Url.Action("Index", "About"))"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; About</a></li>
-                        @if (Request.IsAuthenticated)
-                        {
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Log off</a></li>
-                            }
-                        }
-                        else
-                        {
-                            <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Login</a></li>
-                        }
-                    </ul>
-                    <div id="rights">
-                        <img width="50" height="50" src="~/Content/miniLogo.png" />
-                        <p>Copyright &copy; 2016, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
-                    </div>
-                </div>
-            </div><!--close left column-->
-            <div id="main-section" class="col-xs-12 column">
-                <!--open main column-->
-                @RenderBody()
-            </div><!--close main column-->
-        </div><!--close row-->
-    </div><!--close container-->
+    @*<div class="container-fluid" style="background-color:aqua">
 
+        <!--open container-->
+        <div  class="row row-offcanvas row-offcanvas-left" style="background-color:orangered">
+            <!--open row-->*@
+    <div id="nav-section" class="col-md-12 column">
+        <!--open nav column-->
+        <div class="navbar-default">
+            <button id="toggle-button" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <h1 id="dash-logo" class="center-block" style="font-size: 20px">
+            <a href="@(Url.Action("Index", "Home"))">myfood&#183;IOT&#183;Hub</a>
+        </h1>
+        <div class="collapse navbar-collapse" id="sidebar-nav" role="navigation">
+            <ul class="nav">
+                @if (Request.IsAuthenticated)
+                {
+                    <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; Messages</a></li>
+                        <li><a href="@(Url.Action("Index", "Measures"))"><i class="fa fa-thermometer-full" aria-hidden="true"></i>&nbsp; Measures</a></li>
+                        <li><a href="@(Url.Action("Index", "ProductionUnits"))"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; Production Units</a></li>
+                        <li><a href="@(Url.Action("Index", "Home"))"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; Performances &amp; Health</a></li>
+                        <li><a href="@(Url.Action("Index", "Home"))"><i class="fa fa-book" aria-hidden="true"></i>&nbsp; Recipes</a></li>
+                        <li><a href="@(Url.Action("Update", "MyInfo"))"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp; My Information</a></li>
+                }
+                <li id="About"><a href="@(Url.Action("Index", "About"))"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; About</a></li>
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; Log off</a></li>
+                    }
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; Login</a></li>
+                }
+            </ul>
+            <div id="rights">
+                <img width="50" height="50" src="~/Content/miniLogo.png" />
+                <p>Copyright &copy; 2016, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div><!--close left column-->
+    <div id="main-section" class="col-md-12 column">
+        <!--open main column-->
+        @RenderBody()
+    </div><!--close main column-->
+    @*</div><!--close row-->
+        </div><!--close container-->*@
     <script>
         $(document).ready(function () {
             $('[data-toggle=offcanvas]').click(function () {
@@ -85,7 +87,6 @@
             });
         });
     </script>
-
     <style type="text/css">
         a:link {
             color: #ffffff;
@@ -104,6 +105,5 @@
         }
         /* selected link */
     </style>
-
 </body>
 </html>

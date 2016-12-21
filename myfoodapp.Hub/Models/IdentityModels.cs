@@ -74,5 +74,13 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Recipes> Recipes { get; set; }
 
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.GardeningType> GardeningTypes { get; set; }
+
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.WateringLevel> WateringLevels { get; set; }
+
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Month> Months { get; set; }
+
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Season> Seasons { get; set; }
+
     }
 }

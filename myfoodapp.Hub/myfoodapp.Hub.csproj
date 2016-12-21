@@ -401,6 +401,10 @@
     <Compile Include="Migrations\201612181635235_Init.Designer.cs">
       <DependentUpon>201612181635235_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612211632504_Add-Recipes.cs" />
+    <Compile Include="Migrations\201612211632504_Add-Recipes.Designer.cs">
+      <DependentUpon>201612211632504_Add-Recipes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2904,6 +2908,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612181635235_Init.resx">
       <DependentUpon>201612181635235_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612211632504_Add-Recipes.resx">
+      <DependentUpon>201612211632504_Add-Recipes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

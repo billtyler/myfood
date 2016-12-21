@@ -12,8 +12,28 @@ namespace myfoodapp.Hub.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Int64 Id { get; set; }
         [Required]
-        public GardeningType productionUnit { get; set; }
+        public GardeningType gardeningType { get; set; }
+        public int daysOfGermination { get; set; }
+        public int daysOfHarvest { get; set; }
+        public int daysOfHarvestFromSowing { get; set; }
+        public List<Month> plantingIndoorMonths { get; set; }
+        public List<Month> plantingOutdorMonths { get; set; }
+        public List<Month> harvestingMonths { get; set; }
+        public int minimumSpaceBetweenPlantInTower { get; set; }
+        public int proteinPercentage { get; set; }
+        public WateringLevel wateringLevel { get; set; }
+        [Required]
+        public decimal idealMinTemperature { get; set; }
+        [Required]
+        public decimal idealMaxTemperature { get; set; }
+        [Required]
+        public decimal acceptableMaxTemperature { get; set; }
+        [Required]
+        public decimal acceptableMinTemperature { get; set; }
+        [Required]
+        public string picturePath { get; set; }
     }
+
 
     public class GardeningType
     {
@@ -22,6 +42,36 @@ namespace myfoodapp.Hub.Models
         [Required]
         public string name { get; set; }
         public string description { get; set; }
+    }
+
+    public class WateringLevel
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [Required]
+        public string name { get; set; }
+        public string description { get; set; }
+    }
+
+    public class Month
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [Required]
+        public string name { get; set; }
+        [Required]
+        public int order { get; set; }
+        [Required]
+        public Season season { get; set; }
+
+    }
+    public class Season
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        [Required]
+        public string name { get; set; }
+
     }
 
 }
