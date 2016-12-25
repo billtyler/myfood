@@ -154,6 +154,10 @@
         });
     }
 
+    $(window).on("resize", function () {
+        
+    });
+
     function onShow(e) {
 
         var OptionList = $("#OptionList").data("kendoListView");
@@ -219,17 +223,17 @@
 <div id="pioneer-network" style="height:100%" class="main-section-content">
     <div id="map-wrapper" class="row">
         <div id="picturesContainer" class="col-md-4">
-            <div class="widget">
+            <div class="widget picture-widget">
                 <h3><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp; Picture</h3>
-                <div style="margin: 25px;">
+                <div class="image-div">
                     <a id="ProductionUnitPictureLink" class="example-image-link" data-lightbox="example-1">
-                        <img class="example-image" id="ProductionUnitPicture" alt="image-1" style='height: 100%; width: 100%; object-fit: contain' />
+                        <img class="example-image" id="ProductionUnitPicture" style='height: 100%; width: 100%; object-fit: contain' />
                     </a>
                 </div>
             </div>
         </div>
         <div id="map-container" class="col-md-8">
-            <div class="widget">
+            <div class="widget large-widget">
                 <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; Pioneer Citizen Map</h3>
                 <div class="maps">
                     @model myfoodapp.Hub.Models.Map
@@ -275,26 +279,26 @@
     </div>
     <div id="map-wrapper" class="row">
         <div id="map-info" class="col-md-4">
-            <div class="widget" style="height:200px">
+            <div class="widget">
                 <h3><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; Network Info</h3>
                 <div style="margin: 25px;">
                     <div class="column-left">
-                        <h2 style="margin:7px;text-align: center;">TOTAL<br />CONNECTED <br />PROD. UNITS </h2>
-                        <h1 id="ProductionUnitNumber" style="font-size:xx-large;text-align: center;"></h1>
+                        <h2 class="widget-text" style="text-align: center;">TOTAL<br />CONNECTED <br />PROD. UNITS </h2>
+                        <h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
                     </div>
                     <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                        <h2 style="margin:7px;text-align: center;">TOTAL<br />EST. PROD. <br />PER MONTH</h2>
-                        <h1 id="TotalMonthlyProduction" style="font-size:xx-large;text-align: center;"></h1>
+                        <h2 class="widget-text" style="text-align: center;">TOTAL<br />EST. PROD. <br />PER MONTH</h2>
+                        <h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
                     </div>
                     <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                        <h2 style="margin:7px;text-align: center;">TOTAL<br />CO2 SAVED<br />PER MONTH</h2>
-                        <h1 id="TotalMonthlySparedCO2" style="font-size:xx-large;text-align: center;"></h1>
+                        <h2 class="widget-text" style="text-align: center;">TOTAL<br />CO2 SAVED<br />PER MONTH</h2>
+                        <h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
                     </div>
                 </div>
             </div>
         </div>
         <div id="map-details" class="col-md-4">
-            <div class="widget" style="height:200px">
+            <div class="widget">
                 <h3><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp; Details</h3>
                 <div style="margin: 25px;">
                     <h2 id="PioneerCitizenName"></h2>
@@ -306,7 +310,7 @@
             </div>
         </div>
         <div id="map-options" class="col-md-4">
-            <div class="widget" style="height:200px">
+            <div class="widget">
                 <h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Options</h3>
                 <div style="margin: 25px;">
                     @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
@@ -325,5 +329,66 @@
         <h4>.:myfoodapphub is licensed under a <a style="color:forestgreen" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"> Attribution-NonCommercial-ShareAlike 4.0 International</a> licence:.</h4>
     </div>
 </div>
+
+<style>
+        .image-div {
+            height:350px;
+        }
+
+        .widget {
+            height:200px;
+        }
+
+        .picture-widget {
+            height:100%;
+        }
+
+        .large-widget {
+            height:100%;
+        }
+
+        h1 {
+            font-size:xx-large;
+        }
+
+        .widget-text {
+                margin:7px;
+        }
+
+        #map-container{
+                visibility:visible;
+            }
+
+        @@media screen and (max-width: 480px) {
+            .image-div {
+            height:200px;
+            }
+
+            .widget-text {
+                font-size: xx-small;
+                margin:2px;
+            }
+
+            h1 {
+                font-size: medium;
+            }
+
+            /*.widget {
+            height:200px;
+            }*/
+
+            .picture-widget {
+            height:200px;
+            }
+
+            #map-container{
+                visibility:hidden;
+                display:none;
+            }
+        }
+</style>
+
+
+
 
 

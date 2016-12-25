@@ -17,6 +17,9 @@
 
             Measures.options.categoryAxis[0].majorGridLines.step = 180;
             Measures.options.categoryAxis[0].majorTicks.step = 180;
+
+            $("#Measures").css("-ms-touch-action", "pan-x");
+            $("#Measures").css("-touch-action", "pan-x");
         }
         else
         {
@@ -48,6 +51,9 @@
             Measures.options.categoryAxis[0].majorTicks.step = 200;
 
             Measures.refresh();
+
+            $("#Measures").css("-ms-touch-action", "pan-x");
+            $("#Measures").css("-touch-action", "pan-x");
         }
 
         var OptionList = $("#OptionList").data("kendoListView");
@@ -117,7 +123,6 @@
         <span>&bull; #:name#</span>
     </div>
 </script>
-
 
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
 <input type="hidden" id="displayManagementBtn" value="@ViewBag.DisplayManagementBtn" />
@@ -317,15 +322,15 @@
         opacity: 0;
         }
 
-       .productiontitle {
+       /*.productiontitle {
         font-size:medium;
-        }
+        }*/
 
-        @@media screen and (max-width: 480px) {
+        /*@@media screen and (max-width: 480px) {
         .productiontitle{
         font-size:medium;
         }
-        }
+        }*/
 
 </style>
 

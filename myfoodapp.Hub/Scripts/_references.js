@@ -1,4 +1,6 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="../onesignalsdkupdaterworker.js" />
+/// <reference path="../onesignalsdkworker.js" />
 /// <reference path="ai.0.22.19-build00125.min.js" />
 /// <reference path="bootstrap.min.js" />
 /// <reference path="jquery.validate.min.js" />

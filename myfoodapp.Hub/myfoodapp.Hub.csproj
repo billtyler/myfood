@@ -1137,6 +1137,8 @@
     <Content Include="fonts\OpenSans\OpenSans-Regular-webfont.ttf" />
     <Content Include="fonts\OpenSans\OpenSans-Regular-webfont.woff" />
     <Content Include="Global.asax" />
+    <Content Include="OneSignalSDKUpdaterWorker.js" />
+    <Content Include="OneSignalSDKWorker.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -1362,6 +1364,9 @@
     <Content Include="Content\kendo\2016.3.1118\fonts\glyphs\KendoUIGlyphs.woff" />
     <Content Include="Content\kendo\2016.3.1118\images\kendoui.ttf" />
     <Content Include="Content\kendo\2016.3.1118\images\kendoui.woff" />
+    <Content Include="manifest.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\myfoodapphub - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2931,7 +2936,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>21961</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:21961/</IISUrl>
+          <IISUrl>http://localhost:21962/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
