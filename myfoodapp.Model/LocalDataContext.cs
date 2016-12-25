@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Windows.Storage;
 
 namespace myfoodapp.Model
 {
@@ -15,10 +17,11 @@ namespace myfoodapp.Model
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-                optionsBuilder.UseSqlite($"Filename=myfood.db");
-            }
+          //   optionsBuilder.UseSqlite("Data Source=" + Path.Combine(ApplicationData.Current.LocalFolder.Path, "myfood.db"));
+            optionsBuilder.UseSqlite("Filename=myfood.db");
+        }
 
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
 
                 modelBuilder.Entity<Measure>()

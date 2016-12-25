@@ -1044,7 +1044,7 @@ namespace myfoodapp.Hub.Migrations
 
         //    // foreach (ProductionUnit productionUnit in productionUnitList)
         //    // {
-        //    //     for (int i = 0; i < 6 * 24; i++)
+        //    //     for (int i = 0; i < 6 * 2; i++)
         //    //     {
         //    //         Random rnd = new Random();
         //    //         var currentDate = DateTime.Now;

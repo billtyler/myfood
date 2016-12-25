@@ -8,9 +8,10 @@ using myfoodapp.Model;
 namespace myfoodapp.Model.Migrations
 {
     [DbContext(typeof(LocalDataContext))]
-    partial class LocalDataContextModelSnapshot : ModelSnapshot
+    [Migration("20161225204729_FirstMigration")]
+    partial class FirstMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");

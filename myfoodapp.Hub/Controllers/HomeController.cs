@@ -92,9 +92,13 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var prodUnitList = db.ProductionUnits.Where(p => p.measures.Count != 0).Count();
+            var prodUnitListCount = db.ProductionUnits.Where(p => p.measures.Count != 0).Count();
+
+            if (prodUnitListCount == 0)
+                return null;
+
             var random = new Random();
-            int randomIndex = random.Next(0, prodUnitList);
+            int randomIndex = random.Next(0, prodUnitListCount);
 
             var currentProductionUnit = db.ProductionUnits.Include("owner.user")
                                          .Include("productionUnitType")

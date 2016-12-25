@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Storage;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace myfoodapp.Model
 {

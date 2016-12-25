@@ -116,9 +116,9 @@
     <Compile Include="LocalDataContext.cs" />
     <Compile Include="LocalDataContextExtension.cs" />
     <Compile Include="LogModel.cs" />
-    <Compile Include="Migrations\20160701091118_FirstMigration.cs" />
-    <Compile Include="Migrations\20160701091118_FirstMigration.Designer.cs">
-      <DependentUpon>20160701091118_FirstMigration.cs</DependentUpon>
+    <Compile Include="Migrations\20161225204729_FirstMigration.cs" />
+    <Compile Include="Migrations\20161225204729_FirstMigration.designer.cs">
+      <DependentUpon>20161225204729_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\LocalDataContextModelSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,6 +131,7 @@
       <Name>myfoodapp.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
