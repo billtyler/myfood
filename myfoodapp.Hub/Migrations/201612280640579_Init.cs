@@ -176,6 +176,17 @@ namespace myfoodapp.Hub.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.GardeningTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        name = c.String(nullable: false),
+                        description = c.String(),
+                        imagePath = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Logs",
                 c => new
                     {
@@ -213,6 +224,37 @@ namespace myfoodapp.Hub.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.Months",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        name = c.String(nullable: false),
+                        order = c.Int(nullable: false),
+                        season_Id = c.Int(nullable: false),
+                        Recipes_Id = c.Long(),
+                        Recipes_Id1 = c.Long(),
+                        Recipes_Id2 = c.Long(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Seasons", t => t.season_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Recipes", t => t.Recipes_Id)
+                .ForeignKey("dbo.Recipes", t => t.Recipes_Id1)
+                .ForeignKey("dbo.Recipes", t => t.Recipes_Id2)
+                .Index(t => t.season_Id)
+                .Index(t => t.Recipes_Id)
+                .Index(t => t.Recipes_Id1)
+                .Index(t => t.Recipes_Id2);
+            
+            CreateTable(
+                "dbo.Seasons",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        name = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.OptionLists",
                 c => new
                     {
@@ -231,19 +273,36 @@ namespace myfoodapp.Hub.Migrations
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        productionUnit_Id = c.Int(nullable: false),
+                        name = c.String(nullable: false),
+                        description = c.String(nullable: false),
+                        advice = c.String(),
+                        daysOfGermination = c.Int(nullable: false),
+                        daysOfHarvestFromSowing = c.Int(nullable: false),
+                        minimumSpaceBetweenPlantInTower = c.Int(nullable: false),
+                        proteinPercentage = c.Int(nullable: false),
+                        idealMinTemperature = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        idealMaxTemperature = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        acceptableMaxTemperature = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        acceptableMinTemperature = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        reference = c.String(nullable: false),
+                        picturePath = c.String(nullable: false),
+                        gardeningType_Id = c.Int(nullable: false),
+                        wateringLevel_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.GardeningTypes", t => t.productionUnit_Id, cascadeDelete: true)
-                .Index(t => t.productionUnit_Id);
+                .ForeignKey("dbo.GardeningTypes", t => t.gardeningType_Id, cascadeDelete: true)
+                .ForeignKey("dbo.WateringLevels", t => t.wateringLevel_Id)
+                .Index(t => t.gardeningType_Id)
+                .Index(t => t.wateringLevel_Id);
             
             CreateTable(
-                "dbo.GardeningTypes",
+                "dbo.WateringLevels",
                 c => new
                     {
                         Id = c.Int(nullable: false),
                         name = c.String(nullable: false),
                         description = c.String(),
+                        imagePath = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -262,9 +321,14 @@ namespace myfoodapp.Hub.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Recipes", "productionUnit_Id", "dbo.GardeningTypes");
+            DropForeignKey("dbo.Recipes", "wateringLevel_Id", "dbo.WateringLevels");
+            DropForeignKey("dbo.Months", "Recipes_Id2", "dbo.Recipes");
+            DropForeignKey("dbo.Months", "Recipes_Id1", "dbo.Recipes");
+            DropForeignKey("dbo.Months", "Recipes_Id", "dbo.Recipes");
+            DropForeignKey("dbo.Recipes", "gardeningType_Id", "dbo.GardeningTypes");
             DropForeignKey("dbo.OptionLists", "productionUnit_Id", "dbo.ProductionUnits");
             DropForeignKey("dbo.OptionLists", "option_Id", "dbo.Options");
+            DropForeignKey("dbo.Months", "season_Id", "dbo.Seasons");
             DropForeignKey("dbo.Messages", "messageType_Id", "dbo.MessageTypes");
             DropForeignKey("dbo.Events", "productionUnit_Id", "dbo.ProductionUnits");
             DropForeignKey("dbo.ProductionUnits", "productionUnitType_Id", "dbo.ProductionUnitTypes");
@@ -278,9 +342,14 @@ namespace myfoodapp.Hub.Migrations
             DropForeignKey("dbo.Measures", "productionUnit_Id", "dbo.ProductionUnits");
             DropForeignKey("dbo.ProductionUnits", "hydroponicType_Id", "dbo.HydroponicTypes");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Recipes", new[] { "productionUnit_Id" });
+            DropIndex("dbo.Recipes", new[] { "wateringLevel_Id" });
+            DropIndex("dbo.Recipes", new[] { "gardeningType_Id" });
             DropIndex("dbo.OptionLists", new[] { "productionUnit_Id" });
             DropIndex("dbo.OptionLists", new[] { "option_Id" });
+            DropIndex("dbo.Months", new[] { "Recipes_Id2" });
+            DropIndex("dbo.Months", new[] { "Recipes_Id1" });
+            DropIndex("dbo.Months", new[] { "Recipes_Id" });
+            DropIndex("dbo.Months", new[] { "season_Id" });
             DropIndex("dbo.Messages", new[] { "messageType_Id" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -296,12 +365,15 @@ namespace myfoodapp.Hub.Migrations
             DropIndex("dbo.ProductionUnits", new[] { "hydroponicType_Id" });
             DropIndex("dbo.Events", new[] { "productionUnit_Id" });
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.GardeningTypes");
+            DropTable("dbo.WateringLevels");
             DropTable("dbo.Recipes");
             DropTable("dbo.OptionLists");
+            DropTable("dbo.Seasons");
+            DropTable("dbo.Months");
             DropTable("dbo.MessageTypes");
             DropTable("dbo.Messages");
             DropTable("dbo.Logs");
+            DropTable("dbo.GardeningTypes");
             DropTable("dbo.ProductionUnitTypes");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

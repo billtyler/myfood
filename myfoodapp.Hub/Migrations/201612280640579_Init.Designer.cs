@@ -7,13 +7,13 @@ namespace myfoodapp.Hub.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddRecipes : IMigrationMetadata
+    public sealed partial class Init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddRecipes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612211632504_Add-Recipes"; }
+            get { return "201612280640579_Init"; }
         }
         
         string IMigrationMetadata.Source

@@ -12,12 +12,16 @@ namespace myfoodapp.Hub.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Int64 Id { get; set; }
         [Required]
+        public string name { get; set; }
+        [Required]
+        public string description { get; set; }
+        public string advice { get; set; }
+        [Required]
         public GardeningType gardeningType { get; set; }
         public int daysOfGermination { get; set; }
-        public int daysOfHarvest { get; set; }
         public int daysOfHarvestFromSowing { get; set; }
         public List<Month> plantingIndoorMonths { get; set; }
-        public List<Month> plantingOutdorMonths { get; set; }
+        public List<Month> plantingOutdoorMonths { get; set; }
         public List<Month> harvestingMonths { get; set; }
         public int minimumSpaceBetweenPlantInTower { get; set; }
         public int proteinPercentage { get; set; }
@@ -31,7 +35,11 @@ namespace myfoodapp.Hub.Models
         [Required]
         public decimal acceptableMinTemperature { get; set; }
         [Required]
+        public string reference { get; set; }
+        [Required]
         public string picturePath { get; set; }
+        [NotMapped]
+        public bool isRecommandated { get; set; }
     }
 
 
@@ -42,6 +50,7 @@ namespace myfoodapp.Hub.Models
         [Required]
         public string name { get; set; }
         public string description { get; set; }
+        public string imagePath { get; set; }
     }
 
     public class WateringLevel
@@ -51,6 +60,7 @@ namespace myfoodapp.Hub.Models
         [Required]
         public string name { get; set; }
         public string description { get; set; }
+        public string imagePath { get; set; }
     }
 
     public class Month

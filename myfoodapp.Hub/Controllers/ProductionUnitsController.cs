@@ -82,7 +82,7 @@ namespace myfoodapp.Hub.Controllers
             var db = new ApplicationDbContext();
             var productionUnitService = new ProductionUnitService(db);
 
-            var currentProductionUnit = db.ProductionUnits.Include("owner.user").Include("options").Where(p => p.Id == id).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user).Include(p => p.options).Where(p => p.Id == id).FirstOrDefault();
             if (currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser || isAdmin)
             {
                 var currentProductionUnitViewModel = productionUnitService.One(id);

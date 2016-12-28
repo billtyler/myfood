@@ -377,17 +377,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasuresController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\ProductionUnitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612181635235_Init.cs" />
-    <Compile Include="Migrations\201612181635235_Init.Designer.cs">
-      <DependentUpon>201612181635235_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612211632504_Add-Recipes.cs" />
-    <Compile Include="Migrations\201612211632504_Add-Recipes.Designer.cs">
-      <DependentUpon>201612211632504_Add-Recipes.cs</DependentUpon>
+    <Compile Include="Migrations\201612280640579_Init.cs" />
+    <Compile Include="Migrations\201612280640579_Init.Designer.cs">
+      <DependentUpon>201612280640579_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -1107,6 +1104,17 @@
     <Content Include="Content\Pictures\OberpallenFamily22.jpg" />
     <Content Include="Content\Pictures\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\PavillyFamily22.JPG" />
+    <Content Include="Content\Pictures\Recipes\basil.jpg" />
+    <Content Include="Content\Pictures\Recipes\carrot.jpg" />
+    <Content Include="Content\Pictures\Recipes\cucumber.jpg" />
+    <Content Include="Content\Pictures\Recipes\greenbeans.jpg" />
+    <Content Include="Content\Pictures\Recipes\kale.jpg" />
+    <Content Include="Content\Pictures\Recipes\lettuce.jpg" />
+    <Content Include="Content\Pictures\Recipes\mache.jpg" />
+    <Content Include="Content\Pictures\Recipes\parsley.jpg" />
+    <Content Include="Content\Pictures\Recipes\strawberries.jpg" />
+    <Content Include="Content\Pictures\Recipes\tilapia.jpg" />
+    <Content Include="Content\Pictures\Recipes\tomatoes.jpg" />
     <Content Include="Content\Pictures\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\SainteBarbeFamily22.JPG" />
     <Content Include="Content\Pictures\TarragonaFamily14.JPG" />
@@ -2884,6 +2892,7 @@
     <Content Include="Scripts\kendo\2016.3.1118\kendo.window.min.js.map" />
     <Content Include="Views\ProductionUnits\Events.cshtml" />
     <Content Include="Views\ProductionUnits\Update.cshtml" />
+    <Content Include="Views\Recipes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2895,11 +2904,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612181635235_Init.resx">
-      <DependentUpon>201612181635235_Init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612211632504_Add-Recipes.resx">
-      <DependentUpon>201612211632504_Add-Recipes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612280640579_Init.resx">
+      <DependentUpon>201612280640579_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

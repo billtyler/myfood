@@ -1,0 +1,189 @@
+﻿@model IEnumerable<myfoodapp.Hub.Models.Recipes>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    function onSelect(e) {
+            var dataItem = this.dataItem(e.item);
+    }
+</script>
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="recipes">
+        <img src="@Url.Content("~/content/pictures/recipes/")#:picturePath#" alt="#:name# image" />
+        <div class="inner">
+            <div class="title">#:name# - #:reference#</div>
+            <div class="info" style="margin: 8px;">
+                <div class="column-left">
+                    <h2 class="widget-text" style="text-align: center;">DAY <br />OF<br />GERMINATION<br />FROM SEED</h2>
+                    <h1 style="text-align: center;font-size:x-large;">#:daysOfGermination#</h1>
+                </div>
+                <div class="column-center" style="border-left:1px;border-color:white;">
+                    <h2 class="widget-text" style="text-align: center;border-left:1px;">DAY OF<br />HARVEST<br />FROM SOWING</h2>
+                    <h1 style="text-align: center;font-size:x-large;">#:daysOfHarvestFromSowing#</h1>
+                </div>
+                <div class="column-right" style="border-left:1px;border-color:white;">
+                    <h2 class="widget-text" style="text-align: center;border-left:1px;">MINI. DISTANCE<br />BETWEEN PLANTS</h2>
+                    <h1 style="text-align: center;font-size:x-large;">#:minimumSpaceBetweenPlantInTower#</h1>
+                </div>
+                <div class="title" style="font-size:medium;font-weight:normal;margin-top:120px;">Can be planted in:</div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div id="main-section-header" class="row">
+    <h2 id="title" class="col-md-3">Recipes</h2>
+    <div style="clear:both;"></div>
+</div>
+
+<div id="recipes-list" class="main-section-content row">
+    <div id="recipes-list-details" class="col-md-2">
+        <h3 class="section-header">Choose the suitable recipes for your greenhouse</h3>
+        <br/>
+        <h3>See Recommandations for my Production Unit:</h3>
+        <br />
+        @(Html.Kendo().DropDownList()
+                                  .Name("DropDownList")
+                                  .DataTextField("info")
+                                  .DataValueField("Id")
+                                  .AutoBind(true)
+                                  .DataSource(source =>
+                                  {
+                                      source.Read(read =>
+                                      {
+                                          read.Action("ProductionUnits_Read", "Recipes");
+                                      });
+                                  })
+                                  .Events(e =>
+                                  {
+                                      e.Select("onSelect");
+                                  })
+        )
+    </div>
+    <div id="grid-container" class="col-md-10">
+        @(Html.Kendo().ListView<myfoodapp.Hub.Models.Recipes>(Model)
+        .Name("listView")
+        .TagName("div")
+        .ClientTemplateId("template")
+        .DataSource(dataSource => dataSource
+            .PageSize(6)
+            .ServerOperation(false)
+         )
+         .Pageable()
+         )
+    </div>
+</div>
+
+<style>
+    #listView {
+        padding: 10px;
+        margin-bottom: -1px;
+        min-height: 700px;
+    }
+
+   .recipes .widget-text {
+        margin:7px;
+    }
+
+    .recipes div .column-left {
+        float: left;
+        width: 33%;
+    }
+
+    .recipes div .column-right {
+        float: right;
+        width: 33%;
+    }
+
+    .recipes div .column-center {
+        display: inline-block;
+        width: 33%;
+    }
+
+    .recipes {
+        float: left;
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 5px;
+        padding: 0;
+    }
+
+     .recipes img {
+            width: 300px;
+            height: 300px;
+        }
+
+     .recipes div .info {
+            visibility: hidden;
+        }
+
+     .recipes div .title {
+            visibility: hidden;
+        }
+
+     .recipes div .inner {
+            visibility: hidden;
+        }
+
+     .recipes:hover .title {
+            visibility: visible;
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 0;
+            font-size:x-large;
+            font-weight:bold;
+            margin: 5px;
+            padding: 0px 0px 20px 0px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+     .recipes:hover .info {
+            visibility: visible;
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 0;
+            margin: 0;
+            padding: 20px 0px 20px 0px;
+            vertical-align: top;
+            text-align: left;
+        }
+
+     .recipes:hover .inner {
+            visibility: visible;
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 0;
+            margin: 0;
+            vertical-align: top;
+            text-align: left;
+            color: #fff;
+            background-color: rgba(0,0,0,0.75);
+            transition: background .2s linear, color .2s linear;
+            -moz-transition: background .2s linear, color .2s linear;
+            -webkit-transition: background .2s linear, color .2s linear;
+            -o-transition: background .2s linear, color .2s linear;
+        }
+
+        /*@@media screen and (max-width: 480px) {
+        #listView{
+        width:310px;
+        }
+        }*/
+
+    .k-listview:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+</style>
