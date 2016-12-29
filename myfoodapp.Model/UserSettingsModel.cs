@@ -55,7 +55,7 @@ namespace myfoodapp.Model
                         isDiagnosticModeEnable = false,
                         measureFrequency = 60000,
                         productionSiteId = "74711",
-                        hubMessageAPI = "http://myfoodapphub.azurewebsites.net/api/Messages"
+                        hubMessageAPI = "https://hub.myfood.eu/api/Messages"
                     };
 #endif
 
@@ -70,7 +70,7 @@ namespace myfoodapp.Model
                         isDiagnosticModeEnable = false,
                         measureFrequency = 600000,
                         productionSiteId = "74711",
-                        hubMessageAPI = "http://myfoodapphub.azurewebsites.net/api/Messages"
+                        hubMessageAPI = "https://hub.myfood.eu/api/Messages"
                     };
 #endif
 

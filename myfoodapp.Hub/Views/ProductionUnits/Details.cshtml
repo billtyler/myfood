@@ -11,25 +11,29 @@
 
         if ($(window).width() < 480) {
             Measures.options.categoryAxis[1].labels.rotation = 45;
-            Measures.options.categoryAxis[1].labels.step = 180;
-            Measures.options.categoryAxis[1].majorGridLines.step = 180;
-            Measures.options.categoryAxis[1].majorTicks.step = 180;
+            Measures.options.categoryAxis[1].labels.step = 240;
+            Measures.options.categoryAxis[1].majorGridLines.step = 240;
+            Measures.options.categoryAxis[1].majorTicks.step = 240;
 
-            Measures.options.categoryAxis[0].majorGridLines.step = 180;
-            Measures.options.categoryAxis[0].majorTicks.step = 180;
+            //Measures.options.categoryAxis[1].labels.template("#= kendo.toString(value, 'd')#");
 
+            Measures.options.categoryAxis[0].majorGridLines.step = 240;
+            Measures.options.categoryAxis[0].majorTicks.step = 240;
+            
             $("#Measures").css("-ms-touch-action", "pan-x");
             $("#Measures").css("-touch-action", "pan-x");
         }
         else
         {
             Measures.options.categoryAxis[1].labels.rotation = 0;
-            Measures.options.categoryAxis[1].labels.step = 90;
-            Measures.options.categoryAxis[1].majorGridLines.step = 90;
-            Measures.options.categoryAxis[1].majorTicks.step = 90;
+            Measures.options.categoryAxis[1].labels.step = 120;
+            Measures.options.categoryAxis[1].majorGridLines.step = 120;
+            Measures.options.categoryAxis[1].majorTicks.step = 120;
 
-            Measures.options.categoryAxis[0].majorGridLines.step = 90;
-            Measures.options.categoryAxis[0].majorTicks.step = 90;
+            //Measures.options.categoryAxis[1].labels.template("#= kendo.toString(value, 'd')#\n#= kendo.toString(value, 't')#");
+
+            Measures.options.categoryAxis[0].majorGridLines.step = 120;
+            Measures.options.categoryAxis[0].majorTicks.step = 120;
         }
 
         Measures.refresh();
@@ -43,12 +47,14 @@
         if ($(window).width() < 480)
         {
             Measures.options.categoryAxis[1].labels.rotation = 45;
-            Measures.options.categoryAxis[1].labels.step = 180;
-            Measures.options.categoryAxis[1].majorGridLines.step = 180;
-            Measures.options.categoryAxis[1].majorTicks.step = 180;
+            Measures.options.categoryAxis[1].labels.step = 240;
+            Measures.options.categoryAxis[1].majorGridLines.step = 240;
+            Measures.options.categoryAxis[1].majorTicks.step = 240;
 
-            Measures.options.categoryAxis[0].majorGridLines.step = 180;
-            Measures.options.categoryAxis[0].majorTicks.step = 180;
+            //Measures.options.categoryAxis[1].labels.template("#= kendo.toString(value, 'd')#");
+
+            Measures.options.categoryAxis[0].majorGridLines.step = 240;
+            Measures.options.categoryAxis[0].majorTicks.step = 240;
 
             Measures.refresh();
 
@@ -230,18 +236,18 @@
                 .Labels(l => l.Visible(false))
                 .BaseUnit(ChartAxisBaseUnit.Minutes)
                 .BaseUnitStep(15)
-                .MajorGridLines(majorGridLines => majorGridLines.Step(90).Visible(true))
-                .MajorTicks(ticks => ticks.Step(90))
+                .MajorGridLines(majorGridLines => majorGridLines.Step(120).Visible(true))
+                .MajorTicks(ticks => ticks.Step(120))
                 .Justify(true)
                 .AxisCrossingValue(0, 9000)
             )
             .CategoryAxis(axis => axis
                 .Date()
-                .Labels(l => l.Visible(true).Step(90).Template("#= kendo.toString(value, 'd')#\n#= kendo.toString(value, 't')#"))
+                .Labels(l => l.Visible(true).Step(120).Template("#= kendo.toString(value, 'd')#\n#= kendo.toString(value, 't')#"))
                 .BaseUnit(ChartAxisBaseUnit.Minutes)
                 .BaseUnitStep(15)
-                .MajorGridLines(majorGridLines => majorGridLines.Step(90).Visible(true))
-                .MajorTicks(ticks => ticks.Step(90))
+                .MajorGridLines(majorGridLines => majorGridLines.Step(120).Visible(true))
+                .MajorTicks(ticks => ticks.Step(120))
                 .Justify(true)
                 .AxisCrossingValue(9000, 0, 0, 9000, 0, 9000)
             )
