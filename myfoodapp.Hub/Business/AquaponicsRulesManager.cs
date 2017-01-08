@@ -5,6 +5,7 @@ using SimpleExpressionEvaluator;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace myfoodapp.Hub.Business
@@ -22,6 +23,8 @@ namespace myfoodapp.Hub.Business
             var data = File.ReadAllText("Content/AquaponicsRules.json");
             var rulesList = JsonConvert.DeserializeObject<List<Rule>>(data);
 
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
+
             var mailContent = new StringBuilder();
 
             foreach (var rule in rulesList)
@@ -35,7 +38,8 @@ namespace myfoodapp.Hub.Business
                         var message = String.Format(rule.warningContent, bindingValue);
                         mailContent.AppendLine(message + "<br>");
 
-                        db.Events.Add(new Event() { date = DateTime.Now, description = message });
+                        if(currentProductionUnit != null)
+                        db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit });
 
                         isValid = false;
                     }
