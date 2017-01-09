@@ -1,36 +1,72 @@
 ﻿@using myfoodapp.Hub.Models
 @model ProductionUnitViewModel
-<div id="center">
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
+
+<script type="text/javascript">
+    window.onload = function onLoad(e) {
+
+        var Events = $("#Events").data("kendoGrid");
+
+        var productionUnitId = $('#routeDataId').val();
+
+        Events.dataSource.read({ id: productionUnitId });
+    }
+
+    function onBackClick() {
+        var productionUnitId = $('#routeDataId').val();
+        window.location = window.location.origin + "/ProductionUnits/Details/" + productionUnitId;
+    }
+
+</script>
+
+<input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
+
+<div id="main-section-header" class="row">
+    <h2 class="col-md-3">Production Units Management</h2>
+    <div style="clear:both;"></div>
+</div>
+
+<div id="productionUnits-grid" class="main-section-content row">
+    <div id="productionUnits-details" class="col-md-2">
+        <h3 class="section-header">Change Production Units Settings</h3>
+        <br />
+
+        <p>
+            @(Html.Kendo().Button()
+            .Name("backButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .Content("Back to Details")
+            .Events(ev => ev.Click("onBackClick")))
+        </p>
+    </div>
+    <div id="grid-container" class="col-xs-10">
+        <div id="center">
+            <section id="form">
                 @using (Html.BeginForm("Update", "ProductionUnits", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
+            {
                     @Html.HiddenFor(model => model.Id)
                     @Html.HiddenFor(model => model.locationLatitude)
                     @Html.HiddenFor(model => model.locationLongitude)
                     @Html.HiddenFor(model => model.options)
                     @Html.HiddenFor(model => model.picturePath)
-                   
+
                     @Html.HiddenFor(model => model.productionUnitTypeId)
                     @Html.HiddenFor(model => model.ownerId)
                     @Html.HiddenFor(model => model.version)
                     @Html.HiddenFor(model => model.startDate)
                     @Html.HiddenFor(model => model.reference)
 
-                        @Html.AntiForgeryToken()
-                        <h1>Change Production Unit Settings</h1>
-                        <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.info, new { @class = "col-md-2 control-label" })
-                            <div class="col-md-10">
-                                @(Html.Kendo().TextBoxFor(model => model.info)
+                    @Html.AntiForgeryToken()
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.info, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @(Html.Kendo().TextBoxFor(model => model.info)
                                 .Name("info")
-                                .HtmlAttributes(new {@readonly = "true" })
-                                 )
-                            </div>
+                                .HtmlAttributes(new { @readonly = "true" })
+                            )
                         </div>
+                    </div>
                         <div class="form-group">
                             @Html.LabelFor(m => m.owner, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
@@ -54,7 +90,7 @@
                                       });
                                   })
                                 )
-                        </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -62,20 +98,25 @@
                                 <input type="submit" value="Save & Close" class="btn btn-default" />
                             </div>
                         </div>
-                    }
+                }
             </section>
         </div>
     </div>
 </div>
 
 <style type="text/css">
+     
+    .k-button {
+     height: 50px;
+}
+
     #center {
     margin: auto;
-    width: 50%;
+    width: 80%;
     border: 3px solid green;
-    padding: 10px;
+    padding: 20px;
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(50%);
 }
 </style>

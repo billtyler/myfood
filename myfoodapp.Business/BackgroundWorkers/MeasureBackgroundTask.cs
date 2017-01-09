@@ -287,7 +287,7 @@ namespace myfoodapp.Business
                                     taskTemp.Wait();
 
                                     if (userSettings.isDiagnosticModeEnable)
-                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
+                                        logModel.AppendLog(Log.CreateLog(String.Format("Air Temperature captured : {0}", capturedValue), Log.LogType.Information));
                                 }
                                 else
                                     logModel.AppendLog(Log.CreateLog(String.Format("Air Temperature out of range - {0}", capturedValue), Log.LogType.Warning));
@@ -313,7 +313,7 @@ namespace myfoodapp.Business
                                     taskHum.Wait();
 
                                     if (userSettings.isDiagnosticModeEnable)
-                                        logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature captured : {0}", capturedValue), Log.LogType.Information));
+                                        logModel.AppendLog(Log.CreateLog(String.Format("Air Humidity captured : {0}", capturedValue), Log.LogType.Information));
                                 }
                                 else
                                     logModel.AppendLog(Log.CreateLog(String.Format("Air Humidity out of range - {0}", capturedValue), Log.LogType.Warning));
