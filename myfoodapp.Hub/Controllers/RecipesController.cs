@@ -33,13 +33,18 @@ namespace myfoodapp.Hub.Controllers
         public async Task<ActionResult> Index()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return View(await db.Recipes
+
+            var rstl = await db.Recipes
                                     .Include(r => r.plantingIndoorMonths)
                                     .Include(r => r.plantingOutdoorMonths)
                                     .Include(r => r.harvestingMonths)
                                     .Include(r => r.wateringLevel)
                                     .Include(r => r.gardeningType)
-                                    .ToListAsync());
+                                    .ToListAsync();
+
+            rstl.ForEach(r => r.isRecommended = true);
+
+            return View(rstl);
         }
 
         public ActionResult ProductionUnits_Read([DataSourceRequest] DataSourceRequest request)

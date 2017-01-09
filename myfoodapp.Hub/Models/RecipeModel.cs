@@ -39,7 +39,7 @@ namespace myfoodapp.Hub.Models
         [Required]
         public string picturePath { get; set; }
         [NotMapped]
-        public bool isRecommandated { get; set; }
+        public bool isRecommended { get; set; }
     }
 
 
