@@ -16,6 +16,8 @@ namespace myfoodapp.Hub.Models
         public ProductionUnitTypeViewModel productionUnitType { get; set; }
         public int hydroponicTypeId { get; set; }
         public HydroponicTypeViewModel hydroponicType { get; set; }
+        public int productionUnitStatusId { get; set; }
+        public ProductionUnitStatusViewModel productionUnitStatus { get; set; }
         public double locationLatitude { get; set; }
         public double locationLongitude { get; set; }
         public String info { get; set; }

@@ -34,14 +34,17 @@ namespace myfoodapp.Hub.Migrations
                         picturePath = c.String(),
                         hydroponicType_Id = c.Int(nullable: false),
                         owner_Id = c.Int(nullable: false),
+                        productionUnitStatus_Id = c.Int(nullable: false),
                         productionUnitType_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.HydroponicTypes", t => t.hydroponicType_Id, cascadeDelete: true)
                 .ForeignKey("dbo.ProductionUnitOwners", t => t.owner_Id, cascadeDelete: true)
+                .ForeignKey("dbo.ProductionUnitStatus", t => t.productionUnitStatus_Id, cascadeDelete: true)
                 .ForeignKey("dbo.ProductionUnitTypes", t => t.productionUnitType_Id, cascadeDelete: true)
                 .Index(t => t.hydroponicType_Id)
                 .Index(t => t.owner_Id)
+                .Index(t => t.productionUnitStatus_Id)
                 .Index(t => t.productionUnitType_Id);
             
             CreateTable(
@@ -164,6 +167,16 @@ namespace myfoodapp.Hub.Migrations
                 .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
+            
+            CreateTable(
+                "dbo.ProductionUnitStatus",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        name = c.String(),
+                        description = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
             
             CreateTable(
                 "dbo.ProductionUnitTypes",
@@ -332,6 +345,7 @@ namespace myfoodapp.Hub.Migrations
             DropForeignKey("dbo.Messages", "messageType_Id", "dbo.MessageTypes");
             DropForeignKey("dbo.Events", "productionUnit_Id", "dbo.ProductionUnits");
             DropForeignKey("dbo.ProductionUnits", "productionUnitType_Id", "dbo.ProductionUnitTypes");
+            DropForeignKey("dbo.ProductionUnits", "productionUnitStatus_Id", "dbo.ProductionUnitStatus");
             DropForeignKey("dbo.ProductionUnits", "owner_Id", "dbo.ProductionUnitOwners");
             DropForeignKey("dbo.ProductionUnitOwners", "user_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
@@ -361,6 +375,7 @@ namespace myfoodapp.Hub.Migrations
             DropIndex("dbo.Measures", new[] { "sensor_Id" });
             DropIndex("dbo.Measures", new[] { "productionUnit_Id" });
             DropIndex("dbo.ProductionUnits", new[] { "productionUnitType_Id" });
+            DropIndex("dbo.ProductionUnits", new[] { "productionUnitStatus_Id" });
             DropIndex("dbo.ProductionUnits", new[] { "owner_Id" });
             DropIndex("dbo.ProductionUnits", new[] { "hydroponicType_Id" });
             DropIndex("dbo.Events", new[] { "productionUnit_Id" });
@@ -375,6 +390,7 @@ namespace myfoodapp.Hub.Migrations
             DropTable("dbo.Logs");
             DropTable("dbo.GardeningTypes");
             DropTable("dbo.ProductionUnitTypes");
+            DropTable("dbo.ProductionUnitStatus");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");

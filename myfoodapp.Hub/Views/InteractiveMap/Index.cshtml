@@ -127,6 +127,7 @@
                 $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
                 $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
                 $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+                $("#ProductionUnitStatus").text('STATUS: ' + response.ProductionUnitStatus);
                 $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
 
                 currentProductionUnitLat = response.LocationLatitude;
@@ -175,6 +176,7 @@
                 $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
                 $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
                 $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+                $("#ProductionUnitStatus").text('STATUS: ' + response.ProductionUnitStatus);
                 $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
 
                 if (response.PicturePath === null) {
@@ -305,6 +307,7 @@
                     <h2 id="PioneerCitizenNumber"><span></span></h2>
                     <h2 id="ProductionUnitType"><span></span></h2>
                     <h2 id="ProductionUnitVersion"><span></span></h2>
+                    <h2 id="ProductionUnitStatus"><span></span></h2>
                     <h2 id="ProductionUnitStartDate"><span></span></h2>
                 </div>
             </div>

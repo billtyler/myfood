@@ -299,38 +299,36 @@
 <div id="performanceHealthAnalysis">
     <div id="performanceHealthAnalysisContainer" class="col-md-4">
         <h3 class="section-header">Performance and Health Analysis</h3> 
-        @*@(Html.Kendo().Chart()
-            .Name("PerfChart")
-            .Legend(legend => legend
-                .Visible(false)
-                .Position(ChartLegendPosition.Top)
-            )
-            .ChartArea(ch => ch.Background("#eeeeee"))
-            .Series(series =>
-            {
-                series.Column(new double[] { 23, 39, 27 }).Color("#018001");
-            })
-            .HtmlAttributes(new { @style = "height: 150px;" })
-            .CategoryAxis(axis => axis
-                .Categories("Jul", "Agu", "Sep")
-                .MajorGridLines(m => m.Visible(true))
-                .Line(l => l.Width(0))
-                .Labels(l => l.Visible(false))
-            )
-            .ValueAxis(axis => axis
-                .Numeric()
-                .Line(line => line.Visible(false))
-                .MajorTicks(x => x.Visible(false))
-                .MajorGridLines(m => m.Visible(true))
-                .Line(l => l.Visible(false))
-                .Labels(l => l.Visible(false))
-             )
-            .Tooltip(tooltip => tooltip
-            .Visible(true)
-            .Format("{0}%")
-            .Template("#= category #: #= value # kg")
+        @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
+        .Name("chart")
+        .Legend(legend => legend
+            .Position(ChartLegendPosition.Right)
         )
-        )*@
+        .HtmlAttributes(new { @class = "small-chart" })
+        .ChartArea(chart => chart
+            .Background("transparent")
+         )
+         .DataSource(ds =>
+         {
+             ds.Read(read => read.Action("ProductionUnitStatus_Read", "Home"));
+         }
+            )
+            .Series(series => series
+            .Pie(model => model.Value, model => model.Category, model => model.Color)
+            //.Labels(labels => labels
+            //                .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
+            //                .Background("transparent")
+            //                .Visible(true)
+            //               )
+            .StartAngle(150)
+            .Padding(0)
+            )
+        .Tooltip(tooltip => tooltip
+            .Visible(true)
+            .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
+        )
+        )
+        
     </div>
 </div>
 
@@ -365,6 +363,12 @@
         height: 0;
         clear: both;
         visibility: hidden;
+    }
+
+    .k-chart.small-chart {
+        display: inline-block;
+        width: 300;
+        height: 150px;
     }
 
     .k-map .k-marker-red-marker {

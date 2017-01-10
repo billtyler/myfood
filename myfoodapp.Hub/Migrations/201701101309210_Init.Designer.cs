@@ -13,7 +13,7 @@ namespace myfoodapp.Hub.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201612280640579_Init"; }
+            get { return "201701101309210_Init"; }
         }
         
         string IMigrationMetadata.Source

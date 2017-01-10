@@ -33,6 +33,7 @@ namespace myfoodapp.Hub.Controllers
         {
             PopulateProductionUnitTypes();
             PopulateOwners();
+            PopulateProductionUnitStatus();
 
             ApplicationDbContext db = new ApplicationDbContext();
             return View(await db.ProductionUnits.ToListAsync());
@@ -207,6 +208,21 @@ namespace myfoodapp.Hub.Controllers
                         .OrderBy(e => e.pioneerCitizenNumber);
 
             ViewData["owners"] = owners;
+        }
+
+        private void PopulateProductionUnitStatus()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var productionUnitStatus = db.ProductionUnitStatus
+                       .Select(m => new ProductionUnitStatusViewModel
+                       {
+                           Id = m.Id,
+                           name = m.name
+                       })
+                       .OrderBy(e => e.name);
+
+            ViewData["ProductionUnitStatus"] = productionUnitStatus;
         }
 
         public ActionResult HydroponicTypes_Read([DataSourceRequest] DataSourceRequest request)

@@ -77,6 +77,7 @@ namespace myfoodapp.Hub.Controllers
 
             var rslt = db.ProductionUnits.Include("owner.user")
                                          .Include("productionUnitType")
+                                         .Include("productionUnitStatus")
                                          .Where(p => p.locationLatitude == SelectedProductionUnitLat &&
                                                      p.locationLongitude == SelectedProductionUnitLong).FirstOrDefault();
 
@@ -85,6 +86,7 @@ namespace myfoodapp.Hub.Controllers
                               ProductionUnitVersion = rslt.version,
                               ProductionUnitStartDate = rslt.startDate,
                               ProductionUnitType = rslt.productionUnitType.name,
+                              ProductionUnitStatus = rslt.productionUnitStatus.name,
                               PicturePath = rslt.picturePath,
                             }, JsonRequestBehavior.AllowGet);
         }
@@ -103,6 +105,7 @@ namespace myfoodapp.Hub.Controllers
 
             var rslt = db.ProductionUnits.Include("owner.user")
                                          .Include("productionUnitType")
+                                         .Include("productionUnitStatus")
                                          .Where(p => p.picturePath != null).ToList()[randomIndex];
 
             return Json(new
@@ -112,6 +115,7 @@ namespace myfoodapp.Hub.Controllers
                 ProductionUnitVersion = rslt.version,
                 ProductionUnitStartDate = rslt.startDate,
                 ProductionUnitType = rslt.productionUnitType.name,
+                ProductionUnitStatus = rslt.productionUnitStatus.name,
                 PicturePath = rslt.picturePath,
                 LocationLatitude = rslt.locationLatitude,
                 LocationLongitude = rslt.locationLongitude,

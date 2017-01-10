@@ -30,6 +30,8 @@ namespace myfoodapp.Hub.Models
         public ProductionUnitOwner owner { get; set; }
         public string picturePath { get; set; }
         public List<Measure> measures { get; set; }
+        [Required]
+        public ProductionUnitStatus productionUnitStatus { get; set; }
     }
 
     public class OptionList
@@ -50,6 +52,14 @@ namespace myfoodapp.Hub.Models
     }
 
     public class ProductionUnitType
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+    }
+
+    public class ProductionUnitStatus
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }

@@ -382,9 +382,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612280640579_Init.cs" />
-    <Compile Include="Migrations\201612280640579_Init.Designer.cs">
-      <DependentUpon>201612280640579_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201701101309210_Init.cs" />
+    <Compile Include="Migrations\201701101309210_Init.Designer.cs">
+      <DependentUpon>201701101309210_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -406,9 +406,11 @@
     <Compile Include="Viewmodels\AccountViewModels.cs" />
     <Compile Include="Viewmodels\OwnerViewModel.cs" />
     <Compile Include="Viewmodels\HydroponicTypeViewModel.cs" />
+    <Compile Include="Viewmodels\ProductionUnitStatusViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitTypeViewModel.cs" />
     <Compile Include="Viewmodels\MessageTypeViewModel.cs" />
     <Compile Include="Viewmodels\MeasureViewModel.cs" />
+    <Compile Include="Viewmodels\PieChartViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitViewModel.cs" />
     <Compile Include="Viewmodels\MessageViewModel.cs" />
   </ItemGroup>
@@ -2928,8 +2930,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612280640579_Init.resx">
-      <DependentUpon>201612280640579_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701101309210_Init.resx">
+      <DependentUpon>201701101309210_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

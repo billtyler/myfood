@@ -21,7 +21,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<ProductionUnitViewModel> result = new List<ProductionUnitViewModel>();
 
-            result = entities.ProductionUnits.Select(pu => new ProductionUnitViewModel
+            result = entities.ProductionUnits.OrderBy(m => m.startDate).Select(pu => new ProductionUnitViewModel
             {
                 Id = pu.Id,
                 startDate = pu.startDate,
@@ -45,6 +45,13 @@ namespace myfoodapp.Hub.Services
                 {
                     Id = pu.productionUnitType.Id,
                     name = pu.productionUnitType.name
+                },
+
+                productionUnitStatusId = pu.productionUnitStatus.Id,
+                productionUnitStatus = new ProductionUnitStatusViewModel()
+                {
+                    Id = pu.productionUnitStatus.Id,
+                    name = pu.productionUnitStatus.name
                 },
 
                 ownerId = pu.owner.Id,
@@ -97,6 +104,13 @@ namespace myfoodapp.Hub.Services
                     name = pu.hydroponicType.name
                 },
 
+                productionUnitStatusId = pu.productionUnitStatus.Id,
+                productionUnitStatus = new ProductionUnitStatusViewModel()
+                {
+                    Id = pu.productionUnitStatus.Id,
+                    name = pu.productionUnitStatus.name
+                },
+
                 ownerId = pu.owner.Id,
                 owner = new OwnerViewModel()
                 {
@@ -136,6 +150,12 @@ namespace myfoodapp.Hub.Services
                 entity.hydroponicType.Id = productionUnit.hydroponicTypeId;
             }
 
+            if (entity.productionUnitStatus == null)
+            {
+                entity.productionUnitStatus = new ProductionUnitStatus();
+                entity.productionUnitStatus.Id = productionUnit.productionUnitStatusId;
+            }
+
             if (entity.owner == null)
             {
                 entity.owner = new ProductionUnitOwner();
@@ -173,6 +193,11 @@ namespace myfoodapp.Hub.Services
 
                 HydroponicType currentHydroponicType = new HydroponicType();
                 currentHydroponicType = entities.HydroponicTypes.Where(p => p.Id == productionUnit.hydroponicTypeId).FirstOrDefault();
+
+                target.hydroponicType = currentHydroponicType;
+
+                ProductionUnitStatus currentProductionUnitStatus = new ProductionUnitStatus();
+                currentProductionUnitStatus = entities.ProductionUnitStatus.Where(p => p.Id == productionUnit.productionUnitStatusId).FirstOrDefault();
 
                 target.hydroponicType = currentHydroponicType;
 

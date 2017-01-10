@@ -33,6 +33,7 @@ namespace myfoodapp.Hub.Migrations
 
             context.ProductionUnitOwners.RemoveRange(context.ProductionUnitOwners);
             context.ProductionUnitTypes.RemoveRange(context.ProductionUnitTypes);
+            context.ProductionUnitStatus.RemoveRange(context.ProductionUnitStatus);
             context.HydroponicTypes.RemoveRange(context.HydroponicTypes);
 
             context.OptionLists.RemoveRange(context.OptionLists);
@@ -68,7 +69,7 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "Family 22" });
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "Farm" });
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "Development Kit" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "Experimental Installation" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "Custom Lab" });
 
             context.HydroponicTypes.Add(new HydroponicType() { Id = 1, name = "Not applicable" });
             context.HydroponicTypes.Add(new HydroponicType() { Id = 2, name = "Bioponics" });
@@ -78,6 +79,12 @@ namespace myfoodapp.Hub.Migrations
             context.HydroponicTypes.Add(new HydroponicType() { Id = 6, name = "Aquaponics - Crayfish" });
             context.HydroponicTypes.Add(new HydroponicType() { Id = 7, name = "Aquaponics - Oth. Cold Fish" });
             context.HydroponicTypes.Add(new HydroponicType() { Id = 8, name = "Aquaponics - Oth. Warm Fish" });
+
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 1, name = "Wait Confirm." });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 2, name = "Setup planned" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 3, name = "Up and Running" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "In Maintenance" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "Stopped" });
 
             context.Options.Add(new Option() { Id = 0, name = "11 towers" });
             context.Options.Add(new Option() { Id = 1, name = "18 towers" });
@@ -489,6 +496,12 @@ namespace myfoodapp.Hub.Migrations
             var prodUnitTypeDevKit = context.ProductionUnitTypes.Where(m => m.Id == 6).FirstOrDefault();
             var prodUnitTypeExperimental = context.ProductionUnitTypes.Where(m => m.Id == 7).FirstOrDefault();
 
+            var prodUnitStatusWait = context.ProductionUnitStatus.Where(m => m.Id == 1).FirstOrDefault();
+            var prodUnitStatusReadyForInstall = context.ProductionUnitStatus.Where(m => m.Id == 2).FirstOrDefault();
+            var prodUnitStatusRunning = context.ProductionUnitStatus.Where(m => m.Id == 3).FirstOrDefault();
+            var prodUnitStatusMaintenance = context.ProductionUnitStatus.Where(m => m.Id == 4).FirstOrDefault();
+            var prodUnitStatusStopped = context.ProductionUnitStatus.Where(m => m.Id == 5).FirstOrDefault();
+
             var hydroTypeNotApplicable = context.HydroponicTypes.Where(m => m.Id == 1).FirstOrDefault();
             var hydroTypeBioponics = context.HydroponicTypes.Where(m => m.Id == 2).FirstOrDefault();
             var hydroTypeAquaponicsCarp = context.HydroponicTypes.Where(m => m.Id == 3).FirstOrDefault();
@@ -636,7 +649,7 @@ namespace myfoodapp.Hub.Migrations
             var MargotWOwner = new ProductionUnitOwner() { Id = 17, user = userMWI, pioneerCitizenName = "Margot W.", pioneerCitizenNumber = 16 };
             var StephaneMOwner = new ProductionUnitOwner() { Id = 18, user = userSMA, pioneerCitizenName = "Stéphane M.", pioneerCitizenNumber = 18 };
             var DarioMOwner = new ProductionUnitOwner() { Id = 19, user = userDMA, pioneerCitizenName = "Dario M.", pioneerCitizenNumber = 19 };
-            var SGPOwner = new ProductionUnitOwner() { Id = 20, user = userSGP, pioneerCitizenName = "Société du Grand Paris" };
+            var SGPOwner = new ProductionUnitOwner() { Id = 20, user = userSGP, pioneerCitizenName = "Soc. Grand Paris" };
 
             //TO BE DEPLOYED 
             var CristofDOwner = new ProductionUnitOwner() { Id = 21, user = userCDE, pioneerCitizenName = "Cristof D." };
@@ -716,6 +729,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = MickaelGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "SainteBarbeFamily22.jpg"
             };
 
@@ -730,6 +744,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = MatthieuUOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsCarp,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "GertwillerFamily22.jpg"
             };
 
@@ -744,6 +759,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = JohanNOwner,
                 productionUnitType = prodUnitTypeCity,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
             };
 
             var CLAProdUnit = new ProductionUnit()
@@ -757,6 +773,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = ChristopheLOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusMaintenance,
                 picturePath = "BivilleFamily22.jpg"
             };
 
@@ -771,6 +788,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = JeanPhilippeMGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "PavillyFamily22.jpg"
             };
 
@@ -785,6 +803,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = AndrewMOwner,
                 productionUnitType = prodUnitTypeFam14,
                 hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "TarragonaFamily14.jpg"
             };
 
@@ -799,6 +818,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = RosarioRGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "VillevaudeFamily22.jpg"
             };
 
@@ -813,6 +833,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = SebastienCOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "MezelFamily22.jpg"
             };
 
@@ -827,6 +848,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = MichelVSOwner,
                 productionUnitType = prodUnitTypeFam14,
                 hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "CannesFamily14.jpg"
             };
 
@@ -841,6 +863,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = DidierPOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsTilapia,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "LeCeillierFamily22.jpg"
             };
 
@@ -855,6 +878,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = ChristophePOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsTilapia,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "GuerpontFamily22.jpg"
             };
 
@@ -869,6 +893,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = PhilippeTOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "MelinFamily22.jpg"
             };
 
@@ -883,6 +908,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = SabineCOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "BraineFamily22.jpg"
             };
 
@@ -897,6 +923,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = StanAOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "OuzoueFamily22.jpg"
             };
 
@@ -911,6 +938,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = ChristianeWOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsCarp,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "OberpallenFamily22.jpg"
             };
 
@@ -925,6 +953,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = GillesDOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "MerigniacFamily22.JPG"
             };
 
@@ -939,6 +968,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = MargotWOwner,
                 productionUnitType = prodUnitTypeCity,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "BoisColombesCity.jpg"
             };
 
@@ -953,6 +983,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = StephaneMOwner,
                 productionUnitType = prodUnitTypeFam14,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "BronFamily14.JPG"
             };
 
@@ -967,6 +998,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = DarioMOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
                 picturePath = "LauterbourgFamily22.JPG"
             };
 
@@ -981,6 +1013,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = SGPOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusMaintenance,
                 picturePath = "SaintDenisFamily22.JPG"
             };
 
@@ -996,6 +1029,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = CristofDOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
             var AHEProdUnit = new ProductionUnit()
@@ -1009,19 +1043,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = AmousHOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
-            };
-
-            var BDEProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 45.1842207,
-                locationLongitude = 5.6804372,
-                reference = "76671",
-                info = "Engineer School Experimentation",
-                startDate = new DateTime(2017, 03, 06),
-                version = "2",
-                owner = BenoitDOwner,
-                productionUnitType = prodUnitTypeCity,
-                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
             var DMOProdUnit = new ProductionUnit()
@@ -1035,6 +1057,35 @@ namespace myfoodapp.Hub.Migrations
                 owner = DonatienMOwner,
                 productionUnitType = prodUnitTypeFam14,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var CELProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 46.3274736,
+                locationLongitude = -0.5313457,
+                reference = "76555",
+                info = "Open Source Contributor",
+                startDate = new DateTime(2017, 01, 30),
+                version = "2",
+                owner = CyrilleEOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var BDEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 45.1842207,
+                locationLongitude = 5.6804372,
+                reference = "76671",
+                info = "Engineer School Lab",
+                startDate = new DateTime(2017, 03, 06),
+                version = "2",
+                owner = BenoitDOwner,
+                productionUnitType = prodUnitTypeCity,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
             var MSEProdUnit = new ProductionUnit()
@@ -1048,6 +1099,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = MairieSOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
             var EDCProdUnit = new ProductionUnit()
@@ -1061,6 +1113,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = EleonoreDCOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
             //TO BE CONFIRMED
@@ -1075,6 +1128,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = MarcLOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusWait,
             };
 
             var PCLProdUnit = new ProductionUnit()
@@ -1088,6 +1142,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = PieterjanGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusWait,
             };
 
 
@@ -1102,6 +1157,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = BrigitteGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusWait,
             };
 
             //CONTRIBUTORS
@@ -1116,6 +1172,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = AnhHungPOwner,
                 productionUnitType = prodUnitTypeExperimental,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusMaintenance,
             };
 
             var JTEProdUnit = new ProductionUnit()
@@ -1129,19 +1186,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = JoelTOwner,
                 productionUnitType = prodUnitTypeExperimental,
                 hydroponicType = hydroTypeNotApplicable,
-            };
-
-            var CELProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 46.3274736,
-                locationLongitude = -0.5313457,
-                reference = "76555",
-                info = "Open Source Contributor",
-                startDate = new DateTime(2016, 10, 11),
-                version = "2",
-                owner = CyrilleEOwner,
-                productionUnitType = prodUnitTypeExperimental,
-                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusMaintenance,
             };
 
             var NROProdUnit = new ProductionUnit()
@@ -1155,6 +1200,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = NicolasROwner,
                 productionUnitType = prodUnitTypeExperimental,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusMaintenance,
             };
 
             //ADD PRODUCTION UNITS

@@ -161,6 +161,30 @@ namespace myfoodapp.Hub.Controllers
             return Json(rslt.ToDataSourceResult(request));
         }
 
+        public ActionResult ProductionUnitStatus_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var db = new ApplicationDbContext();
+
+            var rslt = db.ProductionUnits.Include("productionUnitStatus").ToList();
+
+            var waitConfCount = rslt.Where(p => p.productionUnitStatus.Id == 1).Count();
+            var setuPlannedCount = rslt.Where(p => p.productionUnitStatus.Id == 2).Count();
+            var upRunningCount = rslt.Where(p => p.productionUnitStatus.Id == 3).Count();
+            var onMaintenanceCount = rslt.Where(p => p.productionUnitStatus.Id == 4).Count();
+            var stoppedCount  = rslt.Where(p => p.productionUnitStatus.Id == 5).Count();
+
+            var statusList = new List<PieChartViewModel>();
+
+            statusList.Add(new PieChartViewModel() { Category = "Wait Confirm.", Value = waitConfCount, Color = "#9de219" });
+            statusList.Add(new PieChartViewModel() { Category = "Setup Planned", Value = setuPlannedCount, Color = "#90cc38" });
+            statusList.Add(new PieChartViewModel() { Category = "Up & Running", Value = upRunningCount, Color = "#068c35" });
+            statusList.Add(new PieChartViewModel() { Category = "On Maintenance", Value = onMaintenanceCount, Color = "#006634" });
+            statusList.Add(new PieChartViewModel() { Category = "Stopped", Value = stoppedCount, Color = "#004d38" });
+
+            return Json(statusList);
+        }
+
+
         public ActionResult GetNetworkStats()
         {
             ApplicationDbContext db = new ApplicationDbContext();
