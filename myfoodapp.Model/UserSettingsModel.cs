@@ -2,13 +2,8 @@
 using myfoodapp.Common;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace myfoodapp.Model
@@ -54,7 +49,7 @@ namespace myfoodapp.Model
                         isTempHumiditySensorEnable = true,
                         isDiagnosticModeEnable = false,
                         measureFrequency = 60000,
-                        productionSiteId = "74711",
+                        productionSiteId = "XXXXX",
                         hubMessageAPI = "https://hub.myfood.eu/api/Messages"
                     };
 #endif
@@ -69,7 +64,7 @@ namespace myfoodapp.Model
                         isTempHumiditySensorEnable = false,
                         isDiagnosticModeEnable = false,
                         measureFrequency = 600000,
-                        productionSiteId = "74711",
+                        productionSiteId = "XXXXX",
                         hubMessageAPI = "https://hub.myfood.eu/api/Messages"
                     };
 #endif

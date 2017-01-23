@@ -19,6 +19,8 @@ namespace myfoodapp.Hub.Migrations
         }
         protected override void Seed(ApplicationDbContext context)
         {
+            return;
+
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();
 
@@ -650,25 +652,24 @@ namespace myfoodapp.Hub.Migrations
             var StephaneMOwner = new ProductionUnitOwner() { Id = 18, user = userSMA, pioneerCitizenName = "Stéphane M.", pioneerCitizenNumber = 18 };
             var DarioMOwner = new ProductionUnitOwner() { Id = 19, user = userDMA, pioneerCitizenName = "Dario M.", pioneerCitizenNumber = 19 };
             var SGPOwner = new ProductionUnitOwner() { Id = 20, user = userSGP, pioneerCitizenName = "Soc. Grand Paris" };
+            var CristofDOwner = new ProductionUnitOwner() { Id = 21, user = userCDE, pioneerCitizenName = "Cristof D.", pioneerCitizenNumber = 20 };
+            var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M.", pioneerCitizenNumber = 21 };
 
             //TO BE DEPLOYED 
-            var CristofDOwner = new ProductionUnitOwner() { Id = 21, user = userCDE, pioneerCitizenName = "Cristof D." };
+            var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E." };
             var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Amous H.", pioneerCitizenNumber = 17 };
             var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
-            var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M." };
             var MairieSOwner = new ProductionUnitOwner() { Id = 23, user = userMSE, pioneerCitizenName = "Mairie Sevran" };
             var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléornore DC." };
 
             //TO BE CONFIRMED
             var MarcLOwner = new ProductionUnitOwner() { Id = 24, user = userMLA, pioneerCitizenName = "Marc L." };
             var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G." };
-            var PieterjanGOwner = new ProductionUnitOwner() { Id = 26, user = userPCL, pioneerCitizenName = "Pieterjan C." };
 
             //CONTRIBUTORS
             var JoelTOwner = new ProductionUnitOwner() { Id = 27, user = userJTE, pioneerCitizenName = "Joël T." };
             var AnhHungPOwner = new ProductionUnitOwner() { Id = 28, user = userAPO, pioneerCitizenName = "Anh Hung P." };
             var NicolasROwner = new ProductionUnitOwner() { Id = 29, user = userNRO, pioneerCitizenName = "Nicolas R." };
-            var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E." };
 
             //ADD PRODUCTION UNIT OWNERS
             //GREENHOUSE OWNERS 
@@ -693,10 +694,11 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(StephaneMOwner);
             context.ProductionUnitOwners.Add(DarioMOwner);
             context.ProductionUnitOwners.Add(SGPOwner);
-
-            //TO BE DEPLOYED 
             context.ProductionUnitOwners.Add(CristofDOwner);
             context.ProductionUnitOwners.Add(AmousHOwner);
+
+            //TO BE DEPLOYED 
+            context.ProductionUnitOwners.Add(CyrilleEOwner);
             context.ProductionUnitOwners.Add(BenoitDOwner);
             context.ProductionUnitOwners.Add(DonatienMOwner);
             context.ProductionUnitOwners.Add(MairieSOwner);
@@ -704,14 +706,12 @@ namespace myfoodapp.Hub.Migrations
 
             //TO BE CONFIRMED
             context.ProductionUnitOwners.Add(MarcLOwner);
-            context.ProductionUnitOwners.Add(PieterjanGOwner);
             context.ProductionUnitOwners.Add(BrigitteGOwner);
 
             //CONTRIBUTORS
             context.ProductionUnitOwners.Add(JoelTOwner);
             context.ProductionUnitOwners.Add(AnhHungPOwner);
             context.ProductionUnitOwners.Add(NicolasROwner);
-            context.ProductionUnitOwners.Add(CyrilleEOwner);
 
             context.SaveChanges();
 
@@ -1006,7 +1006,7 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 48.9196549,
                 locationLongitude = 2.3526728,
-                reference = "1ACDC8",
+                reference = "1AXDC8",
                 info = "Public Exhibition",
                 startDate = new DateTime(2016, 12, 01),
                 version = "2",
@@ -1017,33 +1017,18 @@ namespace myfoodapp.Hub.Migrations
                 picturePath = "SaintDenisFamily22.JPG"
             };
 
-            //TO BE DEPLOYED 
             var CDEProdUnit = new ProductionUnit()
             {
                 locationLatitude = 50.9406272,
                 locationLongitude = 3.0499455,
-                reference = "767DE",
+                reference = "1ACDC8",
                 info = "ACD Showroom",
                 startDate = new DateTime(2017, 01, 30),
                 version = "2",
                 owner = CristofDOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
-            };
-
-            var AHEProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 34.7568479,
-                locationLongitude = 10.7129123,
-                reference = "76671",
-                info = "Commercial Experimentation",
-                startDate = new DateTime(2017, 01, 06),
-                version = "2",
-                owner = AmousHOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
+                productionUnitStatus = prodUnitStatusRunning,
             };
 
             var DMOProdUnit = new ProductionUnit()
@@ -1056,6 +1041,21 @@ namespace myfoodapp.Hub.Migrations
                 version = "2",
                 owner = DonatienMOwner,
                 productionUnitType = prodUnitTypeFam14,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            //TO BE DEPLOYED 
+            var AHEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 34.7568479,
+                locationLongitude = 10.7129123,
+                reference = "76671",
+                info = "Commercial Experimentation",
+                startDate = new DateTime(2017, 01, 06),
+                version = "2",
+                owner = AmousHOwner,
+                productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusReadyForInstall,
             };
@@ -1131,20 +1131,19 @@ namespace myfoodapp.Hub.Migrations
                 productionUnitStatus = prodUnitStatusWait,
             };
 
-            var PCLProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 50.9282888,
-                locationLongitude = 4.3886957,
-                reference = "76739",
-                info = "Living Tomorrow Hub",
-                startDate = new DateTime(2016, 11, 30),
-                version = "2",
-                owner = PieterjanGOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusWait,
-            };
-
+            //var PCLProdUnit = new ProductionUnit()
+            //{
+            //    locationLatitude = 50.9282888,
+            //    locationLongitude = 4.3886957,
+            //    reference = "76739",
+            //    info = "Living Tomorrow Hub",
+            //    startDate = new DateTime(2016, 11, 30),
+            //    version = "2",
+            //    owner = PieterjanGOwner,
+            //    productionUnitType = prodUnitTypeFam22,
+            //    hydroponicType = hydroTypeNotApplicable,
+            //    productionUnitStatus = prodUnitStatusWait,
+            //};
 
             var BGUProdUnit = new ProductionUnit()
             {
@@ -1228,26 +1227,25 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(SMAProdUnit);
             context.ProductionUnits.Add(DMAProdUnit);
             context.ProductionUnits.Add(SGPProdUnit);
+            context.ProductionUnits.Add(CDEProdUnit);
+            context.ProductionUnits.Add(DMOProdUnit);
 
             //TO BE DEPLOYED
-            context.ProductionUnits.Add(CDEProdUnit);
+            context.ProductionUnits.Add(CELProdUnit);
             context.ProductionUnits.Add(AHEProdUnit);
             context.ProductionUnits.Add(BDEProdUnit);
-            context.ProductionUnits.Add(CDEProdUnit);
             context.ProductionUnits.Add(MSEProdUnit);
             context.ProductionUnits.Add(EDCProdUnit);
 
             //TO BE CONFIRMED
             context.ProductionUnits.Add(MLAProdUnit);
             context.ProductionUnits.Add(BGUProdUnit);
-            context.ProductionUnits.Add(PCLProdUnit);
-            context.ProductionUnits.Add(DMOProdUnit);
+            //context.ProductionUnits.Add(PCLProdUnit);
 
             //CONTRIBUTORS
             context.ProductionUnits.Add(APOProdUnit);
             context.ProductionUnits.Add(JTEProdUnit);
             context.ProductionUnits.Add(NROProdUnit);
-            context.ProductionUnits.Add(CELProdUnit);
 
             //OPTIONS
             //GREENHOUSES OWNERS
@@ -1400,8 +1398,8 @@ namespace myfoodapp.Hub.Migrations
 
             var optionsDMO = new List<OptionList>();
 
-            optionsDMO.Add(new OptionList() { productionUnit = BDEProdUnit, option = monitoringKitv2Option });
-            optionsDMO.Add(new OptionList() { productionUnit = BDEProdUnit, option = towers11Option });
+            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = monitoringKitv2Option });
+            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers11Option });
 
             var optionsMSE = new List<OptionList>();
 
@@ -1420,15 +1418,6 @@ namespace myfoodapp.Hub.Migrations
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = monitoringKitv2Option });
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = towers18Option });
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = permacultureBedOption });
-
-            var optionsPCL = new List<OptionList>();
-
-            optionsPCL.Add(new OptionList() { productionUnit = PCLProdUnit, option = monitoringKitv2Option });
-            optionsPCL.Add(new OptionList() { productionUnit = PCLProdUnit, option = towers18Option });
-            optionsPCL.Add(new OptionList() { productionUnit = PCLProdUnit, option = permacultureBedOption });
-            optionsPCL.Add(new OptionList() { productionUnit = PCLProdUnit, option = solarPanelOption });
-            optionsPCL.Add(new OptionList() { productionUnit = PCLProdUnit, option = sigfoxConnectionOption });
-            optionsPCL.Add(new OptionList() { productionUnit = PCLProdUnit, option = touchlessScreenOption });
 
             var optionsBGU = new List<OptionList>();
 
@@ -1477,18 +1466,17 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsSMA);
             context.OptionLists.AddRange(optionsDMA);
             context.OptionLists.AddRange(optionsSGP);
+            context.OptionLists.AddRange(optionsCDE);
+            context.OptionLists.AddRange(optionsDMO);
 
             //TO BE DEPLOYED
-            context.OptionLists.AddRange(optionsCDE);
             context.OptionLists.AddRange(optionsAHE);
             context.OptionLists.AddRange(optionsBDE);
-            context.OptionLists.AddRange(optionsDMO);
             context.OptionLists.AddRange(optionsMSE);
             context.OptionLists.AddRange(optionsEDC);
 
             //TO BE CONFIRMED
             context.OptionLists.AddRange(optionsMLA);
-            context.OptionLists.AddRange(optionsPCL);
             context.OptionLists.AddRange(optionsBGU);            
 
             //CONTRIBUTORS
@@ -1512,38 +1500,38 @@ namespace myfoodapp.Hub.Migrations
 
                 var productionUnitList = context.ProductionUnits;
 
-                foreach (ProductionUnit productionUnit in productionUnitList)
-                {
-                    for (int i = 0; i < 6 * 2; i++)
-                    {
-                        Random rnd = new Random();
-                        var currentDate = DateTime.Now;
-                        currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
+                //foreach (ProductionUnit productionUnit in productionUnitList)
+                //{
+                //    for (int i = 0; i < 6 * 2; i++)
+                //    {
+                //        Random rnd = new Random();
+                //        var currentDate = DateTime.Now;
+                //        currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
 
-                        context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
-                        context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
-                        context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
+                //        context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
+                //        context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
+                //        context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
 
-                        decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
+                //        decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
+                //        context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
 
-                        decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
+                //        decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                //        context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
 
-                        decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
+                //        decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                //        context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
 
-                        decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
+                //        decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
+                //        context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
 
-                        decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
+                //        decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                //        context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
 
-                        decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
-                    };
+                //        decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                //        context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
+                //    };
 
-                }
+                //}
                 context.SaveChanges();
             }
         }

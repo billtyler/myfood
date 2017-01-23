@@ -85,8 +85,8 @@ namespace myfoodapp.Hub.Models
 
     public class Event
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Int64 Id { get; set; }
         [Required]
         public DateTime date { get; set; }
         [Required]

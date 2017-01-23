@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 
 namespace myfoodapp.Hub.Business
 {
@@ -19,8 +20,9 @@ namespace myfoodapp.Hub.Business
             var mailSubject = "Warning from myfood Hub";
 
             ApplicationDbContext db = new ApplicationDbContext();
+            ApplicationDbContext dbLog = new ApplicationDbContext();
 
-            var data = File.ReadAllText("Content/AquaponicsRules.json");
+            var data = File.ReadAllText(HttpContext.Current.Server.MapPath("~/Content/AquaponicsRules.json"));
             var rulesList = JsonConvert.DeserializeObject<List<Rule>>(data);
 
             var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
@@ -39,15 +41,18 @@ namespace myfoodapp.Hub.Business
                         mailContent.AppendLine(message + "<br>");
 
                         if(currentProductionUnit != null)
-                        db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit });
+                        {
+                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit });
+                            db.SaveChanges();
+                        }
 
                         isValid = false;
                     }
                 }
                 catch (Exception ex)
                 {
-                    db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
-                    db.SaveChanges();
+                    dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                    dbLog.SaveChanges();
                 }
             }
 
@@ -57,8 +62,8 @@ namespace myfoodapp.Hub.Business
             }
             catch (Exception ex)
             {
-                db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
-                db.SaveChanges();
+                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
+                dbLog.SaveChanges();
             }
 
             try
@@ -67,8 +72,8 @@ namespace myfoodapp.Hub.Business
             }
             catch (Exception ex)
             {
-                db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Save Events"), ex));
-                db.SaveChanges();
+                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Save Events"), ex));
+                dbLog.SaveChanges();
             }
 
             return isValid;

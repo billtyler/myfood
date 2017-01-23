@@ -386,6 +386,14 @@
     <Compile Include="Migrations\201701101309210_Init.Designer.cs">
       <DependentUpon>201701101309210_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701231457282_Events.cs" />
+    <Compile Include="Migrations\201701231457282_Events.Designer.cs">
+      <DependentUpon>201701231457282_Events.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701231510133_Events_Int.cs" />
+    <Compile Include="Migrations\201701231510133_Events_Int.Designer.cs">
+      <DependentUpon>201701231510133_Events_Int.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1135,12 +1143,14 @@
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LauterbourgFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LeCeillierFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\LilleFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\MelinFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\MerigniacFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\MezelFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\OberpallenFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\PavillyFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
@@ -2932,6 +2942,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701101309210_Init.resx">
       <DependentUpon>201701101309210_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231457282_Events.resx">
+      <DependentUpon>201701231457282_Events.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701231510133_Events_Int.resx">
+      <DependentUpon>201701231510133_Events_Int.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,6 +16,8 @@ namespace myfoodapp.Hub.Controllers.Api
             var device = data["device"].ToObject<string>();
 
             var db = new ApplicationDbContext();
+            var dbLog = new ApplicationDbContext();
+
             var date = DateTime.Now;
 
             try
@@ -27,15 +29,14 @@ namespace myfoodapp.Hub.Controllers.Api
             }
             catch (Exception ex)
             {
-                db.Logs.Add(Log.CreateErrorLog("Error on Message from Sigfox", ex));
-                db.SaveChanges();
+                dbLog.Logs.Add(Log.CreateErrorLog("Error on Message from Sigfox", ex));
+                dbLog.SaveChanges();
             }
 
             try
             {
                 var currentProductionUnit = db.ProductionUnits.Include("owner.user").Include("hydroponicType").Where(p => p.reference == device).FirstOrDefault();
                 
-
                 if (currentProductionUnit == null)
                 {
                     db.Logs.Add(Log.CreateLog(String.Format("Production Unit not found - {0}", device), Log.LogType.Warning));
@@ -133,9 +134,11 @@ namespace myfoodapp.Hub.Controllers.Api
                     }                     
                 }
 
-                var currentLastDayPHValue = db.Measures.Where(m => m.captureDate > date.AddDays(-1) &&
-                                                   m.productionUnit == currentProductionUnit &&
-                                                   m.sensor == phSensor).OrderBy(m => m.Id).FirstOrDefault();
+                DateTime lastDay = date.AddDays(-1);
+
+                var currentLastDayPHValue = db.Measures.Where(m => m.captureDate > lastDay &&
+                                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).FirstOrDefault();
 
                 if (currentLastDayPHValue == null)
                     currentMeasures.lastDayPHvariation = 0;
@@ -146,7 +149,8 @@ namespace myfoodapp.Hub.Controllers.Api
             }
             catch (Exception ex)
             {
-                db.Logs.Add(Log.CreateErrorLog("Error on Convert Message into Measure", ex));
+                dbLog.Logs.Add(Log.CreateErrorLog("Error on Convert Message into Measure", ex));
+                dbLog.SaveChanges();
             }
         }
     }
