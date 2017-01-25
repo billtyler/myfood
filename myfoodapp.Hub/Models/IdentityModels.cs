@@ -84,5 +84,7 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.ProductionUnitStatus> ProductionUnitStatus { get; set; }
 
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.EventType> EventTypes { get; set; }
+
     }
 }

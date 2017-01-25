@@ -19,7 +19,7 @@ namespace myfoodapp.Hub.Migrations
         }
         protected override void Seed(ApplicationDbContext context)
         {
-            return;
+            //return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();
@@ -37,6 +37,9 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitTypes.RemoveRange(context.ProductionUnitTypes);
             context.ProductionUnitStatus.RemoveRange(context.ProductionUnitStatus);
             context.HydroponicTypes.RemoveRange(context.HydroponicTypes);
+
+            context.Events.RemoveRange(context.Events);
+            context.EventTypes.RemoveRange(context.EventTypes);
 
             context.OptionLists.RemoveRange(context.OptionLists);
             context.Options.RemoveRange(context.Options);
@@ -88,6 +91,12 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "In Maintenance" });
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "Stopped" });
 
+            context.EventTypes.Add(new EventType() { Id = 1, name = "Warning" });
+            context.EventTypes.Add(new EventType() { Id = 2, name = "Issue" });
+            context.EventTypes.Add(new EventType() { Id = 3, name = "Info" });
+            context.EventTypes.Add(new EventType() { Id = 4, name = "Advices" });
+            context.EventTypes.Add(new EventType() { Id = 5, name = "Improvement" });
+
             context.Options.Add(new Option() { Id = 0, name = "11 towers" });
             context.Options.Add(new Option() { Id = 1, name = "18 towers" });
             context.Options.Add(new Option() { Id = 2, name = "24 towers" });
@@ -120,18 +129,18 @@ namespace myfoodapp.Hub.Migrations
 
             context.SaveChanges();
 
-            context.Months.Add(new Month() { Id = 0, name = "January", order = 0, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
-            context.Months.Add(new Month() { Id = 1, name = "February", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 2, name = "March", order = 2, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 3, name = "April", order = 3, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 4, name = "May", order = 4, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 5, name = "June", order = 5, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 6, name = "July", order = 6, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 7, name = "August", order = 7, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 8, name = "September", order = 8, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 9, name = "October", order = 9, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 10, name = "November", order = 10, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 11, name = "December", order = 11, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 0, name = "January", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
+            context.Months.Add(new Month() { Id = 1, name = "February", order = 2, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 2, name = "March", order = 3, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 3, name = "April", order = 4, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 4, name = "May", order = 5, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 5, name = "June", order = 6, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 6, name = "July", order = 7, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 7, name = "August", order = 8, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 8, name = "September", order = 9, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 9, name = "October", order = 10, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 10, name = "November", order = 11, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 11, name = "December", order = 12, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
 
             context.SaveChanges();
 
@@ -555,7 +564,7 @@ namespace myfoodapp.Hub.Migrations
             //TO BE DEPLOYED
             var userCDE = new ApplicationUser() { Email = "cristof@myfood.eu", UserName = "cristof@myfood.eu" };
             var userAHE = new ApplicationUser() { Email = "amous@myfood.eu", UserName = "amous@myfood.eu" };
-            var userDMO = new ApplicationUser() { Email = "donotien@myfood.eu", UserName = "donotien@myfood.eu" };
+            var userDMO = new ApplicationUser() { Email = "donatien@myfood.eu", UserName = "donatien@myfood.eu" };
             var userMSE = new ApplicationUser() { Email = "sevran@myfood.eu", UserName = "sevran@myfood.eu" };
             var userEDC = new ApplicationUser() { Email = "eleonore@myfood.eu", UserName = "eleonore@myfood.eu" };
 
@@ -961,7 +970,7 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 48.9151423,
                 locationLongitude = 2.2513185,
-                reference = "76709",
+                reference = "1AD15B",
                 info = "Urban Experimentation",
                 startDate = new DateTime(2016, 10, 15),
                 version = "1",
@@ -1035,7 +1044,7 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 50.6311167,
                 locationLongitude = 3.0120553,
-                reference = "76AZ1",
+                reference = "73331",
                 info = "Entrepreunor Experimentation",
                 startDate = new DateTime(2017, 01, 20),
                 version = "2",
@@ -1043,6 +1052,7 @@ namespace myfoodapp.Hub.Migrations
                 productionUnitType = prodUnitTypeFam14,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "LilleFamily14.JPG",
             };
 
             //TO BE DEPLOYED 

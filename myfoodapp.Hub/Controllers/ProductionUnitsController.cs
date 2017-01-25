@@ -68,7 +68,9 @@ namespace myfoodapp.Hub.Controllers
         [Authorize]
         public ActionResult Events(int id)
         {
-            ViewBag.Title = "Production Unit Detail Page";
+            ViewBag.Title = "Production Unit Event Page";
+
+            PopulateEventType();
 
             return View();
         }
@@ -112,7 +114,9 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult Event_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var rslt = db.Events.Where(e => e.productionUnit.Id == id).ToList();
+            EventService eventService = new EventService(db);
+
+            var rslt = eventService.GetAll().Where(ev => ev.productionUnitId == id);
 
             return Json(rslt.ToDataSourceResult(request));
         }
@@ -223,6 +227,21 @@ namespace myfoodapp.Hub.Controllers
                        .OrderBy(e => e.name);
 
             ViewData["ProductionUnitStatus"] = productionUnitStatus;
+        }
+
+        private void PopulateEventType()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var eventTypes = db.EventTypes
+                       .Select(m => new EventTypeViewModel
+                       {
+                           Id = m.Id,
+                           name = m.name
+                       })
+                       .OrderBy(e => e.name);
+
+            ViewData["EventTypes"] = eventTypes;
         }
 
         public ActionResult HydroponicTypes_Read([DataSourceRequest] DataSourceRequest request)

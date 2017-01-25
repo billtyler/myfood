@@ -17,7 +17,6 @@ namespace myfoodapp.Hub.Business
         {
             Evaluator evaluator = new Evaluator();
             bool isValid = true;
-            var mailSubject = "Warning from myfood Hub";
 
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
@@ -26,8 +25,7 @@ namespace myfoodapp.Hub.Business
             var rulesList = JsonConvert.DeserializeObject<List<Rule>>(data);
 
             var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
-
-            var mailContent = new StringBuilder();
+            var warningEventType = db.EventTypes.Where(p => p.Id == 1).FirstOrDefault();
 
             foreach (var rule in rulesList)
             {
@@ -38,11 +36,10 @@ namespace myfoodapp.Hub.Business
                     {
                         var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
                         var message = String.Format(rule.warningContent, bindingValue);
-                        mailContent.AppendLine(message + "<br>");
 
                         if(currentProductionUnit != null)
                         {
-                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit });
+                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit, eventType = warningEventType });
                             db.SaveChanges();
                         }
 
@@ -54,16 +51,6 @@ namespace myfoodapp.Hub.Business
                     dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
                     dbLog.SaveChanges();
                 }
-            }
-
-            try
-            {
-                MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
-            }
-            catch (Exception ex)
-            {
-                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
-                dbLog.SaveChanges();
             }
 
             try

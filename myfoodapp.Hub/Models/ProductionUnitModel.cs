@@ -30,6 +30,7 @@ namespace myfoodapp.Hub.Models
         public ProductionUnitOwner owner { get; set; }
         public string picturePath { get; set; }
         public List<Measure> measures { get; set; }
+        public List<Event> events { get; set; }
         [Required]
         public ProductionUnitStatus productionUnitStatus { get; set; }
     }
@@ -93,5 +94,15 @@ namespace myfoodapp.Hub.Models
         public string description { get; set; }
         [Required]
         public ProductionUnit productionUnit { get; set; }
+        [Required]
+        public EventType eventType { get; set; }
+    }
+
+    public class EventType
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
     }
 }

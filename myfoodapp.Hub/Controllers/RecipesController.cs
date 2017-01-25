@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -34,6 +35,8 @@ namespace myfoodapp.Hub.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
+            var currentMonths = DateTime.Now.Month;
+
             var rstl = await db.Recipes
                                     .Include(r => r.plantingIndoorMonths)
                                     .Include(r => r.plantingOutdoorMonths)
@@ -42,7 +45,12 @@ namespace myfoodapp.Hub.Controllers
                                     .Include(r => r.gardeningType)
                                     .ToListAsync();
 
-            rstl.ForEach(r => r.isRecommended = true);
+            rstl.ForEach(r =>
+                            {
+                                if(r.plantingIndoorMonths.Where(p => p.order == currentMonths).FirstOrDefault() != null)
+                                  r.isRecommended = true;
+                            }    
+                        );
 
             return View(rstl);
         }

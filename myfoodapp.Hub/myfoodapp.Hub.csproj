@@ -394,6 +394,14 @@
     <Compile Include="Migrations\201701231510133_Events_Int.Designer.cs">
       <DependentUpon>201701231510133_Events_Int.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701250752121_Events_Type.cs" />
+    <Compile Include="Migrations\201701250752121_Events_Type.Designer.cs">
+      <DependentUpon>201701250752121_Events_Type.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701251650229_Event-ProdUnit.cs" />
+    <Compile Include="Migrations\201701251650229_Event-ProdUnit.Designer.cs">
+      <DependentUpon>201701251650229_Event-ProdUnit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -404,6 +412,7 @@
     <Compile Include="Models\ProductionUnitModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\ProductionUnitService.cs" />
     <Compile Include="Services\MeasureService.cs" />
     <Compile Include="Services\MessageService.cs" />
@@ -412,6 +421,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
+    <Compile Include="Viewmodels\EventViewModel.cs" />
     <Compile Include="Viewmodels\OwnerViewModel.cs" />
     <Compile Include="Viewmodels\HydroponicTypeViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitStatusViewModel.cs" />
@@ -2948,6 +2958,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701231510133_Events_Int.resx">
       <DependentUpon>201701231510133_Events_Int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701250752121_Events_Type.resx">
+      <DependentUpon>201701250752121_Events_Type.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701251650229_Event-ProdUnit.resx">
+      <DependentUpon>201701251650229_Event-ProdUnit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
