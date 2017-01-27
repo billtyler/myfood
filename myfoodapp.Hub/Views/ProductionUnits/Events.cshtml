@@ -47,9 +47,9 @@
         .Name("Events")
         .Columns(columns =>
         {
-            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("event type").Width(130);
+            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("event type").Width(80);
             columns.Bound(c => c.date).Format("{0:d}").Width(100).MinScreenWidth(380);
-            columns.Bound(c => c.description);
+            columns.Bound(c => c.description).Width(250);
             //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
             //columns.Command(command => { command.Destroy(); }).Width(250);
         })

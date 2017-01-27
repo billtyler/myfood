@@ -58,10 +58,7 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult ProductionUnits_Read([DataSourceRequest] DataSourceRequest request)
         {
             var currentUser = this.User.Identity.GetUserName();
-            var userId = UserManager.FindByName(currentUser).Id;
-
             var db = new ApplicationDbContext();
-            var productionUnitService = new ProductionUnitService(db);
 
             var currentProductionUnits = db.ProductionUnits.Include(p => p.owner.user)
                                                            .Where(p => p.owner.user.UserName == currentUser).ToList();

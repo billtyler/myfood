@@ -21,7 +21,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<MessageViewModel> result = new List<MessageViewModel>();
 
-            result = entities.Messages.Select(mess => new MessageViewModel
+            result = entities.Messages.OrderByDescending(m => m.date).Take(2000).Select(mess => new MessageViewModel
             {
                 Id = mess.Id,
                 content = mess.content,

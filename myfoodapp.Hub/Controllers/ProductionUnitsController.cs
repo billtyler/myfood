@@ -116,7 +116,7 @@ namespace myfoodapp.Hub.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
-            var rslt = eventService.GetAll().Where(ev => ev.productionUnitId == id);
+            var rslt = eventService.GetAll(id).OrderByDescending(ev => ev.date);
 
             return Json(rslt.ToDataSourceResult(request));
         }

@@ -20,7 +20,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<MeasureViewModel> result = new List<MeasureViewModel>();
 
-            result = entities.Measures.Select(meas => new MeasureViewModel
+            result = entities.Measures.OrderByDescending(m => m.captureDate).Take(2000).Select(meas => new MeasureViewModel
             {
                 Id = meas.Id,
                 captureDate = meas.captureDate,
@@ -50,6 +50,37 @@ namespace myfoodapp.Hub.Services
             return GetAll();
         }
 
+        public IEnumerable<MeasureViewModel> Read(int currentProductionUnitId)
+        {
+            IList<MeasureViewModel> result = new List<MeasureViewModel>();
+
+            result = entities.Measures.Where(m => m.productionUnit.Id == currentProductionUnitId)
+                                      .OrderByDescending(p => p.Id).Take(6 * 24 * 14 * 4)
+                                      .Select(meas => new MeasureViewModel
+                                      {
+                                          Id = meas.Id,
+                                          captureDate = meas.captureDate,
+                                          value = meas.value,
+                                          sensorId = meas.sensor.Id,
+                                          sensor = new SensorTypeViewModel()
+                                          {
+                                              Id = meas.sensor.Id,
+                                              name = meas.sensor.name
+                                          },
+                                          productionUnitId = meas.productionUnit.Id,
+                                          productionUnit = new ProductionUnitViewModel()
+                                          {
+                                              Id = meas.productionUnit.Id,
+                                              info = meas.productionUnit.info,
+                                              locationLatitude = meas.productionUnit.locationLatitude,
+                                              locationLongitude = meas.productionUnit.locationLongitude
+                                          },
+
+                                      }).ToList();
+
+            return result;
+        }
+
         public IEnumerable<MeasureViewModel> Read(SensorTypeEnum sensorType, double productionUnitLat, double productionUnitLong)
         {
             return GetAll().Where(m => m.sensorId == (int)sensorType && 
@@ -61,11 +92,6 @@ namespace myfoodapp.Hub.Services
         {
             return GetAll().Where(m => m.sensorId == (int)sensorType &&
                                        m.productionUnit.Id == currentProductionUnitId).Take(6 * 24 * 7);
-        }
-
-        public IEnumerable<MeasureViewModel> Read(int currentProductionUnitId)
-        {
-            return GetAll().Where(m => m.productionUnit.Id == currentProductionUnitId).OrderByDescending(p => p.Id).Take(6 * 24 * 14 * 4);
         }
 
         public void Create(MeasureViewModel measure)

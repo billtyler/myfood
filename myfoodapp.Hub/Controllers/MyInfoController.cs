@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using myfoodapp.Hub.Models;
 using System.Web.Security;
+using System.Linq;
 
 namespace myfoodapp.Hub.Controllers
 {   
@@ -85,6 +86,25 @@ namespace myfoodapp.Hub.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult AddPushNotification(string id)
+        {
+            var currentUser = this.User.Identity.GetUserName();
+
+            var db = new ApplicationDbContext();
+
+            var currentProductionOwner = db.ProductionUnitOwners.Include("user")
+                                                           .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+            if (currentProductionOwner != null)
+            {
+                currentProductionOwner.notificationPushKey = id;
+                db.SaveChanges();
+
+                return Json(currentProductionOwner, JsonRequestBehavior.AllowGet);
+            }
+
+            return null;
         }
 
         private void AddErrors(IdentityResult result)

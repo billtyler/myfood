@@ -27,7 +27,7 @@ namespace myfoodapp.Hub
             // Disable the HTTP Header X-Frame-Options: SAMEORIGIN
             AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
 
-            //SendDailyMessage();
+            SendDailyMessage();
 
             Timer timer = new Timer(TimerIntervalInMilliseconds);
             timer.Enabled = true;
@@ -59,26 +59,29 @@ namespace myfoodapp.Hub
             {
                 var productionUnitOwnerMail = item.Key.owner.user.Email;
                 var productionUnitOwnerName = item.Key.owner.pioneerCitizenName;
+                var notificationPushKey = item.Key.owner.notificationPushKey;
                 var productionUnitId = item.Key.Id;
                 var productionUnitInfo = item.Key.info;
 
-                var mailSubject = String.Format("Today Events on your myfood Unit {0}", productionUnitInfo);
+                var mailSubject = String.Format("Daily Events on your myfood Unit {0}", productionUnitInfo);
                 var mailContent = new StringBuilder();
 
-                mailContent.AppendLine(String.Format("Hello {0}, your unit reported few events today", productionUnitOwnerName));
-                mailContent.AppendLine(String.Format(@"Get more details at https://hub.myfood.eu/ProductionUnits/Events/{0}", productionUnitId));
+                NotificationPushManager.PushMessage(mailSubject, "Click to see your production unit's status", productionUnitId, notificationPushKey);
 
-                var eventMessageList = item.ToList();
+                //mailContent.AppendLine(String.Format("Hello {0}, your unit reported few events today", productionUnitOwnerName));
+                //mailContent.AppendLine(String.Format(@"Get more details at https://hub.myfood.eu/ProductionUnits/Events/{0}", productionUnitId));
 
-                try
-                {
-                    MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
-                }
-                catch (Exception ex)
-                {
-                    db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
-                    db.SaveChanges();
-                }
+                //var eventMessageList = item.ToList();
+
+                //try
+                //{
+                //    MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
+                //}
+                //catch (Exception ex)
+                //{
+                //    db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
+                //    db.SaveChanges();
+                //}
             }
         }
              

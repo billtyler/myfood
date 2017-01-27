@@ -20,7 +20,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44357</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -369,6 +369,7 @@
     <Compile Include="Business\AquaponicsRulesManager.cs" />
     <Compile Include="Business\SensorValueSet.cs" />
     <Compile Include="Common\MailManager.cs" />
+    <Compile Include="Common\NotificationPushManager.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\MessageController.cs" />
@@ -401,6 +402,10 @@
     <Compile Include="Migrations\201701251650229_Event-ProdUnit.cs" />
     <Compile Include="Migrations\201701251650229_Event-ProdUnit.Designer.cs">
       <DependentUpon>201701251650229_Event-ProdUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701270707293_Owner-NotificationPush.cs" />
+    <Compile Include="Migrations\201701270707293_Owner-NotificationPush.Designer.cs">
+      <DependentUpon>201701270707293_Owner-NotificationPush.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -1113,6 +1118,7 @@
     <Content Include="Content\Pictures\GardeningType\gardeningPermacultureBed.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningTowerGarden.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningZipgrowTower.png" />
+    <Content Include="Content\Pictures\miniLogoWhite.jpg" />
     <Content Include="Content\Pictures\Options\11towers.png" />
     <Content Include="Content\Pictures\Options\18towers.png" />
     <Content Include="Content\Pictures\Options\24towers.png" />
@@ -2965,6 +2971,9 @@
     <EmbeddedResource Include="Migrations\201701251650229_Event-ProdUnit.resx">
       <DependentUpon>201701251650229_Event-ProdUnit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701270707293_Owner-NotificationPush.resx">
+      <DependentUpon>201701270707293_Owner-NotificationPush.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -2984,7 +2993,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>21961</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:21962/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

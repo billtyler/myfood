@@ -50,6 +50,7 @@ namespace myfoodapp.Hub.Models
         public ApplicationUser user { get; set; }
         public int pioneerCitizenNumber { get; set; }
         public string pioneerCitizenName { get; set; }
+        public string notificationPushKey { get; set; }
     }
 
     public class ProductionUnitType

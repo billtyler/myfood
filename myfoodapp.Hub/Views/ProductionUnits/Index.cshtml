@@ -22,7 +22,7 @@
             columns.ForeignKey(c => c.ownerId, (System.Collections.IEnumerable)ViewData["owners"], "Id", "pioneerCitizenName").Title("owner").Width(130);
             columns.Bound(c => c.info).Width(175).MinScreenWidth(380);
             columns.Bound(c => c.startDate).Format("{0:d}").Width(100).MinScreenWidth(380);
-            columns.ForeignKey(c => c.productionUnitTypeId, (System.Collections.IEnumerable)ViewData["productionUnitTypes"], "Id", "name").Title("prod. type").Width(100);
+            columns.ForeignKey(c => c.productionUnitTypeId, (System.Collections.IEnumerable)ViewData["productionUnitTypes"], "Id", "name").Title("prod. type").Width(100).MinScreenWidth(380);
             columns.Bound(c => c.locationLatitude).Width(80).Title("lat.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).MinScreenWidth(380);
             columns.Bound(c => c.locationLongitude).Width(80).Title("long.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).MinScreenWidth(380);
             //columns.Bound(c => c.version).Width(80).HtmlAttributes(new { style = "text-align:right" }).HeaderHtmlAttributes(new { style = "text-align:right" }).MinScreenWidth(380);
