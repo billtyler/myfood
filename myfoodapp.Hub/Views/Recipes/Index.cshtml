@@ -36,33 +36,33 @@
                 <div class="thumbs">
                     #if (gardeningType.name === "Permaculture Bed" ){#
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningPermacultureBed.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningPermacultureBed.png")" alt="perma image" />
                     </div>
                     #}#
                     #if (gardeningType.name === "Zipgrow Tower" ){#
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningZipgrowTower.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningZipgrowTower.png")" alt="perma image" />
                     </div>
                     #}#
                     #if (gardeningType.name === "Tower Garden" ){#
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningTowerGarden.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningTowerGarden.png")" alt="perma image" />
                     </div>
                     #}#
                     #if (gardeningType.name === "Fish Tank" ){#
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningFishTank.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningFishTank.png")" alt="perma image" />
                     </div>
                      #}#
                      #if (gardeningType.name === "All" ){#
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningZipgrowTower.png")" title="Zipgrow Tower" alt="Zipgrow Tower" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningZipgrowTower.png")" alt="perma image" />
                     </div>
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningTowerGarden.png")" title="Tower Garden" alt="Tower Garden" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningTowerGarden.png")" alt="perma image" />
                     </div>
                     <div>
-                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningPermacultureBed.png")" title="Permaculture Bed" alt="Permaculture Bed" />
+                        <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningPermacultureBed.png")" alt="perma image" />
                     </div>
                         #}#
                         <span class="stretch"></span>
@@ -109,12 +109,12 @@
         .TagName("div")
         .ClientTemplateId("template")
         .DataSource(dataSource => dataSource
+            .PageSize(6)
             .ServerOperation(false)
          )
+         .Pageable()
          )
     </div>
-    <br />
-    <br />
 </div>
 
 <style>
@@ -126,8 +126,8 @@
     }
 
     .recipes .gardeningType {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
     }
 
     .recipes .thumbs div {   

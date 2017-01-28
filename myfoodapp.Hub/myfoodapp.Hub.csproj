@@ -368,7 +368,6 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Business\AquaponicsRulesManager.cs" />
     <Compile Include="Business\SensorValueSet.cs" />
-    <Compile Include="Common\AuthorizationHeaderHandler.cs" />
     <Compile Include="Common\MailManager.cs" />
     <Compile Include="Common\NotificationPushManager.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
