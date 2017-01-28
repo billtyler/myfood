@@ -55,6 +55,7 @@ namespace myfoodapp.Hub.Controllers
             return View(rstl);
         }
 
+        [Authorize]
         public ActionResult ProductionUnits_Read([DataSourceRequest] DataSourceRequest request)
         {
             var currentUser = this.User.Identity.GetUserName();

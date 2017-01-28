@@ -130,7 +130,7 @@
             .Ajax()
             .Batch(true)
             .Filter(f => f.Add(a => a.date).IsGreaterThan(getThisWeekMonday()))
-            .PageSize(20)
+            .PageSize(15)
             .ServerOperation(false)
             .Model(model =>
             {

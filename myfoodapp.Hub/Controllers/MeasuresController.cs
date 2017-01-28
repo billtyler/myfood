@@ -16,6 +16,7 @@ namespace myfoodapp.Hub.Controllers
 {
     public class MeasuresController : Controller
     {
+        [Authorize]
         // GET: Measures
         public async Task<ActionResult> Index()
         {
@@ -28,6 +29,7 @@ namespace myfoodapp.Hub.Controllers
             return View(await db.Measures.ToListAsync());
         }
 
+        [Authorize]
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
             var db = new ApplicationDbContext();
@@ -39,6 +41,7 @@ namespace myfoodapp.Hub.Controllers
             return result;
         }
 
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Editing_Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<MeasureViewModel> measures)
         {
@@ -59,6 +62,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(results.ToDataSourceResult(request, ModelState));
         }
 
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Editing_Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<MeasureViewModel> messages)
         {
@@ -76,6 +80,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(messages.ToDataSourceResult(request, ModelState));
         }
 
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Editing_Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<MeasureViewModel> measures)
         {
