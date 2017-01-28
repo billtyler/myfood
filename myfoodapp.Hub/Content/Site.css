@@ -22,6 +22,7 @@ ol, ul {
 html, body {
 height: 100%;
 font-family: 'Source Sans Pro',arial,sans-serif;
+overflow: hidden;
 }
 
 html,
@@ -168,7 +169,7 @@ body,
 #main-section {
     float: none;
     width: auto;
-    overflow: hidden;
+    overflow-y: scroll;
     height: 100%;
     background-color: #eee;
 }
@@ -204,22 +205,6 @@ body,
 #dateFilter {
     padding: 30px;
     text-align: right;
-}
-
-#employee-list,
-#employee-details-wrapper {
-    padding: 0;
-}
-
-#employee-details-wrapper {
-    height: 100%;
-    overflow-y: auto;
-    background-color: #fff;
-}
-
-#employee-details {
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .k-state-selected .name,
@@ -271,8 +256,7 @@ body,
 
 #pioneer-network {
     border: none;
-    overflow-y: auto;
-    height: 100%;
+    overflow-y: hidden;
 }
 
 #pioneer-network .row {
@@ -300,127 +284,10 @@ body,
     padding-left: 15px;
 }
 
-/* Products & Orders*/
-#products-orders-main-content {
-    border: none;
-    overflow: auto;
-    height: 100%;
-    height: calc(100% - 86px);
-    color: #464648;
-    font-size: 11px;
-}
-
-#products-orders-main-content .k-tooltip {
-    width: 140px;
-}
-
-#products-orders-main-content .k-tooltip th{
-    text-align: left;
-}
-
-#products-orders-main-content .k-tooltip td{
-    border: 0;
-}
-
-.product-details{
-    display: inline-block;
-    height: 100%;
-}
-
-.product-name-cat,
-.product-details-wrapper {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.product-details-wrapper {
-    color: #0d1016;
-    width: 100%;
-
-}
-
-.product-details-image {
-    border-radius: 55px;
-    border: 1px solid #eaeaeb;
-    margin-right: 1.667em;
-}
-
-.product-name {
-    font-size: 14px;
-}
-
-.product-category {
-    font-size: 9px;
-    color: #8a8b8f;
-    text-transform: uppercase;
-}
-
-.product-details {
-    padding: 0;
-    text-transform: uppercase;
-    display: inline-block;
-}
-
-.product-details .k-sparkline {
-    width: 80%;
-    height: 50px;
-}
-
-.product-details span {
-    font-size: 36px;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;     
-}
-
-.product-details-wrapper h5 {
-    font-size: 11px; 
-    vertical-align: middle;
-    top: 20%;
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.stats-graph {
-    padding: 15px 30px 30px;
-}
-
-#MarketShareLabel,
-#RevenueLabel,
-#OrdersLabel,
-#CustomersLabel,
-#countryName {
-    font-size: 36px;
-    text-transform: uppercase;
-}
-
 .k-detail-cell .k-tabstrip .k-content {
     padding: 0.2em;
 }
 
-.shipping-details ul
-{
-    list-style:none;
-    font-style:italic;
-    margin: 15px;
-    padding: 0;
-}
-
-.shipping-details ul li
-{
-    margin: 0;
-    line-height: 1.7em;
-}
-
-.shipping-details label
-{
-    display:inline-block;
-    width:90px;
-    padding-right: 10px;
-    text-align: right;
-    font-style:normal;
-    font-weight:bold;
-}
 
 /* About */
 #map-wrapper {
@@ -547,7 +414,8 @@ body,
 
     #main-section {
         width: 100%;
-        overflow: scroll;
+        overflow-y: scroll;
+        height: 80%;
     }
 
     #main-section-header > h2,
@@ -561,17 +429,6 @@ body,
         padding-bottom: 15px;
     }
 
-    #dateFilter {
-        padding-top: 15px;
-    }
-
-    #employee-list h3 {
-        display: none;
-    }
-
-    #rights {
-        display: none;
-    }
 }
 
 @media screen and (max-width: 380px) {

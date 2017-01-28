@@ -28,7 +28,8 @@ namespace myfoodapp.Hub.Controllers
                 _userManager = value;
             }
         }
-        // GET: ProductionUnits
+
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             PopulateProductionUnitTypes();
@@ -111,6 +112,7 @@ namespace myfoodapp.Hub.Controllers
             return Redirect("/ProductionUnits/Details/" + model.Id);
         }
 
+        [Authorize]
         public ActionResult Event_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -121,6 +123,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(rslt.ToDataSourceResult(request));
         }
 
+        [Authorize]
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -129,6 +132,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(productionUnitService.Read().ToDataSourceResult(request));
         }
 
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Editing_Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ProductionUnitViewModel> productionUnits)
         {
@@ -149,6 +153,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(results.ToDataSourceResult(request, ModelState));
         }
 
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Editing_Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ProductionUnitViewModel> productionUnits)
         {
@@ -166,6 +171,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(productionUnits.ToDataSourceResult(request, ModelState));
         }
 
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Editing_Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ProductionUnitViewModel> productionUnits)
         {
@@ -244,6 +250,7 @@ namespace myfoodapp.Hub.Controllers
             ViewData["EventTypes"] = eventTypes;
         }
 
+        [Authorize]
         public ActionResult HydroponicTypes_Read([DataSourceRequest] DataSourceRequest request)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -254,6 +261,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(rslt, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         public ActionResult Measures_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -290,6 +298,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(groupedValue, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         public ActionResult AdvancedMeasures_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -318,6 +327,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(groupedValue, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         public ActionResult GetProductionUnitDetail(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -365,6 +375,7 @@ namespace myfoodapp.Hub.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
         public ActionResult Option_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();

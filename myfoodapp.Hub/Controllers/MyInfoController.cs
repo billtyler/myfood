@@ -42,7 +42,7 @@ namespace myfoodapp.Hub.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult Update()
         {
             var currentUser = this.User.Identity.GetUserName();
@@ -53,7 +53,7 @@ namespace myfoodapp.Hub.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Update(UserViewModel model, string returnUrl)
         {
@@ -88,6 +88,7 @@ namespace myfoodapp.Hub.Controllers
             return View(model);
         }
 
+        [Authorize]
         public ActionResult AddPushNotification(string id)
         {
             var currentUser = this.User.Identity.GetUserName();
@@ -115,6 +116,7 @@ namespace myfoodapp.Hub.Controllers
             }
         }
 
+        [Authorize]
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
