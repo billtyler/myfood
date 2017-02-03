@@ -47,6 +47,10 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.RemoveRange(context.OptionLists);
             context.Options.RemoveRange(context.Options);
 
+            context.RecognitionRecord.RemoveRange(context.RecognitionRecord);
+            context.ProductionLevel.RemoveRange(context.ProductionLevel);
+            context.HealthLevel.RemoveRange(context.HealthLevel);
+
             context.Recipes.RemoveRange(context.Recipes);
             context.GardeningTypes.RemoveRange(context.GardeningTypes);
             context.WateringLevels.RemoveRange(context.WateringLevels);
@@ -96,6 +100,18 @@ namespace myfoodapp.Hub.Migrations
             context.EventTypes.Add(new EventType() { Id = 3, name = "Info" });
             context.EventTypes.Add(new EventType() { Id = 4, name = "Advices" });
             context.EventTypes.Add(new EventType() { Id = 5, name = "Improvement" });
+
+            context.HealthLevel.Add(new HealthLevel() { Id = 1, name = "Poor" });
+            context.HealthLevel.Add(new HealthLevel() { Id = 2, name = "Average" });
+            context.HealthLevel.Add(new HealthLevel() { Id = 3, name = "Good" });
+            context.HealthLevel.Add(new HealthLevel() { Id = 4, name = "Perfect" });
+            context.HealthLevel.Add(new HealthLevel() { Id = 5, name = "Unknown" });
+
+            context.ProductionLevel.Add(new ProductionLevel() { Id = 1, name = "Low" });
+            context.ProductionLevel.Add(new ProductionLevel() { Id = 2, name = "Medium" });
+            context.ProductionLevel.Add(new ProductionLevel() { Id = 3, name = "High" });
+            context.ProductionLevel.Add(new ProductionLevel() { Id = 4, name = "Awesome" });
+            context.ProductionLevel.Add(new ProductionLevel() { Id = 5, name = "Unknown" });
 
             context.Options.Add(new Option() { Id = 0, name = "11 towers" });
             context.Options.Add(new Option() { Id = 1, name = "18 towers" });
@@ -559,25 +575,25 @@ namespace myfoodapp.Hub.Migrations
             var userSMA = new ApplicationUser() { Email = "stephane@myfood.eu", UserName = "stephane@myfood.eu" };
             var userDMA = new ApplicationUser() { Email = "dario@myfood.eu", UserName = "dario@myfood.eu" };
             var userSGP = new ApplicationUser() { Email = "sgp@myfood.eu", UserName = "sdp@myfood.eu" };
-            var userBDE = new ApplicationUser() { Email = "benoit@myfood.eu", UserName = "benoit@myfood.eu" };
+            var userCDE = new ApplicationUser() { Email = "cristof@myfood.eu", UserName = "cristof@myfood.eu" };
+            var userDMO = new ApplicationUser() { Email = "donatien@myfood.eu", UserName = "donatien@myfood.eu" };
+            var userCEL = new ApplicationUser() { Email = "cyrille@myfood.eu", UserName = "cyrille@myfood.eu" };
 
             //TO BE DEPLOYED
-            var userCDE = new ApplicationUser() { Email = "cristof@myfood.eu", UserName = "cristof@myfood.eu" };
+            var userBDE = new ApplicationUser() { Email = "benoit@myfood.eu", UserName = "benoit@myfood.eu" };
             var userAHE = new ApplicationUser() { Email = "amous@myfood.eu", UserName = "amous@myfood.eu" };
-            var userDMO = new ApplicationUser() { Email = "donatien@myfood.eu", UserName = "donatien@myfood.eu" };
             var userMSE = new ApplicationUser() { Email = "sevran@myfood.eu", UserName = "sevran@myfood.eu" };
             var userEDC = new ApplicationUser() { Email = "eleonore@myfood.eu", UserName = "eleonore@myfood.eu" };
 
             //TO BE CONFIRMED
             var userMLA = new ApplicationUser() { Email = "marc@myfood.eu", UserName = "marc@myfood.eu" };
             var userBGU = new ApplicationUser() { Email = "brigitte@myfood.eu", UserName = "brigitte@myfood.eu" };
-            var userPCL = new ApplicationUser() { Email = "pieterjan@myfood.eu", UserName = "pieterjan@myfood.eu" };
+            //var userPCL = new ApplicationUser() { Email = "pieterjan@myfood.eu", UserName = "pieterjan@myfood.eu" };
 
             //CONTRIBUTORS
             var userJTE = new ApplicationUser() { Email = "joel@myfood.eu", UserName = "joel@myfood.eu" };
             var userAPO = new ApplicationUser() { Email = "anhhung@myfood.eu", UserName = "anhhung@myfood.eu" };
             var userNRO = new ApplicationUser() { Email = "nicolas@myfood.eu", UserName = "nicolas@myfood.eu" };
-            var userCEL = new ApplicationUser() { Email = "cyrille@myfood.eu", UserName = "cyrille@myfood.eu" };
 
             var defaultPassword = ConfigurationManager.AppSettings["defaultPassword"];
 
@@ -616,7 +632,7 @@ namespace myfoodapp.Hub.Migrations
                 await manager.CreateAsync(userEDC, defaultPassword);
 
                 //TO BE CONFIRMED
-                await manager.CreateAsync(userPCL, defaultPassword);
+                //await manager.CreateAsync(userPCL, defaultPassword);
                 await manager.CreateAsync(userMLA, defaultPassword);
                 await manager.CreateAsync(userBGU, defaultPassword);
 
@@ -642,7 +658,6 @@ namespace myfoodapp.Hub.Migrations
             var MickaelGOwner = new ProductionUnitOwner() { Id = 1, user = userMGA, pioneerCitizenName = "Mickaël G." };
             var MatthieuUOwner = new ProductionUnitOwner() { Id = 2, user = userMUR, pioneerCitizenName = "Matthieu U." };
             var JohanNOwner = new ProductionUnitOwner() { Id = 3, user = userJNA, pioneerCitizenName = "Johan N." };
-
             var ChristopheLOwner = new ProductionUnitOwner() { Id = 4, user = userCLA, pioneerCitizenName = "Christophe L.", pioneerCitizenNumber = 1 };
             var JeanPhilippeMGOwner = new ProductionUnitOwner() { Id = 5, user = userJPM, pioneerCitizenName = "Jean-Philippe M.", pioneerCitizenNumber = 2 };
             var AndrewMOwner = new ProductionUnitOwner() { Id = 6, user = userAMA, pioneerCitizenName = "Andrew M.", pioneerCitizenNumber = 3 };
@@ -653,7 +668,6 @@ namespace myfoodapp.Hub.Migrations
             var ChristophePOwner = new ProductionUnitOwner() { Id = 11, user = userCPE, pioneerCitizenName = "Christophe P.", pioneerCitizenNumber = 9 };
             var PhilippeTOwner = new ProductionUnitOwner() { Id = 12, user = userPTO, pioneerCitizenName = "Philippe T.", pioneerCitizenNumber = 10 };
             var SabineCOwner = new ProductionUnitOwner() { Id = 13, user = userSCO, pioneerCitizenName = "Sabine C.", pioneerCitizenNumber = 11 };
-
             var StanAOwner = new ProductionUnitOwner() { Id = 14, user = userSAS, pioneerCitizenName = "Stan A.", pioneerCitizenNumber = 12 };
             var ChristianeWOwner = new ProductionUnitOwner() { Id = 15, user = userCWI, pioneerCitizenName = "Christiane W.", pioneerCitizenNumber = 13 };
             var GillesDOwner = new ProductionUnitOwner() { Id = 16, user = userGDE, pioneerCitizenName = "Gilles D.", pioneerCitizenNumber = 15 };
@@ -663,9 +677,9 @@ namespace myfoodapp.Hub.Migrations
             var SGPOwner = new ProductionUnitOwner() { Id = 20, user = userSGP, pioneerCitizenName = "Soc. Grand Paris" };
             var CristofDOwner = new ProductionUnitOwner() { Id = 21, user = userCDE, pioneerCitizenName = "Cristof D.", pioneerCitizenNumber = 20 };
             var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M.", pioneerCitizenNumber = 21 };
+            var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E.", pioneerCitizenNumber = 22 };
 
             //TO BE DEPLOYED 
-            var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E." };
             var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Amous H.", pioneerCitizenNumber = 17 };
             var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
             var MairieSOwner = new ProductionUnitOwner() { Id = 23, user = userMSE, pioneerCitizenName = "Mairie Sevran" };
@@ -704,12 +718,13 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(DarioMOwner);
             context.ProductionUnitOwners.Add(SGPOwner);
             context.ProductionUnitOwners.Add(CristofDOwner);
-            context.ProductionUnitOwners.Add(AmousHOwner);
+            context.ProductionUnitOwners.Add(DonatienMOwner);
+            context.ProductionUnitOwners.Add(CyrilleEOwner);
 
             //TO BE DEPLOYED 
-            context.ProductionUnitOwners.Add(CyrilleEOwner);
+            context.ProductionUnitOwners.Add(AmousHOwner);
             context.ProductionUnitOwners.Add(BenoitDOwner);
-            context.ProductionUnitOwners.Add(DonatienMOwner);
+
             context.ProductionUnitOwners.Add(MairieSOwner);
             context.ProductionUnitOwners.Add(EleonoreDCOwner);
 
@@ -769,6 +784,7 @@ namespace myfoodapp.Hub.Migrations
                 productionUnitType = prodUnitTypeCity,
                 hydroponicType = hydroTypeAquaponicsColdFish,
                 productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "BlancMesnil.jpg"
             };
 
             var CLAProdUnit = new ProductionUnit()
@@ -1055,6 +1071,22 @@ namespace myfoodapp.Hub.Migrations
                 picturePath = "LilleFamily14.JPG",
             };
 
+            var CELProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 46.3274736,
+                locationLongitude = -0.5313457,
+                reference = "74XDX",
+                info = "Open Source Contributor",
+                startDate = new DateTime(2017, 01, 30),
+                version = "2",
+                owner = CyrilleEOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "NiortFamily22.JPG",
+            };
+
+
             //TO BE DEPLOYED 
             var AHEProdUnit = new ProductionUnit()
             {
@@ -1070,19 +1102,6 @@ namespace myfoodapp.Hub.Migrations
                 productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
-            var CELProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 46.3274736,
-                locationLongitude = -0.5313457,
-                reference = "76555",
-                info = "Open Source Contributor",
-                startDate = new DateTime(2017, 01, 30),
-                version = "2",
-                owner = CyrilleEOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
-            };
 
             var BDEProdUnit = new ProductionUnit()
             {
@@ -1239,9 +1258,9 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(SGPProdUnit);
             context.ProductionUnits.Add(CDEProdUnit);
             context.ProductionUnits.Add(DMOProdUnit);
+            context.ProductionUnits.Add(CELProdUnit);
 
             //TO BE DEPLOYED
-            context.ProductionUnits.Add(CELProdUnit);
             context.ProductionUnits.Add(AHEProdUnit);
             context.ProductionUnits.Add(BDEProdUnit);
             context.ProductionUnits.Add(MSEProdUnit);
@@ -1266,7 +1285,6 @@ namespace myfoodapp.Hub.Migrations
             optionsMGA.Add(new OptionList() { productionUnit = MGAProdUnit, option = advancedMonitoringOption });
             optionsMGA.Add(new OptionList() { productionUnit = MGAProdUnit, option = permacultureBiocharOption });
             optionsMGA.Add(new OptionList() { productionUnit = MGAProdUnit, option = sigfoxConnectionOption });
-            optionsMGA.Add(new OptionList() { productionUnit = MGAProdUnit, option = touchlessScreenOption });
 
             var optionsMUR = new List<OptionList>();
 
@@ -1383,7 +1401,6 @@ namespace myfoodapp.Hub.Migrations
             optionsSGP.Add(new OptionList() { productionUnit = SGPProdUnit, option = permacultureBedOption });
             optionsSGP.Add(new OptionList() { productionUnit = SGPProdUnit, option = solarPanelOption });
 
-            //TO BE DEPLOYED
             var optionsCDE = new List<OptionList>();
 
             optionsCDE.Add(new OptionList() { productionUnit = CDEProdUnit, option = monitoringKitv2Option });
@@ -1391,8 +1408,17 @@ namespace myfoodapp.Hub.Migrations
             optionsCDE.Add(new OptionList() { productionUnit = CDEProdUnit, option = permacultureBedOption });
             optionsCDE.Add(new OptionList() { productionUnit = CDEProdUnit, option = solarPanelOption });
             optionsCDE.Add(new OptionList() { productionUnit = CDEProdUnit, option = sigfoxConnectionOption });
-            optionsCDE.Add(new OptionList() { productionUnit = CDEProdUnit, option = touchlessScreenOption });
 
+            var optionsDMO = new List<OptionList>();
+
+            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = monitoringKitv2Option });
+            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers11Option });
+
+            var optionsCEL = new List<OptionList>();
+
+            optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = monitoringKitv2Option });
+
+            //TO BE DEPLOYED
             var optionsAHE = new List<OptionList>();
 
             optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = monitoringKitv2Option });
@@ -1405,11 +1431,6 @@ namespace myfoodapp.Hub.Migrations
             optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = towers11Option });
             optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = sigfoxConnectionOption });
             optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = solarPanelOption });
-
-            var optionsDMO = new List<OptionList>();
-
-            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = monitoringKitv2Option });
-            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers11Option });
 
             var optionsMSE = new List<OptionList>();
 
@@ -1436,11 +1457,6 @@ namespace myfoodapp.Hub.Migrations
             optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = permacultureBedOption });
 
             //CONTRIBUTORS
-            var optionsCEL = new List<OptionList>();
-
-            optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = monitoringKitv2Option });
-            optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = touchlessScreenOption });
-
             var optionsNRO = new List<OptionList>();
 
             optionsNRO.Add(new OptionList() { productionUnit = NROProdUnit, option = monitoringKitv2Option });
@@ -1478,6 +1494,7 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsSGP);
             context.OptionLists.AddRange(optionsCDE);
             context.OptionLists.AddRange(optionsDMO);
+            context.OptionLists.AddRange(optionsCEL);
 
             //TO BE DEPLOYED
             context.OptionLists.AddRange(optionsAHE);
@@ -1493,11 +1510,30 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsAPO);
             context.OptionLists.AddRange(optionsJTE);
             context.OptionLists.AddRange(optionsNRO);
-            context.OptionLists.AddRange(optionsCEL);
 
             context.SaveChanges();
 
             var messMeasure = context.MessageTypes.Where(m => m.Id == 1).FirstOrDefault();
+
+            var poorHealthLevel = context.HealthLevel.Where(s => s.Id == 1).FirstOrDefault();
+            var averageHealthLevel = context.HealthLevel.Where(s => s.Id == 2).FirstOrDefault();
+            var goodHealthLevel = context.HealthLevel.Where(s => s.Id == 3).FirstOrDefault();
+            var perfectHealthLevel = context.HealthLevel.Where(s => s.Id == 4).FirstOrDefault();
+            var unknownHealthLevel = context.HealthLevel.Where(s => s.Id == 5).FirstOrDefault();
+
+            var lowProductionLevel = context.ProductionLevel.Where(s => s.Id == 1).FirstOrDefault();
+            var mediumProductionLevel = context.ProductionLevel.Where(s => s.Id == 2).FirstOrDefault();
+            var highProductionLevel = context.ProductionLevel.Where(s => s.Id == 3).FirstOrDefault();
+            var awesomeProductionLevel = context.ProductionLevel.Where(s => s.Id == 4).FirstOrDefault();
+            var unknowProductionLevel = context.ProductionLevel.Where(s => s.Id == 5).FirstOrDefault();
+
+            var mgaProdUnit = context.ProductionUnits.Where(s => s.picturePath == "SainteBarbeFamily22.jpg").FirstOrDefault();
+
+            var mayRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 05, 15), imagePath = "15052016_GHID_2.JPG", dailyProduction = 0.2, productionLevel = lowProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.974321722984314}, {""name"": ""ground"", ""confidence"": 0.9694542288780212}]" });
+            var juneRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 06, 15), imagePath = "15062016_GHID_2.JPG", dailyProduction = 0.5, productionLevel = mediumProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.867531418800354}, {""name"": ""plant"", ""confidence"": 0.315796108436584}]" });
+            var augustRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 08, 15), imagePath = "15082016_GHID_2.JPG", dailyProduction = 1.5, productionLevel = awesomeProductionLevel, healthLevel = perfectHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.9086201190948486}, {""name"": ""plant"", ""confidence"": 0.5123096108436584}, {""name"": ""vegetable"", ""confidence"": 0.1269458830356598}]"});
+
+            context.SaveChanges();
 
             if (!context.Measures.Any())
             {

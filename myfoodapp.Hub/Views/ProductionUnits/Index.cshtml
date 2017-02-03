@@ -14,20 +14,20 @@
     <div id="productionUnits-details" class="col-md-2">
         <h3 class="section-header">Manage Production Units from Pioneer Citizen Network</h3>
     </div>
-    <div id="grid-container" class="col-md-10">
+    <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.ProductionUnitViewModel>()
         .Name("grid")
         .Columns(columns =>
         {
-            columns.ForeignKey(c => c.ownerId, (System.Collections.IEnumerable)ViewData["owners"], "Id", "pioneerCitizenName").Title("owner").Width(130);
-            columns.Bound(c => c.info).Width(175).MinScreenWidth(380);
-            columns.Bound(c => c.startDate).Format("{0:d}").Width(100).MinScreenWidth(380);
+            columns.ForeignKey(c => c.ownerId, (System.Collections.IEnumerable)ViewData["owners"], "Id", "pioneerCitizenName").Title("owner").Groupable(false).Width(130);
+            columns.Bound(c => c.info).Width(175).MinScreenWidth(380).Groupable(false);
+            columns.Bound(c => c.startDate).Format("{0:d}").Width(100).MinScreenWidth(380).Groupable(false);
             columns.ForeignKey(c => c.productionUnitTypeId, (System.Collections.IEnumerable)ViewData["productionUnitTypes"], "Id", "name").Title("prod. type").Width(100).MinScreenWidth(380);
-            columns.Bound(c => c.locationLatitude).Width(80).Title("lat.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).MinScreenWidth(380);
-            columns.Bound(c => c.locationLongitude).Width(80).Title("long.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).MinScreenWidth(380);
+            columns.Bound(c => c.locationLatitude).Width(80).Title("lat.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).Groupable(false).MinScreenWidth(380);
+            columns.Bound(c => c.locationLongitude).Width(80).Title("long.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).Groupable(false).MinScreenWidth(380);
             //columns.Bound(c => c.version).Width(80).HtmlAttributes(new { style = "text-align:right" }).HeaderHtmlAttributes(new { style = "text-align:right" }).MinScreenWidth(380);
-            columns.ForeignKey(c => c.productionUnitStatusId, (System.Collections.IEnumerable)ViewData["productionUnitStatus"], "Id", "name").Title("status").Width(100);
-            columns.Bound(c => c.reference).Width(60).Title("ref.").HtmlAttributes(new { style = "text-align:right" }).HeaderHtmlAttributes(new { style = "text-align:right" }).MinScreenWidth(380);
+            columns.ForeignKey(c => c.productionUnitStatusId, (System.Collections.IEnumerable)ViewData["productionUnitStatus"], "Id", "name").Title("status").Width(120);
+            columns.Bound(c => c.reference).Width(60).Title("ref.").HtmlAttributes(new { style = "text-align:right" }).HeaderHtmlAttributes(new { style = "text-align:right" }).Groupable(false).MinScreenWidth(380);
             columns.Command(command => command.Custom("Details").Click("showDetails")).Width(70);
             //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
             //columns.Command(command => { command.Destroy(); }).Width(250);
@@ -37,13 +37,13 @@
         //    toolbar.Create();
         //    toolbar.Save();
         //})
-        .HtmlAttributes(new { style = "height: 700px;" })
+        .HtmlAttributes(new { style = "height: 80vh;" })
         //.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("ProductionUnitEditTemplate"))
         //.Editable(editable => editable.Mode(GridEditMode.InCell))
         .Scrollable()
-        .Filterable()
+        //.Filterable()
         .Groupable()
-        .ColumnMenu()
+        //.ColumnMenu()
         //.Pageable(pageable => pageable
         //    .Refresh(true)
         //    .PageSizes(true)
@@ -109,8 +109,8 @@
         background-color: #018001;
         }
 
-        .k-grouping-header {
+        /*.k-grouping-header {
         display:none;
-        }
+        }*/
 </style>
    

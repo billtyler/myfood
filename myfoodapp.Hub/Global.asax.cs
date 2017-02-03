@@ -10,6 +10,8 @@ using System.Timers;
 using myfoodapp.Hub.Models;
 using System.Text;
 using myfoodapp.Hub.Common;
+using myfoodapp.Hub.Migrations;
+using System.Data.Entity.Migrations;
 
 namespace myfoodapp.Hub
 {
@@ -26,6 +28,8 @@ namespace myfoodapp.Hub
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             // Disable the HTTP Header X-Frame-Options: SAMEORIGIN
             AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
+
+            GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
             SendDailyMessage();
 

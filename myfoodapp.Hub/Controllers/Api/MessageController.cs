@@ -10,6 +10,7 @@ namespace myfoodapp.Hub.Controllers.Api
     public class MessagesController : ApiController
     {
         // POST api/<controller>
+        //[Authorize]
         public void Post([FromBody]JObject data)
         {
             var content = data["content"].ToObject<string>();

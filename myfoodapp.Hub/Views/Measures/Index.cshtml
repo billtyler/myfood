@@ -93,7 +93,7 @@
             </p>
         </div>
     </div>
-    <div id="grid-container" class="col-md-10">
+    <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.MeasureViewModel>()
         .Name("grid")
         .Columns(columns =>
@@ -110,7 +110,7 @@
         //    toolbar.Create();
         //    toolbar.Save();
         //})
-        .HtmlAttributes(new { style = "height: 700px;" })
+        .HtmlAttributes(new { style = "height: 80vh" })
         .Editable(editable => editable.Mode(GridEditMode.InCell))
         .Navigatable()
         .Sortable()

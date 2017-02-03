@@ -103,11 +103,12 @@
                                   })
         )
     </div>
-    <div id="grid-container" class="col-md-10">
+    <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().ListView<myfoodapp.Hub.Models.Recipes>(Model)
         .Name("listView")
         .TagName("div")
         .ClientTemplateId("template")
+        //.HtmlAttributes(new { style = "height: 80vh;" })
         .DataSource(dataSource => dataSource
             .ServerOperation(false)
          )

@@ -42,13 +42,13 @@
             .Events(ev => ev.Click("onBackClick")))
         </p>
     </div>
-    <div id="grid-container" class="col-xs-10">
+    <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.EventViewModel>()
         .Name("Events")
         .Columns(columns =>
         {
-            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("event type").Width(80);
-            columns.Bound(c => c.date).Format("{0:d}").Width(100).MinScreenWidth(380);
+            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("type").Width(60);
+            columns.Bound(c => c.date).Format("{0:d} - {0:t}").Width(100);
             columns.Bound(c => c.description).Width(250);
             //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
             //columns.Command(command => { command.Destroy(); }).Width(250);
@@ -58,7 +58,7 @@
         //    toolbar.Create();
         //    toolbar.Save();
         //})
-        .HtmlAttributes(new { style = "height: 700px;" })
+        .HtmlAttributes(new { style = "height: 80vh" })
         //.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("ProductionUnitEditTemplate"))
         //.Editable(editable => editable.Mode(GridEditMode.InCell))
         .Scrollable()

@@ -379,6 +379,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeasuresController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\PerformanceHealthController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\ProductionUnitsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -408,6 +409,10 @@
     <Compile Include="Migrations\201701270707293_Owner-NotificationPush.Designer.cs">
       <DependentUpon>201701270707293_Owner-NotificationPush.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702021412357_RecognitionRecord-Lev.cs" />
+    <Compile Include="Migrations\201702021412357_RecognitionRecord-Lev.Designer.cs">
+      <DependentUpon>201702021412357_RecognitionRecord-Lev.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -418,7 +423,9 @@
     <Compile Include="Models\ProductionUnitModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\RecognitionRecordModel.cs" />
     <Compile Include="Services\EventService.cs" />
+    <Compile Include="Services\RecognitionRecordService.cs" />
     <Compile Include="Services\ProductionUnitService.cs" />
     <Compile Include="Services\MeasureService.cs" />
     <Compile Include="Services\MessageService.cs" />
@@ -435,6 +442,7 @@
     <Compile Include="Viewmodels\MessageTypeViewModel.cs" />
     <Compile Include="Viewmodels\MeasureViewModel.cs" />
     <Compile Include="Viewmodels\PieChartViewModel.cs" />
+    <Compile Include="Viewmodels\RecognitionRecordViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitViewModel.cs" />
     <Compile Include="Viewmodels\MessageViewModel.cs" />
   </ItemGroup>
@@ -1115,6 +1123,7 @@
     <Content Include="Content\lightbox\lightbox.css" />
     <Content Include="Content\logoMyfood.png" />
     <Content Include="Content\miniLogo.png" />
+    <Content Include="Content\miniLogoWhite.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningFishTank.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningPermacultureBed.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningTowerGarden.png" />
@@ -1150,8 +1159,12 @@
     <Content Include="Content\Pictures\Recipes\strawberries.jpg" />
     <Content Include="Content\Pictures\Recipes\tilapia.jpg" />
     <Content Include="Content\Pictures\Recipes\tomatoes.jpg" />
+    <Content Include="Content\Pictures\RecognitionPictures\15052016_GHID_2.JPG" />
+    <Content Include="Content\Pictures\RecognitionPictures\15062016_GHID_2.jpg" />
+    <Content Include="Content\Pictures\RecognitionPictures\15082016_GHID_2.jpg" />
     <Content Include="Content\Pictures\recommandated.png" />
     <Content Include="Content\Pictures\Sites\BivilleFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\BlancMesnilCity.jpg" />
     <Content Include="Content\Pictures\Sites\BoisColombesCity.jpg" />
     <Content Include="Content\Pictures\Sites\BraineFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
@@ -1164,6 +1177,7 @@
     <Content Include="Content\Pictures\Sites\MelinFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\MerigniacFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\MezelFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\NiortFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\OberpallenFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\PavillyFamily22.JPG" />
@@ -2946,6 +2960,7 @@
     <Content Include="Views\ProductionUnits\Events.cshtml" />
     <Content Include="Views\ProductionUnits\Update.cshtml" />
     <Content Include="Views\Recipes\Index.cshtml" />
+    <Content Include="Views\PerformanceHealth\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2974,6 +2989,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701270707293_Owner-NotificationPush.resx">
       <DependentUpon>201701270707293_Owner-NotificationPush.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702021412357_RecognitionRecord-Lev.resx">
+      <DependentUpon>201702021412357_RecognitionRecord-Lev.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
