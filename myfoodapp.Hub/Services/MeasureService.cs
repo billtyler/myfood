@@ -55,7 +55,7 @@ namespace myfoodapp.Hub.Services
             IList<MeasureViewModel> result = new List<MeasureViewModel>();
 
             result = entities.Measures.Where(m => m.productionUnit.Id == currentProductionUnitId)
-                                      .OrderByDescending(p => p.Id).Take(6 * 24 * 14 * 4)
+                                      .OrderByDescending(p => p.Id)
                                       .Select(meas => new MeasureViewModel
                                       {
                                           Id = meas.Id,
@@ -90,8 +90,35 @@ namespace myfoodapp.Hub.Services
 
         public IEnumerable<MeasureViewModel> Read(SensorTypeEnum sensorType, int currentProductionUnitId)
         {
-            return GetAll().Where(m => m.sensorId == (int)sensorType &&
-                                       m.productionUnit.Id == currentProductionUnitId).Take(6 * 24 * 7);
+            IList<MeasureViewModel> result = new List<MeasureViewModel>();
+
+            var fewDaysAgo = DateTime.Now.AddDays(-4);
+
+            result = entities.Measures.OrderByDescending(m => m.captureDate)
+                                      .Where(m => m.sensor.Id == (int)sensorType && m.productionUnit.Id == currentProductionUnitId && m.captureDate > fewDaysAgo)
+                                      .Select(meas => new MeasureViewModel
+            {
+                Id = meas.Id,
+                captureDate = meas.captureDate,
+                value = meas.value,
+                sensorId = meas.sensor.Id,
+                sensor = new SensorTypeViewModel()
+                {
+                    Id = meas.sensor.Id,
+                    name = meas.sensor.name
+                },
+                productionUnitId = meas.productionUnit.Id,
+                productionUnit = new ProductionUnitViewModel()
+                {
+                    Id = meas.productionUnit.Id,
+                    info = meas.productionUnit.info,
+                    locationLatitude = meas.productionUnit.locationLatitude,
+                    locationLongitude = meas.productionUnit.locationLongitude
+                },
+
+            }).ToList();
+
+            return result;
         }
 
         public void Create(MeasureViewModel measure)

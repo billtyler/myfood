@@ -415,7 +415,7 @@ body,
     #main-section {
         width: 100%;
         overflow-y: scroll;
-        height: 80%;
+        height: 90%;
     }
 
     #main-section-header > h2,

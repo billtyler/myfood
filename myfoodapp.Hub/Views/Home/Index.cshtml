@@ -10,9 +10,9 @@
             dataType: "json",
         type: "POST",
         success: function (response) {
-            $("#ProductionUnitNumber").text('TOTAL CONNECTED: ' + response.ProductionUnitNumber);
-            $("#TotalMonthlyProduction").text('TOTAL EST. PROD. PER MONTH: ' + response.TotalMonthlyProduction + 'kg');
-            $("#TotalMonthlySparedCO2").text('TOTAL CO2 NOT RELEASED PER MONTH: ' + response.TotalMonthlySparedCO2 + 'kg');
+            $("#ProductionUnitNumber").text(response.ProductionUnitNumber);
+            $("#TotalMonthlyProduction").text(response.TotalMonthlyProduction + 'kg');
+            $("#TotalMonthlySparedCO2").text(response.TotalMonthlySparedCO2 + 'kg');
         }
         });
 
@@ -142,12 +142,6 @@
 <div id="pioneer-network" class="main-section-content row">
     <div id="map-wrapper" class="row">
         <div id="map-details" class="col-md-4">
-            <div>
-                <h2 id="ProductionUnitNumber"></h2>
-                <h2 id="TotalMonthlyProduction"></h2>
-                <h2 id="TotalMonthlySparedCO2"></h2>
-            </div>
-            <br/>
             <h2 id="PioneerCitizenName"></h2>
             <div id="PioneerCitizenNumber"><span></span></div>
             <div id="ProductionUnitType"><span></span></div>
@@ -272,7 +266,7 @@
                 </div>
             </div>
         </div>
-    <div id="HumidityContainer" class="col-md-3">
+        <div id="HumidityContainer" class="col-md-3">
         <h3 class="section-header" style="text-align:center;font-size:larger">Humidity (%)</h3>
         <div class="sparkline-container">
             <div style="margin: 3px;">
@@ -298,7 +292,7 @@
 
 <div id="performanceHealthAnalysis">
     <div id="performanceHealthAnalysisContainer" class="col-md-4">
-        <h3 class="section-header">Performance and Health Analysis</h3> 
+        <h3 class="section-header">Network Status</h3>
         @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
         .Name("chart")
         .Legend(legend => legend
@@ -328,13 +322,40 @@
             .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
         )
         )
-        
     </div>
+    <div id="map-info" class="col-md-4">
+        <div class="widget">
+            <h3 class="section-header">Network Info</h3> 
+            <div style="margin: 25px;">
+                <div class="column-left">
+                    <h2 class="widget-text" style="text-align: center;">TOTAL<br />CONNECTED <br />PROD. UNITS </h2>
+                    <h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
+                </div>
+                <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                    <h2 class="widget-text" style="text-align: center;">TOTAL<br />EST. PROD. <br />PER MONTH</h2>
+                    <h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
+                </div>
+                <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                    <h2 class="widget-text" style="text-align: center;">TOTAL<br />CO2 SAVED<br />PER MONTH</h2>
+                    <h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </div>
 
 <style>
+
+    h1 {
+        font-size:xx-large;
+    }
+
+     .widget-text {
+        margin:7px;
+    }
 
     .column-left {
         float: left;
@@ -367,7 +388,7 @@
 
     .k-chart.small-chart {
         display: inline-block;
-        width: 300;
+        width: 300px;
         height: 150px;
     }
 
@@ -390,6 +411,19 @@
 
     .k-loading-mask {
         opacity: 0;
+    }
+
+    @@media screen and (max-width: 480px) {
+
+   .widget-text {
+         font-size: xx-small;
+         margin:2px;
+    }
+
+    h1 {
+         font-size: medium;
+    }
+
     }
 
 </style>

@@ -2,8 +2,10 @@
 using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -262,69 +264,57 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public ActionResult Measures_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult PHMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            MeasureService measureService = new MeasureService(db);
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
 
-            var groupedValue = new List<GroupedMeasure>();
-            var rslt = measureService.Read(id);
-
-            var groupedRslt = rslt.GroupBy(m => m.captureDate);
-
-            groupedRslt.ToList().ForEach(gr => 
-            {
-                var newMeas = new GroupedMeasure() { captureDate = gr.Key };
-
-                gr.ToList().ForEach(meas => 
-                {
-                    if (meas.sensorId == 1)
-                        newMeas.pHvalue = meas.value;
-                    if (meas.sensorId == 2)
-                        newMeas.waterTempvalue = meas.value;
-                    if (meas.sensorId == 3)
-                        newMeas.DOvalue = meas.value;
-                    if (meas.sensorId == 4)
-                        newMeas.ORPvalue = meas.value;
-                    if (meas.sensorId == 5)
-                        newMeas.airTempvalue = meas.value;
-                    if (meas.sensorId == 6)
-                        newMeas.humidityvalue = meas.value;
-                });
-
-                groupedValue.Add(newMeas);
-            });
-
-            return Json(groupedValue, JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.ph, id), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult AdvancedMeasures_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult WaterTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            MeasureService measureService = new MeasureService(db);
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
 
-            var groupedValue = new List<GroupedMeasure>();
-            var rslt = measureService.Read(id);
+            return Json(measureService.Read(SensorTypeEnum.waterTemperature, id), JsonRequestBehavior.AllowGet);
+        }
 
-            var groupedRslt = rslt.GroupBy(m => m.captureDate);
+        [Authorize]
+        public ActionResult AirTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
 
-            groupedRslt.ToList().ForEach(gr =>
-            {
-                var newMeas = new GroupedMeasure() { captureDate = gr.Key };
+            return Json(measureService.Read(SensorTypeEnum.airTemperature, id), JsonRequestBehavior.AllowGet);
+        }
 
-                gr.ToList().ForEach(meas =>
-                {
-                    if (meas.sensorId == 3)
-                        newMeas.DOvalue = meas.value;
-                    if (meas.sensorId == 4)
-                        newMeas.ORPvalue = meas.value;
-                });
+        [Authorize]
+        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
 
-                groupedValue.Add(newMeas);
-            });
+            return Json(measureService.Read(SensorTypeEnum.humidity, id), JsonRequestBehavior.AllowGet);
+        }
 
-            return Json(groupedValue, JsonRequestBehavior.AllowGet);
+        [Authorize]
+        public ActionResult ORPMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            return Json(measureService.Read(SensorTypeEnum.orp, id), JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        public ActionResult DissolvedOxyMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            return Json(measureService.Read(SensorTypeEnum.dissolvedOxygen, id), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -333,13 +323,14 @@ namespace myfoodapp.Hub.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             MeasureService measureService = new MeasureService(db);
 
-            var rslt = db.ProductionUnits.Include("owner.user")
-                                         .Include("productionUnitType")
-                                         .Where(p => p.Id == id).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                          .Include(p => p.productionUnitType)
+                                          .Include(p => p.options)
+                                          .Where(p => p.Id == id).FirstOrDefault();
 
             var averageMonthlyProduction = 0;
 
-            switch (rslt.productionUnitType.Id)
+            switch (currentProductionUnit.productionUnitType.Id)
             {
                 case 1:
                     averageMonthlyProduction = 5;
@@ -362,16 +353,62 @@ namespace myfoodapp.Hub.Controllers
 
             var averageMonthlySparedCO2 = averageMonthlyProduction * 0.3;
 
+            var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
+            var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
+            var airTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.airTemperature, db);
+            var humiditySensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.humidity, db);
+
+            var options = db.OptionLists.Include(o => o.productionUnit)
+                        .Include(o => o.option)
+                        .Where(p => p.productionUnit.Id == id)
+                        .Select(p => p.option);
+
+            var optionList = string.Empty;
+
+            if(options.Count() > 0)
+            {
+                options.ToList().ForEach(o => { optionList += o.name + " / "; });
+            }
+
+            var onlineSinceWeeks = Math.Round((DateTime.Now - currentProductionUnit.startDate).TotalDays / 7);
+
             return Json(new
             {
-                PioneerCitizenName = rslt.owner.pioneerCitizenName,
-                PioneerCitizenNumber = rslt.owner.pioneerCitizenNumber,
-                ProductionUnitVersion = rslt.version,
-                ProductionUnitStartDate = rslt.startDate,
-                ProductionUnitType = rslt.productionUnitType.name,
-                PicturePath = rslt.picturePath,
+                PioneerCitizenName = currentProductionUnit.owner.pioneerCitizenName,
+                PioneerCitizenNumber = currentProductionUnit.owner.pioneerCitizenNumber,
+                ProductionUnitVersion = currentProductionUnit.version,
+                ProductionUnitType = currentProductionUnit.productionUnitType.name,
+                PicturePath = currentProductionUnit.picturePath,
+
+                ProductionUnitOptions = optionList,
+                OnlineSinceWeeks = onlineSinceWeeks,
+
                 AverageMonthlyProduction = averageMonthlyProduction,
                 AverageMonthlySparedCO2 = averageMonthlySparedCO2,
+
+                CurrentPhValue = pHSensorValueSet.CurrentValue,
+                CurrentPhCaptureTime = pHSensorValueSet.CurrentCaptureTime,
+                AverageHourPhValue = pHSensorValueSet.AverageHourValue,
+                AverageDayPhValue = pHSensorValueSet.AverageDayValue,
+                LastDayPhCaptureTime = pHSensorValueSet.LastDayCaptureTime,
+
+                CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
+                CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
+                AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
+                AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
+                LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+
+                CurrentAirTempValue = airTempSensorValueSet.CurrentValue,
+                CurrentAirTempCaptureTime = airTempSensorValueSet.CurrentCaptureTime,
+                AverageHourAirTempValue = airTempSensorValueSet.AverageHourValue,
+                AverageDayAirTempValue = airTempSensorValueSet.AverageDayValue,
+                LastDayAirTempCaptureTime = airTempSensorValueSet.LastDayCaptureTime,
+
+                CurrentHumidityValue = humiditySensorValueSet.CurrentValue,
+                CurrentHumidityCaptureTime = humiditySensorValueSet.CurrentCaptureTime,
+                AverageHourHumidityValue = humiditySensorValueSet.AverageHourValue,
+                AverageDayHumidityValue = humiditySensorValueSet.AverageDayValue,
+                LastDayHumidityCaptureTime = humiditySensorValueSet.LastDayCaptureTime,
             }, JsonRequestBehavior.AllowGet);
         }
 

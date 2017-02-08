@@ -48,10 +48,10 @@ namespace myfoodapp.Hub.Controllers
                                          .Where(p => p.locationLatitude == SelectedProductionUnitLat &&
                                                      p.locationLongitude == SelectedProductionUnitLong).FirstOrDefault();
 
-            var pHSensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
-            var waterTempSensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
-            var airTempSensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.airTemperature, db);
-            var humiditySensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.humidity, db);
+            var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
+            var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
+            var airTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.airTemperature, db);
+            var humiditySensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.humidity, db);
 
             return Json(new {
                               PioneerCitizenName = currentProductionUnit.owner.pioneerCitizenName,
@@ -104,10 +104,10 @@ namespace myfoodapp.Hub.Controllers
                                          .Include("productionUnitType")
                                          .Where(p => p.measures.Count != 0).ToList()[randomIndex];
 
-            var pHSensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
-            var waterTempSensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
-            var airTempSensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.airTemperature, db);
-            var humiditySensorValueSet = GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.humidity, db);
+            var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
+            var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
+            var airTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.airTemperature, db);
+            var humiditySensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.humidity, db);
 
             return Json(new
             {
@@ -184,7 +184,6 @@ namespace myfoodapp.Hub.Controllers
             return Json(statusList);
         }
 
-
         public ActionResult GetNetworkStats()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -212,60 +211,6 @@ namespace myfoodapp.Hub.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public SensorValueSet GetSensorValueSet(int currentProductionUnitId, SensorTypeEnum sensor, ApplicationDbContext db)
-        {
-            var currentValue = 0M;
-            var averageHourValue = 0M;
-            var averageDayValue = 0M;
-
-            var currentCaptureTime = String.Empty;
-            var lastDayCaptureTime = String.Empty;
-
-            var lastValue = db.Measures.Where(m => m.productionUnit.Id == currentProductionUnitId
-                                               && m.sensor.Id == (int)sensor)
-                                         .OrderByDescending(m => m.captureDate).FirstOrDefault();
-            if (lastValue != null)
-            {
-                currentValue = lastValue.value;
-                currentCaptureTime = lastValue.captureDate.ToShortTimeString();
-
-                var lastHour = lastValue.captureDate.AddHours(-1);
-
-                var averageHourValueRslt = db.Measures.Where(m => m.productionUnit.Id == currentProductionUnitId
-                                                      && m.sensor.Id == (int)sensor
-                                                      && m.captureDate >= lastHour)
-                                                     .OrderByDescending(m => m.captureDate);
-
-                averageHourValue = Math.Round(averageHourValueRslt.Average(m => m.value), 1);
-
-                var lastDay = lastValue.captureDate.AddDays(-1);
-                lastDayCaptureTime = lastDay.ToShortDateString();
-
-                var averageDayValueRslt = db.Measures.Where(m => m.productionUnit.Id == currentProductionUnitId
-                                                      && m.sensor.Id == (int)sensor
-                                                      && m.captureDate >= lastDay)
-                                                     .OrderByDescending(m => m.captureDate);
-
-                averageDayValue = Math.Round(averageDayValueRslt.Average(m => m.value), 1);
-
-                return new SensorValueSet()
-                {
-                    CurrentValue = currentValue,
-                    CurrentCaptureTime = currentCaptureTime,
-                    AverageHourValue = averageHourValue,
-                    AverageDayValue = averageDayValue,
-                    LastDayCaptureTime = lastDayCaptureTime
-                };
-            }
-
-            return new SensorValueSet()
-            {
-                CurrentValue = 0,
-                CurrentCaptureTime = "-",
-                AverageHourValue = 0,
-                AverageDayValue = 0,
-                LastDayCaptureTime = "-"
-            };
-        }
+       
     }
 }

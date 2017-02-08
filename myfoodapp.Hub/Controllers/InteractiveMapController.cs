@@ -39,38 +39,6 @@ namespace myfoodapp.Hub.Controllers
             return View(map);
         }
 
-        public ActionResult PHMeasure_Read([DataSourceRequest] DataSourceRequest request, double SelectedProductionUnitLat, double SelectedProductionUnitLong)
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.ph, SelectedProductionUnitLat, SelectedProductionUnitLong), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult TempMeasure_Read([DataSourceRequest] DataSourceRequest request, double SelectedProductionUnitLat, double SelectedProductionUnitLong)
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.waterTemperature, SelectedProductionUnitLat, SelectedProductionUnitLong), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult ORPMeasure_Read([DataSourceRequest] DataSourceRequest request, double SelectedProductionUnitLat, double SelectedProductionUnitLong)
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.orp, SelectedProductionUnitLat, SelectedProductionUnitLong), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult DissolvedOxyMeasure_Read([DataSourceRequest] DataSourceRequest request, double SelectedProductionUnitLat, double SelectedProductionUnitLong)
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.dissolvedOxygen, SelectedProductionUnitLat, SelectedProductionUnitLong), JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult GetProductionUnitDetail(double SelectedProductionUnitLat, double SelectedProductionUnitLong)
         {
             var db = new ApplicationDbContext();
