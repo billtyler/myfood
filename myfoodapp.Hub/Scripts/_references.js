@@ -748,3 +748,6 @@
 /// <reference path="modernizr-2.8.3.js" />
 /// <reference path="respond.matchmedia.addlistener.min.js" />
 /// <reference path="respond.min.js" />
+/// <reference path="swiper/swiper.jquery.js" />
+/// <reference path="swiper/swiper.jquery.umd.js" />
+/// <reference path="swiper/swiper.js" />

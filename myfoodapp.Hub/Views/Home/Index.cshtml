@@ -1,9 +1,18 @@
 ﻿<script type="text/javascript">
+
+    var swiper;
+
     window.onload = function onLoad(e) {
 
-        var OptionList = $("#OptionList").data("kendoListView");
-        var currentProductionUnitLat;
-        var currentProductionUnitLong;
+        swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            parallax: true,
+            speed: 600,
+            onSlideChangeEnd: onSlideChangeEnd,
+        });
 
         $.ajax({
             url: "@Url.Action("GetNetworkStats", "Home")",
@@ -17,16 +26,34 @@
         });
 
         $.ajax({
-            url: "@Url.Action("GetRandomProductionUnitDetail", "Home")",
+            url: "@Url.Action("GetProductionUnitDetailList", "Home")",
             dataType: "json",
             type: "POST",
             success: function (response) {
-            $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
-            $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
-            $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
-            $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
-            $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
 
+                $.each(response, function (index, item) {
+                    swiper.appendSlide(
+                        '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
+                            '<div class="subtitle" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
+                            '<div class="title" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
+                            '<div class="text" data-swiper-parallax="-300">' +
+                                '<p>' + item.ProductionUnitOptions + '</p>' +
+                            '</div>' +
+                        '</div>'
+                        );
+                });
+            }
+        });
+    }
+
+    function onSlideChangeEnd(ep)
+    {
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitMeasures", "Home")",
+            dataType: "json",
+        data: { id: ep.activeIndex },
+        type: "POST",
+        success: function (response) {
             $("#CurrentPhValue").text(response.CurrentPhValue);
             $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
             $("#AverageHourPhValue").text(response.AverageHourPhValue);
@@ -38,7 +65,7 @@
             $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
             $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
             $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
-                
+
             $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
             $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
             $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
@@ -50,63 +77,24 @@
             $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
             $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
             $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
-
-            currentProductionUnitLat = response.LocationLatitude;
-            currentProductionUnitLong = response.LocationLongitude;
-
-            OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
-
         }
-        });
-
+    });
     }
 
     function onShow(e) {
-
-        var OptionList = $("#OptionList").data("kendoListView");
 
         var currentProductionUnitLat = this.marker.options.location[0];
         var currentProductionUnitLong = this.marker.options.location[1];
 
         $.ajax({
-                url: "@Url.Action("GetProductionUnitDetail", "Home")",
-                dataType: "json",
-                data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
-                type: "POST",
-                success: function (response) {
-                $("#PioneerCitizenName").text('NAME: ' + response.PioneerCitizenName);
-                $("#PioneerCitizenNumber").text('NUMBER: ' + response.PioneerCitizenNumber);
-                $("#ProductionUnitType").text('TYPE: ' + response.ProductionUnitType);
-                $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
-                $("#ProductionUnitStartDate").text('START DATE: ' + kendo.toString(kendo.parseDate(response.ProductionUnitStartDate, 'yyyy-MM-dd'), 'MM/dd/yyyy'));
-
-                $("#CurrentPhValue").text(response.CurrentPhValue);
-                $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
-                $("#AverageHourPhValue").text(response.AverageHourPhValue);
-                $("#AverageDayPhValue").text(response.AverageDayPhValue);
-                $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
-
-                $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
-                $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
-                $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
-                $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
-                $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
-                
-                $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
-                $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
-                $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
-                $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
-                $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
-
-                $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
-                $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
-                $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
-                $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
-                $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
-                }
-            });
-        
-        OptionList.dataSource.read({ SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong });
+            url: "@Url.Action("GetProductionUnitIndex", "Home")",
+            dataType: "json",
+            data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
+            type: "POST",
+            success: function(response) {
+                swiper.slideTo(response.CurrentIndex);
+            }
+        });
     }
 
     function onShapeCreated(e) {
@@ -142,20 +130,15 @@
 <div id="pioneer-network" class="main-section-content row">
     <div id="map-wrapper" class="row">
         <div id="map-details" class="col-md-4">
-            <h2 id="PioneerCitizenName"></h2>
-            <div id="PioneerCitizenNumber"><span></span></div>
-            <div id="ProductionUnitType"><span></span></div>
-            <div id="ProductionUnitVersion"><span></span></div>
-            <div id="ProductionUnitStartDate"><span></span></div>
-            <h3 class="section-header">OPTIONS</h3>           
-            @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
-            .Name("OptionList")
-            .TagName("div")
-            .ClientTemplateId("templateOption")
-            .DataSource(dataSource => dataSource
-              .Read(read => read.Action("Option_Read", "Home"))
-            )
-            )
+            <div class="swiper-container" style="background-color:white;height:350px">
+                <div class="parallax-bg"></div>
+                <div class="swiper-wrapper"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper-pagination-white"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-prev swiper-button-white"></div>
+                <div class="swiper-button-next swiper-button-white"></div>
+            </div>
         </div>
         <div id="map-container" class="col-md-8">
         @model myfoodapp.Hub.Models.Map
@@ -348,6 +331,63 @@
 </div>
 
 <style>
+            .swiper-container {
+                width: 100%;
+                height: 100%;
+                background: #000;
+            }
+
+            .swiper-slide {
+                font-size: 18px;
+                color:#fff;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            .parallax-bg {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 130%;
+                height: 100%;
+                -webkit-background-size: cover;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .swiper-slide .title {
+              font-weight: 900;
+              color: white;
+              text-transform: uppercase;
+              word-wrap: break-word;
+              margin: 0;
+              padding-top:20px;
+              font-size: 2rem;
+              padding-left:20px;
+            }
+
+            .swiper-slide .subtitle {
+              color: white;
+              margin: 0;
+              font-size: 1rem;
+              padding: 20px;
+              padding-left:20px;
+            }
+
+            .swiper-slide .text {
+              color: white;
+              font-size: 1rem;
+              margin: 0;
+              word-wrap: break-word;
+              padding-left:20px;
+              padding-top:100px;
+            }
+
+            .box{
+              width: 320px;
+              height: 240px;
+              background-size:contain;
+            }
 
     h1 {
         font-size:xx-large;
@@ -423,6 +463,15 @@
     h1 {
          font-size: medium;
     }
+
+    .picture-widget {
+         height:200px;
+    }
+
+     #map-container{
+         visibility:hidden;
+         display:none;
+      }
 
     }
 

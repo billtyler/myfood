@@ -4,10 +4,8 @@
     <title>myfood Hub Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css" rel="stylesheet">
-    <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.metro.min.css" rel="stylesheet">
-    <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.dataviz.min.css" rel="stylesheet">
-    <link href="https://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.dataviz.metro.min.css" rel="stylesheet">
+    <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.metro.min.css" rel="stylesheet">
+    <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.dataviz.min.css" rel="stylesheet">
     <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.dataviz.metro.min.css" rel="stylesheet" type="text/css" />
     <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/jquery.min.js"></script>
@@ -16,17 +14,19 @@
     <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.aspnetmvc.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
+
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.css">
+
+    <link rel="stylesheet" href="~/Content/Swiper/swiper.min.css">
+    <script src="~/Scripts/Swiper/swiper.jquery.js"></script>
+
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="~/Content/favicon.ico" type="image/x-icon" />
     <link rel="manifest" href="~/manifest.txt">
 </head>
 <body>
     @using Microsoft.AspNet.Identity
-    <!-- Google Tag Manager -->
-    <noscript>
-        <iframe src="//www.googletagmanager.com/ns.html?id=GTM-6X92" height="0" width="0" style="display: none; visibility: hidden"></iframe>
-    </noscript>
-    <script>(function(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-6X92');</script>
+  
     <!-- End Google Tag Manager -->
     @*<div class="container-fluid" style="background-color:aqua">
 
@@ -72,7 +72,7 @@
             </ul>
             <div id="rights">
                 <img width="50" height="50" src="~/Content/miniLogo.png" />
-                <p>Copyright &copy; 2016, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
+                <p>Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
             </div>
         </div>
     </div><!--close left column-->
@@ -90,6 +90,14 @@
         });
     </script>
     <style type="text/css">
+        @@media screen and (max-width: 480px) {
+        #rights{
+             visibility:hidden;
+             display:none;
+        }
+
+        }
+
         a:link {
             color: #ffffff;
         }

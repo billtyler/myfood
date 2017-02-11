@@ -418,8 +418,8 @@ namespace myfoodapp.Hub.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             MeasureService measureService = new MeasureService(db);
 
-            var rslt = db.OptionLists.Include("productionUnit")
-                                    .Include("option")
+            var rslt = db.OptionLists.Include(o => o.productionUnit)
+                                    .Include(o => o.option)
                                     .Where(p => p.productionUnit.Id == id)
                                     .Select(p => p.option);
 

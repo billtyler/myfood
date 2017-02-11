@@ -78,6 +78,10 @@ body,
     margin-right: 0.917em;
 }
 
+.k-grid td.k-state-selected:hover, .k-grid tr:hover{
+  background-color: grey !important;
+}
+ 
 /* Bootstrap overrides*/
 .row,
 .container-fluid {

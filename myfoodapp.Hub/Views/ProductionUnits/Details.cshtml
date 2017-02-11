@@ -6,63 +6,8 @@
 }
 
 <script type="text/javascript">
-    //$(window).on("resize", function () {
-    //    var Measures = $("#Measures").data("kendoChart");
-
-    //    if ($(window).width() < 480) {
-    //        Measures.options.categoryAxis[1].labels.rotation = 45;
-    //        Measures.options.categoryAxis[1].labels.step = 240;
-    //        Measures.options.categoryAxis[1].majorGridLines.step = 240;
-    //        Measures.options.categoryAxis[1].majorTicks.step = 240;
-
-    //        //Measures.options.categoryAxis[1].labels.template("#= kendo.toString(value, 'd')#");
-
-    //        Measures.options.categoryAxis[0].majorGridLines.step = 240;
-    //        Measures.options.categoryAxis[0].majorTicks.step = 240;
-            
-    //        $("#Measures").css("-ms-touch-action", "pan-x");
-    //        $("#Measures").css("-touch-action", "pan-x");
-    //    }
-    //    else
-    //    {
-    //        Measures.options.categoryAxis[1].labels.rotation = 0;
-    //        Measures.options.categoryAxis[1].labels.step = 120;
-    //        Measures.options.categoryAxis[1].majorGridLines.step = 120;
-    //        Measures.options.categoryAxis[1].majorTicks.step = 120;
-
-    //        //Measures.options.categoryAxis[1].labels.template("#= kendo.toString(value, 'd')#\n#= kendo.toString(value, 't')#");
-
-    //        Measures.options.categoryAxis[0].majorGridLines.step = 120;
-    //        Measures.options.categoryAxis[0].majorTicks.step = 120;
-    //    }
-
-    //    Measures.refresh();
-    //    Measures.resize();
-    //});
 
     window.onload = function onLoad(e) {
-
-        //var Measures = $("#Measures").data("kendoChart");
-
-        //if ($(window).width() < 480)
-        //{
-        //    Measures.options.categoryAxis[1].labels.rotation = 45;
-        //    Measures.options.categoryAxis[1].labels.step = 240;
-        //    Measures.options.categoryAxis[1].majorGridLines.step = 240;
-        //    Measures.options.categoryAxis[1].majorTicks.step = 240;
-
-        //    //Measures.options.categoryAxis[1].labels.template("#= kendo.toString(value, 'd')#");
-
-        //    Measures.options.categoryAxis[0].majorGridLines.step = 240;
-        //    Measures.options.categoryAxis[0].majorTicks.step = 240;
-
-        //    Measures.refresh();
-
-        //    $("#Measures").css("-ms-touch-action", "pan-x");
-        //    $("#Measures").css("-touch-action", "pan-x");
-        //}
-
-        //var OptionList = $("#OptionList").data("kendoListView");
 
         var productionUnitId = $('#routeDataId').val();
 
@@ -72,7 +17,7 @@
             data: {id: productionUnitId},
             type: "POST",
             success: function (response) { 
-                $("#PioneerCitizenName").text(response.PioneerCitizenName + " # " + response.PioneerCitizenNumber);
+                $("#PioneerCitizenName").text(response.PioneerCitizenName + " #" + response.PioneerCitizenNumber);
                 $("#ProductionUnitType").text(response.ProductionUnitType);
                 $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
                 $("#ProductionUnitOptions").text('Options: ' + response.ProductionUnitOptions);
@@ -86,12 +31,9 @@
                 }
                 else
                 {
-                   // $("#ProductionUnitPicture").attr("src", "/Content/Pictures/Sites/" + response.PicturePath);
                     $('#ProductionUnitPicture').css("background-image", "linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/" + response.PicturePath + ")");                  
                     $("#ProductionUnitPicture").show();
                 }
-
-                //$("#ProductionUnitPicture").attr("src", "/Content/Pictures/" + response.PicturePath);
 
                 $("#CurrentPhValue").text(response.CurrentPhValue);
                 $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
@@ -119,22 +61,12 @@
             }
         });
 
-        //Measures.dataSource.read({ id: productionUnitId });
-        //OptionList.dataSource.read({ id: productionUnitId });
-
         var myVal = $("#displayManagementBtn").val();
         if (myVal === 'None')
         {
             $("#managementButton").hide();
         }
     }
-
-    //function onMeasuresDataBound() {
-    //    var Measures = $("#Measures").data("kendoChart");
-
-    //    var items = Measures.dataSource.data().length;
-    //    $("#MeasureNoData").toggle(items === 0);
-    //}
 
     function onViewEventsClick() {
         var productionUnitId = $('#routeDataId').val();
@@ -164,27 +96,6 @@
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-md-2">
-        @*<br />*@
-        @*<div>
-            <h2 id="AverageMonthlyProduction"></h2>
-            <h2 id="AverageMonthlySparedCO2"></h2>
-        </div>*@
-        @*<br />
-        <h2 id="PioneerCitizenName"></h2>
-        <div id="PioneerCitizenNumber"><span></span></div>
-        <div id="ProductionUnitType"><span></span></div>
-        <div id="ProductionUnitVersion"><span></span></div>*@
-        @*<div id="ProductionUnitStartDate"><span></span></div>*@
-        @*<h3 class="section-header">OPTIONS</h3>
-        @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
-            .Name("OptionList")
-            .TagName("div")
-            .ClientTemplateId("templateOption")
-            .DataSource(dataSource => dataSource
-              .Read(read => read.Action("Option_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
-            )
-        )*@
-
         <br />
 
         <div id="managementButton">
@@ -207,140 +118,6 @@
 
     </div>
 
-    @*<div id="measures-container" class="col-md-10">
-            <h3 class="section-header">Last week measures</h3>
-            <div class="sparkline-container">
-                @(Html.Kendo().Chart<myfoodapp.Hub.Models.GroupedMeasure>()
-                    .Name("Measures")
-                    .Theme("metro")
-                    .AutoBind(false)
-                    .Panes(panes =>
-                    {
-                        panes.Add().Title("Basic sensors");
-                        panes.Add("advancedPane").Title("Advanced sensors").Height(150);
-                    })
-                    .Legend(legend => legend
-                        .Visible(true)
-                        .Position(ChartLegendPosition.Bottom)
-                    )
-                    .HtmlAttributes(new { style = "height: 700px;" })
-                    .Events(e => e.DataBound("onMeasuresDataBound"))
-                    .ChartArea(ch => ch.Background("#eeeeee"))
-                    .DataSource(ds => ds
-                        .Read(read => read.Action("Measures_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] })))
-                                    .Series(series =>
-                                    {
-                                        series.Line(model => model.pHvalue, categoryExpression: model => model.captureDate)
-                                              .Color("#FF0914").Name("pH [&deg;]").Axis("pH")
-                                              .Style(ChartLineStyle.Smooth).Markers(x => x.Visible(false))
-                                              .Tooltip(tooltip => tooltip.Template("ph - #= kendo.toString(category, 'd')# <br/> #= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#&deg;"));
-                                        series.Line(model => model.humidityvalue, categoryExpression: model => model.captureDate)
-                                              .Color("#ffae00").Name("Humidity [%]").Axis("hum")
-                                              .Style(ChartLineStyle.Smooth).Markers(x => x.Visible(false))
-                                              .Tooltip(tooltip => tooltip.Template("hum - #= kendo.toString(category, 'd')# <br/> #= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#%"));
-                                        series.Line(model => model.waterTempvalue, categoryExpression: model => model.captureDate)
-                                              .Color("#3E7F2B").Name("Water Temp. [&deg;C]").Axis("water")
-                                              .Style(ChartLineStyle.Smooth).Markers(x => x.Visible(false))
-                                              .Tooltip(tooltip => tooltip.Template("water - #= kendo.toString(category, 'd')# <br/> #= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#&deg;C"));
-                                        series.Line(model => model.airTempvalue, categoryExpression: model => model.captureDate)
-                                              .Color("#73c100").Name("Air Temp. [&deg;C]").Axis("air")
-                                              .Style(ChartLineStyle.Smooth).Markers(x => x.Visible(false))
-                                              .Tooltip(tooltip => tooltip.Template("air - #= kendo.toString(category, 'd')# <br/> #= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#&deg;C"));
-                                        series.Line(model => model.ORPvalue, categoryExpression: model => model.captureDate)
-                                              .Color("#7F385A").Name("ORP [mV]").Axis("orp")
-                                              .Style(ChartLineStyle.Smooth).Markers(x => x.Visible(false))
-                                              .Tooltip(tooltip => tooltip.Template("orp - #= kendo.toString(category, 'd')# <br/> #= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#mV"));
-                                        series.Line(model => model.DOvalue, categoryExpression: model => model.captureDate)
-                                              .Color("#CC0060").Name("Dissolved Oxy [mg/L]").Axis("do")
-                                              .Style(ChartLineStyle.Smooth).Markers(x => x.Visible(false))
-                                              .Tooltip(tooltip => tooltip.Template("dissolved oxy - #= kendo.toString(category, 'd')# <br/> #= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#mg/L"));
-                                    })
-                    .CategoryAxis(axis => axis.Pane("advancedPane")
-                        .Date()
-                        .Labels(l => l.Visible(false))
-                        .BaseUnit(ChartAxisBaseUnit.Minutes)
-                        .BaseUnitStep(15)
-                        .MajorGridLines(majorGridLines => majorGridLines.Step(120).Visible(true))
-                        .MajorTicks(ticks => ticks.Step(120))
-                        .Justify(true)
-                        .AxisCrossingValue(0, 9000)
-                    )
-                    .CategoryAxis(axis => axis
-                        .Date()
-                        .Labels(l => l.Visible(true).Step(120).Template("#= kendo.toString(value, 'd')#\n#= kendo.toString(value, 't')#"))
-                        .BaseUnit(ChartAxisBaseUnit.Minutes)
-                        .BaseUnitStep(15)
-                        .MajorGridLines(majorGridLines => majorGridLines.Step(120).Visible(true))
-                        .MajorTicks(ticks => ticks.Step(120))
-                        .Justify(true)
-                        .AxisCrossingValue(9000, 0, 0, 9000, 0, 9000)
-                    )
-
-                    .ValueAxis(axis => axis.Numeric("pH")
-                        .MajorUnit(1)
-                        .MajorTicks(x => x.Visible(false))
-                        .MajorGridLines(m => m.Visible(false))
-                        .Line(l => l.Visible(false))
-                        .Labels(l => l.Visible(true))
-                        .Min(0).Max(10)
-                    )
-                    .ValueAxis(axis => axis.Numeric("water")
-                        .Visible(false)
-                        .MajorUnit(10)
-                        .MajorTicks(x => x.Visible(false))
-                        .MajorGridLines(m => m.Visible(false))
-                        .Line(l => l.Visible(false))
-                        .Labels(l => l.Visible(true))
-                        .Min(0).Max(50)
-                    )
-                    .ValueAxis(axis => axis.Numeric("air")
-                        .MajorUnit(10)
-                        .MajorTicks(x => x.Visible(false))
-                        .MajorGridLines(m => m.Visible(false))
-                        .Line(l => l.Visible(false))
-                        .Labels(l => l.Visible(true))
-                        .Min(0).Max(50)
-                    )
-                     .ValueAxis(axis => axis.Numeric("hum")
-                         .Visible(false)
-                         .MajorUnit(10)
-                         .MajorTicks(x => x.Visible(false))
-                         .MajorGridLines(m => m.Visible(false))
-                         .Line(l => l.Visible(false))
-                         .Labels(l => l.Visible(true))
-                         .Min(0).Max(100)
-                     )
-                     .ValueAxis(axis => axis.Numeric("do").Pane("advancedPane")
-                         .MajorUnit(10)
-                         .MajorTicks(x => x.Visible(true))
-                         .MajorGridLines(m => m.Visible(false))
-                         .Line(l => l.Visible(false))
-                         .Labels(l => l.Visible(true))
-                     )
-                     .ValueAxis(axis => axis.Numeric("orp").Pane("advancedPane")
-                         .MajorUnit(100)
-                         .MajorTicks(x => x.Visible(true))
-                         .MajorGridLines(m => m.Visible(false))
-                         .Line(l => l.Visible(false))
-                         .Labels(l => l.Visible(true))
-                     )
-                     .Pannable(pannable => pannable
-                               .Lock(ChartAxisLock.Y)
-                              )
-                    .Zoomable(zoomable => zoomable
-                        .Mousewheel(mousewheel => mousewheel.Lock(ChartAxisLock.Y))
-                        .Selection(selection => selection.Lock(ChartAxisLock.Y))
-                    )
-                     .Tooltip(tooltip => tooltip
-                        .Visible(true)
-                        .Template("#= kendo.toString(category, 't')# : #=kendo.format('{0}', data.value)#"))
-                )
-                <div id="MeasureNoData" class="overlay">
-                    <div>No data available</div>
-                </div>
-            </div>
-        </div>*@
-
     <div id="measures-container" class="col-md-10" style="padding-bottom:40px">
 
                <div id="detailedContainer" class="row">
@@ -349,8 +126,8 @@
                         <div id="containerPicture">
                             <div class="box" id="ProductionUnitPicture">
                                 <div class="text">
-                                    <h2 id="PioneerCitizenName"></h2>
                                     <h3 id="ProductionUnitType"></h3>
+                                    <h2 id="PioneerCitizenName"></h2>
                                     <p id="ProductionUnitOptions" />
                                 </div>
                             </div>
@@ -610,7 +387,6 @@
                   margin-left:-10%;
                   margin-right:-10%;
              }
-
          }
 
             .text p {
@@ -620,8 +396,8 @@
               font-size: 1rem;
               margin: 0;
               word-wrap: break-word;
-              padding-left:15px;
-              padding-top:90px;
+              padding-left:20px;
+              padding-top:20px;
             }
 
             .text h3 {
@@ -635,11 +411,11 @@
               font-weight: 900;
               color: white;
               text-transform: uppercase;
+              word-wrap: break-word;
               margin: 0;
-              position: absolute;
-              top: 50%;
+              padding-top:40px;
               font-size: 2rem;
-              padding-left:15px;
+              padding-left:20px;
             }
 
             .box{

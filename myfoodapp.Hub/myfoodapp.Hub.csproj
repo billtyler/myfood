@@ -1122,6 +1122,7 @@
     <Content Include="Content\kendo\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\lightbox\lightbox.css" />
     <Content Include="Content\logoMyfood.png" />
+    <Content Include="Content\favicon.ico" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\miniLogoWhite.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningFishTank.png" />
@@ -1186,6 +1187,8 @@
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\VillevaudeFamily22.jpg" />
+    <Content Include="Content\Swiper\swiper.css" />
+    <Content Include="Content\Swiper\swiper.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -2186,6 +2189,12 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Swiper\swiper.jquery.js" />
+    <Content Include="Scripts\Swiper\swiper.jquery.min.js" />
+    <Content Include="Scripts\Swiper\swiper.jquery.umd.js" />
+    <Content Include="Scripts\Swiper\swiper.jquery.umd.min.js" />
+    <Content Include="Scripts\Swiper\swiper.js" />
+    <Content Include="Scripts\Swiper\swiper.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2961,6 +2970,9 @@
     <Content Include="Views\ProductionUnits\Update.cshtml" />
     <Content Include="Views\Recipes\Index.cshtml" />
     <Content Include="Views\PerformanceHealth\Index.cshtml" />
+    <Content Include="Scripts\Swiper\maps\swiper.jquery.min.js.map" />
+    <Content Include="Scripts\Swiper\maps\swiper.jquery.umd.min.js.map" />
+    <Content Include="Scripts\Swiper\maps\swiper.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

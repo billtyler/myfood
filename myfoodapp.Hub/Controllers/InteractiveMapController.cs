@@ -5,8 +5,9 @@ using myfoodapp.Hub.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
+using myfoodapp.Hub.Business;
 
 namespace myfoodapp.Hub.Controllers
 {
@@ -21,8 +22,9 @@ namespace myfoodapp.Hub.Controllers
 
             var listMarker = new List<Marker>();
 
-            db.ProductionUnits.ToList().ForEach(p => 
-                                        listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, p.info) { shape = "redMarker" }));
+            db.ProductionUnits.Include(p => p.owner).ToList().ForEach(p => 
+                                        listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}", 
+                                                                  p.info, p.startDate.ToShortDateString())) { shape = "redMarker" }));
 
             var map = new Models.Map()
             {
@@ -39,27 +41,39 @@ namespace myfoodapp.Hub.Controllers
             return View(map);
         }
 
-        public ActionResult GetProductionUnitDetail(double SelectedProductionUnitLat, double SelectedProductionUnitLong)
+        public ActionResult GetProductionUnitMeasures(int id)
         {
             var db = new ApplicationDbContext();
 
-            var rslt = db.ProductionUnits.Include("owner.user")
-                                         .Include("productionUnitType")
-                                         .Include("productionUnitStatus")
-                                         .Where(p => p.locationLatitude == SelectedProductionUnitLat &&
-                                                     p.locationLongitude == SelectedProductionUnitLong).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList()[id];                                         
 
-            return Json(new { PioneerCitizenName = rslt.owner.pioneerCitizenName,
-                              PioneerCitizenNumber = rslt.owner.pioneerCitizenNumber,
-                              ProductionUnitVersion = rslt.version,
-                              ProductionUnitStartDate = rslt.startDate,
-                              ProductionUnitType = rslt.productionUnitType.name,
-                              ProductionUnitStatus = rslt.productionUnitStatus.name,
-                              PicturePath = rslt.picturePath,
-                            }, JsonRequestBehavior.AllowGet);
+            var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
+
+            return Json(new { 
+                             CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
+                             CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
+                             AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
+                             AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
+                             LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+            }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetRandomProductionUnitDetail()
+        public ActionResult GetProductionUnitIndex(double SelectedProductionUnitLat, double SelectedProductionUnitLong)
+        {
+            var db = new ApplicationDbContext();
+
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+
+            var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == SelectedProductionUnitLat &&
+                                                                             p.locationLongitude == SelectedProductionUnitLong);
+
+            return Json(new
+            {
+                CurrentIndex = currentProductionUnitIndex
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetProductionUnitDetailList()
         {
             var db = new ApplicationDbContext();
 
@@ -71,37 +85,49 @@ namespace myfoodapp.Hub.Controllers
             var random = new Random();
             int randomIndex = random.Next(0, prodUnitListCount);
 
-            var rslt = db.ProductionUnits.Include("owner.user")
-                                         .Include("productionUnitType")
-                                         .Include("productionUnitStatus")
-                                         .Where(p => p.picturePath != null).ToList()[randomIndex];
+            var currentProductionUnitList = db.ProductionUnits.Include(p => p.owner)
+                                         .Include(p => p.productionUnitType)
+                                         .Include(p => p.productionUnitStatus)
+                                         .Where(p => p.picturePath != null).ToList();
 
-            return Json(new
+            var lst = new List<object>();
+
+            currentProductionUnitList.ForEach(p =>
             {
-                PioneerCitizenName = rslt.owner.pioneerCitizenName,
-                PioneerCitizenNumber = rslt.owner.pioneerCitizenNumber,
-                ProductionUnitVersion = rslt.version,
-                ProductionUnitStartDate = rslt.startDate,
-                ProductionUnitType = rslt.productionUnitType.name,
-                ProductionUnitStatus = rslt.productionUnitStatus.name,
-                PicturePath = rslt.picturePath,
-                LocationLatitude = rslt.locationLatitude,
-                LocationLongitude = rslt.locationLongitude,
-            }, JsonRequestBehavior.AllowGet);
+                var options = db.OptionLists.Include(o => o.productionUnit)
+                .Include(o => o.option)
+                .Where(o => o.productionUnit.Id == p.Id)
+                .Select(o => o.option);
+
+                var optionList = string.Empty;
+
+                if (options.Count() > 0)
+                {
+                    options.ToList().ForEach(o => { optionList += o.name + " / "; });
+                }
+
+                lst.Add(new
+                {
+
+                    PioneerCitizenName = p.owner.pioneerCitizenName,
+                    PioneerCitizenNumber = p.owner.pioneerCitizenNumber,
+                    ProductionUnitVersion = p.version,
+                    ProductionUnitStartDate = p.startDate,
+                    ProductionUnitType = p.productionUnitType.name,
+                    ProductionUnitStatus = p.productionUnitStatus.name,
+                    PicturePath = p.picturePath,
+
+                    LocationLatitude = p.locationLatitude,
+                    LocationLongitude = p.locationLongitude,
+
+                    ProductionUnitOptions = optionList,
+                }
+                );
+            });
+
+            return Json(lst, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult Option_Read([DataSourceRequest] DataSourceRequest request, double SelectedProductionUnitLat, double SelectedProductionUnitLong)
-        {
-            var db = new ApplicationDbContext();
-
-            var rslt = db.OptionLists.Include("productionUnit")
-                                    .Include("option")
-                                    .Where(p => p.productionUnit.locationLatitude == SelectedProductionUnitLat &&
-                                                p.productionUnit.locationLongitude == SelectedProductionUnitLong)
-                                    .Select(p => p.option);
-
-            return Json(rslt.ToDataSourceResult(request));
-        }
+   
 
         public ActionResult GetNetworkStats()
         {
@@ -128,6 +154,29 @@ namespace myfoodapp.Hub.Controllers
                 TotalMonthlyProduction = totalMonthlyProduction,
                 TotalMonthlySparedCO2 = totalMonthlySparedCO2,
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ProductionUnitStatus_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var db = new ApplicationDbContext();
+
+            var rslt = db.ProductionUnits.Include("productionUnitStatus").ToList();
+
+            var waitConfCount = rslt.Where(p => p.productionUnitStatus.Id == 1).Count();
+            var setuPlannedCount = rslt.Where(p => p.productionUnitStatus.Id == 2).Count();
+            var upRunningCount = rslt.Where(p => p.productionUnitStatus.Id == 3).Count();
+            var onMaintenanceCount = rslt.Where(p => p.productionUnitStatus.Id == 4).Count();
+            var stoppedCount = rslt.Where(p => p.productionUnitStatus.Id == 5).Count();
+
+            var statusList = new List<PieChartViewModel>();
+
+            statusList.Add(new PieChartViewModel() { Category = "Wait Confirm.", Value = waitConfCount, Color = "#9de219" });
+            statusList.Add(new PieChartViewModel() { Category = "Setup Planned", Value = setuPlannedCount, Color = "#90cc38" });
+            statusList.Add(new PieChartViewModel() { Category = "Up & Running", Value = upRunningCount, Color = "#068c35" });
+            statusList.Add(new PieChartViewModel() { Category = "On Maintenance", Value = onMaintenanceCount, Color = "#006634" });
+            statusList.Add(new PieChartViewModel() { Category = "Stopped", Value = stoppedCount, Color = "#004d38" });
+
+            return Json(statusList);
         }
     }
 }
