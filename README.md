@@ -17,10 +17,11 @@ Hardware pre-requisite:
 
 Material pre-requisite:
 - 22sq² tempered glass greenhouse (ie: S208 Model from <a href="http://www.acd.eu/en">ACD</a>) 
+- 24X 5' Zipgrow towers (<a href="https://brightagrotech.com">see the product</a>) 
 - Wooden structure (<a href="https://myfood.eu/wp-content/uploads/2017/03/myfood-family-plan.pdf">see the plan</a>)
 - Water pump (ie: DCS-2000)
 - PVC-U tubes
-- 2X600L fish tanks
+- 2X 600L food contact fish tanks (1150mm X 1550mm X 450mm)
 
 Greenhouse setup:
 <a href="https://myfood.eu/wp-content/uploads/2017/03/myfood-greenhouse-setup.pdf">see the plan</a>
