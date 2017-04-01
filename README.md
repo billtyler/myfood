@@ -1,4 +1,4 @@
-# myfoodapp
+# myfood app & hub - Solar Smart Greenhouse Using Vertical Aquaponic Towers
 
 Technical architecture overview:
 <a href="https://myfood.eu/wp-content/uploads/2017/03/myfood-solution-architecture.pdf">download the document</a>
