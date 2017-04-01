@@ -15,7 +15,7 @@ Hardware pre-requisite:
 - Atlas Sensors (pH, Temp, DO, ORP) plus USB Board (<a href="https://www.atlas-scientific.com/product_pages/components/usb-iso.html">see the product</a>) and EZO circuits
 
 Material pre-requisite:
-- 22sq² tempered glass greenhouse (ie: S208 Model from <a href="http://www.acd.eu/en">ACD</a>) 
+- 22/14sq² tempered glass greenhouse (ie: S208 or S106 Model from <a href="http://www.acd.eu/en">ACD</a>) 
 - 24X 5' Zipgrow towers (<a href="https://brightagrotech.com">see the product</a>) 
 - Wooden structure (<a href="https://myfood.eu/wp-content/uploads/2017/03/myfood-family-plan.pdf">see the plan</a>)
 - Water pump (ie: DCS-2000)
