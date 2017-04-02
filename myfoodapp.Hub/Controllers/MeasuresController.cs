@@ -117,11 +117,11 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var productionUnits = db.ProductionUnits
+            var productionUnits = db.ProductionUnits.Include(p => p.owner)
                         .Select(m => new ProductionUnitViewModel
                         {
                             Id = m.Id,
-                            info = m.info
+                            info = m.owner.pioneerCitizenName + " - " + m.info
                         })
                         .OrderBy(e => e.info);
 

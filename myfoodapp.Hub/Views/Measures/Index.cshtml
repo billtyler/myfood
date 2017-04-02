@@ -99,7 +99,7 @@
         .Columns(columns =>
         {
             columns.Bound(c => c.Id).Width(75);
-            columns.ForeignKey(c => c.productionUnitId, (System.Collections.IEnumerable)ViewData["productionUnits"], "Id", "info").Title("prod. unit").Width(100);
+            columns.ForeignKey(c => c.productionUnitId, (System.Collections.IEnumerable)ViewData["productionUnits"], "Id", "info").Title("prod. unit").Width(150);
             columns.ForeignKey(c => c.sensorId, (System.Collections.IEnumerable)ViewData["sensorTypes"], "Id", "name").Title("sensor type").Width(100);
             columns.Bound(c => c.captureDate).Format("{0:d} - {0:t}").Width(100);
             columns.Bound(c => c.value).Width(75);
