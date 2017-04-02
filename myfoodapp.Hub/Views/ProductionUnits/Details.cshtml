@@ -1,0 +1,481 @@
+﻿@model IEnumerable<myfoodapp.Hub.Models.ProductionUnit>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    window.onload = function onLoad(e) {
+
+        var productionUnitId = $('#routeDataId').val();
+
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitDetail", "ProductionUnits")",
+            dataType: "json",
+            data: {id: productionUnitId},
+            type: "POST",
+            success: function (response) { 
+                $("#PioneerCitizenName").text(response.PioneerCitizenName + " #" + response.PioneerCitizenNumber);
+                $("#ProductionUnitType").text(response.ProductionUnitType);
+                $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
+                $("#ProductionUnitOptions").text('Options: ' + response.ProductionUnitOptions);
+                $("#OnlineSinceWeeks").text(response.OnlineSinceWeeks);
+                $("#AverageMonthlyProduction").text(response.AverageMonthlyProduction + 'kg');
+                $("#AverageMonthlySparedCO2").text(response.AverageMonthlySparedCO2 + 'kg');
+
+                if (response.PicturePath === null)
+                {
+                    $("#ProductionUnitPicture").hide();
+                }
+                else
+                {
+                    $('#ProductionUnitPicture').css("background-image", "linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/" + response.PicturePath + ")");                  
+                    $("#ProductionUnitPicture").show();
+                }
+
+                $("#CurrentPhValue").text(response.CurrentPhValue);
+                $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
+                $("#AverageHourPhValue").text(response.AverageHourPhValue);
+                $("#AverageDayPhValue").text(response.AverageDayPhValue);
+                $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
+
+                $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
+                $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
+                $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
+                $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
+                $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
+
+                $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
+                $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
+                $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
+                $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
+                $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
+
+                $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
+                $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
+                $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
+                $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
+                $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
+            }
+        });
+
+        var myVal = $("#displayManagementBtn").val();
+        if (myVal === 'None')
+        {
+            $("#managementButton").hide();
+        }
+    }
+
+    function onViewEventsClick() {
+        var productionUnitId = $('#routeDataId').val();
+        window.location = window.location.origin + "/ProductionUnits/Events/" + productionUnitId;
+    }
+
+    function onManageUnitClick() {
+        var productionUnitId = $('#routeDataId').val();
+        window.location = window.location.origin + "/ProductionUnits/Update/" + productionUnitId;
+    }
+
+</script>
+
+<script type="text/x-kendo-tmpl" id="templateOption">
+    <div class="option">
+        <span>&bull; #:name#</span>
+    </div>
+</script>
+
+<input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
+<input type="hidden" id="displayManagementBtn" value="@ViewBag.DisplayManagementBtn" />
+
+<div id="main-section-header" class="row">
+    <h2>Production Unit Details</h2>
+    <div style="clear:both;"></div>
+</div>
+
+<div id="productionUnits-grid" class="main-section-content row">
+    <div id="productionUnits-details" class="col-md-2">
+        <br />
+
+        <div id="managementButton">
+            <p>
+                @(Html.Kendo().Button()
+            .Name("viewEventsButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .Content("View Events")
+            .Events(ev => ev.Click("onViewEventsClick")))
+            </p>
+
+            <p>
+                @(Html.Kendo().Button()
+            .Name("manageUnitButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .Content("Manage Unit")
+            .Events(ev => ev.Click("onManageUnitClick")))
+            </p>
+        </div>
+
+    </div>
+
+    <div id="measures-container" class="col-md-10" style="padding-bottom:40px">
+
+               <div id="detailedContainer" class="row">
+                    <div id="imageContainer" class="col-md-6">
+                        <h3 class="section-header">Detailed information</h3>
+                        <div id="containerPicture">
+                            <div class="box" id="ProductionUnitPicture">
+                                <div class="text">
+                                    <h3 id="ProductionUnitType"></h3>
+                                    <h2 id="PioneerCitizenName"></h2>
+                                    <p id="ProductionUnitOptions" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="extraInfoContainer" class="col-md-6">
+                        <h3 class="section-header">Performance</h3>
+                        <div style="margin: 25px;">
+                            <div class="column-left">
+                                <h2 class="widget-text" style="text-align: center;">EST. PROD. </h2>
+                                <h1 id="AverageMonthlyProduction" style="text-align: center;"></h1>
+                                <h2 class="widget-text" style="margin:7px;text-align: center;">PER MONTH</h2>
+                            </div>
+                            <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                                <h2 class="widget-text" style="text-align: center;">CO2 SAVED</h2>
+                                <h1 id="AverageMonthlySparedCO2" style="text-align: center;"></h1>
+                                <h2 class="widget-text" style="margin:7px;text-align: center;">PER MONTH</h2>
+                            </div>
+                            <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                                <h2 class="widget-text" style="text-align: center;">ONLINE SINCE</h2>
+                                <h1 id="OnlineSinceWeeks" style="text-align: center;"></h1>
+                                <h2 class="widget-text" style="margin:7px;text-align: center;">WEEKS</h2>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+            <div class="sparkline-container">
+
+                <div id="statsContainerTop" class="row">
+                    <div id="pHContainer" class="col-md-6">
+                        <h3 class="section-header" style="text-align:center;font-size:larger">pH</h3>
+                        <div class="sparkline-container">
+                            <div style="margin: 3px;">
+                                <div class="column-left">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h1 id="CurrentPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="CurrentPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                                <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageHourPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                </div>
+                                <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageDayPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="LastDayPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-content wide">
+                         @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
+                        .Name("chartPh")
+                        .Theme("metro")
+                        .ChartArea(ch => ch.Background("#eeeeee"))
+                        .DataSource(dataSource => dataSource
+                            .Read(read => read.Action("PHMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                        )
+                        .SeriesDefaults(seriesDefaults => seriesDefaults
+                            .ScatterLine().Markers(markers => markers.Size(6))
+                        )
+                        .Series(series =>
+                        {
+                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                        })
+                        .YAxis(y => y
+                            .Numeric()
+                            .Min(4)
+                            .Max(10)
+                            .Labels(labels => labels.Format("{0}").Skip(1))
+                        )
+                        .Tooltip(tooltip => tooltip
+                            .Format("ph - {0:d} </br> {0:t} : {1}")
+                            .Visible(true)
+                        )
+                            )
+                        </div>
+                    </div>
+                    <div id="WaterTempContainer" class="col-md-6">
+                        <h3 class="section-header" style="text-align:center;font-size:larger">Water Temperature (°C)</h3>
+                        <div class="sparkline-container">
+                            <div style="margin: 3px;">
+                                <div class="column-left">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                                <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                </div>
+                                <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-content wide">
+                        @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
+                        .Name("chartWatTemp")
+                        .Theme("metro")
+                        .ChartArea(ch => ch.Background("#eeeeee"))
+                        .DataSource(dataSource => dataSource
+                            .Read(read => read.Action("WaterTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                        )
+                        .SeriesDefaults(seriesDefaults => seriesDefaults
+                            .ScatterLine().Markers(markers => markers.Size(6))
+                        )
+                        .Series(series =>
+                        {
+                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                        })
+                        .YAxis(y => y
+                            .Numeric()
+                            .Min(0)
+                            .Max(50)
+                            .Labels(labels => labels.Format("{0}").Skip(1))
+                        )
+                        .Tooltip(tooltip => tooltip
+                            .Format("Water Temp. - {0:d} </br> {0:t} : {1}°C")
+                            .Visible(true)
+                        )
+                            )
+                        </div>
+                    </div>
+                </div>
+                <div id="statsContainerBottom" class="row">
+                    <div id="AirTempContainer" class="col-md-6">
+                        <h3 class="section-header" style="text-align:center;font-size:larger">Air Temperature (°C)</h3>
+                        <div class="sparkline-container">
+                            <div style="margin: 3px;">
+                                <div class="column-left">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h1 id="CurrentAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="CurrentAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                                <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageHourAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                </div>
+                                <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageDayAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="LastDayAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-content wide">
+                            @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
+                        .Name("chartAirTemp")
+                        .Theme("metro")
+                        .ChartArea(ch => ch.Background("#eeeeee"))
+                        .DataSource(dataSource => dataSource
+                            .Read(read => read.Action("AirTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                        )
+                        .SeriesDefaults(seriesDefaults => seriesDefaults
+                            .ScatterLine().Markers(markers => markers.Size(6))
+                        )
+                        .Series(series =>
+                        {
+                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                        })
+                        .YAxis(y => y
+                            .Numeric()
+                            .Min(0)
+                            .Max(50)
+                            .Labels(labels => labels.Format("{0}").Skip(1))
+                        )
+                        .Tooltip(tooltip => tooltip
+                            .Format("Air Temp - {0:d} </br> {0:t} : {1}°C")
+                            .Visible(true)
+                        )
+                            )
+                        </div>
+                    </div>
+                    <div id="HumidityContainer" class="col-md-6">
+                        <h3 class="section-header" style="text-align:center;font-size:larger">Humidity (%)</h3>
+                        <div class="sparkline-container">
+                            <div style="margin: 3px;">
+                                <div class="column-left">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                                <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                </div>
+                                <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                                    <h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-content wide">
+                            @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
+                        .Name("chartHumidity")
+                        .Theme("metro")
+                        .ChartArea(ch => ch.Background("#eeeeee"))
+                        .DataSource(dataSource => dataSource
+                            .Read(read => read.Action("HumidityMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                        )
+                        .SeriesDefaults(seriesDefaults => seriesDefaults
+                            .ScatterLine().Markers(markers => markers.Size(6))
+                        )
+                        .Series(series =>
+                        {
+                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                        })
+                        .YAxis(y => y
+                            .Numeric()
+                            .Min(0)
+                            .Max(100)
+                            .Labels(labels => labels.Format("{0}").Skip(1))
+                        )
+                        .Tooltip(tooltip => tooltip
+                            .Format("Humidity - {0:d} </br> {0:t} : {1}%")
+                            .Visible(true)
+                        )
+                            )
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+        <style>
+
+        @@media screen and (max-width: 480px) {
+
+           .widget-text {
+                 font-size: xx-small;
+                 margin:2px;
+            }
+
+            h1 {
+                 font-size: medium;
+            }
+
+            .box{
+                 margin-left:auto;
+                 margin-right:auto;
+             }
+
+             #containerPicture{
+                  background-color:white;
+                  margin-left:-10%;
+                  margin-right:-10%;
+             }
+         }
+
+            .text p {
+              bottom: 20px;
+              left: 20px;
+              color: white;
+              font-size: 1rem;
+              margin: 0;
+              word-wrap: break-word;
+              padding-left:20px;
+              padding-top:20px;
+            }
+
+            .text h3 {
+              color: white;
+              margin: 0;
+              font-size: 1rem;
+              padding: 20px;
+            }
+
+            .text h2 {
+              font-weight: 900;
+              color: white;
+              text-transform: uppercase;
+              word-wrap: break-word;
+              margin: 0;
+              padding-top:40px;
+              font-size: 2rem;
+              padding-left:20px;
+            }
+
+            .box{
+                  width: 320px;
+                  height: 240px;
+                  background-size:contain;
+                }
+
+            .k-button {
+                height: 50px;
+            }
+
+            #OptionList {
+                background: transparent;
+                border-color: transparent;
+                color: #333;
+            }
+
+            .k-loading-mask {
+                opacity: 0;
+            }
+
+            h1 {
+                font-size: xx-large;
+            }
+
+            .widget-text {
+                margin: 7px;
+            }
+
+            .column-left {
+                float: left;
+                width: 33%;
+            }
+
+            .column-right {
+                float: right;
+                width: 33%;
+            }
+
+            .column-center {
+                display: inline-block;
+                width: 33%;
+            }
+
+        </style>
+
+        <script type="text/javascript">
+            function error_handler(e) {
+                if (e.errors) {
+                    var measure = "Errors:\n";
+                    $.each(e.errors, function (key, value) {
+                        if ('errors' in value) {
+                            $.each(value.errors, function () {
+                                measure += this + "\n";
+                            });
+                        }
+                    });
+                    alert(measure);
+                }
+            }
+        </script>
+

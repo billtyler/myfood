@@ -1,0 +1,105 @@
+﻿@using myfoodapp.Hub.Models
+@model UserViewModel
+
+<script type="text/javascript">
+    window.onload = function onLoad(e) {
+        var OneSignal = window.OneSignal || [];
+        OneSignal.push(["init", {
+            appId: "674761cf-c65d-4eaa-adc7-960d13fe4e54",
+            autoRegister: false,
+            notifyButton: {
+                enable: true
+            }
+        }]); 
+    }
+
+    //OneSignal.push(function () {
+    //    OneSignal.getUserId(function (userId) {
+    //        console.log("OneSignal User ID:", userId);  
+    //    });
+    //});
+
+    OneSignal.push(function () {
+        OneSignal.on('subscriptionChange', function (isSubscribed) {
+            console.log("The user's subscription state is now:", isSubscribed);
+            OneSignal.getUserId(function (userId) {
+                console.log("OneSignal User ID:", userId);
+                $.ajax({
+                    url: "@Url.Action("AddPushNotification", "MyInfo")",
+                    dataType: "json",
+                    data: { id: userId },
+                    type: "POST",
+                    success: function (response) {
+                        console.log("Production Owner Registered");
+                }
+            });
+            });
+        });
+    });
+   
+</script>
+
+<div id="main-section-header" class="row">
+    <h2 class="col-md-3">My Information</h2>
+    <div style="clear:both;"></div>
+</div>
+
+<div id="productionUnits-grid" class="main-section-content row">
+    <div id="productionUnits-details" class="col-md-2">
+        <h3 class="section-header">Change User Settings</h3>
+    </div>
+    <div id="grid-container" class="col-xs-10">
+        <div id="center">
+            <div class="row">
+                <div class="col-md-8">
+                    <section id="loginForm">
+                        @using (Html.BeginForm("Update", "MyInfo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Save" class="btn btn-default" />
+                                </div>
+                            </div>
+                        }
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style type="text/css">
+    #center {
+    margin: auto;
+    width: 80%;
+    border: 3px solid green;
+    padding: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+</style>

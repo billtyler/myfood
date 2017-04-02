@@ -1,0 +1,83 @@
+﻿[
+  {
+    "ruleEvaluator": "(pHvalue != 0) && ((pHvalue < 5.5M) || (pHvalue > 8.9))",
+    "warningContent": "Ph value is out of range : {0}",
+    "bindingPropertyValue": "pHvalue"
+  },
+  {
+    "ruleEvaluator": "(pHvalue != 0) && (lastDayPHvariation != 0) && (lastDayPHvariation > 0.5)",
+    "warningContent": "Ph value is moving fast since 24h: {0}",
+    "bindingPropertyValue": "pHvalue"
+  },
+  {
+    "ruleEvaluator": "(airTempvalue <= 0)",
+    "warningContent": "It's a bit cold there: {0}",
+    "bindingPropertyValue": "airTempvalue"
+  },
+  {
+    "ruleEvaluator": "(waterTempvalue <= 0)",
+    "warningContent": "It's a bit cold there: {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Carp') && ((waterTempvalue <= 0) || (waterTempvalue >= 30)))",
+    "warningContent": "Water Temperature value is out of range for Carps: {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Tilapia') && ((waterTempvalue <= 5) || (waterTempvalue >= 35))",
+    "warningContent": "Water Temperature value is out of range for Tilapias: {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Trout') && ((waterTempvalue <= 5) || (waterTempvalue >= 25))",
+    "warningContent": "Water Temperature value is out of range for Trouts : {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Crayfish') && ((waterTempvalue <= 5) || (waterTempvalue >= 22))",
+    "warningContent": "Water Temperature value is out of range for Crayfish: {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Oth. Cold Fish') && ((waterTempvalue <= 5) || (waterTempvalue >= 22))",
+    "warningContent": "Water Temperature value is out of range for Cold Water Fish: {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Oth. Warm Fish') && ((waterTempvalue <= 10) || (waterTempvalue >= 32))",
+    "warningContent": "Water Temperature value is out of range for Cold Water Fish: {0}",
+    "bindingPropertyValue": "waterTempvalue"
+  },
+  {
+    "ruleEvaluator": "(ORPvalue != 0) && ((ORPvalue < 300) || (ORPvalue > 450))",
+    "warningContent": "ORP value is out of range : {0}",
+    "bindingPropertyValue": "ORPvalue"
+  },
+  {
+    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Carp') && (DOvalue <= 5)",
+    "warningContent": "Dissolved Oxygen value is out of range : {0}",
+    "bindingPropertyValue": "DOvalue"
+  },
+  {
+    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Tilapia') && (DOvalue <= 4)",
+    "warningContent": "Dissolved Oxygen value is out of range : {0}",
+    "bindingPropertyValue": "DOvalue"
+  },
+  {
+    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Trout') && (DOvalue <= 6)",
+    "warningContent": "Dissolved Oxygen value is out of range : {0}",
+    "bindingPropertyValue": "DOvalue"
+  },
+  {
+    "ruleEvaluator": "((airTempvalue <= 0) || (airTempvalue >= 40))",
+    "warningContent": "Air Temperature value is out of range : {0}",
+    "bindingPropertyValue": "airTempvalue"
+  },
+  {
+    "ruleEvaluator": "((airTempvalue <= 10 ) && (humidityvalue >= 83)) || ((airTempvalue <= 15 ) && (humidityvalue >= 89)) || ((airTempvalue <= 30 ) && (humidityvalue >= 95))",
+    "warningContent": "Air Humidity value is out of range : {0}",
+    "bindingPropertyValue": "humidityvalue"
+  }
+] 
+

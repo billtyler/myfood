@@ -1,0 +1,511 @@
+﻿@{
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+<link href="~/Content/lightbox/lightbox.css" rel="stylesheet" />
+<script src="~/Scripts/lightbox/lightbox.js"></script>
+
+<link rel="stylesheet" href="~/Content/Swiper/swiper.min.css">
+<script src="~/Scripts/Swiper/swiper.jquery.js"></script>
+
+<script type="text/javascript">
+
+    var swiper;
+
+    window.onload = function onLoad(e) {
+
+        swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            parallax: true,
+            speed: 600,
+            onSlideChangeEnd: onSlideChangeEnd,
+        });
+
+        $.ajax({
+            url: "@Url.Action("GetNetworkStats", "InteractiveMap")",
+            dataType: "json",
+            type: "POST",
+            success: function(response) {
+                $("#ProductionUnitNumber").text(response.ProductionUnitNumber);
+                $("#TotalMonthlyProduction").text(response.TotalMonthlyProduction + 'kg');
+                $("#TotalMonthlySparedCO2").text(response.TotalMonthlySparedCO2 + 'kg');
+            }
+        });
+
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitDetailList", "InteractiveMap")",
+            dataType: "json",
+            type: "POST",
+            success: function (response) {
+                
+                $.each(response, function (index, item) {
+                    swiper.appendSlide(
+                        '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
+                            '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
+                            '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
+                            '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
+                                '<p>' + item.ProductionUnitOptions + '</p>' +
+                            '</div>' +
+                        '</div>'
+                        );
+                });
+            }
+        });
+
+    }
+
+    function onSlideChangeEnd(ep)
+    {
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitMeasures", "InteractiveMap")",
+            dataType: "json",
+            data: { id: ep.activeIndex },
+        type: "POST",
+        success: function (response) {
+            $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
+            $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
+            $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
+            $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
+            $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
+        }
+    });
+    }
+
+    function onShow(e) {
+        var currentProductionUnitLat = this.marker.options.location[0];
+        var currentProductionUnitLong = this.marker.options.location[1];
+
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitIndex", "InteractiveMap")",
+            dataType: "json",
+            data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
+            type: "POST",
+            success: function(response) {
+                swiper.slideTo(response.CurrentIndex);
+            }
+        });
+    }
+
+    function onShapeCreated(e) {
+        var shape = e.shape;
+        var users = shape.dataItem.properties.users;
+        if (users) {
+            var color = scale(users).hex();
+            shape.options.fill.set("color", color);
+        }
+    }
+
+    function onShapeMouseEnter(e) {
+        e.shape.options.set("fill.opacity", 1);
+    }
+
+    function onShapeMouseLeave(e) {
+        e.shape.options.set("fill.opacity", 0.7);
+    }
+
+</script>
+
+<script type="text/x-kendo-tmpl" id="templateOption">
+    <div class="option">
+        <h2>&bull; #:name#</h2>
+    </div>
+</script>
+
+<div id="pioneer-network" style="height:100%;overflow-y:hidden" class="main-section-content">
+    <div id="map-wrapper" class="row">
+        <div id="picturesContainer" class="col-md-4">
+            <div class="widget picture-widget">
+                <h3><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp; Picture</h3>
+                <div class="swiper-container" style="background-color:white;height:350px">
+                    <div class="parallax-bg"></div>
+                    <div class="swiper-wrapper"></div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination swiper-pagination-white"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                    <div class="swiper-button-next swiper-button-white"></div>
+                </div>
+            </div>
+        </div>
+        <div id="map-container" class="col-md-8">
+            <div class="widget large-widget">
+                <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; Pioneer Citizen Map</h3>
+                <div class="maps">
+                    @model myfoodapp.Hub.Models.Map
+                    @(Html.Kendo().Map()
+                    .Name(Model.Name)
+                    .Center(Model.CenterLatitude, Model.CenterLongitude)
+                    .Zoom(Model.Zoom)
+                    .Zoomable(false)
+                    .Layers(layers =>
+                        {
+                            layers.Add()
+                                .Style(style => style
+                                    .Fill(fill => fill.Color("#018001").Opacity(0.7))
+                                    .Stroke(stroke => stroke.Color("#FFFFFF"))
+                                )
+                                .Type(MapLayerType.Shape)
+                                .DataSource(dataSource => dataSource
+                                    .GeoJson()
+                                    .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
+                                );
+                        })
+                        .Markers(markers =>
+                        {
+                            foreach (var marker in Model.Markers)
+                            {
+                                markers.Add()
+                                .Location(marker.latlng)
+                                .Shape(marker.shape)
+                                .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
+                                .Tooltip(t => t.Events(e => e.Show("onShow")))
+                                .Title(marker.name);
+                            }
+                        })
+                        .Events(events => events
+                                          .ShapeCreated("onShapeCreated")
+                                          .ShapeMouseEnter("onShapeMouseEnter")
+                                          .ShapeMouseLeave("onShapeMouseLeave")
+                            )
+                    )
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="map-wrapper" class="row">
+        <div id="map-info" class="col-md-4">
+            <div class="widget">
+                <h3><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; Network Info</h3>
+                <div style="margin: 3px;padding-top:25px;">
+                    <div class="column-left">
+                        <h2 class="widget-text" style="text-align: center;">TOTAL<br />CONNECTED <br />PROD. UNITS </h2>
+                        <h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 class="widget-text" style="text-align: center;">TOTAL<br />EST. PROD. <br />PER MONTH</h2>
+                        <h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 class="widget-text" style="text-align: center;">TOTAL<br />CO2 SAVED<br />PER MONTH</h2>
+                        <h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="map-details" class="col-md-4">
+            <div class="widget">
+                <h3><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp; Network Info</h3>
+                @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
+                .Name("chart")
+                .Legend(legend => legend
+                    .Position(ChartLegendPosition.Right).Labels(x => x.Font(font: "12px Open Sans"))
+                )
+                .HtmlAttributes(new { @class = "small-chart" })
+                .ChartArea(chart => chart
+                    .Background("transparent")
+                 )
+                 .DataSource(ds =>
+                 {
+                     ds.Read(read => read.Action("ProductionUnitStatus_Read", "Home"));
+                 }
+                    )
+                    .Series(series => series
+                    .Pie(model => model.Value, model => model.Category, model => model.Color)
+                    //.Labels(labels => labels
+                    //                .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
+                    //                .Background("transparent")
+                    //                .Visible(true)
+                    //               )
+                    .StartAngle(150)
+                    .Padding(0)
+                    )
+                .Tooltip(tooltip => tooltip
+                    .Visible(true)
+                    .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
+                )
+                )
+                @*<div style="margin: 25px;">
+                    <h2 id="PioneerCitizenName"></h2>
+                    <h2 id="PioneerCitizenNumber"><span></span></h2>
+                    <h2 id="ProductionUnitType"><span></span></h2>
+                    <h2 id="ProductionUnitVersion"><span></span></h2>
+                    <h2 id="ProductionUnitStatus"><span></span></h2>
+                    <h2 id="ProductionUnitStartDate"><span></span></h2>
+                </div>*@
+            </div>
+        </div>
+        <div id="map-options" class="col-md-4">
+            <div class="widget">
+                @*<h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Options</h3>
+                <div style="margin: 25px;">
+                    @(Html.Kendo().ListView<myfoodapp.Hub.Models.Option>()
+                    .Name("OptionList")
+                    .TagName("div")
+                    .ClientTemplateId("templateOption")
+                    .DataSource(dataSource => dataSource
+                      .Read(read => read.Action("Option_Read", "InteractiveMap"))
+                    )
+                    )
+                </div>*@
+                <h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; Water Temperature (°C)</h3>
+                <div class="sparkline-container">
+                    <div style="margin: 3px;padding-top:25px;">
+                        <div class="column-left">
+                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                            <h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                            <h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                        </div>
+                        <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                            <h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                            <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                        </div>
+                        <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                            <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+                            <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center">
+        <h4>.:myfoodapphub is licensed under a <a style="color:forestgreen" href="https://www.gnu.org/licenses/gpl-3.0.en.html"> GPLv3</a>.</h4>
+    </div>
+</div>
+
+<style>
+            * {
+             font-size: 100%;
+             font-family: Open Sans;
+            }
+
+            .swiper-container {
+                width: 100%;
+                height: 100%;
+                background: #000;
+            }
+
+            .swiper-slide {
+                font-size: 18px;
+                color:#fff;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                padding: 40px 60px;
+            }
+
+            .parallax-bg {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 130%;
+                height: 100%;
+                -webkit-background-size: cover;
+                background-size: cover;
+                background-position: center;
+            }
+
+            .swiper-slide .title {
+              font-weight: 900;
+              color: white;
+              text-transform: uppercase;
+              word-wrap: break-word;
+              margin: 0;
+              padding-top:20px;
+              font-size: 2rem;
+              padding-left:20px;
+            }
+
+            .swiper-slide .subtitle {
+              color: white;
+              margin: 0;
+              font-size: 1rem;
+              padding: 20px;
+              padding-left:20px;
+            }
+
+            .swiper-slide .text {
+              color: white;
+              font-size: 1rem;
+              margin: 0;
+              word-wrap: break-word;
+              padding-left:20px;
+              padding-top:100px;
+            }
+
+            .box{
+                  width: 320px;
+                  height: 240px;
+                  background-size:contain;
+                }
+
+        .column-left {
+        float: left;
+        width: 33%;
+        }
+
+        .column-right {
+            float: right;
+            width: 33%;
+        }
+
+        .column-center {
+            display: inline-block;
+            width: 33%;
+        }
+
+        /* WIDGETS */
+        .widget {
+            margin: 0 0 0px;
+            padding: 0;
+            background-color: #ffffff;
+            border: 1px solid #e7e7e7;
+            border-radius: 3px;
+            height: 380px;
+        }
+
+        .widget div {
+            padding: 0;
+        }
+
+        .widget h3 {
+            font-size: 12px;
+            padding: 8px 10px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #e7e7e7;
+        }
+
+        .widget h3 span {
+             float: right;
+         }
+
+        .widget h3 span:hover {
+             cursor: pointer;
+             background-color: #e7e7e7;
+             border-radius: 20px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Open Sans';
+        }
+
+        .maps {
+            color: #35373d;
+            padding-bottom: 1.091em;
+            padding: 15px 0;
+        }
+
+        /*#OptionList {
+            background: transparent;
+            border-color: transparent;
+            color: #333;
+        }*/
+
+        .k-listview:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+
+        .k-map .k-marker-red-marker {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAIAAAAC64paAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AoMDSM0TTMGvAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAHUlEQVQ4y2M8Iy7OQC5gYqAAjGoe1TyqeVQz5ZoBCogBIhwXVIUAAAAASUVORK5CYII=');
+            width: 10px;
+            height: 10px;
+            margin: -5px 0 0 -5px;
+        }
+
+        .k-tooltip-content {
+            background-color: #018001;
+            stroke: black;
+        }
+
+        .k-widget.k-tooltip {
+            background-color: #018001;
+            stroke: black;
+        }
+
+        .k-loading-mask {
+            opacity: 0;
+        }
+
+        .image-div {
+            height:350px;
+        }
+
+        .widget {
+            height:200px;
+        }
+
+        .picture-widget {
+            height:100%;
+        }
+
+        .large-widget {
+            height:100%;
+        }
+
+        h1 {
+            font-size:xx-large;
+        }
+
+        .widget-text {
+                margin:7px;
+        }
+
+        #map-container{
+                visibility:visible;
+            }
+
+       .k-chart.small-chart {
+                display: inline-block;
+                width: 300px;
+                height: 150px;
+                padding-top:10px;
+        }
+
+        @@media screen and (max-width: 480px) {
+            .image-div {
+            height:200px;
+            }
+
+            .widget-text {
+                font-size: xx-small;
+                margin:2px;
+            }
+
+            h1 {
+                font-size: medium;
+            }
+
+            .picture-widget {
+            height:200px;
+            }
+
+            #map-container{
+                visibility:hidden;
+                display:none;
+            }
+
+            #map-details
+            {
+                visibility:hidden;
+                display:none;
+            }
+
+            #map-info
+            {
+                padding-top: 200px;
+            }
+        }
+</style>
+
+
+
+
+
