@@ -414,6 +414,7 @@
       <DependentUpon>201702021412357_RecognitionRecord-Lev.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\LogModel.cs" />
@@ -1164,12 +1165,14 @@
     <Content Include="Content\Pictures\RecognitionPictures\15062016_GHID_2.jpg" />
     <Content Include="Content\Pictures\RecognitionPictures\15082016_GHID_2.jpg" />
     <Content Include="Content\Pictures\recommandated.png" />
+    <Content Include="Content\Pictures\Sites\AndancetteFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BivilleFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BlancMesnilCity.jpg" />
     <Content Include="Content\Pictures\Sites\BoisColombesCity.jpg" />
     <Content Include="Content\Pictures\Sites\BraineFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LauterbourgFamily22.jpg" />
@@ -1185,7 +1188,9 @@
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\SfaxFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\VauvenarguesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\VerriereFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\VillevaudeFamily22.jpg" />
     <Content Include="Content\Swiper\swiper.css" />

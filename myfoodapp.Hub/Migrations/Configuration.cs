@@ -580,19 +580,22 @@ namespace myfoodapp.Hub.Migrations
             var userDMO = new ApplicationUser() { Email = "donatien@myfood.eu", UserName = "donatien@myfood.eu" };
             var userCEL = new ApplicationUser() { Email = "cyrille@myfood.eu", UserName = "cyrille@myfood.eu" };
             var userEDC = new ApplicationUser() { Email = "eleonore@myfood.eu", UserName = "eleonore@myfood.eu" };
+            var userAHE = new ApplicationUser() { Email = "amous@myfood.eu", UserName = "amous@myfood.eu" };
+            var userALH = new ApplicationUser() { Email = "alain@myfood.eu", UserName = "alain@myfood.eu" };
+            var userVTH = new ApplicationUser() { Email = "vincent@myfood.eu", UserName = "vincent@myfood.eu" };
+            var userBGU = new ApplicationUser() { Email = "brigitte@myfood.eu", UserName = "brigitte@myfood.eu" };
+            var userCHI = new ApplicationUser() { Email = "christopheh@myfood.eu", UserName = "christopheh@myfood.eu" };
 
             //TO BE DEPLOYED
             var userYGR = new ApplicationUser() { Email = "yves@myfood.eu", UserName = "yves@myfood.eu" };
             var userGGR = new ApplicationUser() { Email = "goy@myfood.eu", UserName = "goy@myfood.eu" };
             var userBDE = new ApplicationUser() { Email = "benoit@myfood.eu", UserName = "benoit@myfood.eu" };
-            var userAHE = new ApplicationUser() { Email = "amous@myfood.eu", UserName = "amous@myfood.eu" };
+
             var userMSE = new ApplicationUser() { Email = "sevran@myfood.eu", UserName = "sevran@myfood.eu" };
 
-            //TO BE CONFIRMED
-            var userCHI = new ApplicationUser() { Email = "christopheh@myfood.eu", UserName = "christopheh@myfood.eu" };
+            //TO BE CONFIRMED            
             var userMLA = new ApplicationUser() { Email = "marc@myfood.eu", UserName = "marc@myfood.eu" };
-            var userBGU = new ApplicationUser() { Email = "brigitte@myfood.eu", UserName = "brigitte@myfood.eu" };
-
+            
             //CONTRIBUTORS
             var userJTE = new ApplicationUser() { Email = "joel@myfood.eu", UserName = "joel@myfood.eu" };
             var userAPO = new ApplicationUser() { Email = "anhhung@myfood.eu", UserName = "anhhung@myfood.eu" };
@@ -629,18 +632,20 @@ namespace myfoodapp.Hub.Migrations
                 await manager.CreateAsync(userDMO, defaultPassword);
                 await manager.CreateAsync(userCEL, defaultPassword);
                 await manager.CreateAsync(userEDC, defaultPassword);
+                await manager.CreateAsync(userAHE, defaultPassword);
+                await manager.CreateAsync(userALH, defaultPassword);
+                await manager.CreateAsync(userVTH, defaultPassword);
+                await manager.CreateAsync(userBGU, defaultPassword);
+                await manager.CreateAsync(userCHI, defaultPassword);
 
                 //TO BE DEPLOYED       
                 await manager.CreateAsync(userYGR, defaultPassword);
                 await manager.CreateAsync(userGGR, defaultPassword);
-                await manager.CreateAsync(userAHE, defaultPassword);
                 await manager.CreateAsync(userBDE, defaultPassword);
                 await manager.CreateAsync(userMSE, defaultPassword);
 
                 //TO BE CONFIRMED
-                await manager.CreateAsync(userCHI, defaultPassword);
                 await manager.CreateAsync(userMLA, defaultPassword);
-                await manager.CreateAsync(userBGU, defaultPassword);
 
                 //CONTRIBUTORS
                 await manager.CreateAsync(userJTE, defaultPassword);
@@ -684,19 +689,21 @@ namespace myfoodapp.Hub.Migrations
             var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M.", pioneerCitizenNumber = 21 };
             var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E.", pioneerCitizenNumber = 22 };
             var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléornore DC.", pioneerCitizenNumber = 23 };
+            var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Amous H.", pioneerCitizenNumber = 17 };
+            var AlainHOwner = new ProductionUnitOwner() { Id = 25, user = userALH, pioneerCitizenName = "Alain H.", pioneerCitizenNumber = 24 };
+            var VincentTOwner = new ProductionUnitOwner() { Id = 22, user = userVTH, pioneerCitizenName = "Vincent T." };
+            var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G." };
+            var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H." };
 
             //TO BE DEPLOYED 
             var YvesGOwner = new ProductionUnitOwner() { Id = 31, user = userYGR, pioneerCitizenName = "Yves G."};
-            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G."};
-            var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Amous H."};
+            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G."};         
             var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
             var MairieSOwner = new ProductionUnitOwner() { Id = 23, user = userMSE, pioneerCitizenName = "Mairie Sevran" };
 
             //TO BE CONFIRMED
-            var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H." };
             var MarcLOwner = new ProductionUnitOwner() { Id = 24, user = userMLA, pioneerCitizenName = "Marc L." };
-            var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G." };
-
+ 
             //CONTRIBUTORS
             var JoelTOwner = new ProductionUnitOwner() { Id = 27, user = userJTE, pioneerCitizenName = "Joël T." };
             var AnhHungPOwner = new ProductionUnitOwner() { Id = 28, user = userAPO, pioneerCitizenName = "Anh Hung P." };
@@ -729,18 +736,20 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(DonatienMOwner);
             context.ProductionUnitOwners.Add(CyrilleEOwner);
             context.ProductionUnitOwners.Add(EleonoreDCOwner);
+            context.ProductionUnitOwners.Add(AmousHOwner);
+            context.ProductionUnitOwners.Add(BrigitteGOwner);
+            context.ProductionUnitOwners.Add(AlainHOwner);
+            context.ProductionUnitOwners.Add(VincentTOwner);
+            context.ProductionUnitOwners.Add(ChristopheHOwner);
 
             //TO BE DEPLOYED 
             context.ProductionUnitOwners.Add(YvesGOwner);
             context.ProductionUnitOwners.Add(GoyGOwner);
-            context.ProductionUnitOwners.Add(AmousHOwner);
             context.ProductionUnitOwners.Add(BenoitDOwner);
             context.ProductionUnitOwners.Add(MairieSOwner);
 
             //TO BE CONFIRMED
-            context.ProductionUnitOwners.Add(ChristopheHOwner);
             context.ProductionUnitOwners.Add(MarcLOwner);
-            context.ProductionUnitOwners.Add(BrigitteGOwner);
 
             //CONTRIBUTORS
             context.ProductionUnitOwners.Add(JoelTOwner);
@@ -770,7 +779,7 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 48.4127102,
                 locationLongitude = 7.4652961,
-                reference = "74621",
+                reference = "74733",
                 info = "Family Farm Gertwiller",
                 startDate = new DateTime(2016, 01, 20),
                 version = "2",
@@ -1070,7 +1079,7 @@ namespace myfoodapp.Hub.Migrations
                 locationLatitude = 50.6311167,
                 locationLongitude = 3.0120553,
                 reference = "73331",
-                info = "Entrepreunor Experimentation",
+                info = "Entrepreneur Experimentation",
                 startDate = new DateTime(2017, 01, 20),
                 version = "2",
                 owner = DonatienMOwner,
@@ -1110,6 +1119,80 @@ namespace myfoodapp.Hub.Migrations
                 picturePath = "VerriereFamily22.JPG",
             };
 
+            var AHEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 34.7568479,
+                locationLongitude = 10.7129123,
+                reference = "76671",
+                info = "Commercial Experimentation",
+                startDate = new DateTime(2017, 01, 06),
+                version = "2",
+                owner = AmousHOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "SfaxFamily22.JPG",
+            };
+
+            var ALHProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.8529442,
+                locationLongitude = 6.9747352,
+                reference = "1AD158",
+                info = "Aqualor Experimentation",
+                startDate = new DateTime(2017, 04, 16),
+                version = "2",
+                owner = AlainHOwner,
+                productionUnitType = prodUnitTypeCity,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "FenetrangeCity.jpg"
+            };
+
+            var VTHProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 43.5616946,
+                locationLongitude = 5.5506688,
+                reference = "769CV",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 04, 20),
+                version = "2",
+                owner = VincentTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "VauvenarguesFamily22.jpg"
+            };
+
+            var BGUProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 45.2475762,
+                locationLongitude = 4.7951584,
+                reference = "76AA3",
+                info = "Restaurant Experimentation",
+                startDate = new DateTime(2017, 04, 24),
+                version = "2",
+                owner = BrigitteGOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "AndancetteFamily22.JPG"
+            };
+
+            var CHIProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 47.5378282,
+                locationLongitude = 7.150098,
+                reference = "76XSX",
+                info = "Organic Farm Exploitation",
+                startDate = new DateTime(2016, 11, 05),
+                version = "2",
+                owner = ChristopheHOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
             //TO BE DEPLOYED 
             var YGRProdUnit = new ProductionUnit()
             {
@@ -1134,20 +1217,6 @@ namespace myfoodapp.Hub.Migrations
                 startDate = new DateTime(2017, 05, 06),
                 version = "2",
                 owner = GoyGOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
-            };
-
-            var AHEProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 34.7568479,
-                locationLongitude = 10.7129123,
-                reference = "76671",
-                info = "Commercial Experimentation",
-                startDate = new DateTime(2017, 01, 06),
-                version = "2",
-                owner = AmousHOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusReadyForInstall,
@@ -1182,19 +1251,6 @@ namespace myfoodapp.Hub.Migrations
             };
 
             //TO BE CONFIRMED
-            var CHIProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 47.5378282,
-                locationLongitude = 7.150098,
-                reference = "76XSX",
-                info = "Organic Farm Exploitation",
-                startDate = new DateTime(2016, 11, 05),
-                version = "2",
-                owner = ChristopheHOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusWait,
-            };
 
             var MLAProdUnit = new ProductionUnit()
             {
@@ -1205,20 +1261,6 @@ namespace myfoodapp.Hub.Migrations
                 startDate = new DateTime(2016, 11, 05),
                 version = "2",
                 owner = MarcLOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusWait,
-            };
-
-            var BGUProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 45.2475762,
-                locationLongitude = 4.7951584,
-                reference = "76AA3",
-                info = "Restaurant Experimentation",
-                startDate = new DateTime(2016, 12, 01),
-                version = "2",
-                owner = BrigitteGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusWait,
@@ -1296,17 +1338,18 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(DMOProdUnit);
             context.ProductionUnits.Add(CELProdUnit);
             context.ProductionUnits.Add(EDCProdUnit);
+            context.ProductionUnits.Add(AHEProdUnit);
+            context.ProductionUnits.Add(BDEProdUnit);
+            context.ProductionUnits.Add(ALHProdUnit);
+            context.ProductionUnits.Add(VTHProdUnit);
+            context.ProductionUnits.Add(CHIProdUnit);
 
             //TO BE DEPLOYED
             context.ProductionUnits.Add(YGRProdUnit);
             context.ProductionUnits.Add(GGRProdUnit);
-            context.ProductionUnits.Add(AHEProdUnit);
-            context.ProductionUnits.Add(BDEProdUnit);
             context.ProductionUnits.Add(MSEProdUnit);
 
-
             //TO BE CONFIRMED
-            context.ProductionUnits.Add(CHIProdUnit);
             context.ProductionUnits.Add(MLAProdUnit);
             context.ProductionUnits.Add(BGUProdUnit);
 
@@ -1463,6 +1506,36 @@ namespace myfoodapp.Hub.Migrations
             optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = towers18Option });
             optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = permacultureBedOption });
 
+            var optionsAHE = new List<OptionList>();
+
+            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = monitoringKitv2Option });
+            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = towers24Option });
+            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = permacultureBedOption });
+
+            var optionsALH = new List<OptionList>();
+
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = monitoringKitv2Option });
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = sigfoxConnectionOption });
+
+            var optionsVTH = new List<OptionList>();
+
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = monitoringKitv2Option });
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = towers18Option });
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = permacultureBedOption });
+
+            var optionsBGU = new List<OptionList>();
+
+            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = monitoringKitv2Option });
+            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = towers18Option });
+            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = permacultureBedOption });
+
+            var optionsCHI = new List<OptionList>();
+
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = monitoringKitv2Option });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = towers24Option });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = sigfoxConnectionOption });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = solarPanelOption });
+
             //TO BE DEPLOYED
             var optionsYGR = new List<OptionList>();
 
@@ -1478,12 +1551,6 @@ namespace myfoodapp.Hub.Migrations
             optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = sigfoxConnectionOption });
             optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = solarPanelOption });
 
-            var optionsAHE = new List<OptionList>();
-
-            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = monitoringKitv2Option });
-            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = towers24Option });
-            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = permacultureBedOption });
-
             var optionsBDE = new List<OptionList>();
 
             optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = monitoringKitv2Option });
@@ -1498,24 +1565,12 @@ namespace myfoodapp.Hub.Migrations
 
 
             //TO BE CONFIRMED
-            var optionsCHI = new List<OptionList>();
-
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = monitoringKitv2Option });
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = towers24Option });
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = sigfoxConnectionOption });
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = solarPanelOption });
-
             var optionsMLA = new List<OptionList>();
 
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = monitoringKitv2Option });
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = towers18Option });
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = permacultureBedOption });
 
-            var optionsBGU = new List<OptionList>();
-
-            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = monitoringKitv2Option });
-            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = towers18Option });
-            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = permacultureBedOption });
 
             //CONTRIBUTORS
             var optionsNRO = new List<OptionList>();
@@ -1557,16 +1612,18 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsDMO);
             context.OptionLists.AddRange(optionsCEL);
             context.OptionLists.AddRange(optionsEDC);
+            context.OptionLists.AddRange(optionsAHE);
+            context.OptionLists.AddRange(optionsALH);
+            context.OptionLists.AddRange(optionsVTH);
+            context.OptionLists.AddRange(optionsBDE);
+            context.OptionLists.AddRange(optionsCHI);
 
             //TO BE DEPLOYED
             context.OptionLists.AddRange(optionsYGR);
             context.OptionLists.AddRange(optionsGGR);
-            context.OptionLists.AddRange(optionsAHE);
-            context.OptionLists.AddRange(optionsBDE);
             context.OptionLists.AddRange(optionsMSE);
 
             //TO BE CONFIRMED
-            context.OptionLists.AddRange(optionsCHI);
             context.OptionLists.AddRange(optionsMLA);
             context.OptionLists.AddRange(optionsBGU);            
 

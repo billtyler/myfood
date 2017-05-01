@@ -48,6 +48,30 @@
 
     function onSlideChangeEnd(ep)
     {
+        $("#CurrentPhValue").text('-');
+        $("#CurrentPhCaptureTime").text('-');
+        $("#AverageHourPhValue").text('-');
+        $("#AverageDayPhValue").text('-');
+        $("#LastDayPhCaptureTime").text('-');
+
+        $("#CurrentWaterTempValue").text('-');
+        $("#CurrentWaterTempCaptureTime").text('-');
+        $("#AverageHourWaterTempValue").text('-');
+        $("#AverageDayWaterTempValue").text('-');
+        $("#LastDayWaterTempCaptureTime").text('-');
+
+        $("#CurrentAirTempValue").text('-');
+        $("#CurrentAirTempCaptureTime").text('-');
+        $("#AverageHourAirTempValue").text('-');
+        $("#AverageDayAirTempValue").text('-');
+        $("#LastDayAirTempCaptureTime").text('-');
+
+        $("#CurrentHumidityValue").text('-');
+        $("#CurrentHumidityCaptureTime").text('-');
+        $("#AverageHourHumidityValue").text('-');
+        $("#AverageDayHumidityValue").text('-');
+        $("#LastDayHumidityCaptureTime").text('-');
+
         $.ajax({
             url: "@Url.Action("GetProductionUnitMeasures", "Home")",
             dataType: "json",

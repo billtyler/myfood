@@ -169,6 +169,7 @@ namespace myfoodapp.Business
 
                                 if (capturedValue > -20 && capturedValue < 80)
                                 {
+                                    if (!userSettings.isDiagnosticModeEnable)
                                     sensorManager.SetWaterTemperatureForPHSensor(capturedValue);
 
                                         var task = Task.Run(async () =>
