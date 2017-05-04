@@ -373,7 +373,7 @@
     <Compile Include="Common\NotificationPushManager.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Api\MessageController.cs" />
+    <Compile Include="Controllers\API\MessageController.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\InteractiveMapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -413,10 +413,17 @@
     <Compile Include="Migrations\201702021412357_RecognitionRecord-Lev.Designer.cs">
       <DependentUpon>201702021412357_RecognitionRecord-Lev.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705040641285_Add_LastMeasureReceived.cs" />
+    <Compile Include="Migrations\201705040641285_Add_LastMeasureReceived.Designer.cs">
+      <DependentUpon>201705040641285_Add_LastMeasureReceived.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705041148298_Add_ContactInfo.cs" />
+    <Compile Include="Migrations\201705041148298_Add_ContactInfo.Designer.cs">
+      <DependentUpon>201705041148298_Add_ContactInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Map.cs" />
     <Compile Include="Models\RecipeModel.cs" />
@@ -3010,6 +3017,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702021412357_RecognitionRecord-Lev.resx">
       <DependentUpon>201702021412357_RecognitionRecord-Lev.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705040641285_Add_LastMeasureReceived.resx">
+      <DependentUpon>201705040641285_Add_LastMeasureReceived.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705041148298_Add_ContactInfo.resx">
+      <DependentUpon>201705041148298_Add_ContactInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

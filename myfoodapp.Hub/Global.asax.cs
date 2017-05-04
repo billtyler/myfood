@@ -31,8 +31,6 @@ namespace myfoodapp.Hub
 
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
-            SendDailyMessage();
-
             Timer timer = new Timer(TimerIntervalInMilliseconds);
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);

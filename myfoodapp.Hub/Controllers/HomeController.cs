@@ -105,9 +105,6 @@ namespace myfoodapp.Hub.Controllers
             if (prodUnitListCount == 0)
                 return null;
 
-            var random = new Random();
-            int randomIndex = random.Next(0, prodUnitListCount);
-
             var currentProductionUnitList = db.ProductionUnits.Include(p => p.owner)
                                          .Include(p => p.productionUnitType)
                                          .Include(p => p.productionUnitStatus)

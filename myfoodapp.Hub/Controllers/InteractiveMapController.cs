@@ -45,7 +45,7 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList()[id];                                         
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList()[id];                                         
 
             var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
 
@@ -62,7 +62,7 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList();
 
             var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == SelectedProductionUnitLat &&
                                                                              p.locationLongitude == SelectedProductionUnitLong);
@@ -77,15 +77,13 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var prodUnitListCount = db.ProductionUnits.Where(p => p.picturePath != null).Count();
+            var prodUnitListCount = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).Count();
 
             if (prodUnitListCount == 0)
                 return null;
 
-            var random = new Random();
-            int randomIndex = random.Next(0, prodUnitListCount);
-
-            var currentProductionUnitList = db.ProductionUnits.Include(p => p.owner)
+            var currentProductionUnitList = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null)
+                                         .Include(p => p.owner.preferedMoment)
                                          .Include(p => p.productionUnitType)
                                          .Include(p => p.productionUnitStatus)
                                          .Where(p => p.picturePath != null).ToList();
@@ -106,28 +104,51 @@ namespace myfoodapp.Hub.Controllers
                     options.ToList().ForEach(o => { optionList += o.name + " / "; });
                 }
 
-                lst.Add(new
+                if (p.owner.preferedMoment != null && p.owner.phoneNumber != String.Empty && p.owner.contactMail != String.Empty)
                 {
+                    lst.Add(new
+                    {
+                        PioneerCitizenName = p.owner.pioneerCitizenName,
+                        PioneerCitizenNumber = p.owner.pioneerCitizenNumber,
+                        ProductionUnitVersion = p.version,
+                        ProductionUnitStartDate = p.startDate,
+                        ProductionUnitType = p.productionUnitType.name,
+                        ProductionUnitStatus = p.productionUnitStatus.name,
+                        PhoneNumber = p.owner.phoneNumber,
+                        ContactMail = p.owner.contactMail,
+                        PicturePath = p.picturePath,
+                        PreferedMoment = p.owner.preferedMoment.name,
 
-                    PioneerCitizenName = p.owner.pioneerCitizenName,
-                    PioneerCitizenNumber = p.owner.pioneerCitizenNumber,
-                    ProductionUnitVersion = p.version,
-                    ProductionUnitStartDate = p.startDate,
-                    ProductionUnitType = p.productionUnitType.name,
-                    ProductionUnitStatus = p.productionUnitStatus.name,
-                    PicturePath = p.picturePath,
+                        LocationLatitude = p.locationLatitude,
+                        LocationLongitude = p.locationLongitude,
 
-                    LocationLatitude = p.locationLatitude,
-                    LocationLongitude = p.locationLongitude,
+                        ProductionUnitOptions = optionList,
+                    });
 
-                    ProductionUnitOptions = optionList,
                 }
-                );
+                else
+                {
+                    lst.Add(new
+                    {
+                        PioneerCitizenName = p.owner.pioneerCitizenName,
+                        PioneerCitizenNumber = p.owner.pioneerCitizenNumber,
+                        ProductionUnitVersion = p.version,
+                        ProductionUnitStartDate = p.startDate,
+                        ProductionUnitType = p.productionUnitType.name,
+                        ProductionUnitStatus = p.productionUnitStatus.name,
+                        PicturePath = p.picturePath,
+
+                        LocationLatitude = p.locationLatitude,
+                        LocationLongitude = p.locationLongitude,
+
+                        ProductionUnitOptions = optionList,
+                    }
+                    );
+                }
             });
 
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
-   
 
         public ActionResult GetNetworkStats()
         {

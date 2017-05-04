@@ -44,6 +44,38 @@
                 });
             }
         });
+
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitMeasures", "Home")",
+            dataType: "json",
+        data: { id: 0 },
+        type: "POST",
+        success: function (response) {
+            $("#CurrentPhValue").text(response.CurrentPhValue);
+            $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
+            $("#AverageHourPhValue").text(response.AverageHourPhValue);
+            $("#AverageDayPhValue").text(response.AverageDayPhValue);
+            $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
+
+            $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
+            $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
+            $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
+            $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
+            $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
+
+            $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
+            $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
+            $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
+            $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
+            $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
+
+            $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
+            $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
+            $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
+            $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
+            $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
+        }
+        });
     }
 
     function onSlideChangeEnd(ep)

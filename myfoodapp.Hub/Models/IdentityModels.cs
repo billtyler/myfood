@@ -86,11 +86,13 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.EventType> EventTypes { get; set; }
 
-        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.RecognitionRecord> RecognitionRecord { get; set; }
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.RecognitionRecord> RecognitionRecords { get; set; }
 
-        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.HealthLevel> HealthLevel { get; set; }
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.HealthLevel> HealthLevels { get; set; }
 
-        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.ProductionLevel> ProductionLevel { get; set; }
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.ProductionLevel> ProductionLevels { get; set; }
+
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.PreferedMoment> PreferedMoments { get; set; }
 
     }
 }

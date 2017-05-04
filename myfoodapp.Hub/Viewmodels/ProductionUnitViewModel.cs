@@ -26,5 +26,7 @@ namespace myfoodapp.Hub.Models
         public int ownerId { get; set; }
         public OwnerViewModel owner { get; set; }
         public string picturePath { get; set; }
+        public DateTime? lastMeasureReceived { get; set; }
+        
     }
 }

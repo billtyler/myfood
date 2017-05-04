@@ -86,7 +86,7 @@ namespace myfoodapp.Hub.Controllers
         {
              ApplicationDbContext db = new ApplicationDbContext();
 
-             var productionLevels = db.ProductionLevel
+             var productionLevels = db.ProductionLevels
                         .Select(m => new ProductionLevelViewModel
                         {
                             Id = m.Id,
@@ -101,7 +101,7 @@ namespace myfoodapp.Hub.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-            var healthLevel = db.HealthLevel
+            var healthLevel = db.HealthLevels
                        .Select(m => new HealthLevelViewModel
                        {
                            Id = m.Id,

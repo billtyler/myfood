@@ -39,7 +39,7 @@ namespace myfoodapp.Hub.Controllers
             PopulateProductionUnitStatus();
 
             ApplicationDbContext db = new ApplicationDbContext();
-            return View(await db.ProductionUnits.ToListAsync());
+            return View(await db.ProductionUnits.OrderBy(p => p.startDate).ToListAsync());
         }
 
         [Authorize]
@@ -419,9 +419,9 @@ namespace myfoodapp.Hub.Controllers
             MeasureService measureService = new MeasureService(db);
 
             var rslt = db.OptionLists.Include(o => o.productionUnit)
-                                    .Include(o => o.option)
-                                    .Where(p => p.productionUnit.Id == id)
-                                    .Select(p => p.option);
+                                     .Include(o => o.option)
+                                     .Where(p => p.productionUnit.Id == id)
+                                     .Select(p => p.option);
 
             return Json(rslt.ToDataSourceResult(request));
         }

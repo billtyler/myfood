@@ -21,12 +21,13 @@
         {
             columns.ForeignKey(c => c.ownerId, (System.Collections.IEnumerable)ViewData["owners"], "Id", "pioneerCitizenName").Title("owner").Groupable(false).Width(130);
             columns.Bound(c => c.info).Width(175).MinScreenWidth(380).Groupable(false);
-            columns.Bound(c => c.startDate).Format("{0:d}").Width(100).MinScreenWidth(380).Groupable(false);
+            columns.Bound(c => c.startDate).Format("{0:d}").Width(80).MinScreenWidth(380).Groupable(false);
             columns.ForeignKey(c => c.productionUnitTypeId, (System.Collections.IEnumerable)ViewData["productionUnitTypes"], "Id", "name").Title("prod. type").Width(100).MinScreenWidth(380);
             //columns.Bound(c => c.locationLatitude).Width(80).Title("lat.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).Groupable(false).MinScreenWidth(380);
             //columns.Bound(c => c.locationLongitude).Width(80).Title("long.").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).Groupable(false).MinScreenWidth(380);
             //columns.Bound(c => c.version).Width(80).HtmlAttributes(new { style = "text-align:right" }).HeaderHtmlAttributes(new { style = "text-align:right" }).MinScreenWidth(380);
             columns.ForeignKey(c => c.productionUnitStatusId, (System.Collections.IEnumerable)ViewData["productionUnitStatus"], "Id", "name").Title("status").Width(120);
+            columns.Bound(c => c.lastMeasureReceived).Format("{0:g}").Width(110).Title("last measure").MinScreenWidth(380).Groupable(false);
             columns.Bound(c => c.reference).Width(60).Title("ref.").HtmlAttributes(new { style = "text-align:right" }).HeaderHtmlAttributes(new { style = "text-align:right" }).Groupable(false).MinScreenWidth(380);
             columns.Command(command => command.Custom("Details").Click("showDetails")).Width(70);
             //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);

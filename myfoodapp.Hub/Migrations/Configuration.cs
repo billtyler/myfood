@@ -20,6 +20,8 @@ namespace myfoodapp.Hub.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
 
+            UpgradeDatabase.DoWork(context);
+
             return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
@@ -48,9 +50,9 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.RemoveRange(context.OptionLists);
             context.Options.RemoveRange(context.Options);
 
-            context.RecognitionRecord.RemoveRange(context.RecognitionRecord);
-            context.ProductionLevel.RemoveRange(context.ProductionLevel);
-            context.HealthLevel.RemoveRange(context.HealthLevel);
+            context.RecognitionRecords.RemoveRange(context.RecognitionRecords);
+            context.ProductionLevels.RemoveRange(context.ProductionLevels);
+            context.HealthLevels.RemoveRange(context.HealthLevels);
 
             context.Recipes.RemoveRange(context.Recipes);
             context.GardeningTypes.RemoveRange(context.GardeningTypes);
@@ -102,17 +104,17 @@ namespace myfoodapp.Hub.Migrations
             context.EventTypes.Add(new EventType() { Id = 4, name = "Advices" });
             context.EventTypes.Add(new EventType() { Id = 5, name = "Improvement" });
 
-            context.HealthLevel.Add(new HealthLevel() { Id = 1, name = "Poor" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 2, name = "Average" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 3, name = "Good" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 4, name = "Perfect" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 5, name = "Unknown" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 1, name = "Poor" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 2, name = "Average" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 3, name = "Good" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 4, name = "Perfect" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 5, name = "Unknown" });
 
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 1, name = "Low" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 2, name = "Medium" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 3, name = "High" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 4, name = "Awesome" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 5, name = "Unknown" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 1, name = "Low" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 2, name = "Medium" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 3, name = "High" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 4, name = "Awesome" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 5, name = "Unknown" });
 
             context.Options.Add(new Option() { Id = 0, name = "11 towers" });
             context.Options.Add(new Option() { Id = 1, name = "18 towers" });
@@ -143,6 +145,11 @@ namespace myfoodapp.Hub.Migrations
             context.WateringLevels.Add(new WateringLevel() { Id = 1, name = "Moderate" });
             context.WateringLevels.Add(new WateringLevel() { Id = 2, name = "Normal" });
             context.WateringLevels.Add(new WateringLevel() { Id = 3, name = "Maximum" });
+
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 0, name = "Morning" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 1, name = "Afternoon" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 2, name = "Night" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 3, name = "Weekend" });
 
             context.SaveChanges();
 
@@ -689,10 +696,10 @@ namespace myfoodapp.Hub.Migrations
             var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M.", pioneerCitizenNumber = 21 };
             var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E.", pioneerCitizenNumber = 22 };
             var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléornore DC.", pioneerCitizenNumber = 23 };
-            var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Amous H.", pioneerCitizenNumber = 17 };
+            var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Lilia A.", pioneerCitizenNumber = 17 };
             var AlainHOwner = new ProductionUnitOwner() { Id = 25, user = userALH, pioneerCitizenName = "Alain H.", pioneerCitizenNumber = 24 };
-            var VincentTOwner = new ProductionUnitOwner() { Id = 22, user = userVTH, pioneerCitizenName = "Vincent T." };
-            var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G." };
+            var VincentTOwner = new ProductionUnitOwner() { Id = 22, user = userVTH, pioneerCitizenName = "Vincent T.", pioneerCitizenNumber = 26 };
+            var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G.", pioneerCitizenNumber = 25 };
             var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H." };
 
             //TO BE DEPLOYED 
@@ -1451,6 +1458,7 @@ namespace myfoodapp.Hub.Migrations
 
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = towers18Option });
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = monitoringKitv2Option });
+            optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = permacultureBedOption });
 
             var optionsGDE = new List<OptionList>();
 
@@ -1466,7 +1474,7 @@ namespace myfoodapp.Hub.Migrations
             var optionsSMA = new List<OptionList>();
 
             optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = monitoringKitv2Option });
-            optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = towers18Option });
+            optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = towers24Option });
             optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = permacultureBedOption });
 
             var optionsDMA = new List<OptionList>();
@@ -1504,7 +1512,7 @@ namespace myfoodapp.Hub.Migrations
 
             optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = monitoringKitv2Option });
             optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = towers18Option });
-            optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = permacultureBedOption });
+            optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = permacultureBiocharOption });
 
             var optionsAHE = new List<OptionList>();
 
@@ -1516,12 +1524,13 @@ namespace myfoodapp.Hub.Migrations
 
             optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = monitoringKitv2Option });
             optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = sigfoxConnectionOption });
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = permacultureBedOption });
 
             var optionsVTH = new List<OptionList>();
 
             optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = monitoringKitv2Option });
-            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = towers18Option });
-            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = permacultureBedOption });
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = towers24Option });
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = permacultureBiocharOption });
 
             var optionsBGU = new List<OptionList>();
 
@@ -1636,23 +1645,23 @@ namespace myfoodapp.Hub.Migrations
 
             var messMeasure = context.MessageTypes.Where(m => m.Id == 1).FirstOrDefault();
 
-            var poorHealthLevel = context.HealthLevel.Where(s => s.Id == 1).FirstOrDefault();
-            var averageHealthLevel = context.HealthLevel.Where(s => s.Id == 2).FirstOrDefault();
-            var goodHealthLevel = context.HealthLevel.Where(s => s.Id == 3).FirstOrDefault();
-            var perfectHealthLevel = context.HealthLevel.Where(s => s.Id == 4).FirstOrDefault();
-            var unknownHealthLevel = context.HealthLevel.Where(s => s.Id == 5).FirstOrDefault();
+            var poorHealthLevel = context.HealthLevels.Where(s => s.Id == 1).FirstOrDefault();
+            var averageHealthLevel = context.HealthLevels.Where(s => s.Id == 2).FirstOrDefault();
+            var goodHealthLevel = context.HealthLevels.Where(s => s.Id == 3).FirstOrDefault();
+            var perfectHealthLevel = context.HealthLevels.Where(s => s.Id == 4).FirstOrDefault();
+            var unknownHealthLevel = context.HealthLevels.Where(s => s.Id == 5).FirstOrDefault();
 
-            var lowProductionLevel = context.ProductionLevel.Where(s => s.Id == 1).FirstOrDefault();
-            var mediumProductionLevel = context.ProductionLevel.Where(s => s.Id == 2).FirstOrDefault();
-            var highProductionLevel = context.ProductionLevel.Where(s => s.Id == 3).FirstOrDefault();
-            var awesomeProductionLevel = context.ProductionLevel.Where(s => s.Id == 4).FirstOrDefault();
-            var unknowProductionLevel = context.ProductionLevel.Where(s => s.Id == 5).FirstOrDefault();
+            var lowProductionLevel = context.ProductionLevels.Where(s => s.Id == 1).FirstOrDefault();
+            var mediumProductionLevel = context.ProductionLevels.Where(s => s.Id == 2).FirstOrDefault();
+            var highProductionLevel = context.ProductionLevels.Where(s => s.Id == 3).FirstOrDefault();
+            var awesomeProductionLevel = context.ProductionLevels.Where(s => s.Id == 4).FirstOrDefault();
+            var unknowProductionLevel = context.ProductionLevels.Where(s => s.Id == 5).FirstOrDefault();
 
             var mgaProdUnit = context.ProductionUnits.Where(s => s.picturePath == "SainteBarbeFamily22.jpg").FirstOrDefault();
 
-            var mayRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 05, 15), imagePath = "15052016_GHID_2.JPG", dailyProduction = 0.2, productionLevel = lowProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.974321722984314}, {""name"": ""ground"", ""confidence"": 0.9694542288780212}]" });
-            var juneRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 06, 15), imagePath = "15062016_GHID_2.JPG", dailyProduction = 0.5, productionLevel = mediumProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.867531418800354}, {""name"": ""plant"", ""confidence"": 0.315796108436584}]" });
-            var augustRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 08, 15), imagePath = "15082016_GHID_2.JPG", dailyProduction = 1.5, productionLevel = awesomeProductionLevel, healthLevel = perfectHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.9086201190948486}, {""name"": ""plant"", ""confidence"": 0.5123096108436584}, {""name"": ""vegetable"", ""confidence"": 0.1269458830356598}]"});
+            var mayRecognitionRecord = context.RecognitionRecords.Add(new RecognitionRecord { date = new DateTime(2016, 05, 15), imagePath = "15052016_GHID_2.JPG", dailyProduction = 0.2, productionLevel = lowProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.974321722984314}, {""name"": ""ground"", ""confidence"": 0.9694542288780212}]" });
+            var juneRecognitionRecord = context.RecognitionRecords.Add(new RecognitionRecord { date = new DateTime(2016, 06, 15), imagePath = "15062016_GHID_2.JPG", dailyProduction = 0.5, productionLevel = mediumProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.867531418800354}, {""name"": ""plant"", ""confidence"": 0.315796108436584}]" });
+            var augustRecognitionRecord = context.RecognitionRecords.Add(new RecognitionRecord { date = new DateTime(2016, 08, 15), imagePath = "15082016_GHID_2.JPG", dailyProduction = 1.5, productionLevel = awesomeProductionLevel, healthLevel = perfectHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.9086201190948486}, {""name"": ""plant"", ""confidence"": 0.5123096108436584}, {""name"": ""vegetable"", ""confidence"": 0.1269458830356598}]"});
 
             context.SaveChanges();
 
