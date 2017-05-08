@@ -421,6 +421,10 @@
     <Compile Include="Migrations\201705041148298_Add_ContactInfo.Designer.cs">
       <DependentUpon>201705041148298_Add_ContactInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705081252475_Add_User_Language.cs" />
+    <Compile Include="Migrations\201705081252475_Add_User_Language.Designer.cs">
+      <DependentUpon>201705081252475_Add_User_Language.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -3023,6 +3027,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705041148298_Add_ContactInfo.resx">
       <DependentUpon>201705041148298_Add_ContactInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705081252475_Add_User_Language.resx">
+      <DependentUpon>201705081252475_Add_User_Language.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

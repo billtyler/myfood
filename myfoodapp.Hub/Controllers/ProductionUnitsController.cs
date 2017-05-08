@@ -34,12 +34,31 @@ namespace myfoodapp.Hub.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            PopulateProductionUnitTypes();
-            PopulateOwners();
-            PopulateProductionUnitStatus();
+            var currentUser = this.User.Identity.GetUserName();
+            var db = new ApplicationDbContext();
 
-            ApplicationDbContext db = new ApplicationDbContext();
-            return View(await db.ProductionUnits.OrderBy(p => p.startDate).ToListAsync());
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
+            if (isAdmin)
+            {
+                PopulateProductionUnitTypes();
+                PopulateOwners();
+                PopulateProductionUnitStatus();
+
+                return View(await db.ProductionUnits.OrderBy(p => p.startDate).ToListAsync());
+            }
+            else
+            {
+                var currentProductionUnits = db.ProductionUnits.Include(p => p.owner.user)
+                                                               .Where(p => p.owner.user.UserName == currentUser).ToList();
+                if (currentProductionUnits != null)
+                {
+                    return RedirectToAction("Details", "ProductionUnits", new { Id = currentProductionUnits.FirstOrDefault().Id });
+                }
+                else
+                    return View("Home");
+            }
         }
 
         [Authorize]
@@ -256,7 +275,6 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult HydroponicTypes_Read([DataSourceRequest] DataSourceRequest request)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            MeasureService measureService = new MeasureService(db);
 
             var rslt = db.HydroponicTypes;
 

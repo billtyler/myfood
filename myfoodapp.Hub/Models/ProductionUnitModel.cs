@@ -53,11 +53,21 @@ namespace myfoodapp.Hub.Models
         public string pioneerCitizenName { get; set; }
         public string contactMail { get; set; }
         public string phoneNumber { get; set; }
+        public Language language { get; set; }
         public PreferedMoment preferedMoment { get; set; }
         public string notificationPushKey { get; set; }
     }
 
     public class ProductionUnitType
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public string imagePath { get; set; }
+    }
+
+    public class Language
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }

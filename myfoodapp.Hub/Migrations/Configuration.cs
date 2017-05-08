@@ -151,6 +151,12 @@ namespace myfoodapp.Hub.Migrations
             context.PreferedMoments.Add(new PreferedMoment() { Id = 2, name = "Night" });
             context.PreferedMoments.Add(new PreferedMoment() { Id = 3, name = "Weekend" });
 
+            context.Languages.Add(new Language() { Id = 0, name = "Français" });
+            context.Languages.Add(new Language() { Id = 1, name = "English" });
+            context.Languages.Add(new Language() { Id = 2, name = "Deutsch" });
+            context.Languages.Add(new Language() { Id = 3, name = "Lëtzebuergesch" });
+            context.Languages.Add(new Language() { Id = 4, name = "Flemish" });
+
             context.SaveChanges();
 
             context.Months.Add(new Month() { Id = 0, name = "January", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
@@ -695,7 +701,7 @@ namespace myfoodapp.Hub.Migrations
             var CristofDOwner = new ProductionUnitOwner() { Id = 21, user = userCDE, pioneerCitizenName = "Cristof D.", pioneerCitizenNumber = 20 };
             var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M.", pioneerCitizenNumber = 21 };
             var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E.", pioneerCitizenNumber = 22 };
-            var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléornore DC.", pioneerCitizenNumber = 23 };
+            var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléonore DC.", pioneerCitizenNumber = 23 };
             var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Lilia A.", pioneerCitizenNumber = 17 };
             var AlainHOwner = new ProductionUnitOwner() { Id = 25, user = userALH, pioneerCitizenName = "Alain H.", pioneerCitizenNumber = 24 };
             var VincentTOwner = new ProductionUnitOwner() { Id = 22, user = userVTH, pioneerCitizenName = "Vincent T.", pioneerCitizenNumber = 26 };

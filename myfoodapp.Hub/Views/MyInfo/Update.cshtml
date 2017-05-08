@@ -78,6 +78,20 @@
                                     @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
                                 </div>
                             </div>
+                            <h3 class="section-header">Choose the application default language</h3>
+                            <br />
+                            @(Html.Kendo().DropDownListFor(m => m.Language)
+                                  .DataTextField("name")
+                                  .DataValueField("Id")
+                                  .AutoBind(true)
+                                  .DataSource(source =>
+                                  {
+                                      source.Read(read =>
+                                      {
+                                          read.Action("Languages_Read", "MyInfo");
+                                      });
+                                  })
+                            )
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
                                     <input type="submit" value="Save" class="btn btn-default" />
@@ -86,6 +100,7 @@
                         }
                     </section>
                 </div>
+                
             </div>
         </div>
     </div>

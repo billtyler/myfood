@@ -40,6 +40,8 @@ namespace myfoodapp.Hub.Models
         [DataType(DataType.Password)]
         [Display(Name = "New Password")]
         public string NewPassword { get; set; }
+
+        public int Language { get; set; }
     }
 
     public class RegisterViewModel

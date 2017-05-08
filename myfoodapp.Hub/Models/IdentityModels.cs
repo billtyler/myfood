@@ -94,5 +94,7 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.PreferedMoment> PreferedMoments { get; set; }
 
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.Language> Languages { get; set; }
+
     }
 }
