@@ -151,11 +151,11 @@ namespace myfoodapp.Hub.Migrations
             context.PreferedMoments.Add(new PreferedMoment() { Id = 2, name = "Night" });
             context.PreferedMoments.Add(new PreferedMoment() { Id = 3, name = "Weekend" });
 
-            context.Languages.Add(new Language() { Id = 0, name = "Français" });
-            context.Languages.Add(new Language() { Id = 1, name = "English" });
-            context.Languages.Add(new Language() { Id = 2, name = "Deutsch" });
-            context.Languages.Add(new Language() { Id = 3, name = "Lëtzebuergesch" });
-            context.Languages.Add(new Language() { Id = 4, name = "Flemish" });
+            context.Languages.Add(new Language() { Id = 0, name = "Français", description = "fr" });
+            context.Languages.Add(new Language() { Id = 1, name = "English", description = "en" });
+            context.Languages.Add(new Language() { Id = 2, name = "Deutsch", description = "de" });
+            context.Languages.Add(new Language() { Id = 3, name = "Lëtzebuergesch", description = "lu" });
+            context.Languages.Add(new Language() { Id = 4, name = "Flemish", description = "fl" });
 
             context.SaveChanges();
 

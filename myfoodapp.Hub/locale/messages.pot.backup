@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-05-10 14:57+02:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: i18n.POTGenerator\n"
+
+#: Views\Shared\_Layout.cshtml:59
+msgid "About"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:75
+msgid "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:65
+msgid "Log off"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:70
+msgid "Login"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:53
+msgid "Measures"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:52
+msgid "Messages"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:57
+msgid "My Information"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:55
+msgid "Performance &amp; Health"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:54
+msgid "Production Units"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:56
+msgid "Recipes"
+msgstr ""
+

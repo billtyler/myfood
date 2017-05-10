@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2017-05-10 15:03+02:00\n"
+"PO-Revision-Date: 2017-05-10 15:03+02:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: i18n.POTGenerator\n"
+
+#: Views\Shared\_Layout.cshtml:59
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:59
+msgid "About"
+msgstr "A propos"
+
+#: Views\Shared\_Layout.cshtml:75
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:75
+msgid "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
+msgstr "Copyright &copy; 2017, myfood et / ou ses filiales ou sociétés affiliées. Tous les droits réservés."
+
+#: Views\Shared\_Layout.cshtml:65
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
+msgid "Log off"
+msgstr "Déconnexion"
+
+#: Views\Shared\_Layout.cshtml:70
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:70
+msgid "Login"
+msgstr "Connexion"
+
+#: Views\Shared\_Layout.cshtml:53
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:53
+msgid "Measures"
+msgstr "Mesures"
+
+#: Views\Shared\_Layout.cshtml:52
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:52
+msgid "Messages"
+msgstr "Messages"
+
+#: Views\Shared\_Layout.cshtml:57
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:57
+msgid "My Information"
+msgstr "Mes Informations"
+
+#: Views\Shared\_Layout.cshtml:55
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:55
+msgid "Performance &amp; Health"
+msgstr "Performances et Santé"
+
+#: Views\Shared\_Layout.cshtml:54
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:54
+msgid "Production Units"
+msgstr "Unités de Prod."
+
+#: Views\Shared\_Layout.cshtml:56
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:56
+msgid "Recipes"
+msgstr "Recettes"
+

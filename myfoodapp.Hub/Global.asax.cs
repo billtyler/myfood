@@ -10,8 +10,10 @@ using System.Timers;
 using myfoodapp.Hub.Models;
 using System.Text;
 using myfoodapp.Hub.Common;
-using myfoodapp.Hub.Migrations;
-using System.Data.Entity.Migrations;
+using i18n;
+using System.Threading;
+using System.Globalization;
+using System.Data.Entity;
 
 namespace myfoodapp.Hub
 {
@@ -31,7 +33,53 @@ namespace myfoodapp.Hub
 
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
-            Timer timer = new Timer(TimerIntervalInMilliseconds);
+            // Change from the default of 'en'.
+            i18n.LocalizedApplication.Current.DefaultLanguage = "fr";
+
+            // Change from the default of 'i18n.langtag'.
+            i18n.LocalizedApplication.Current.CookieName = "i18n_langtag";
+
+            // Change from the of temporary redirects during URL localization
+            i18n.LocalizedApplication.Current.PermanentRedirects = true;
+
+            // Change the URL localization scheme from Scheme1.
+            i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Scheme2;
+
+            // Specifies a custom method called after a nugget has been translated
+            // that allows the resulting message to be modified, for instance according to content type.
+            i18n.LocalizedApplication.Current.TweakMessageTranslation = delegate (System.Web.HttpContextBase context, i18n.Helpers.Nugget nugget, i18n.LanguageTag langtag, string message)
+            {
+                switch (context.Response.ContentType)
+                {
+                    case "text/html":
+                        return message.Replace("\'", "&apos;");
+                }
+                return message;
+            };
+
+            // Blacklist certain URLs from being 'localized' via a callback.
+            i18n.UrlLocalizer.IncomingUrlFilters += delegate (Uri url) {
+                if (url.LocalPath.EndsWith("sitemap.xml", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+                return true;
+            };
+
+            // Extend (+=) or override (=) the default handler for Set-PAL event.
+            // The default handler applies the setting to both the CurrentCulture and CurrentUICulture
+            // settings of the thread, as shown below.
+            i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = delegate (System.Web.HttpContextBase context, ILanguageTag langtag)
+            {
+                // Do own stuff with the language tag.
+                // The default handler does the following:
+                if (langtag != null)
+                {
+                    Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = langtag.GetCultureInfo();
+                }
+            };
+
+            System.Timers.Timer timer = new System.Timers.Timer(TimerIntervalInMilliseconds);
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.Start();
@@ -53,7 +101,7 @@ namespace myfoodapp.Hub
 
             var yesterdayDate = DateTime.Now.AddDays(-1);
 
-            var todayEvents = db.Events.Include("productionUnit.owner.user").Where(ev => ev.date > yesterdayDate).ToList();
+            var todayEvents = db.Events.Include(e => e.productionUnit.owner.user).Where(ev => ev.date > yesterdayDate).ToList();
 
             var groupedEvents = todayEvents.GroupBy(ev => ev.productionUnit);
 
@@ -69,23 +117,8 @@ namespace myfoodapp.Hub
                 var mailContent = new StringBuilder();
 
                 NotificationPushManager.PushMessage(mailSubject, "Click to see your production unit's status", productionUnitId, notificationPushKey);
-
-                //mailContent.AppendLine(String.Format("Hello {0}, your unit reported few events today", productionUnitOwnerName));
-                //mailContent.AppendLine(String.Format(@"Get more details at https://hub.myfood.eu/ProductionUnits/Events/{0}", productionUnitId));
-
-                //var eventMessageList = item.ToList();
-
-                //try
-                //{
-                //    MailManager.SendMail(productionUnitOwnerMail, mailSubject, mailContent.ToString());
-                //}
-                //catch (Exception ex)
-                //{
-                //    db.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Mail Sending"), ex));
-                //    db.SaveChanges();
-                //}
             }
         }
-             
+
     }
 }
