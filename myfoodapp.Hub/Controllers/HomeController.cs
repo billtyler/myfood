@@ -21,45 +21,15 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult Index()
         {
             var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
+            //var currentUser = this.User.Identity.GetUserName();
 
-            var currentUser = this.User.Identity.GetUserName();
+            //if(currentUser != string.Empty)
+            //{
+            //    var currentProductionUnitOwner = db.ProductionUnitOwners.Include(p => p.language)
+            //                                      .Where(p => p.user.UserName == currentUser).FirstOrDefault();
 
-            var currentProductionUnitOwner = db.ProductionUnitOwners.Include(p => p.language)
-                                                              .Where(p => p.user.UserName == currentUser).FirstOrDefault();
-
-            if (currentProductionUnitOwner != null)
-            {
-                CultureInfo ci = new CultureInfo(currentProductionUnitOwner.language.description);
-                Thread.CurrentThread.CurrentUICulture = ci;
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
-
-                // If valid 'langtag' passed.
-                i18n.LanguageTag lt = i18n.LanguageTag.GetCachedInstance(currentProductionUnitOwner.language.description);
-                if (lt.IsValid())
-                {
-                    // Set persistent cookie in the client to remember the language choice.
-                    Response.Cookies.Add(new HttpCookie("i18n.langtag")
-                    {
-                        Value = lt.ToString(),
-                        HttpOnly = true,
-                        Expires = DateTime.UtcNow.AddYears(1)
-                    });
-                }
-                // Owise...delete any 'language' cookie in the client.
-                else
-                {
-                    var cookie = Response.Cookies["i18n.langtag"];
-                    if (cookie != null)
-                    {
-                        cookie.Value = null;
-                        cookie.Expires = DateTime.UtcNow.AddMonths(-1);
-                    }
-                }
-                // Update PAL setting so that new language is reflected in any URL patched in the 
-                // response (Late URL Localization).
-                HttpContext.SetPrincipalAppLanguageForRequest(lt);
-            }
+            //    System.Web.HttpContext.Current.Session["UserLang"] = currentProductionUnitOwner.language.description;
+            //}
 
             var listMarker = new List<Marker>();
 
@@ -202,11 +172,11 @@ namespace myfoodapp.Hub.Controllers
 
             var statusList = new List<PieChartViewModel>();
 
-            statusList.Add(new PieChartViewModel() { Category = "Wait Confirm.", Value = waitConfCount, Color = "#9de219" });
-            statusList.Add(new PieChartViewModel() { Category = "Setup Planned", Value = setuPlannedCount, Color = "#90cc38" });
-            statusList.Add(new PieChartViewModel() { Category = "Up & Running", Value = upRunningCount, Color = "#068c35" });
-            statusList.Add(new PieChartViewModel() { Category = "On Maintenance", Value = onMaintenanceCount, Color = "#006634" });
-            statusList.Add(new PieChartViewModel() { Category = "Stopped", Value = stoppedCount, Color = "#004d38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Wait Confirm.]]]", Value = waitConfCount, Color = "#9de219" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setuPlannedCount, Color = "#90cc38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Up and Running]]]", Value = upRunningCount, Color = "#068c35" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#004d38" });
 
             return Json(statusList);
         }

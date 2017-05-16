@@ -40,13 +40,13 @@
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">My Information</h2>
+    <h2 class="col-md-3">[[[My Information]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-md-2">
-        <h3 class="section-header">Change User Settings</h3>
+        <h3 class="section-header">[[[Change User Settings]]]</h3>
     </div>
     <div id="grid-container" class="col-xs-10">
         <div id="center">
@@ -78,7 +78,7 @@
                                     @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <h3 class="section-header">Choose the application default language</h3>
+                            <h3 class="section-header">[[[Choose the application default language]]]</h3>
                             <br />
                             @(Html.Kendo().DropDownListFor(m => m.Language)
                                   .DataTextField("name")
@@ -94,7 +94,7 @@
                             )
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Save" class="btn btn-default" />
+                                    <input type="submit" value="[[[Save]]]" class="btn btn-default" />
                                 </div>
                             </div>
                         }

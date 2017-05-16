@@ -14,6 +14,8 @@ using i18n;
 using System.Threading;
 using System.Globalization;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
+using System.Web;
 
 namespace myfoodapp.Hub
 {
@@ -37,13 +39,13 @@ namespace myfoodapp.Hub
             i18n.LocalizedApplication.Current.DefaultLanguage = "fr";
 
             // Change from the default of 'i18n.langtag'.
-            i18n.LocalizedApplication.Current.CookieName = "i18n_langtag";
+            //i18n.LocalizedApplication.Current.CookieName = "i18n_langtag";
 
             // Change from the of temporary redirects during URL localization
-            i18n.LocalizedApplication.Current.PermanentRedirects = true;
+            //i18n.LocalizedApplication.Current.PermanentRedirects = true;
 
             // Change the URL localization scheme from Scheme1.
-            i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Scheme2;
+            i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void;
 
             // Specifies a custom method called after a nugget has been translated
             // that allows the resulting message to be modified, for instance according to content type.
@@ -69,15 +71,16 @@ namespace myfoodapp.Hub
             // Extend (+=) or override (=) the default handler for Set-PAL event.
             // The default handler applies the setting to both the CurrentCulture and CurrentUICulture
             // settings of the thread, as shown below.
-            i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = delegate (System.Web.HttpContextBase context, ILanguageTag langtag)
-            {
-                // Do own stuff with the language tag.
-                // The default handler does the following:
-                if (langtag != null)
-                {
-                    Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = langtag.GetCultureInfo();
-                }
-            };
+            //i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = delegate (System.Web.HttpContextBase context, ILanguageTag langtag)
+            //{
+            //    // Do own stuff with the language tag.
+            //    // The default handler does the following:
+            //    if (langtag != null)
+            //    {
+            //        Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = langtag.GetCultureInfo();
+            //    }
+            //};
+
 
             System.Timers.Timer timer = new System.Timers.Timer(TimerIntervalInMilliseconds);
             timer.Enabled = true;
@@ -92,6 +95,47 @@ namespace myfoodapp.Hub
             if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
             {
                 SendDailyMessage();
+            }
+        }
+
+        protected void Application_AuthenticateRequest()
+        {
+            if (HttpContext.Current.User != null)
+            {
+                var db = new ApplicationDbContext();
+                var currentUser = HttpContext.Current.User.Identity.GetUserName();
+
+                var currentProductionUnitOwner = db.ProductionUnitOwners
+                                                               .Include(p => p.user)
+                                                               .Include(p => p.language)
+                                                               .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+
+                i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                System.Web.HttpContext.Current,
+                i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description)
+             );
+            }
+            else if (HttpContext.Current.User == null && (HttpContext.Current.Request.UrlReferrer != null || !String.IsNullOrEmpty(Request.QueryString["lang"])))
+            {
+                if (Request.QueryString["lang"] == "fr" || Request.QueryString["lang"] == "en" || Request.QueryString["lang"] == "lu" || Request.QueryString["lang"] == "fl")
+                {
+                    i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                    System.Web.HttpContext.Current,
+                    i18n.LanguageHelpers.GetMatchingAppLanguage(Request.QueryString["lang"])
+                    );
+                }
+                else if ((HttpUtility.ParseQueryString(HttpContext.Current.Request.UrlReferrer.Query).Get("lang") != String.Empty))
+                {
+                    var strLang = HttpUtility.ParseQueryString(HttpContext.Current.Request.UrlReferrer.Query).Get("lang");
+
+                    if (strLang == "fr" || strLang == "en" || strLang == "lu" || strLang == "fl")
+                    {
+                        i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                        System.Web.HttpContext.Current,
+                        i18n.LanguageHelpers.GetMatchingAppLanguage(strLang)
+                        );
+                    }
+                }
             }
         }
 

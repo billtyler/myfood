@@ -90,7 +90,7 @@
 <input type="hidden" id="displayManagementBtn" value="@ViewBag.DisplayManagementBtn" />
 
 <div id="main-section-header" class="row">
-    <h2>Production Unit Details</h2>
+    <h2>[[[Production Unit Details]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -103,7 +103,7 @@
                 @(Html.Kendo().Button()
             .Name("viewEventsButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block" })
-            .Content("View Events")
+            .Content("[[[View Events]]]")
             .Events(ev => ev.Click("onViewEventsClick")))
             </p>
 
@@ -111,7 +111,7 @@
                 @(Html.Kendo().Button()
             .Name("manageUnitButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block" })
-            .Content("Manage Unit")
+            .Content("[[[Manage Unit]]]")
             .Events(ev => ev.Click("onManageUnitClick")))
             </p>
         </div>
@@ -122,7 +122,7 @@
 
                <div id="detailedContainer" class="row">
                     <div id="imageContainer" class="col-md-6">
-                        <h3 class="section-header">Detailed information</h3>
+                        <h3 class="section-header">[[[Detailed information]]]</h3>
                         <div id="containerPicture">
                             <div class="box" id="ProductionUnitPicture">
                                 <div class="text">
@@ -134,22 +134,22 @@
                         </div>
                     </div>
                     <div id="extraInfoContainer" class="col-md-6">
-                        <h3 class="section-header">Performance</h3>
+                        <h3 class="section-header">[[[Performance]]]</h3>
                         <div style="margin: 25px;">
                             <div class="column-left">
-                                <h2 class="widget-text" style="text-align: center;">EST. PROD. </h2>
+                                <h2 class="widget-text" style="text-align: center;">[[[EST. PROD. ]]]</h2>
                                 <h1 id="AverageMonthlyProduction" style="text-align: center;"></h1>
-                                <h2 class="widget-text" style="margin:7px;text-align: center;">PER MONTH</h2>
+                                <h2 class="widget-text" style="margin:7px;text-align: center;">[[[PER MONTH]]]</h2>
                             </div>
                             <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                                <h2 class="widget-text" style="text-align: center;">CO2 SAVED</h2>
+                                <h2 class="widget-text" style="text-align: center;">[[[CO2 SAVED]]]</h2>
                                 <h1 id="AverageMonthlySparedCO2" style="text-align: center;"></h1>
-                                <h2 class="widget-text" style="margin:7px;text-align: center;">PER MONTH</h2>
+                                <h2 class="widget-text" style="margin:7px;text-align: center;">[[[PER MONTH]]]</h2>
                             </div>
                             <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                                <h2 class="widget-text" style="text-align: center;">ONLINE SINCE</h2>
+                                <h2 class="widget-text" style="text-align: center;">[[[ONLINE SINCE]]]</h2>
                                 <h1 id="OnlineSinceWeeks" style="text-align: center;"></h1>
-                                <h2 class="widget-text" style="margin:7px;text-align: center;">WEEKS</h2>
+                                <h2 class="widget-text" style="margin:7px;text-align: center;">[[[WEEKS]]]</h2>
                             </div>
                         </div>
                    </div>
@@ -158,21 +158,21 @@
 
                 <div id="statsContainerTop" class="row">
                     <div id="pHContainer" class="col-md-6">
-                        <h3 class="section-header" style="text-align:center;font-size:larger">pH</h3>
+                        <h3 class="section-header" style="text-align:center;font-size:larger">[[[pH]]]</h3>
                         <div class="sparkline-container">
                             <div style="margin: 3px;">
                                 <div class="column-left">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
                                     <h1 id="CurrentPhValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="CurrentPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
                                 <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageHourPhValue" style="font-size:xx-large;text-align: center;">-</h1>
-                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                    <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
                                 </div>
                                 <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageDayPhValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="LastDayPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
@@ -208,21 +208,21 @@
                         </div>
                     </div>
                     <div id="WaterTempContainer" class="col-md-6">
-                        <h3 class="section-header" style="text-align:center;font-size:larger">Water Temperature (°C)</h3>
+                        <h3 class="section-header" style="text-align:center;font-size:larger">[[[Water Temperature (°C)]]]</h3>
                         <div class="sparkline-container">
                             <div style="margin: 3px;">
                                 <div class="column-left">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
                                     <h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
                                 <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                    <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
                                 </div>
                                 <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
@@ -260,21 +260,21 @@
                 </div>
                 <div id="statsContainerBottom" class="row">
                     <div id="AirTempContainer" class="col-md-6">
-                        <h3 class="section-header" style="text-align:center;font-size:larger">Air Temperature (°C)</h3>
+                        <h3 class="section-header" style="text-align:center;font-size:larger">[[[Air Temperature (°C)]]]</h3>
                         <div class="sparkline-container">
                             <div style="margin: 3px;">
                                 <div class="column-left">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
                                     <h1 id="CurrentAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="CurrentAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
                                 <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageHourAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                                    <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+                                    <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
                                 </div>
                                 <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageDayAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="LastDayAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
@@ -310,21 +310,21 @@
                         </div>
                     </div>
                     <div id="HumidityContainer" class="col-md-6">
-                        <h3 class="section-header" style="text-align:center;font-size:larger">Humidity (%)</h3>
+                        <h3 class="section-header" style="text-align:center;font-size:larger">[[[Humidity (%)]]]</h3>
                         <div class="sparkline-container">
                             <div style="margin: 3px;">
                                 <div class="column-left">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; CURRENT</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
                                     <h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>
                                 <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
                                 </div>
                                 <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; AVERAGE</h2>
+                                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
                                     <h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
                                     <h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
                                 </div>

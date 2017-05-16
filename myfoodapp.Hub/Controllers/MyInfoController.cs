@@ -73,39 +73,6 @@ namespace myfoodapp.Hub.Controllers
 
             currentProductionUnitOwner.language = db.Languages.Where(l => l.Id == model.Language).FirstOrDefault();
 
-            if (currentProductionUnitOwner != null)
-            {
-                CultureInfo ci = new CultureInfo(currentProductionUnitOwner.language.description);
-                Thread.CurrentThread.CurrentUICulture = ci;
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(ci.Name);
-
-                // If valid 'langtag' passed.
-                i18n.LanguageTag lt = i18n.LanguageTag.GetCachedInstance(currentProductionUnitOwner.language.description);
-                if (lt.IsValid())
-                {
-                    // Set persistent cookie in the client to remember the language choice.
-                    Response.Cookies.Add(new HttpCookie("i18n.langtag")
-                    {
-                        Value = lt.ToString(),
-                        HttpOnly = true,
-                        Expires = DateTime.UtcNow.AddYears(1)
-                    });
-                }
-                // Owise...delete any 'language' cookie in the client.
-                else
-                {
-                    var cookie = Response.Cookies["i18n.langtag"];
-                    if (cookie != null)
-                    {
-                        cookie.Value = null;
-                        cookie.Expires = DateTime.UtcNow.AddMonths(-1);
-                    }
-                }
-                // Update PAL setting so that new language is reflected in any URL patched in the 
-                // response (Late URL Localization).
-                HttpContext.SetPrincipalAppLanguageForRequest(lt);
-            }
-
             db.SaveChanges();
 
             if (ModelState.IsValid)
@@ -145,14 +112,21 @@ namespace myfoodapp.Hub.Controllers
 
             var db = new ApplicationDbContext();
 
-            var currentProductionOwner = db.ProductionUnitOwners.Include(p => p.user)
+            var currentProductionUnitOwner = db.ProductionUnitOwners
+                                                           .Include(p => p.user)
+                                                           .Include(p => p.language)
                                                            .Where(p => p.user.UserName == currentUser).FirstOrDefault();
-            if (currentProductionOwner != null)
+            if (currentProductionUnitOwner != null)
             {
-                currentProductionOwner.notificationPushKey = id;
+                //i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                //   System.Web.HttpContext.Current,
+                //   i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description)
+                //);
+
+                currentProductionUnitOwner.notificationPushKey = id;
                 db.SaveChanges();
 
-                return Json(currentProductionOwner, JsonRequestBehavior.AllowGet);
+                return Json(currentProductionUnitOwner, JsonRequestBehavior.AllowGet);
             }
 
             return null;

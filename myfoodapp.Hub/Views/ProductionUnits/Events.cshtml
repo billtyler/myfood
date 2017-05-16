@@ -25,20 +25,20 @@
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">Production Units Management</h2>
+    <h2 class="col-md-3">[[[Production Units Management]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-md-2">
-        <h3 class="section-header">Manage Production Units Events</h3>
+        <h3 class="section-header">[[[Manage Production Units Events]]]</h3>
         <br />
 
         <p>
             @(Html.Kendo().Button()
             .Name("backButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block" })
-            .Content("Back to Details")
+            .Content("[[[Back to Details]]]")
             .Events(ev => ev.Click("onBackClick")))
         </p>
     </div>
@@ -47,7 +47,7 @@
         .Name("Events")
         .Columns(columns =>
         {
-            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("type").Width(60);
+            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(60);
             columns.Bound(c => c.date).Format("{0:d} - {0:t}").Width(100);
             columns.Bound(c => c.description).Width(250);
             //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);

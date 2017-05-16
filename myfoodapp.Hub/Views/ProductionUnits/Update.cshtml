@@ -21,20 +21,20 @@
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">Production Units Management</h2>
+    <h2 class="col-md-3">[[[Production Units Management]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-md-2">
-        <h3 class="section-header">Change Production Units Settings</h3>
+        <h3 class="section-header">[[[Change Production Units Settings]]]</h3>
         <br />
 
         <p>
             @(Html.Kendo().Button()
             .Name("backButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block" })
-            .Content("Back to Details")
+            .Content("[[[Back to Details]]]")
             .Events(ev => ev.Click("onBackClick")))
         </p>
     </div>
@@ -95,7 +95,7 @@
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Save & Close" class="btn btn-default" />
+                                <input type="submit" value="[[[Save & Close]]]" class="btn btn-default" />
                             </div>
                         </div>
                 }

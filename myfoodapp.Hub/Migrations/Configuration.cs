@@ -75,81 +75,81 @@ namespace myfoodapp.Hub.Migrations
             context.SensorTypes.Add(new SensorType() { Id = 5, name = "Air Temperature Sensor", description = "Common values between 5-32" });
             context.SensorTypes.Add(new SensorType() { Id = 6, name = "Air Humidity Sensor", description = "Common values between 40-80" });
 
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "Balcony" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "City" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "Family 14" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "Family 22" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "Farm" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "Development Kit" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "Custom Lab" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "[[[Balcony]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "[[[City]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "[[[Family14]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "[[[Family22]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "[[[Farm]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "[[[Development Kit]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "[[[Custom Lab]]]" });
 
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 1, name = "Not applicable" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 2, name = "Bioponics" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 3, name = "Aquaponics - Carp" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 4, name = "Aquaponics - Tilapia" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 5, name = "Aquaponics - Trout" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 6, name = "Aquaponics - Crayfish" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 7, name = "Aquaponics - Oth. Cold Fish" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 8, name = "Aquaponics - Oth. Warm Fish" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 1, name = "[[[Not applicable]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 2, name = "[[[Bioponics]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 3, name = "[[[Aquaponics - Carp]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 4, name = "[[[Aquaponics - Tilapia]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 5, name = "[[[Aquaponics - Trout]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 6, name = "[[[Aquaponics - Crayfish]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 7, name = "[[[Aquaponics - Oth. Cold Fish]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 8, name = "[[[Aquaponics - Oth. Warm Fish]]]" });
 
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 1, name = "Wait Confirm." });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 2, name = "Setup planned" });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 3, name = "Up and Running" });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "In Maintenance" });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "Stopped" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 1, name = "[[[Wait Confirm.]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 2, name = "[[[Setup Planned]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 3, name = "[[[Up and Running]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "[[[In Maintenance]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "[[[Stopped]]]" });
 
-            context.EventTypes.Add(new EventType() { Id = 1, name = "Warning" });
-            context.EventTypes.Add(new EventType() { Id = 2, name = "Issue" });
-            context.EventTypes.Add(new EventType() { Id = 3, name = "Info" });
-            context.EventTypes.Add(new EventType() { Id = 4, name = "Advices" });
-            context.EventTypes.Add(new EventType() { Id = 5, name = "Improvement" });
+            context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]" });
+            context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]" });
+            context.EventTypes.Add(new EventType() { Id = 3, name = "[[[Info]]]" });
+            context.EventTypes.Add(new EventType() { Id = 4, name = "[[[Advices]]]" });
+            context.EventTypes.Add(new EventType() { Id = 5, name = "[[[Improvement]]]" });
 
-            context.HealthLevels.Add(new HealthLevel() { Id = 1, name = "Poor" });
-            context.HealthLevels.Add(new HealthLevel() { Id = 2, name = "Average" });
-            context.HealthLevels.Add(new HealthLevel() { Id = 3, name = "Good" });
-            context.HealthLevels.Add(new HealthLevel() { Id = 4, name = "Perfect" });
-            context.HealthLevels.Add(new HealthLevel() { Id = 5, name = "Unknown" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 1, name = "[[[Poor]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 2, name = "[[[Average]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 3, name = "[[[Good]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 4, name = "[[[Perfect]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 5, name = "[[[Unknown]]]" });
 
-            context.ProductionLevels.Add(new ProductionLevel() { Id = 1, name = "Low" });
-            context.ProductionLevels.Add(new ProductionLevel() { Id = 2, name = "Medium" });
-            context.ProductionLevels.Add(new ProductionLevel() { Id = 3, name = "High" });
-            context.ProductionLevels.Add(new ProductionLevel() { Id = 4, name = "Awesome" });
-            context.ProductionLevels.Add(new ProductionLevel() { Id = 5, name = "Unknown" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 1, name = "[[[Low]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 2, name = "[[[Medium]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 3, name = "[[[High]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 4, name = "[[[Awesome]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 5, name = "[[[Unknown]]]" });
 
-            context.Options.Add(new Option() { Id = 0, name = "11 towers" });
-            context.Options.Add(new Option() { Id = 1, name = "18 towers" });
-            context.Options.Add(new Option() { Id = 2, name = "24 towers" });
-            context.Options.Add(new Option() { Id = 3, name = "36 towers" });
-            context.Options.Add(new Option() { Id = 4, name = "Solar panels" });
-            context.Options.Add(new Option() { Id = 5, name = "Pellet stove" });
-            context.Options.Add(new Option() { Id = 6, name = "Monitoring kit v.1" });
-            context.Options.Add(new Option() { Id = 7, name = "Monitoring kit v.2" });
-            context.Options.Add(new Option() { Id = 8, name = "Advanced monitoring" });
-            context.Options.Add(new Option() { Id = 9, name = "Onboard touchscreen" });
-            context.Options.Add(new Option() { Id = 10, name = "Sigfox connectivity kit" });
-            context.Options.Add(new Option() { Id = 11, name = "Permaculture beds" });
-            context.Options.Add(new Option() { Id = 12, name = "Permaculture beds & biochar" });
+            context.Options.Add(new Option() { Id = 0, name = "[[[11 towers]]]" });
+            context.Options.Add(new Option() { Id = 1, name = "[[[18 towers]]]" });
+            context.Options.Add(new Option() { Id = 2, name = "[[[24 towers]]]" });
+            context.Options.Add(new Option() { Id = 3, name = "[[[36 towers]]]" });
+            context.Options.Add(new Option() { Id = 4, name = "[[[Solar panels]]]" });
+            context.Options.Add(new Option() { Id = 5, name = "[[[Pellet stove]]]" });
+            context.Options.Add(new Option() { Id = 6, name = "[[[Monitoring kit v.1]]]" });
+            context.Options.Add(new Option() { Id = 7, name = "[[[Monitoring kit v.2]]]" });
+            context.Options.Add(new Option() { Id = 8, name = "[[[Advanced monitoring]]]" });
+            context.Options.Add(new Option() { Id = 9, name = "[[[Onboard touchscreen]]]" });
+            context.Options.Add(new Option() { Id = 10, name = "[[[Sigfox connectivity kit]]]" });
+            context.Options.Add(new Option() { Id = 11, name = "[[[Permaculture beds]]]" });
+            context.Options.Add(new Option() { Id = 12, name = "[[[Permaculture beds & biochar]]]" });
 
-            context.Seasons.Add(new Season() { Id = 0, name = "Winter" });
-            context.Seasons.Add(new Season() { Id = 1, name = "Spring" });
-            context.Seasons.Add(new Season() { Id = 2, name = "Summer" });
-            context.Seasons.Add(new Season() { Id = 3, name = "Autumn" });
+            context.Seasons.Add(new Season() { Id = 0, name = "[[[Winter]]]" });
+            context.Seasons.Add(new Season() { Id = 1, name = "[[[Spring]]]" });
+            context.Seasons.Add(new Season() { Id = 2, name = "[[[Summer]]]" });
+            context.Seasons.Add(new Season() { Id = 3, name = "[[[Autumn]]]" });
 
-            context.GardeningTypes.Add(new GardeningType() { Id = 0, name = "Permaculture Bed" });
-            context.GardeningTypes.Add(new GardeningType() { Id = 1, name = "Zipgrow Tower" });
-            context.GardeningTypes.Add(new GardeningType() { Id = 2, name = "Tower Garden" });
-            context.GardeningTypes.Add(new GardeningType() { Id = 3, name = "All" });            
-            context.GardeningTypes.Add(new GardeningType() { Id = 4, name = "Fish Tank" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 0, name = "[[[Permaculture Bed]]]" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 1, name = "[[[Zipgrow Tower]]]" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 2, name = "[[[Tower Garden]]]" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 3, name = "[[[All]]]" });            
+            context.GardeningTypes.Add(new GardeningType() { Id = 4, name = "[[[Fish Tank]]]" });
             
-            context.WateringLevels.Add(new WateringLevel() { Id = 0, name = "Light" });
-            context.WateringLevels.Add(new WateringLevel() { Id = 1, name = "Moderate" });
-            context.WateringLevels.Add(new WateringLevel() { Id = 2, name = "Normal" });
-            context.WateringLevels.Add(new WateringLevel() { Id = 3, name = "Maximum" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 0, name = "[[[Light]]]" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 1, name = "[[[Moderate]]]" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 2, name = "[[[Normal]]]" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 3, name = "[[[Maximum]]]" });
 
-            context.PreferedMoments.Add(new PreferedMoment() { Id = 0, name = "Morning" });
-            context.PreferedMoments.Add(new PreferedMoment() { Id = 1, name = "Afternoon" });
-            context.PreferedMoments.Add(new PreferedMoment() { Id = 2, name = "Night" });
-            context.PreferedMoments.Add(new PreferedMoment() { Id = 3, name = "Weekend" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 0, name = "[[[Morning]]]" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 1, name = "[[[Afternoon]]]" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 2, name = "[[[Night]]]" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 3, name = "[[[Weekend]]]" });
 
             context.Languages.Add(new Language() { Id = 0, name = "Français", description = "fr" });
             context.Languages.Add(new Language() { Id = 1, name = "English", description = "en" });
@@ -159,18 +159,18 @@ namespace myfoodapp.Hub.Migrations
 
             context.SaveChanges();
 
-            context.Months.Add(new Month() { Id = 0, name = "January", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
-            context.Months.Add(new Month() { Id = 1, name = "February", order = 2, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 2, name = "March", order = 3, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 3, name = "April", order = 4, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 4, name = "May", order = 5, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 5, name = "June", order = 6, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 6, name = "July", order = 7, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 7, name = "August", order = 8, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 8, name = "September", order = 9, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 9, name = "October", order = 10, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 10, name = "November", order = 11, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 11, name = "December", order = 12, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 0, name = "[[[January]]]", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
+            context.Months.Add(new Month() { Id = 1, name = "[[[February]]]", order = 2, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 2, name = "[[[March]]]", order = 3, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 3, name = "[[[April]]]", order = 4, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 4, name = "[[[May]]]", order = 5, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 5, name = "[[[June]]]", order = 6, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 6, name = "[[[July]]]", order = 7, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 7, name = "[[[August]]]", order = 8, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 8, name = "[[[September]]]", order = 9, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 9, name = "[[[October]]]", order = 10, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 10, name = "[[[November]]]", order = 11, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 11, name = "[[[December]]]", order = 12, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
 
             context.SaveChanges();
 

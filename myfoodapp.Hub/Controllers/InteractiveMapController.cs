@@ -8,14 +8,21 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web.Mvc;
 using myfoodapp.Hub.Business;
+using System.Globalization;
+using System.Threading;
+using System.Web;
+using i18n;
 
 namespace myfoodapp.Hub.Controllers
 {
     public class InteractiveMapController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(string lang)
         {
             ViewBag.Title = "Interactive Map Page";
+
+            if(lang != String.Empty)
+                System.Web.HttpContext.Current.Session["UserLang"] = lang;
 
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
@@ -191,11 +198,11 @@ namespace myfoodapp.Hub.Controllers
 
             var statusList = new List<PieChartViewModel>();
 
-            statusList.Add(new PieChartViewModel() { Category = "Wait Confirm.", Value = waitConfCount, Color = "#9de219" });
-            statusList.Add(new PieChartViewModel() { Category = "Setup Planned", Value = setuPlannedCount, Color = "#90cc38" });
-            statusList.Add(new PieChartViewModel() { Category = "Up & Running", Value = upRunningCount, Color = "#068c35" });
-            statusList.Add(new PieChartViewModel() { Category = "On Maintenance", Value = onMaintenanceCount, Color = "#006634" });
-            statusList.Add(new PieChartViewModel() { Category = "Stopped", Value = stoppedCount, Color = "#004d38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Wait Confirm.]]]", Value = waitConfCount, Color = "#9de219" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setuPlannedCount, Color = "#90cc38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Up & Running]]]", Value = upRunningCount, Color = "#068c35" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#004d38" });
 
             return Json(statusList);
         }

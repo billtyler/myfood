@@ -21,18 +21,18 @@
             <div class="title">#:name# - #:reference#</div>
             <div class="info" style="margin: 8px;">
                 <div class="column-left">
-                    <h2 class="widget-text" style="text-align: center;">DAY OF<br />GERMINATION<br />FROM SEED</h2>
+                    <h2 class="widget-text" style="text-align: center;">[[[DAY OF<br />GERMINATION<br />FROM SEED]]]</h2>
                     <h1 style="text-align: center;font-size:x-large;">#:daysOfGermination#</h1>
                 </div>
                 <div class="column-center" style="border-left:1px;border-color:white;">
-                    <h2 class="widget-text" style="text-align: center;border-left:1px;">DAY OF<br />HARVEST<br />FROM SOW.</h2>
+                    <h2 class="widget-text" style="text-align: center;border-left:1px;">[[[DAY OF<br />HARVEST<br />FROM SOW.]]]</h2>
                     <h1 style="text-align: center;font-size:x-large;">#:daysOfHarvestFromSowing#</h1>
                 </div>
                 <div class="column-right" style="border-left:1px;border-color:white;">
-                    <h2 class="widget-text" style="text-align: center;border-left:1px;">DISTANCE<br />BETWEEN<br />PLANTS (CM)</h2>
+                    <h2 class="widget-text" style="text-align: center;border-left:1px;">[[[DISTANCE<br />BETWEEN<br />PLANTS (CM)]]]</h2>
                     <h1 style="text-align: center;font-size:x-large;">#:minimumSpaceBetweenPlantInTower#</h1>
                 </div>
-                <div class="title" style="font-size:medium;font-weight:normal;margin-top:120px;">Can be planted in:</div>
+                <div class="title" style="font-size:medium;font-weight:normal;margin-top:120px;">[[[Can be planted in:]]]</div>
                 <div class="thumbs">
                     #if (gardeningType.name === "Permaculture Bed" ){#
                     <div>
@@ -67,7 +67,7 @@
                         #}#
                         <span class="stretch"></span>
                     </div>
-                <div class="title" style="font-size:medium;font-weight:normal;margin-top:230px;">Watering Level:</div>
+                <div class="title" style="font-size:medium;font-weight:normal;margin-top:230px;">[[[Watering Level:]]]</div>
                 <div class="title" style="font-size:medium;font-weight:normal;margin-top:250px;">#:wateringLevel.name#</div>
             </div>
         </div>
@@ -75,15 +75,15 @@
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 id="title" class="col-md-3">Recipes</h2>
+    <h2 id="title" class="col-md-3">[[[Recipes]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
 <div id="recipes-list" class="main-section-content row">
     <div id="recipes-list-details" class="col-md-2">
-        <h3 class="section-header">Choose the suitable recipes for your greenhouse</h3>
+        <h3 class="section-header">[[[Choose the suitable recipes for your greenhouse]]]</h3>
         <br/>
-        <h3>See Recommandations for my Production Unit:</h3>
+        <h3>[[[See Recommandations for my Production Unit:]]]</h3>
         <br />
         @(Html.Kendo().DropDownList()
                                   .Name("DropDownList")
