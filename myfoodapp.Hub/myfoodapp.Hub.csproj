@@ -1197,9 +1197,13 @@
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\LandserFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\LauterbourgFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LeCeillierFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\LeHowaldFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LilleFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\MarseilleFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\MartelangeFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\MelinFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\MerigniacFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\MezelFamily22.JPG" />
@@ -1210,6 +1214,7 @@
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\SeppoisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SfaxFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\VauvenarguesFamily22.jpg" />

@@ -92,9 +92,6 @@ namespace myfoodapp.Business
             if(userSettings.measureFrequency >= 60000)
             TICKSPERCYCLE = userSettings.measureFrequency;
 
-            if (userSettings.isDiagnosticModeEnable)
-                TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOTIC_MODE;
-
             var clockManager = ClockManager.GetInstance;
 
             var captureDateTime = DateTime.Now;
@@ -117,6 +114,12 @@ namespace myfoodapp.Business
             var taskSigfox = Task.Run(async () => { await sigfoxManager.InitSensors(); });
             taskSigfox.Wait();
 
+            if (userSettings.isDiagnosticModeEnable)
+            {
+                TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOTIC_MODE;
+                sigfoxManager.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAA");
+            }
+                
             sensorManager = AtlasSensorManager.GetInstance;
 
             var taskSensor = Task.Run(async () => { await sensorManager.InitSensors(userSettings.isSleepModeEnable); });
@@ -341,8 +344,8 @@ namespace myfoodapp.Business
 
                             sigfoxManager.SendMessage(sigFoxSignature);
 
-                            if (userSettings.isDiagnosticModeEnable)
-                                sigfoxManager.Listen();
+                            //if (userSettings.isDiagnosticModeEnable)
+                            //    sigfoxManager.Listen();
 
                             logModel.AppendLog(Log.CreateLog(String.Format("Data sent to Azure via Sigfox in {0} sec.", watchMesures.ElapsedMilliseconds / 1000), Log.LogType.System));
                         }

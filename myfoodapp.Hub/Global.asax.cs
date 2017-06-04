@@ -36,7 +36,7 @@ namespace myfoodapp.Hub
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
             // Change from the default of 'en'.
-            i18n.LocalizedApplication.Current.DefaultLanguage = "fr";
+            //i18n.LocalizedApplication.Current.DefaultLanguage = "en";
 
             // Change from the default of 'i18n.langtag'.
             //i18n.LocalizedApplication.Current.CookieName = "i18n_langtag";

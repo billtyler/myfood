@@ -78,6 +78,52 @@
         window.location = window.location.origin + "/ProductionUnits/Update/" + productionUnitId;
     }
 
+    function onThisWeekClick() {
+        $(".toggleButton").removeClass("k-state-active");
+        $(this).addClass("k-state-active");
+
+        var productionUnitId = $('#routeDataId').val();
+
+        var chartPh = $("#chartPh").data("kendoChart");
+
+        chartPh.dataSource.read({ id: productionUnitId, range: "thisLastDays" });
+
+        var chartWatTemp = $("#chartWatTemp").data("kendoChart");
+        chartWatTemp.dataSource.read({ id: productionUnitId, range: "thisLastDays" });
+
+        var chartAirTemp = $("#chartAirTemp").data("kendoChart");
+        chartAirTemp.dataSource.read({ id: productionUnitId, range: "thisLastDays" });
+
+        var chartHumidity = $("#chartHumidity").data("kendoChart");
+        chartHumidity.dataSource.read({ id: productionUnitId, range: "thisLastDays" });
+
+    }
+
+    function onThisMonthClick() {
+        $(".toggleButton").removeClass("k-state-active");
+        $(this).addClass("k-state-active");
+
+        var productionUnitId = $('#routeDataId').val();
+
+        var chartPh = $("#chartPh").data("kendoChart");
+        chartPh.dataSource.read({ id: productionUnitId, range: "thisWeek" });
+
+        var chartWatTemp = $("#chartWatTemp").data("kendoChart");
+        chartWatTemp.dataSource.read({ id: productionUnitId, range: "thisWeek" });
+
+        var chartAirTemp = $("#chartAirTemp").data("kendoChart");
+        chartAirTemp.dataSource.read({ id: productionUnitId, range: "thisWeek" });
+
+        var chartHumidity = $("#chartHumidity").data("kendoChart");
+        chartHumidity.dataSource.read({ id: productionUnitId, range: "thisWeek" });
+    }
+
+    function additionalData() {
+        return {
+            clientId: 333
+        };
+    }
+
 </script>
 
 <script type="text/x-kendo-tmpl" id="templateOption">
@@ -116,8 +162,27 @@
             </p>
         </div>
 
-    </div>
+        <br />
 
+        <div id="filterButton">
+            <p>
+                @(Html.Kendo().Button()
+            .Name("thisWeekButton")
+            .HtmlAttributes(new { @class = "toggleButton k-state-active btn-block" })
+            .Content("[[[This Last Days]]]")
+            .Events(ev => ev.Click("onThisWeekClick")))
+            </p>
+
+            <p>
+                @(Html.Kendo().Button()
+            .Name("thisMonthButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .Content("[[[This Week]]]")
+            .Events(ev => ev.Click("onThisMonthClick")))
+            </p>
+
+        </div>
+    </div>
     <div id="measures-container" class="col-md-10" style="padding-bottom:40px">
 
                <div id="detailedContainer" class="row">
@@ -182,10 +247,13 @@
                          @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
                         .Name("chartPh")
                         .Theme("metro")
+                        .AutoBind(true)
                         .ChartArea(ch => ch.Background("#eeeeee"))
                         .DataSource(dataSource => dataSource
+
                             .Read(read => read.Action("PHMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
                             .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+
                         )
                         .SeriesDefaults(seriesDefaults => seriesDefaults
                             .ScatterLine().Markers(markers => markers.Size(6))
@@ -234,7 +302,7 @@
                         .Theme("metro")
                         .ChartArea(ch => ch.Background("#eeeeee"))
                         .DataSource(dataSource => dataSource
-                            .Read(read => read.Action("WaterTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                            .Read(read => read.Action("WaterTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"]}))
                             .Sort(sort => sort.Add(model => model.captureDate).Ascending())
                         )
                         .SeriesDefaults(seriesDefaults => seriesDefaults

@@ -282,57 +282,59 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public ActionResult PHMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult PHMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.ph, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.ph, id, range), JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Authorize]
+        public ActionResult WaterTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            return Json(measureService.Read(SensorTypeEnum.waterTemperature, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult WaterTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult AirTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.waterTemperature, id), JsonRequestBehavior.AllowGet);
+
+            return Json(measureService.Read(SensorTypeEnum.airTemperature, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult AirTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.airTemperature, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.humidity, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult ORPMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.humidity, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.orp, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult ORPMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult DissolvedOxyMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.orp, id), JsonRequestBehavior.AllowGet);
-        }
-
-        [Authorize]
-        public ActionResult DissolvedOxyMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.dissolvedOxygen, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.dissolvedOxygen, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]

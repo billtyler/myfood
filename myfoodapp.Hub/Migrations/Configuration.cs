@@ -19,9 +19,7 @@ namespace myfoodapp.Hub.Migrations
         }
         protected override void Seed(ApplicationDbContext context)
         {
-
-            UpgradeDatabase.DoWork(context);
-
+            //UpgradeDatabase.DoWork(context);
             return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
@@ -598,6 +596,13 @@ namespace myfoodapp.Hub.Migrations
             var userVTH = new ApplicationUser() { Email = "vincent@myfood.eu", UserName = "vincent@myfood.eu" };
             var userBGU = new ApplicationUser() { Email = "brigitte@myfood.eu", UserName = "brigitte@myfood.eu" };
             var userCHI = new ApplicationUser() { Email = "christopheh@myfood.eu", UserName = "christopheh@myfood.eu" };
+            var userHJE = new ApplicationUser() { Email = "herve@myfood.eu", UserName = "herve@myfood.eu" };
+            var userJBF = new ApplicationUser() { Email = "jb@myfood.eu", UserName = "jb@myfood.eu" };
+            var userRDA = new ApplicationUser() { Email = "rudy@myfood.eu", UserName = "rudy@myfood.eu" };
+            var userVBU = new ApplicationUser() { Email = "valerie@myfood.eu", UserName = "valerie@myfood.eu" };
+            var userETR = new ApplicationUser() { Email = "emmanuel@myfood.eu", UserName = "emmanuel@myfood.eu" };
+            var userOFE = new ApplicationUser() { Email = "ophelia@myfood.eu", UserName = "ophelia@myfood.eu" };
+            var userGTI = new ApplicationUser() { Email = "guillaume@myfood.eu", UserName = "guillaume@myfood.eu" };
 
             //TO BE DEPLOYED
             var userYGR = new ApplicationUser() { Email = "yves@myfood.eu", UserName = "yves@myfood.eu" };
@@ -650,6 +655,13 @@ namespace myfoodapp.Hub.Migrations
                 await manager.CreateAsync(userVTH, defaultPassword);
                 await manager.CreateAsync(userBGU, defaultPassword);
                 await manager.CreateAsync(userCHI, defaultPassword);
+                await manager.CreateAsync(userHJE, defaultPassword);
+                await manager.CreateAsync(userJBF, defaultPassword);
+                await manager.CreateAsync(userRDA, defaultPassword);
+                await manager.CreateAsync(userVBU, defaultPassword);
+                await manager.CreateAsync(userETR, defaultPassword);
+                await manager.CreateAsync(userOFE, defaultPassword);
+                await manager.CreateAsync(userGTI, defaultPassword);
 
                 //TO BE DEPLOYED       
                 await manager.CreateAsync(userYGR, defaultPassword);
@@ -703,10 +715,17 @@ namespace myfoodapp.Hub.Migrations
             var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E.", pioneerCitizenNumber = 22 };
             var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléonore DC.", pioneerCitizenNumber = 23 };
             var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Lilia A.", pioneerCitizenNumber = 17 };
-            var AlainHOwner = new ProductionUnitOwner() { Id = 25, user = userALH, pioneerCitizenName = "Alain H.", pioneerCitizenNumber = 24 };
-            var VincentTOwner = new ProductionUnitOwner() { Id = 22, user = userVTH, pioneerCitizenName = "Vincent T.", pioneerCitizenNumber = 26 };
-            var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G.", pioneerCitizenNumber = 25 };
-            var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H." };
+            var AlainHOwner = new ProductionUnitOwner() { Id = 34, user = userALH, pioneerCitizenName = "Alain H.", pioneerCitizenNumber = 24 };
+            var VincentTOwner = new ProductionUnitOwner() { Id = 35, user = userVTH, pioneerCitizenName = "Vincent T.", pioneerCitizenNumber = 26 };
+            var BrigitteGOwner = new ProductionUnitOwner() { Id = 28, user = userBGU, pioneerCitizenName = "Brigitte G.", pioneerCitizenNumber = 25 };
+            var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H.", pioneerCitizenNumber = 28 };
+            var HerveJOwner = new ProductionUnitOwner() { Id = 37, user = userHJE, pioneerCitizenName = "Hervé J.", pioneerCitizenNumber = 29 };
+            var JeanBaptisteFOwner = new ProductionUnitOwner() { Id = 38, user = userJBF, pioneerCitizenName = "Jean Baptiste F.", pioneerCitizenNumber = 30 };
+            var RudyDOwner = new ProductionUnitOwner() { Id = 39, user = userRDA, pioneerCitizenName = "Rudy D.", pioneerCitizenNumber = 32 };
+            var ValerieOwner = new ProductionUnitOwner() { Id = 40, user = userVBU, pioneerCitizenName = "Valérie B.", pioneerCitizenNumber = 33 };
+            var EmmmanuelTOwner = new ProductionUnitOwner() { Id = 46, user = userETR, pioneerCitizenName = "Emmanuel T." };
+            var OpheliaFOwner = new ProductionUnitOwner() { Id = 47, user = userOFE, pioneerCitizenName = "Ophélia F." };
+            var GuillaumeTOwner = new ProductionUnitOwner() { Id = 48, user = userGTI, pioneerCitizenName = "Guillaume T." };
 
             //TO BE DEPLOYED 
             var YvesGOwner = new ProductionUnitOwner() { Id = 31, user = userYGR, pioneerCitizenName = "Yves G."};
@@ -754,6 +773,13 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(AlainHOwner);
             context.ProductionUnitOwners.Add(VincentTOwner);
             context.ProductionUnitOwners.Add(ChristopheHOwner);
+            context.ProductionUnitOwners.Add(HerveJOwner);
+            context.ProductionUnitOwners.Add(JeanBaptisteFOwner);
+            context.ProductionUnitOwners.Add(RudyDOwner);
+            context.ProductionUnitOwners.Add(ValerieOwner);
+            context.ProductionUnitOwners.Add(EmmmanuelTOwner);
+            context.ProductionUnitOwners.Add(OpheliaFOwner);
+            context.ProductionUnitOwners.Add(GuillaumeTOwner);
 
             //TO BE DEPLOYED 
             context.ProductionUnitOwners.Add(YvesGOwner);
@@ -1198,11 +1224,111 @@ namespace myfoodapp.Hub.Migrations
                 locationLongitude = 7.150098,
                 reference = "76XSX",
                 info = "Organic Farm Exploitation",
-                startDate = new DateTime(2016, 11, 05),
+                startDate = new DateTime(2017, 05, 18),
                 version = "2",
                 owner = ChristopheHOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "SeppoisFamily22.JPG"
+            };
+
+            var HJEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 47.6876917,
+                locationLongitude = 7.3676869,
+                reference = "01357",
+                info = "Reiki Master Experimentation",
+                startDate = new DateTime(2017, 05, 19),
+                version = "2",
+                owner = HerveJOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "LandserFamily22.jpg"
+            };
+
+            var JBFProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.4003012,
+                locationLongitude = 7.2742212,
+                reference = "ARG36",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 05, 22),
+                version = "2",
+                owner = JeanBaptisteFOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var RDAProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 49.8051713,
+                locationLongitude = 5.8440259,
+                reference = "ARG39",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 01),
+                version = "2",
+                owner = RudyDOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var VBUProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 43.2803691,
+                locationLongitude = 5.3349279,
+                reference = "894811",
+                info = "Family Experimentation </br> Black Greenhouse",
+                startDate = new DateTime(2017, 06, 01),
+                version = "2",
+                owner = ValerieOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var ETRProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 46.0732302,
+                locationLongitude = 6.2295138,
+                reference = "FTAT01",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 16),
+                version = "2",
+                owner = EmmmanuelTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var OFEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 43.428125,
+                locationLongitude = 6.5823434,
+                reference = "FTAT03",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 19),
+                version = "2",
+                owner = OpheliaFOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var GTIProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 47.5321616,
+                locationLongitude = -3.1774892,
+                reference = "FTAT57",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 25),
+                version = "2",
+                owner = GuillaumeTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
                 productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
@@ -1356,6 +1482,13 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(ALHProdUnit);
             context.ProductionUnits.Add(VTHProdUnit);
             context.ProductionUnits.Add(CHIProdUnit);
+            context.ProductionUnits.Add(HJEProdUnit);
+            context.ProductionUnits.Add(JBFProdUnit);
+            context.ProductionUnits.Add(RDAProdUnit);
+            context.ProductionUnits.Add(VBUProdUnit);
+            context.ProductionUnits.Add(ETRProdUnit);
+            context.ProductionUnits.Add(OFEProdUnit);
+            context.ProductionUnits.Add(GTIProdUnit);
 
             //TO BE DEPLOYED
             context.ProductionUnits.Add(YGRProdUnit);
@@ -1465,6 +1598,7 @@ namespace myfoodapp.Hub.Migrations
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = towers18Option });
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = monitoringKitv2Option });
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = permacultureBedOption });
+            optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = sigfoxConnectionOption });
 
             var optionsGDE = new List<OptionList>();
 
@@ -1508,11 +1642,12 @@ namespace myfoodapp.Hub.Migrations
             var optionsDMO = new List<OptionList>();
 
             optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = monitoringKitv2Option });
-            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers11Option });
+            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers18Option });
 
             var optionsCEL = new List<OptionList>();
 
             optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = monitoringKitv2Option });
+            optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = towers18Option });
 
             var optionsEDC = new List<OptionList>();
 
@@ -1531,6 +1666,7 @@ namespace myfoodapp.Hub.Migrations
             optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = monitoringKitv2Option });
             optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = sigfoxConnectionOption });
             optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = permacultureBedOption });
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = towers11Option });
 
             var optionsVTH = new List<OptionList>();
 
@@ -1550,6 +1686,54 @@ namespace myfoodapp.Hub.Migrations
             optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = towers24Option });
             optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = sigfoxConnectionOption });
             optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = solarPanelOption });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = permacultureBedOption });
+
+            var optionsHJE = new List<OptionList>();
+
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = monitoringKitv2Option });
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = towers18Option });
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = permacultureBedOption });
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = pelletStoveOption });
+
+            var optionsJBF = new List<OptionList>();
+
+            optionsJBF.Add(new OptionList() { productionUnit = JBFProdUnit, option = monitoringKitv2Option });
+            optionsJBF.Add(new OptionList() { productionUnit = JBFProdUnit, option = towers18Option });
+
+            var optionsRDA = new List<OptionList>();
+
+            optionsRDA.Add(new OptionList() { productionUnit = RDAProdUnit, option = monitoringKitv2Option });
+            optionsRDA.Add(new OptionList() { productionUnit = RDAProdUnit, option = towers18Option });
+            optionsRDA.Add(new OptionList() { productionUnit = RDAProdUnit, option = solarPanelOption });
+
+            var optionsVBU = new List<OptionList>();
+
+            optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = monitoringKitv2Option });
+            optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = towers18Option });
+            optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = permacultureBedOption });
+
+            var optionsETR = new List<OptionList>();
+
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = monitoringKitv2Option });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = towers18Option });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = permacultureBedOption });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = solarPanelOption });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = sigfoxConnectionOption });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = pelletStoveOption });
+
+            var optionsOFE = new List<OptionList>();
+
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = monitoringKitv2Option });
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = towers18Option });
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = permacultureBedOption });
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = solarPanelOption });
+
+            var optionsGTI = new List<OptionList>();
+
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = monitoringKitv2Option });
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = towers18Option });
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = solarPanelOption });
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = permacultureBedOption });
 
             //TO BE DEPLOYED
             var optionsYGR = new List<OptionList>();
@@ -1632,6 +1816,13 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsVTH);
             context.OptionLists.AddRange(optionsBDE);
             context.OptionLists.AddRange(optionsCHI);
+            context.OptionLists.AddRange(optionsHJE);
+            context.OptionLists.AddRange(optionsJBF);
+            context.OptionLists.AddRange(optionsRDA);
+            context.OptionLists.AddRange(optionsVBU);
+            context.OptionLists.AddRange(optionsETR);
+            context.OptionLists.AddRange(optionsOFE);
+            context.OptionLists.AddRange(optionsGTI);
 
             //TO BE DEPLOYED
             context.OptionLists.AddRange(optionsYGR);
@@ -1671,51 +1862,51 @@ namespace myfoodapp.Hub.Migrations
 
             context.SaveChanges();
 
-            if (!context.Measures.Any())
-            {
-                var phSensor = context.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
-                var waterTemperatureSensor = context.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
-                var dissolvedOxySensor = context.SensorTypes.Where(s => s.Id == 3).FirstOrDefault();
-                var ORPSensor = context.SensorTypes.Where(s => s.Id == 4).FirstOrDefault();
-                var airTemperatureSensor = context.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
-                var airHumidity = context.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
+            //if (!context.Measures.Any())
+            //{
+            //    var phSensor = context.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
+            //    var waterTemperatureSensor = context.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
+            //    var dissolvedOxySensor = context.SensorTypes.Where(s => s.Id == 3).FirstOrDefault();
+            //    var ORPSensor = context.SensorTypes.Where(s => s.Id == 4).FirstOrDefault();
+            //    var airTemperatureSensor = context.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
+            //    var airHumidity = context.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
 
-                var productionUnitList = context.ProductionUnits;
+            //    var productionUnitList = context.ProductionUnits;
 
-                foreach (ProductionUnit productionUnit in productionUnitList)
-                {
-                    for (int i = 0; i < 6 * 2; i++)
-                    {
-                        Random rnd = new Random();
-                        var currentDate = DateTime.Now;
-                        currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
+            //    foreach (ProductionUnit productionUnit in productionUnitList)
+            //    {
+            //        for (int i = 0; i < 6 * 2; i++)
+            //        {
+            //            Random rnd = new Random();
+            //            var currentDate = DateTime.Now;
+            //            currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
 
-                        context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
-                        context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
-                        context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
+            //            context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
+            //            context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
+            //            context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
 
-                        decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
+            //            decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
 
-                        decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
+            //            decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
 
-                        decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
+            //            decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
 
-                        decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
+            //            decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
 
-                        decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
+            //            decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
 
-                        decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
-                    };
+            //            decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
+            //        };
 
-                }
-                context.SaveChanges();
-            }
+            //    }
+            //    context.SaveChanges();
+            //}
         }
 
     }
