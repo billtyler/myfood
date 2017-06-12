@@ -21,15 +21,6 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult Index()
         {
             var db = new ApplicationDbContext();
-            //var currentUser = this.User.Identity.GetUserName();
-
-            //if(currentUser != string.Empty)
-            //{
-            //    var currentProductionUnitOwner = db.ProductionUnitOwners.Include(p => p.language)
-            //                                      .Where(p => p.user.UserName == currentUser).FirstOrDefault();
-
-            //    System.Web.HttpContext.Current.Session["UserLang"] = currentProductionUnitOwner.language.description;
-            //}
 
             var listMarker = new List<Marker>();
 

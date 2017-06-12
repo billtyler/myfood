@@ -16,7 +16,7 @@
             dataType: "json",
             data: {id: productionUnitId},
             type: "POST",
-            success: function (response) { 
+            success: function (response) {
                 $("#PioneerCitizenName").text(response.PioneerCitizenName + " #" + response.PioneerCitizenNumber);
                 $("#ProductionUnitType").text(response.ProductionUnitType);
                 $("#ProductionUnitVersion").text('VERSION: ' + response.ProductionUnitVersion);
@@ -31,7 +31,7 @@
                 }
                 else
                 {
-                    $('#ProductionUnitPicture').css("background-image", "linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/" + response.PicturePath + ")");                  
+                    $('#ProductionUnitPicture').css("background-image", "linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/" + response.PicturePath + ")");
                     $("#ProductionUnitPicture").show();
                 }
 
@@ -118,10 +118,9 @@
         chartHumidity.dataSource.read({ id: productionUnitId, range: "thisWeek" });
     }
 
-    function additionalData() {
-        return {
-            clientId: 333
-        };
+    function onExportCSVClick() {
+        var productionUnitId = $('#routeDataId').val();
+        window.location.href = "@Url.Action("DownloadCSV", "ProductionUnits")?id=" + productionUnitId;
     }
 
 </script>
@@ -181,6 +180,18 @@
             .Events(ev => ev.Click("onThisMonthClick")))
             </p>
 
+        </div>
+
+        <br />
+
+        <div id="exportButton">
+            <p>
+                @(Html.Kendo().Button()
+            .Name("thisExportButton")
+            .HtmlAttributes(new { @class = "exportButton k-state-active btn-block" })
+            .Content("[[[Export CSV]]]")
+            .Events(ev => ev.Click("onExportCSVClick")))
+            </p>
         </div>
     </div>
     <div id="measures-container" class="col-md-10" style="padding-bottom:40px">

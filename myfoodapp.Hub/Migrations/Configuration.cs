@@ -1351,8 +1351,8 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 49.519387,
                 locationLongitude = 6.289128,
-                reference = "76ERT",
-                info = "Commercial Experimentation",
+                reference = "1ACCCF ",
+                info = "Grosbusch Academy",
                 startDate = new DateTime(2017, 05, 06),
                 version = "2",
                 owner = GoyGOwner,

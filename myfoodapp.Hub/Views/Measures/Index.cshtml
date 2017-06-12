@@ -4,14 +4,14 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*@functions {
+@functions {
     private DateTime getThisWeekMonday()
     {
         DateTime input = DateTime.Now;
         int delta = DayOfWeek.Monday - input.DayOfWeek;
         DateTime monday = input.AddDays(delta);
         return monday;
-    }}*@
+    }}
 
 <script>
     $(function () {

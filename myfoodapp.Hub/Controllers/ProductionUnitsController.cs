@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -444,6 +445,41 @@ namespace myfoodapp.Hub.Controllers
                                      .Select(p => p.option);
 
             return Json(rslt.ToDataSourceResult(request));
+        }
+
+        [Authorize]
+        public FileContentResult DownloadCSV(int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                                          .Include(p => p.productionUnitType)
+                                                          .Where(p => p.Id == id).FirstOrDefault();
+
+            string fileName = String.Format("{0}_#{1}_[{2}].csv",     currentProductionUnit.owner.pioneerCitizenName,
+                                                                    currentProductionUnit.owner.pioneerCitizenNumber,
+                                                                    DateTime.Now.ToShortDateString());
+
+            StringBuilder csv = new StringBuilder();
+
+            var mes = db.Measures.Include(m => m.sensor)
+                       .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
+                       .OrderBy(m => m.captureDate)
+                       .Take(5000);
+
+            mes.ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
+                        {
+                            csv.Append(m.Key + "; ");
+
+                            m.OrderBy(c => c.sensor.Id).ToList().ForEach(g => {
+                                csv.Append(g.value + "; ");
+                                });
+
+                            csv.Remove(csv.Length - 2, 1);
+                            csv.Append("\r\n");
+                        }
+            );
+
+            return File(new UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
         }
 
         protected override void Dispose(bool disposing)
