@@ -7,6 +7,9 @@ To compile flawlessly:
 - on Visual Studio 2015, under the Package Manager Console, execute Update-Package -Reinstall
 - download Telerik ASP MVC component trial to get Kendo.MVC.dll
 
+To deploy local database and dummy data:
+- on Visual Studio 2015, under the Package Manager Console, execute EntityFramework\Update-Database
+
 Hardware pre-requisite:
 - Raspberry Pi 2/3 with Win10 IOT
 - RTC Pi Zero (<a href="https://www.abelectronics.co.uk/p/70/RTC-Pi-Zero">see the product</a>)
@@ -24,11 +27,3 @@ Material pre-requisite:
 
 Greenhouse setup:
 <a href="https://myfood.eu/wp-content/uploads/2017/03/myfood-greenhouse-setup.pdf">see the plan</a>
-
-
-
-
-
-
-
-
