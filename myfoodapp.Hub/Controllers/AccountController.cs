@@ -6,6 +6,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using myfoodapp.Hub.Models;
 using System.Web.Security;
+using System.Data.Entity;
+using System.Linq;
+using System.Globalization;
+using System.Threading;
 
 namespace myfoodapp.Hub.Controllers
 {   
@@ -64,7 +68,9 @@ namespace myfoodapp.Hub.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
                     FormsAuthentication.SetAuthCookie(model.Email, true);
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.Failure:
                 default:

@@ -88,14 +88,28 @@ namespace myfoodapp.Hub.Services
                                        m.productionUnit.locationLongitude == productionUnitLong).Take(24);
         }
 
-        public IEnumerable<MeasureViewModel> Read(SensorTypeEnum sensorType, int currentProductionUnitId)
+        public IEnumerable<MeasureViewModel> Read(SensorTypeEnum sensorType, int currentProductionUnitId, string range)
         {
             IList<MeasureViewModel> result = new List<MeasureViewModel>();
 
             var fewDaysAgo = DateTime.Now.AddDays(-4);
 
+            var aWeekAgo = DateTime.Now.AddDays(-8);
+
+            var selectedTimeFrame = new DateTime();
+
+            if(range == "thisLastDays" || range == null)
+            {
+                selectedTimeFrame = fewDaysAgo;
+            }
+
+            if (range == "thisWeek")
+            {
+                selectedTimeFrame = aWeekAgo;
+            }
+
             result = entities.Measures.OrderByDescending(m => m.captureDate)
-                                      .Where(m => m.sensor.Id == (int)sensorType && m.productionUnit.Id == currentProductionUnitId && m.captureDate > fewDaysAgo)
+                                      .Where(m => m.sensor.Id == (int)sensorType && m.productionUnit.Id == currentProductionUnitId && m.captureDate > selectedTimeFrame)
                                       .Select(meas => new MeasureViewModel
             {
                 Id = meas.Id,

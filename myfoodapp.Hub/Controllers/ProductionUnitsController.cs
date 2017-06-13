@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -34,12 +35,31 @@ namespace myfoodapp.Hub.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            PopulateProductionUnitTypes();
-            PopulateOwners();
-            PopulateProductionUnitStatus();
+            var currentUser = this.User.Identity.GetUserName();
+            var db = new ApplicationDbContext();
 
-            ApplicationDbContext db = new ApplicationDbContext();
-            return View(await db.ProductionUnits.ToListAsync());
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
+            if (isAdmin)
+            {
+                PopulateProductionUnitTypes();
+                PopulateOwners();
+                PopulateProductionUnitStatus();
+
+                return View(await db.ProductionUnits.OrderBy(p => p.startDate).ToListAsync());
+            }
+            else
+            {
+                var currentProductionUnits = db.ProductionUnits.Include(p => p.owner.user)
+                                                               .Where(p => p.owner.user.UserName == currentUser).ToList();
+                if (currentProductionUnits != null)
+                {
+                    return RedirectToAction("Details", "ProductionUnits", new { Id = currentProductionUnits.FirstOrDefault().Id });
+                }
+                else
+                    return View("Home");
+            }
         }
 
         [Authorize]
@@ -256,7 +276,6 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult HydroponicTypes_Read([DataSourceRequest] DataSourceRequest request)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            MeasureService measureService = new MeasureService(db);
 
             var rslt = db.HydroponicTypes;
 
@@ -264,57 +283,59 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public ActionResult PHMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult PHMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.ph, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.ph, id, range), JsonRequestBehavior.AllowGet);
+        }
+
+
+        [Authorize]
+        public ActionResult WaterTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            return Json(measureService.Read(SensorTypeEnum.waterTemperature, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult WaterTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult AirTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.waterTemperature, id), JsonRequestBehavior.AllowGet);
+
+            return Json(measureService.Read(SensorTypeEnum.airTemperature, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult AirTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.airTemperature, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.humidity, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult ORPMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.humidity, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.orp, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
-        public ActionResult ORPMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
+        public ActionResult DissolvedOxyMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.orp, id), JsonRequestBehavior.AllowGet);
-        }
-
-        [Authorize]
-        public ActionResult DissolvedOxyMeasure_Read([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.dissolvedOxygen, id), JsonRequestBehavior.AllowGet);
+            return Json(measureService.Read(SensorTypeEnum.dissolvedOxygen, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -419,11 +440,46 @@ namespace myfoodapp.Hub.Controllers
             MeasureService measureService = new MeasureService(db);
 
             var rslt = db.OptionLists.Include(o => o.productionUnit)
-                                    .Include(o => o.option)
-                                    .Where(p => p.productionUnit.Id == id)
-                                    .Select(p => p.option);
+                                     .Include(o => o.option)
+                                     .Where(p => p.productionUnit.Id == id)
+                                     .Select(p => p.option);
 
             return Json(rslt.ToDataSourceResult(request));
+        }
+
+        [Authorize]
+        public FileContentResult DownloadCSV(int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                                          .Include(p => p.productionUnitType)
+                                                          .Where(p => p.Id == id).FirstOrDefault();
+
+            string fileName = String.Format("{0}_#{1}_[{2}].csv",     currentProductionUnit.owner.pioneerCitizenName,
+                                                                    currentProductionUnit.owner.pioneerCitizenNumber,
+                                                                    DateTime.Now.ToShortDateString());
+
+            StringBuilder csv = new StringBuilder();
+
+            var mes = db.Measures.Include(m => m.sensor)
+                       .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
+                       .OrderByDescending(m => m.captureDate)
+                       .Take(15000);
+
+            mes.OrderBy(m => m.captureDate).ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
+                        {
+                            csv.Append(m.Key + "; ");
+
+                            m.OrderBy(c => c.sensor.Id).ToList().ForEach(g => {
+                                csv.Append(g.value + "; ");
+                                });
+
+                            csv.Remove(csv.Length - 2, 1);
+                            csv.Append("\r\n");
+                        }
+            );
+
+            return File(new UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
         }
 
         protected override void Dispose(bool disposing)

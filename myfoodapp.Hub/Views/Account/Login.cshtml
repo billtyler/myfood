@@ -19,7 +19,7 @@
                 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                         @Html.AntiForgeryToken()
-                        <p style="font-size:large">Please Sign In</p>
+                        <p style="font-size:large">[[[Please Sign In]]]</p>
                         <hr />
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
@@ -46,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Log in" class="btn btn-default" />
+                                <input type="submit" value="[[[Log in]]]" class="btn btn-default" />
                             </div>
                         </div>
                         @*<p>

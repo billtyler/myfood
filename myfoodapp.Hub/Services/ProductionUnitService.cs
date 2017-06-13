@@ -32,6 +32,7 @@ namespace myfoodapp.Hub.Services
                 options = pu.options,
                 reference = pu.reference,
                 picturePath = pu.picturePath,
+                lastMeasureReceived = pu.lastMeasureReceived,
 
                 productionUnitTypeId = pu.productionUnitType.Id,
                 productionUnitType = new ProductionUnitTypeViewModel()
@@ -89,6 +90,7 @@ namespace myfoodapp.Hub.Services
                 options = pu.options,
                 reference = pu.reference,
                 picturePath = pu.picturePath,
+                lastMeasureReceived = pu.lastMeasureReceived,
 
                 productionUnitTypeId = pu.productionUnitType.Id,
                 productionUnitType = new ProductionUnitTypeViewModel()
@@ -137,6 +139,7 @@ namespace myfoodapp.Hub.Services
             entity.options = productionUnit.options;
             entity.reference = productionUnit.reference;
             entity.picturePath = productionUnit.picturePath;
+            entity.lastMeasureReceived = productionUnit.lastMeasureReceived;
 
             if (entity.productionUnitType == null)
             {
@@ -185,6 +188,7 @@ namespace myfoodapp.Hub.Services
                // target.options = productionUnit.options;
                 target.reference = productionUnit.reference;
                 target.picturePath = productionUnit.picturePath;
+                target.lastMeasureReceived = productionUnit.lastMeasureReceived;
 
                 ProductionUnitType currentProductionUnitType = new ProductionUnitType();
                 currentProductionUnitType = entities.ProductionUnitTypes.Where(p => p.Id == productionUnit.productionUnitTypeId).FirstOrDefault();

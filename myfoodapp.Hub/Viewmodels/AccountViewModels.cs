@@ -5,41 +5,43 @@ namespace myfoodapp.Hub.Models
     public class LoginViewModel
     {    
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "[[[Email]]]")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "[[[Password]]]")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "[[[Remember me?]]]")]
         public bool RememberMe { get; set; }
     }
 
     public class UserViewModel
     {
-        [Display(Name = "Name")]
+        [Display(Name = "[[[Name]]]")]
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
-        [Display(Name = "Surname")]
+        [Display(Name = "[[[Surname]]]")]
         [DataType(DataType.Text)]
         public string Surname { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "[[[Email]]]")]
         [EmailAddress]
         public string Email { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Old Password")]
+        [Display(Name = "[[[Old Password]]]")]
         public string OldPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "New Password")]
+        [Display(Name = "[[[New Password]]]")]
         public string NewPassword { get; set; }
+
+        public int Language { get; set; }
     }
 
     public class RegisterViewModel

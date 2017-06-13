@@ -78,22 +78,22 @@
 </style>
 
 <div id="main-section-header" class="row">
-    <h2 id="team-efficiency" class="col-md-2">Messages Monitoring</h2>
+    <h2 id="team-efficiency" class="col-md-2">[[[Messages Monitoring]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
 <div id="message-grid" class="main-section-content row">
     <div id="message-details" class="col-md-2">
         <div class="timeline-section">
-            <h3 class="section-header">Follow Messages sent by Sigfox from Production Units</h3>
+            <h3 class="section-header">[[[Follow Messages sent by Sigfox from Production Units]]]</h3>
             <p>
-                <button type="button" id="thisWeek" name="thisWeek" class="toggleButton k-state-active btn-block">This Week</button>
+                <button type="button" id="thisWeek" name="thisWeek" class="toggleButton k-state-active btn-block">[[[This Week]]]</button>
             </p>
             <p>
-                <button type="button" id="lastMonth" name="lastMonth" class="toggleButton btn-block">Last Month</button>
+                <button type="button" id="lastMonth" name="lastMonth" class="toggleButton btn-block">[[[Last Month]]]</button>
             </p>
             <p>
-                <button type="button" id="all" name="all" class="toggleButton btn-block">All</button>
+                <button type="button" id="all" name="all" class="toggleButton btn-block">[[[All]]]</button>
             </p>
         </div>
     </div>
@@ -105,8 +105,8 @@
             columns.Bound(c => c.Id).Width(75);
             columns.Bound(c => c.device).Width(75);
             columns.Bound(c => c.date).Format("{0:d} - {0:t}").Width(100);
-            columns.Bound(c => c.content).Width(200).Title("content from Sigfox backend");
-            columns.ForeignKey(c => c.messageTypeId, (System.Collections.IEnumerable)ViewData["messageTypes"], "Id", "name").Title("message type").Width(100);
+            columns.Bound(c => c.content).Width(200).Title("[[[content from Sigfox backend]]]");
+            columns.ForeignKey(c => c.messageTypeId, (System.Collections.IEnumerable)ViewData["messageTypes"], "Id", "name").Title("[[[message type]]]").Width(100);
             //columns.Command(command => command.Destroy()).Width(110);
         })
         //.ToolBar(toolbar =>

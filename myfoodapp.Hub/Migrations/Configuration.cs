@@ -19,7 +19,7 @@ namespace myfoodapp.Hub.Migrations
         }
         protected override void Seed(ApplicationDbContext context)
         {
-
+            //UpgradeDatabase.DoWork(context);
             return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
@@ -48,9 +48,9 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.RemoveRange(context.OptionLists);
             context.Options.RemoveRange(context.Options);
 
-            context.RecognitionRecord.RemoveRange(context.RecognitionRecord);
-            context.ProductionLevel.RemoveRange(context.ProductionLevel);
-            context.HealthLevel.RemoveRange(context.HealthLevel);
+            context.RecognitionRecords.RemoveRange(context.RecognitionRecords);
+            context.ProductionLevels.RemoveRange(context.ProductionLevels);
+            context.HealthLevels.RemoveRange(context.HealthLevels);
 
             context.Recipes.RemoveRange(context.Recipes);
             context.GardeningTypes.RemoveRange(context.GardeningTypes);
@@ -73,91 +73,102 @@ namespace myfoodapp.Hub.Migrations
             context.SensorTypes.Add(new SensorType() { Id = 5, name = "Air Temperature Sensor", description = "Common values between 5-32" });
             context.SensorTypes.Add(new SensorType() { Id = 6, name = "Air Humidity Sensor", description = "Common values between 40-80" });
 
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "Balcony" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "City" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "Family 14" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "Family 22" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "Farm" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "Development Kit" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "Custom Lab" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "[[[Balcony]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "[[[City]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "[[[Family14]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "[[[Family22]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "[[[Farm]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "[[[Development Kit]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "[[[Custom Lab]]]" });
 
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 1, name = "Not applicable" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 2, name = "Bioponics" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 3, name = "Aquaponics - Carp" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 4, name = "Aquaponics - Tilapia" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 5, name = "Aquaponics - Trout" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 6, name = "Aquaponics - Crayfish" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 7, name = "Aquaponics - Oth. Cold Fish" });
-            context.HydroponicTypes.Add(new HydroponicType() { Id = 8, name = "Aquaponics - Oth. Warm Fish" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 1, name = "[[[Not applicable]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 2, name = "[[[Bioponics]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 3, name = "[[[Aquaponics - Carp]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 4, name = "[[[Aquaponics - Tilapia]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 5, name = "[[[Aquaponics - Trout]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 6, name = "[[[Aquaponics - Crayfish]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 7, name = "[[[Aquaponics - Oth. Cold Fish]]]" });
+            context.HydroponicTypes.Add(new HydroponicType() { Id = 8, name = "[[[Aquaponics - Oth. Warm Fish]]]" });
 
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 1, name = "Wait Confirm." });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 2, name = "Setup planned" });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 3, name = "Up and Running" });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "In Maintenance" });
-            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "Stopped" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 1, name = "[[[Wait Confirm.]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 2, name = "[[[Setup Planned]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 3, name = "[[[Up and Running]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "[[[In Maintenance]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "[[[Stopped]]]" });
 
-            context.EventTypes.Add(new EventType() { Id = 1, name = "Warning" });
-            context.EventTypes.Add(new EventType() { Id = 2, name = "Issue" });
-            context.EventTypes.Add(new EventType() { Id = 3, name = "Info" });
-            context.EventTypes.Add(new EventType() { Id = 4, name = "Advices" });
-            context.EventTypes.Add(new EventType() { Id = 5, name = "Improvement" });
+            context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]" });
+            context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]" });
+            context.EventTypes.Add(new EventType() { Id = 3, name = "[[[Info]]]" });
+            context.EventTypes.Add(new EventType() { Id = 4, name = "[[[Advices]]]" });
+            context.EventTypes.Add(new EventType() { Id = 5, name = "[[[Improvement]]]" });
 
-            context.HealthLevel.Add(new HealthLevel() { Id = 1, name = "Poor" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 2, name = "Average" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 3, name = "Good" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 4, name = "Perfect" });
-            context.HealthLevel.Add(new HealthLevel() { Id = 5, name = "Unknown" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 1, name = "[[[Poor]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 2, name = "[[[Average]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 3, name = "[[[Good]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 4, name = "[[[Perfect]]]" });
+            context.HealthLevels.Add(new HealthLevel() { Id = 5, name = "[[[Unknown]]]" });
 
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 1, name = "Low" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 2, name = "Medium" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 3, name = "High" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 4, name = "Awesome" });
-            context.ProductionLevel.Add(new ProductionLevel() { Id = 5, name = "Unknown" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 1, name = "[[[Low]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 2, name = "[[[Medium]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 3, name = "[[[High]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 4, name = "[[[Awesome]]]" });
+            context.ProductionLevels.Add(new ProductionLevel() { Id = 5, name = "[[[Unknown]]]" });
 
-            context.Options.Add(new Option() { Id = 0, name = "11 towers" });
-            context.Options.Add(new Option() { Id = 1, name = "18 towers" });
-            context.Options.Add(new Option() { Id = 2, name = "24 towers" });
-            context.Options.Add(new Option() { Id = 3, name = "36 towers" });
-            context.Options.Add(new Option() { Id = 4, name = "Solar panels" });
-            context.Options.Add(new Option() { Id = 5, name = "Pellet stove" });
-            context.Options.Add(new Option() { Id = 6, name = "Monitoring kit v.1" });
-            context.Options.Add(new Option() { Id = 7, name = "Monitoring kit v.2" });
-            context.Options.Add(new Option() { Id = 8, name = "Advanced monitoring" });
-            context.Options.Add(new Option() { Id = 9, name = "Onboard touchscreen" });
-            context.Options.Add(new Option() { Id = 10, name = "Sigfox connectivity kit" });
-            context.Options.Add(new Option() { Id = 11, name = "Permaculture beds" });
-            context.Options.Add(new Option() { Id = 12, name = "Permaculture beds & biochar" });
+            context.Options.Add(new Option() { Id = 0, name = "[[[11 towers]]]" });
+            context.Options.Add(new Option() { Id = 1, name = "[[[18 towers]]]" });
+            context.Options.Add(new Option() { Id = 2, name = "[[[24 towers]]]" });
+            context.Options.Add(new Option() { Id = 3, name = "[[[36 towers]]]" });
+            context.Options.Add(new Option() { Id = 4, name = "[[[Solar panels]]]" });
+            context.Options.Add(new Option() { Id = 5, name = "[[[Pellet stove]]]" });
+            context.Options.Add(new Option() { Id = 6, name = "[[[Monitoring kit v.1]]]" });
+            context.Options.Add(new Option() { Id = 7, name = "[[[Monitoring kit v.2]]]" });
+            context.Options.Add(new Option() { Id = 8, name = "[[[Advanced monitoring]]]" });
+            context.Options.Add(new Option() { Id = 9, name = "[[[Onboard touchscreen]]]" });
+            context.Options.Add(new Option() { Id = 10, name = "[[[Sigfox connectivity kit]]]" });
+            context.Options.Add(new Option() { Id = 11, name = "[[[Permaculture beds]]]" });
+            context.Options.Add(new Option() { Id = 12, name = "[[[Permaculture beds & biochar]]]" });
 
-            context.Seasons.Add(new Season() { Id = 0, name = "Winter" });
-            context.Seasons.Add(new Season() { Id = 1, name = "Spring" });
-            context.Seasons.Add(new Season() { Id = 2, name = "Summer" });
-            context.Seasons.Add(new Season() { Id = 3, name = "Autumn" });
+            context.Seasons.Add(new Season() { Id = 0, name = "[[[Winter]]]" });
+            context.Seasons.Add(new Season() { Id = 1, name = "[[[Spring]]]" });
+            context.Seasons.Add(new Season() { Id = 2, name = "[[[Summer]]]" });
+            context.Seasons.Add(new Season() { Id = 3, name = "[[[Autumn]]]" });
 
-            context.GardeningTypes.Add(new GardeningType() { Id = 0, name = "Permaculture Bed" });
-            context.GardeningTypes.Add(new GardeningType() { Id = 1, name = "Zipgrow Tower" });
-            context.GardeningTypes.Add(new GardeningType() { Id = 2, name = "Tower Garden" });
-            context.GardeningTypes.Add(new GardeningType() { Id = 3, name = "All" });            
-            context.GardeningTypes.Add(new GardeningType() { Id = 4, name = "Fish Tank" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 0, name = "[[[Permaculture Bed]]]" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 1, name = "[[[Zipgrow Tower]]]" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 2, name = "[[[Tower Garden]]]" });
+            context.GardeningTypes.Add(new GardeningType() { Id = 3, name = "[[[All]]]" });            
+            context.GardeningTypes.Add(new GardeningType() { Id = 4, name = "[[[Fish Tank]]]" });
             
-            context.WateringLevels.Add(new WateringLevel() { Id = 0, name = "Light" });
-            context.WateringLevels.Add(new WateringLevel() { Id = 1, name = "Moderate" });
-            context.WateringLevels.Add(new WateringLevel() { Id = 2, name = "Normal" });
-            context.WateringLevels.Add(new WateringLevel() { Id = 3, name = "Maximum" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 0, name = "[[[Light]]]" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 1, name = "[[[Moderate]]]" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 2, name = "[[[Normal]]]" });
+            context.WateringLevels.Add(new WateringLevel() { Id = 3, name = "[[[Maximum]]]" });
+
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 0, name = "[[[Morning]]]" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 1, name = "[[[Afternoon]]]" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 2, name = "[[[Night]]]" });
+            context.PreferedMoments.Add(new PreferedMoment() { Id = 3, name = "[[[Weekend]]]" });
+
+            context.Languages.Add(new Language() { Id = 0, name = "Français", description = "fr" });
+            context.Languages.Add(new Language() { Id = 1, name = "English", description = "en" });
+            context.Languages.Add(new Language() { Id = 2, name = "Deutsch", description = "de" });
+            context.Languages.Add(new Language() { Id = 3, name = "Lëtzebuergesch", description = "lu" });
+            context.Languages.Add(new Language() { Id = 4, name = "Flemish", description = "fl" });
 
             context.SaveChanges();
 
-            context.Months.Add(new Month() { Id = 0, name = "January", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
-            context.Months.Add(new Month() { Id = 1, name = "February", order = 2, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 2, name = "March", order = 3, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 3, name = "April", order = 4, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 4, name = "May", order = 5, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 5, name = "June", order = 6, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 6, name = "July", order = 7, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 7, name = "August", order = 8, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 8, name = "September", order = 9, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 9, name = "October", order = 10, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 10, name = "November", order = 11, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
-            context.Months.Add(new Month() { Id = 11, name = "December", order = 12, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 0, name = "[[[January]]]", order = 1, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault()});
+            context.Months.Add(new Month() { Id = 1, name = "[[[February]]]", order = 2, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 2, name = "[[[March]]]", order = 3, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 3, name = "[[[April]]]", order = 4, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 4, name = "[[[May]]]", order = 5, season = context.Seasons.Where(s => s.Id == 1).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 5, name = "[[[June]]]", order = 6, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 6, name = "[[[July]]]", order = 7, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 7, name = "[[[August]]]", order = 8, season = context.Seasons.Where(s => s.Id == 2).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 8, name = "[[[September]]]", order = 9, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 9, name = "[[[October]]]", order = 10, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 10, name = "[[[November]]]", order = 11, season = context.Seasons.Where(s => s.Id == 3).FirstOrDefault() });
+            context.Months.Add(new Month() { Id = 11, name = "[[[December]]]", order = 12, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
 
             context.SaveChanges();
 
@@ -580,19 +591,29 @@ namespace myfoodapp.Hub.Migrations
             var userDMO = new ApplicationUser() { Email = "donatien@myfood.eu", UserName = "donatien@myfood.eu" };
             var userCEL = new ApplicationUser() { Email = "cyrille@myfood.eu", UserName = "cyrille@myfood.eu" };
             var userEDC = new ApplicationUser() { Email = "eleonore@myfood.eu", UserName = "eleonore@myfood.eu" };
+            var userAHE = new ApplicationUser() { Email = "amous@myfood.eu", UserName = "amous@myfood.eu" };
+            var userALH = new ApplicationUser() { Email = "alain@myfood.eu", UserName = "alain@myfood.eu" };
+            var userVTH = new ApplicationUser() { Email = "vincent@myfood.eu", UserName = "vincent@myfood.eu" };
+            var userBGU = new ApplicationUser() { Email = "brigitte@myfood.eu", UserName = "brigitte@myfood.eu" };
+            var userCHI = new ApplicationUser() { Email = "christopheh@myfood.eu", UserName = "christopheh@myfood.eu" };
+            var userHJE = new ApplicationUser() { Email = "herve@myfood.eu", UserName = "herve@myfood.eu" };
+            var userJBF = new ApplicationUser() { Email = "jb@myfood.eu", UserName = "jb@myfood.eu" };
+            var userRDA = new ApplicationUser() { Email = "rudy@myfood.eu", UserName = "rudy@myfood.eu" };
+            var userVBU = new ApplicationUser() { Email = "valerie@myfood.eu", UserName = "valerie@myfood.eu" };
+            var userETR = new ApplicationUser() { Email = "emmanuel@myfood.eu", UserName = "emmanuel@myfood.eu" };
+            var userOFE = new ApplicationUser() { Email = "ophelia@myfood.eu", UserName = "ophelia@myfood.eu" };
+            var userGTI = new ApplicationUser() { Email = "guillaume@myfood.eu", UserName = "guillaume@myfood.eu" };
 
             //TO BE DEPLOYED
             var userYGR = new ApplicationUser() { Email = "yves@myfood.eu", UserName = "yves@myfood.eu" };
             var userGGR = new ApplicationUser() { Email = "goy@myfood.eu", UserName = "goy@myfood.eu" };
             var userBDE = new ApplicationUser() { Email = "benoit@myfood.eu", UserName = "benoit@myfood.eu" };
-            var userAHE = new ApplicationUser() { Email = "amous@myfood.eu", UserName = "amous@myfood.eu" };
+
             var userMSE = new ApplicationUser() { Email = "sevran@myfood.eu", UserName = "sevran@myfood.eu" };
 
-            //TO BE CONFIRMED
-            var userCHI = new ApplicationUser() { Email = "christopheh@myfood.eu", UserName = "christopheh@myfood.eu" };
+            //TO BE CONFIRMED            
             var userMLA = new ApplicationUser() { Email = "marc@myfood.eu", UserName = "marc@myfood.eu" };
-            var userBGU = new ApplicationUser() { Email = "brigitte@myfood.eu", UserName = "brigitte@myfood.eu" };
-
+            
             //CONTRIBUTORS
             var userJTE = new ApplicationUser() { Email = "joel@myfood.eu", UserName = "joel@myfood.eu" };
             var userAPO = new ApplicationUser() { Email = "anhhung@myfood.eu", UserName = "anhhung@myfood.eu" };
@@ -629,18 +650,27 @@ namespace myfoodapp.Hub.Migrations
                 await manager.CreateAsync(userDMO, defaultPassword);
                 await manager.CreateAsync(userCEL, defaultPassword);
                 await manager.CreateAsync(userEDC, defaultPassword);
+                await manager.CreateAsync(userAHE, defaultPassword);
+                await manager.CreateAsync(userALH, defaultPassword);
+                await manager.CreateAsync(userVTH, defaultPassword);
+                await manager.CreateAsync(userBGU, defaultPassword);
+                await manager.CreateAsync(userCHI, defaultPassword);
+                await manager.CreateAsync(userHJE, defaultPassword);
+                await manager.CreateAsync(userJBF, defaultPassword);
+                await manager.CreateAsync(userRDA, defaultPassword);
+                await manager.CreateAsync(userVBU, defaultPassword);
+                await manager.CreateAsync(userETR, defaultPassword);
+                await manager.CreateAsync(userOFE, defaultPassword);
+                await manager.CreateAsync(userGTI, defaultPassword);
 
                 //TO BE DEPLOYED       
                 await manager.CreateAsync(userYGR, defaultPassword);
                 await manager.CreateAsync(userGGR, defaultPassword);
-                await manager.CreateAsync(userAHE, defaultPassword);
                 await manager.CreateAsync(userBDE, defaultPassword);
                 await manager.CreateAsync(userMSE, defaultPassword);
 
                 //TO BE CONFIRMED
-                await manager.CreateAsync(userCHI, defaultPassword);
                 await manager.CreateAsync(userMLA, defaultPassword);
-                await manager.CreateAsync(userBGU, defaultPassword);
 
                 //CONTRIBUTORS
                 await manager.CreateAsync(userJTE, defaultPassword);
@@ -683,20 +713,29 @@ namespace myfoodapp.Hub.Migrations
             var CristofDOwner = new ProductionUnitOwner() { Id = 21, user = userCDE, pioneerCitizenName = "Cristof D.", pioneerCitizenNumber = 20 };
             var DonatienMOwner = new ProductionUnitOwner() { Id = 24, user = userBDE, pioneerCitizenName = "Donatien M.", pioneerCitizenNumber = 21 };
             var CyrilleEOwner = new ProductionUnitOwner() { Id = 30, user = userCEL, pioneerCitizenName = "Cyrille E.", pioneerCitizenNumber = 22 };
-            var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléornore DC.", pioneerCitizenNumber = 23 };
+            var EleonoreDCOwner = new ProductionUnitOwner() { Id = 24, user = userEDC, pioneerCitizenName = "Eléonore DC.", pioneerCitizenNumber = 23 };
+            var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Lilia A.", pioneerCitizenNumber = 17 };
+            var AlainHOwner = new ProductionUnitOwner() { Id = 34, user = userALH, pioneerCitizenName = "Alain H.", pioneerCitizenNumber = 24 };
+            var VincentTOwner = new ProductionUnitOwner() { Id = 35, user = userVTH, pioneerCitizenName = "Vincent T.", pioneerCitizenNumber = 26 };
+            var BrigitteGOwner = new ProductionUnitOwner() { Id = 28, user = userBGU, pioneerCitizenName = "Brigitte G.", pioneerCitizenNumber = 25 };
+            var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H.", pioneerCitizenNumber = 28 };
+            var HerveJOwner = new ProductionUnitOwner() { Id = 37, user = userHJE, pioneerCitizenName = "Hervé J.", pioneerCitizenNumber = 29 };
+            var JeanBaptisteFOwner = new ProductionUnitOwner() { Id = 38, user = userJBF, pioneerCitizenName = "Jean Baptiste F.", pioneerCitizenNumber = 30 };
+            var RudyDOwner = new ProductionUnitOwner() { Id = 39, user = userRDA, pioneerCitizenName = "Rudy D.", pioneerCitizenNumber = 32 };
+            var ValerieOwner = new ProductionUnitOwner() { Id = 40, user = userVBU, pioneerCitizenName = "Valérie B.", pioneerCitizenNumber = 33 };
+            var EmmmanuelTOwner = new ProductionUnitOwner() { Id = 46, user = userETR, pioneerCitizenName = "Emmanuel T." };
+            var OpheliaFOwner = new ProductionUnitOwner() { Id = 47, user = userOFE, pioneerCitizenName = "Ophélia F." };
+            var GuillaumeTOwner = new ProductionUnitOwner() { Id = 48, user = userGTI, pioneerCitizenName = "Guillaume T." };
 
             //TO BE DEPLOYED 
             var YvesGOwner = new ProductionUnitOwner() { Id = 31, user = userYGR, pioneerCitizenName = "Yves G."};
-            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G."};
-            var AmousHOwner = new ProductionUnitOwner() { Id = 22, user = userAHE, pioneerCitizenName = "Amous H."};
+            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G."};         
             var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
             var MairieSOwner = new ProductionUnitOwner() { Id = 23, user = userMSE, pioneerCitizenName = "Mairie Sevran" };
 
             //TO BE CONFIRMED
-            var ChristopheHOwner = new ProductionUnitOwner() { Id = 33, user = userCHI, pioneerCitizenName = "Christophe H." };
             var MarcLOwner = new ProductionUnitOwner() { Id = 24, user = userMLA, pioneerCitizenName = "Marc L." };
-            var BrigitteGOwner = new ProductionUnitOwner() { Id = 25, user = userBGU, pioneerCitizenName = "Brigitte G." };
-
+ 
             //CONTRIBUTORS
             var JoelTOwner = new ProductionUnitOwner() { Id = 27, user = userJTE, pioneerCitizenName = "Joël T." };
             var AnhHungPOwner = new ProductionUnitOwner() { Id = 28, user = userAPO, pioneerCitizenName = "Anh Hung P." };
@@ -729,18 +768,27 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(DonatienMOwner);
             context.ProductionUnitOwners.Add(CyrilleEOwner);
             context.ProductionUnitOwners.Add(EleonoreDCOwner);
+            context.ProductionUnitOwners.Add(AmousHOwner);
+            context.ProductionUnitOwners.Add(BrigitteGOwner);
+            context.ProductionUnitOwners.Add(AlainHOwner);
+            context.ProductionUnitOwners.Add(VincentTOwner);
+            context.ProductionUnitOwners.Add(ChristopheHOwner);
+            context.ProductionUnitOwners.Add(HerveJOwner);
+            context.ProductionUnitOwners.Add(JeanBaptisteFOwner);
+            context.ProductionUnitOwners.Add(RudyDOwner);
+            context.ProductionUnitOwners.Add(ValerieOwner);
+            context.ProductionUnitOwners.Add(EmmmanuelTOwner);
+            context.ProductionUnitOwners.Add(OpheliaFOwner);
+            context.ProductionUnitOwners.Add(GuillaumeTOwner);
 
             //TO BE DEPLOYED 
             context.ProductionUnitOwners.Add(YvesGOwner);
             context.ProductionUnitOwners.Add(GoyGOwner);
-            context.ProductionUnitOwners.Add(AmousHOwner);
             context.ProductionUnitOwners.Add(BenoitDOwner);
             context.ProductionUnitOwners.Add(MairieSOwner);
 
             //TO BE CONFIRMED
-            context.ProductionUnitOwners.Add(ChristopheHOwner);
             context.ProductionUnitOwners.Add(MarcLOwner);
-            context.ProductionUnitOwners.Add(BrigitteGOwner);
 
             //CONTRIBUTORS
             context.ProductionUnitOwners.Add(JoelTOwner);
@@ -770,7 +818,7 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 48.4127102,
                 locationLongitude = 7.4652961,
-                reference = "74621",
+                reference = "74733",
                 info = "Family Farm Gertwiller",
                 startDate = new DateTime(2016, 01, 20),
                 version = "2",
@@ -1070,7 +1118,7 @@ namespace myfoodapp.Hub.Migrations
                 locationLatitude = 50.6311167,
                 locationLongitude = 3.0120553,
                 reference = "73331",
-                info = "Entrepreunor Experimentation",
+                info = "Entrepreneur Experimentation",
                 startDate = new DateTime(2017, 01, 20),
                 version = "2",
                 owner = DonatienMOwner,
@@ -1110,6 +1158,180 @@ namespace myfoodapp.Hub.Migrations
                 picturePath = "VerriereFamily22.JPG",
             };
 
+            var AHEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 34.7568479,
+                locationLongitude = 10.7129123,
+                reference = "76671",
+                info = "Commercial Experimentation",
+                startDate = new DateTime(2017, 01, 06),
+                version = "2",
+                owner = AmousHOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "SfaxFamily22.JPG",
+            };
+
+            var ALHProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.8529442,
+                locationLongitude = 6.9747352,
+                reference = "1AD158",
+                info = "Aqualor Experimentation",
+                startDate = new DateTime(2017, 04, 16),
+                version = "2",
+                owner = AlainHOwner,
+                productionUnitType = prodUnitTypeCity,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "FenetrangeCity.jpg"
+            };
+
+            var VTHProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 43.5616946,
+                locationLongitude = 5.5506688,
+                reference = "769CV",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 04, 20),
+                version = "2",
+                owner = VincentTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "VauvenarguesFamily22.jpg"
+            };
+
+            var BGUProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 45.2475762,
+                locationLongitude = 4.7951584,
+                reference = "76AA3",
+                info = "Restaurant Experimentation",
+                startDate = new DateTime(2017, 04, 24),
+                version = "2",
+                owner = BrigitteGOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "AndancetteFamily22.JPG"
+            };
+
+            var CHIProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 47.5378282,
+                locationLongitude = 7.150098,
+                reference = "76XSX",
+                info = "Organic Farm Exploitation",
+                startDate = new DateTime(2017, 05, 18),
+                version = "2",
+                owner = ChristopheHOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "SeppoisFamily22.JPG"
+            };
+
+            var HJEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 47.6876917,
+                locationLongitude = 7.3676869,
+                reference = "01357",
+                info = "Reiki Master Experimentation",
+                startDate = new DateTime(2017, 05, 19),
+                version = "2",
+                owner = HerveJOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
+                picturePath = "LandserFamily22.jpg"
+            };
+
+            var JBFProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.4003012,
+                locationLongitude = 7.2742212,
+                reference = "ARG36",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 05, 22),
+                version = "2",
+                owner = JeanBaptisteFOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var RDAProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 49.8051713,
+                locationLongitude = 5.8440259,
+                reference = "ARG39",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 01),
+                version = "2",
+                owner = RudyDOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsColdFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var VBUProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 43.2803691,
+                locationLongitude = 5.3349279,
+                reference = "894811",
+                info = "Family Experimentation </br> Black Greenhouse",
+                startDate = new DateTime(2017, 06, 01),
+                version = "2",
+                owner = ValerieOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var ETRProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 46.0732302,
+                locationLongitude = 6.2295138,
+                reference = "FTAT01",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 16),
+                version = "2",
+                owner = EmmmanuelTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var OFEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 43.428125,
+                locationLongitude = 6.5823434,
+                reference = "FTAT03",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 19),
+                version = "2",
+                owner = OpheliaFOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var GTIProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 47.5321616,
+                locationLongitude = -3.1774892,
+                reference = "FTAT57",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 06, 25),
+                version = "2",
+                owner = GuillaumeTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
             //TO BE DEPLOYED 
             var YGRProdUnit = new ProductionUnit()
             {
@@ -1129,25 +1351,11 @@ namespace myfoodapp.Hub.Migrations
             {
                 locationLatitude = 49.519387,
                 locationLongitude = 6.289128,
-                reference = "76ERT",
-                info = "Commercial Experimentation",
+                reference = "1ACCCF ",
+                info = "Grosbusch Academy",
                 startDate = new DateTime(2017, 05, 06),
                 version = "2",
                 owner = GoyGOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
-            };
-
-            var AHEProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 34.7568479,
-                locationLongitude = 10.7129123,
-                reference = "76671",
-                info = "Commercial Experimentation",
-                startDate = new DateTime(2017, 01, 06),
-                version = "2",
-                owner = AmousHOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusReadyForInstall,
@@ -1182,19 +1390,6 @@ namespace myfoodapp.Hub.Migrations
             };
 
             //TO BE CONFIRMED
-            var CHIProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 47.5378282,
-                locationLongitude = 7.150098,
-                reference = "76XSX",
-                info = "Organic Farm Exploitation",
-                startDate = new DateTime(2016, 11, 05),
-                version = "2",
-                owner = ChristopheHOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusWait,
-            };
 
             var MLAProdUnit = new ProductionUnit()
             {
@@ -1205,20 +1400,6 @@ namespace myfoodapp.Hub.Migrations
                 startDate = new DateTime(2016, 11, 05),
                 version = "2",
                 owner = MarcLOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusWait,
-            };
-
-            var BGUProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 45.2475762,
-                locationLongitude = 4.7951584,
-                reference = "76AA3",
-                info = "Restaurant Experimentation",
-                startDate = new DateTime(2016, 12, 01),
-                version = "2",
-                owner = BrigitteGOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusWait,
@@ -1296,17 +1477,25 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(DMOProdUnit);
             context.ProductionUnits.Add(CELProdUnit);
             context.ProductionUnits.Add(EDCProdUnit);
+            context.ProductionUnits.Add(AHEProdUnit);
+            context.ProductionUnits.Add(BDEProdUnit);
+            context.ProductionUnits.Add(ALHProdUnit);
+            context.ProductionUnits.Add(VTHProdUnit);
+            context.ProductionUnits.Add(CHIProdUnit);
+            context.ProductionUnits.Add(HJEProdUnit);
+            context.ProductionUnits.Add(JBFProdUnit);
+            context.ProductionUnits.Add(RDAProdUnit);
+            context.ProductionUnits.Add(VBUProdUnit);
+            context.ProductionUnits.Add(ETRProdUnit);
+            context.ProductionUnits.Add(OFEProdUnit);
+            context.ProductionUnits.Add(GTIProdUnit);
 
             //TO BE DEPLOYED
             context.ProductionUnits.Add(YGRProdUnit);
             context.ProductionUnits.Add(GGRProdUnit);
-            context.ProductionUnits.Add(AHEProdUnit);
-            context.ProductionUnits.Add(BDEProdUnit);
             context.ProductionUnits.Add(MSEProdUnit);
 
-
             //TO BE CONFIRMED
-            context.ProductionUnits.Add(CHIProdUnit);
             context.ProductionUnits.Add(MLAProdUnit);
             context.ProductionUnits.Add(BGUProdUnit);
 
@@ -1408,6 +1597,8 @@ namespace myfoodapp.Hub.Migrations
 
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = towers18Option });
             optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = monitoringKitv2Option });
+            optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = permacultureBedOption });
+            optionsCWI.Add(new OptionList() { productionUnit = CWIProdUnit, option = sigfoxConnectionOption });
 
             var optionsGDE = new List<OptionList>();
 
@@ -1423,7 +1614,7 @@ namespace myfoodapp.Hub.Migrations
             var optionsSMA = new List<OptionList>();
 
             optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = monitoringKitv2Option });
-            optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = towers18Option });
+            optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = towers24Option });
             optionsSMA.Add(new OptionList() { productionUnit = SMAProdUnit, option = permacultureBedOption });
 
             var optionsDMA = new List<OptionList>();
@@ -1451,17 +1642,98 @@ namespace myfoodapp.Hub.Migrations
             var optionsDMO = new List<OptionList>();
 
             optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = monitoringKitv2Option });
-            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers11Option });
+            optionsDMO.Add(new OptionList() { productionUnit = DMOProdUnit, option = towers18Option });
 
             var optionsCEL = new List<OptionList>();
 
             optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = monitoringKitv2Option });
+            optionsCEL.Add(new OptionList() { productionUnit = CELProdUnit, option = towers18Option });
 
             var optionsEDC = new List<OptionList>();
 
             optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = monitoringKitv2Option });
             optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = towers18Option });
-            optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = permacultureBedOption });
+            optionsEDC.Add(new OptionList() { productionUnit = EDCProdUnit, option = permacultureBiocharOption });
+
+            var optionsAHE = new List<OptionList>();
+
+            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = monitoringKitv2Option });
+            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = towers24Option });
+            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = permacultureBedOption });
+
+            var optionsALH = new List<OptionList>();
+
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = monitoringKitv2Option });
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = sigfoxConnectionOption });
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = permacultureBedOption });
+            optionsALH.Add(new OptionList() { productionUnit = ALHProdUnit, option = towers11Option });
+
+            var optionsVTH = new List<OptionList>();
+
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = monitoringKitv2Option });
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = towers24Option });
+            optionsVTH.Add(new OptionList() { productionUnit = VTHProdUnit, option = permacultureBiocharOption });
+
+            var optionsBGU = new List<OptionList>();
+
+            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = monitoringKitv2Option });
+            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = towers18Option });
+            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = permacultureBedOption });
+
+            var optionsCHI = new List<OptionList>();
+
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = monitoringKitv2Option });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = towers24Option });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = sigfoxConnectionOption });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = solarPanelOption });
+            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = permacultureBedOption });
+
+            var optionsHJE = new List<OptionList>();
+
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = monitoringKitv2Option });
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = towers18Option });
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = permacultureBedOption });
+            optionsHJE.Add(new OptionList() { productionUnit = HJEProdUnit, option = pelletStoveOption });
+
+            var optionsJBF = new List<OptionList>();
+
+            optionsJBF.Add(new OptionList() { productionUnit = JBFProdUnit, option = monitoringKitv2Option });
+            optionsJBF.Add(new OptionList() { productionUnit = JBFProdUnit, option = towers18Option });
+
+            var optionsRDA = new List<OptionList>();
+
+            optionsRDA.Add(new OptionList() { productionUnit = RDAProdUnit, option = monitoringKitv2Option });
+            optionsRDA.Add(new OptionList() { productionUnit = RDAProdUnit, option = towers18Option });
+            optionsRDA.Add(new OptionList() { productionUnit = RDAProdUnit, option = solarPanelOption });
+
+            var optionsVBU = new List<OptionList>();
+
+            optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = monitoringKitv2Option });
+            optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = towers18Option });
+            optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = permacultureBedOption });
+
+            var optionsETR = new List<OptionList>();
+
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = monitoringKitv2Option });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = towers18Option });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = permacultureBedOption });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = solarPanelOption });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = sigfoxConnectionOption });
+            optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = pelletStoveOption });
+
+            var optionsOFE = new List<OptionList>();
+
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = monitoringKitv2Option });
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = towers18Option });
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = permacultureBedOption });
+            optionsOFE.Add(new OptionList() { productionUnit = OFEProdUnit, option = solarPanelOption });
+
+            var optionsGTI = new List<OptionList>();
+
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = monitoringKitv2Option });
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = towers18Option });
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = solarPanelOption });
+            optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = permacultureBedOption });
 
             //TO BE DEPLOYED
             var optionsYGR = new List<OptionList>();
@@ -1478,12 +1750,6 @@ namespace myfoodapp.Hub.Migrations
             optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = sigfoxConnectionOption });
             optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = solarPanelOption });
 
-            var optionsAHE = new List<OptionList>();
-
-            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = monitoringKitv2Option });
-            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = towers24Option });
-            optionsAHE.Add(new OptionList() { productionUnit = AHEProdUnit, option = permacultureBedOption });
-
             var optionsBDE = new List<OptionList>();
 
             optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = monitoringKitv2Option });
@@ -1498,24 +1764,12 @@ namespace myfoodapp.Hub.Migrations
 
 
             //TO BE CONFIRMED
-            var optionsCHI = new List<OptionList>();
-
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = monitoringKitv2Option });
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = towers24Option });
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = sigfoxConnectionOption });
-            optionsCHI.Add(new OptionList() { productionUnit = CHIProdUnit, option = solarPanelOption });
-
             var optionsMLA = new List<OptionList>();
 
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = monitoringKitv2Option });
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = towers18Option });
             optionsMLA.Add(new OptionList() { productionUnit = MLAProdUnit, option = permacultureBedOption });
 
-            var optionsBGU = new List<OptionList>();
-
-            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = monitoringKitv2Option });
-            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = towers18Option });
-            optionsBGU.Add(new OptionList() { productionUnit = BGUProdUnit, option = permacultureBedOption });
 
             //CONTRIBUTORS
             var optionsNRO = new List<OptionList>();
@@ -1557,16 +1811,25 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsDMO);
             context.OptionLists.AddRange(optionsCEL);
             context.OptionLists.AddRange(optionsEDC);
+            context.OptionLists.AddRange(optionsAHE);
+            context.OptionLists.AddRange(optionsALH);
+            context.OptionLists.AddRange(optionsVTH);
+            context.OptionLists.AddRange(optionsBDE);
+            context.OptionLists.AddRange(optionsCHI);
+            context.OptionLists.AddRange(optionsHJE);
+            context.OptionLists.AddRange(optionsJBF);
+            context.OptionLists.AddRange(optionsRDA);
+            context.OptionLists.AddRange(optionsVBU);
+            context.OptionLists.AddRange(optionsETR);
+            context.OptionLists.AddRange(optionsOFE);
+            context.OptionLists.AddRange(optionsGTI);
 
             //TO BE DEPLOYED
             context.OptionLists.AddRange(optionsYGR);
             context.OptionLists.AddRange(optionsGGR);
-            context.OptionLists.AddRange(optionsAHE);
-            context.OptionLists.AddRange(optionsBDE);
             context.OptionLists.AddRange(optionsMSE);
 
             //TO BE CONFIRMED
-            context.OptionLists.AddRange(optionsCHI);
             context.OptionLists.AddRange(optionsMLA);
             context.OptionLists.AddRange(optionsBGU);            
 
@@ -1579,71 +1842,71 @@ namespace myfoodapp.Hub.Migrations
 
             var messMeasure = context.MessageTypes.Where(m => m.Id == 1).FirstOrDefault();
 
-            var poorHealthLevel = context.HealthLevel.Where(s => s.Id == 1).FirstOrDefault();
-            var averageHealthLevel = context.HealthLevel.Where(s => s.Id == 2).FirstOrDefault();
-            var goodHealthLevel = context.HealthLevel.Where(s => s.Id == 3).FirstOrDefault();
-            var perfectHealthLevel = context.HealthLevel.Where(s => s.Id == 4).FirstOrDefault();
-            var unknownHealthLevel = context.HealthLevel.Where(s => s.Id == 5).FirstOrDefault();
+            var poorHealthLevel = context.HealthLevels.Where(s => s.Id == 1).FirstOrDefault();
+            var averageHealthLevel = context.HealthLevels.Where(s => s.Id == 2).FirstOrDefault();
+            var goodHealthLevel = context.HealthLevels.Where(s => s.Id == 3).FirstOrDefault();
+            var perfectHealthLevel = context.HealthLevels.Where(s => s.Id == 4).FirstOrDefault();
+            var unknownHealthLevel = context.HealthLevels.Where(s => s.Id == 5).FirstOrDefault();
 
-            var lowProductionLevel = context.ProductionLevel.Where(s => s.Id == 1).FirstOrDefault();
-            var mediumProductionLevel = context.ProductionLevel.Where(s => s.Id == 2).FirstOrDefault();
-            var highProductionLevel = context.ProductionLevel.Where(s => s.Id == 3).FirstOrDefault();
-            var awesomeProductionLevel = context.ProductionLevel.Where(s => s.Id == 4).FirstOrDefault();
-            var unknowProductionLevel = context.ProductionLevel.Where(s => s.Id == 5).FirstOrDefault();
+            var lowProductionLevel = context.ProductionLevels.Where(s => s.Id == 1).FirstOrDefault();
+            var mediumProductionLevel = context.ProductionLevels.Where(s => s.Id == 2).FirstOrDefault();
+            var highProductionLevel = context.ProductionLevels.Where(s => s.Id == 3).FirstOrDefault();
+            var awesomeProductionLevel = context.ProductionLevels.Where(s => s.Id == 4).FirstOrDefault();
+            var unknowProductionLevel = context.ProductionLevels.Where(s => s.Id == 5).FirstOrDefault();
 
             var mgaProdUnit = context.ProductionUnits.Where(s => s.picturePath == "SainteBarbeFamily22.jpg").FirstOrDefault();
 
-            var mayRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 05, 15), imagePath = "15052016_GHID_2.JPG", dailyProduction = 0.2, productionLevel = lowProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.974321722984314}, {""name"": ""ground"", ""confidence"": 0.9694542288780212}]" });
-            var juneRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 06, 15), imagePath = "15062016_GHID_2.JPG", dailyProduction = 0.5, productionLevel = mediumProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.867531418800354}, {""name"": ""plant"", ""confidence"": 0.315796108436584}]" });
-            var augustRecognitionRecord = context.RecognitionRecord.Add(new RecognitionRecord { date = new DateTime(2016, 08, 15), imagePath = "15082016_GHID_2.JPG", dailyProduction = 1.5, productionLevel = awesomeProductionLevel, healthLevel = perfectHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.9086201190948486}, {""name"": ""plant"", ""confidence"": 0.5123096108436584}, {""name"": ""vegetable"", ""confidence"": 0.1269458830356598}]"});
+            var mayRecognitionRecord = context.RecognitionRecords.Add(new RecognitionRecord { date = new DateTime(2016, 05, 15), imagePath = "15052016_GHID_2.JPG", dailyProduction = 0.2, productionLevel = lowProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.974321722984314}, {""name"": ""ground"", ""confidence"": 0.9694542288780212}]" });
+            var juneRecognitionRecord = context.RecognitionRecords.Add(new RecognitionRecord { date = new DateTime(2016, 06, 15), imagePath = "15062016_GHID_2.JPG", dailyProduction = 0.5, productionLevel = mediumProductionLevel, healthLevel = goodHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.867531418800354}, {""name"": ""plant"", ""confidence"": 0.315796108436584}]" });
+            var augustRecognitionRecord = context.RecognitionRecords.Add(new RecognitionRecord { date = new DateTime(2016, 08, 15), imagePath = "15082016_GHID_2.JPG", dailyProduction = 1.5, productionLevel = awesomeProductionLevel, healthLevel = perfectHealthLevel, productionUnit = mgaProdUnit, token = @"[{""name"": ""outdoor"", ""confidence"": 0.9086201190948486}, {""name"": ""plant"", ""confidence"": 0.5123096108436584}, {""name"": ""vegetable"", ""confidence"": 0.1269458830356598}]"});
 
             context.SaveChanges();
 
-            if (!context.Measures.Any())
-            {
-                var phSensor = context.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
-                var waterTemperatureSensor = context.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
-                var dissolvedOxySensor = context.SensorTypes.Where(s => s.Id == 3).FirstOrDefault();
-                var ORPSensor = context.SensorTypes.Where(s => s.Id == 4).FirstOrDefault();
-                var airTemperatureSensor = context.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
-                var airHumidity = context.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
+            //if (!context.Measures.Any())
+            //{
+            //    var phSensor = context.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
+            //    var waterTemperatureSensor = context.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
+            //    var dissolvedOxySensor = context.SensorTypes.Where(s => s.Id == 3).FirstOrDefault();
+            //    var ORPSensor = context.SensorTypes.Where(s => s.Id == 4).FirstOrDefault();
+            //    var airTemperatureSensor = context.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
+            //    var airHumidity = context.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
 
-                var productionUnitList = context.ProductionUnits;
+            //    var productionUnitList = context.ProductionUnits;
 
-                foreach (ProductionUnit productionUnit in productionUnitList)
-                {
-                    for (int i = 0; i < 6 * 2; i++)
-                    {
-                        Random rnd = new Random();
-                        var currentDate = DateTime.Now;
-                        currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
+            //    foreach (ProductionUnit productionUnit in productionUnitList)
+            //    {
+            //        for (int i = 0; i < 6 * 2; i++)
+            //        {
+            //            Random rnd = new Random();
+            //            var currentDate = DateTime.Now;
+            //            currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
 
-                        context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
-                        context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
-                        context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
+            //            context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
+            //            context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
+            //            context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
 
-                        decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
+            //            decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
 
-                        decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
+            //            decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
 
-                        decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
+            //            decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
 
-                        decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
+            //            decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
 
-                        decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
+            //            decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
 
-                        decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-                        context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
-                    };
+            //            decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
+            //        };
 
-                }
-                context.SaveChanges();
-            }
+            //    }
+            //    context.SaveChanges();
+            //}
         }
 
     }

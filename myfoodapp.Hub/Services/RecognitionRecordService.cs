@@ -20,7 +20,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<RecognitionRecordViewModel> result = new List<RecognitionRecordViewModel>();
 
-            result = entities.RecognitionRecord.OrderBy(m => m.date).Select(rec => new RecognitionRecordViewModel
+            result = entities.RecognitionRecords.OrderBy(m => m.date).Select(rec => new RecognitionRecordViewModel
             {
                 Id = rec.Id,
                 date = rec.date,
@@ -59,7 +59,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<RecognitionRecordViewModel> result = new List<RecognitionRecordViewModel>();
 
-            result = entities.RecognitionRecord.Include(m => m.productionUnit)
+            result = entities.RecognitionRecords.Include(m => m.productionUnit)
                                              .Include(m => m.healthLevel)
                                              .Include(m => m.productionLevel)
                                              .Where(p => p.Id == productionUnitId).Select(rec => new RecognitionRecordViewModel

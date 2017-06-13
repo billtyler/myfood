@@ -1,12 +1,17 @@
-﻿using Kendo.Mvc.Extensions;
+﻿using i18n;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNet.Identity;
 using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 
 namespace myfoodapp.Hub.Controllers
@@ -15,10 +20,7 @@ namespace myfoodapp.Hub.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
             var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
 
             var listMarker = new List<Marker>();
 
@@ -105,9 +107,6 @@ namespace myfoodapp.Hub.Controllers
             if (prodUnitListCount == 0)
                 return null;
 
-            var random = new Random();
-            int randomIndex = random.Next(0, prodUnitListCount);
-
             var currentProductionUnitList = db.ProductionUnits.Include(p => p.owner)
                                          .Include(p => p.productionUnitType)
                                          .Include(p => p.productionUnitStatus)
@@ -164,11 +163,11 @@ namespace myfoodapp.Hub.Controllers
 
             var statusList = new List<PieChartViewModel>();
 
-            statusList.Add(new PieChartViewModel() { Category = "Wait Confirm.", Value = waitConfCount, Color = "#9de219" });
-            statusList.Add(new PieChartViewModel() { Category = "Setup Planned", Value = setuPlannedCount, Color = "#90cc38" });
-            statusList.Add(new PieChartViewModel() { Category = "Up & Running", Value = upRunningCount, Color = "#068c35" });
-            statusList.Add(new PieChartViewModel() { Category = "On Maintenance", Value = onMaintenanceCount, Color = "#006634" });
-            statusList.Add(new PieChartViewModel() { Category = "Stopped", Value = stoppedCount, Color = "#004d38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Wait Confirm.]]]", Value = waitConfCount, Color = "#9de219" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setuPlannedCount, Color = "#90cc38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Up and Running]]]", Value = upRunningCount, Color = "#068c35" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#004d38" });
 
             return Json(statusList);
         }
@@ -198,8 +197,6 @@ namespace myfoodapp.Hub.Controllers
                 TotalMonthlyProduction = totalMonthlyProduction,
                 TotalMonthlySparedCO2 = totalMonthlySparedCO2,
             }, JsonRequestBehavior.AllowGet);
-        }
-
-       
+        }  
     }
 }

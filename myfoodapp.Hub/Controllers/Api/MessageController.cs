@@ -3,7 +3,9 @@ using myfoodapp.Hub.Models;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Data.Entity;
 using System.Web.Http;
+using System.Globalization;
 
 namespace myfoodapp.Hub.Controllers.Api
 {
@@ -19,7 +21,15 @@ namespace myfoodapp.Hub.Controllers.Api
             var db = new ApplicationDbContext();
             var dbLog = new ApplicationDbContext();
 
+            NumberStyles style;
+            CultureInfo culture;
+
+            style = NumberStyles.AllowDecimalPoint;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
+
             var date = DateTime.Now;
+
+            content = content.Replace("a", "A");
 
             try
             {
@@ -36,7 +46,11 @@ namespace myfoodapp.Hub.Controllers.Api
 
             try
             {
-                var currentProductionUnit = db.ProductionUnits.Include("owner.user").Include("hydroponicType").Where(p => p.reference == device).FirstOrDefault();
+                var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                                              .Include(p => p.hydroponicType)
+                                                              .Include(p => p.productionUnitStatus)
+                                                              .Include(p => p.productionUnitType)
+                                                              .Where(p => p.reference == device).FirstOrDefault();
                 
                 if (currentProductionUnit == null)
                 {
@@ -44,7 +58,9 @@ namespace myfoodapp.Hub.Controllers.Api
                     db.SaveChanges();
                 }
 
-                var productionUnitOwnerMail = currentProductionUnit.owner.user.Email;
+                currentProductionUnit.lastMeasureReceived = date;
+
+                //var productionUnitOwnerMail = currentProductionUnit.owner.user.Email;
 
                 var currentMeasures = new GroupedMeasure();
                 currentMeasures.hydroponicTypeName = currentProductionUnit.hydroponicType.name;
@@ -63,77 +79,109 @@ namespace myfoodapp.Hub.Controllers.Api
                 var airTempContent = content.Substring(16, 4).Insert(3, ".");
                 var airHumidityContent = content.Substring(20, 4).Insert(3, ".");
 
-                if(!phContent.Contains("a"))
+                if(!(phContent.Contains("a") || phContent.Contains("A")))
                 {
                     decimal pHvalue = 0;
-                    if(decimal.TryParse(phContent, out pHvalue))
+                    if(decimal.TryParse(phContent, style, culture, out pHvalue))
                     {
                         currentMeasures.pHvalue = pHvalue;
 
                         db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = phSensor, value = pHvalue });
                         db.SaveChanges();
-                    }       
+                    }
+                    else
+                    {
+                        dbLog.Logs.Add(Log.CreateLog("Error on Convert pH value", Log.LogType.Warning));
+                        dbLog.SaveChanges();
+                    }     
                 }
 
-                if (!waterTempContent.Contains("a"))
+                if (!(waterTempContent.Contains("a") || waterTempContent.Contains("A")))
                 {
                     decimal waterTempvalue = 0;
-                    if (decimal.TryParse(waterTempContent, out waterTempvalue))
+                    if (decimal.TryParse(waterTempContent, style, culture, out waterTempvalue))
                     {
                         currentMeasures.waterTempvalue = waterTempvalue;
 
-                      db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = waterTemperatureSensor, value = waterTempvalue });
-                      db.SaveChanges();
-                    }          
+                        db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = waterTemperatureSensor, value = waterTempvalue });
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        dbLog.Logs.Add(Log.CreateLog("Error on Convert water temp. value", Log.LogType.Warning));
+                        dbLog.SaveChanges();
+                    }
                 }
 
-                if (!dissolvedOxyContent.Contains("a"))
+                if (!(dissolvedOxyContent.Contains("a") || dissolvedOxyContent.Contains("A")))
                 {
                     decimal DOvalue = 0;
-                    if (decimal.TryParse(dissolvedOxyContent, out DOvalue))
+                    if (decimal.TryParse(dissolvedOxyContent, style, culture, out DOvalue))
                     {
                         currentMeasures.DOvalue = DOvalue;
 
                         db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = dissolvedOxySensor, value = DOvalue });
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        dbLog.Logs.Add(Log.CreateLog("Error on Convert dissolved oxy. value", Log.LogType.Warning));
+                        dbLog.SaveChanges();
+                    }
                 }
 
-                if (!orpContent.Contains("a"))
+                if (!(orpContent.Contains("a") || orpContent.Contains("A")))
                 {
                     decimal ORPvalue = 0;
-                    if (decimal.TryParse(orpContent, out ORPvalue))
+                    if (decimal.TryParse(orpContent, style, culture, out ORPvalue))
                     {
                         currentMeasures.ORPvalue = ORPvalue;
 
                         db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = ORPSensor, value = ORPvalue });
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        dbLog.Logs.Add(Log.CreateLog("Error on Convert ORP value", Log.LogType.Warning));
+                        dbLog.SaveChanges();
+                    }
                 }
 
-                if (!airTempContent.Contains("a"))
+                if (!(airTempContent.Contains("a") || airTempContent.Contains("A")))
                 {
                     decimal airTempvalue = 0;
-                    if (decimal.TryParse(airTempContent, out airTempvalue))
+                    if (decimal.TryParse(airTempContent, style, culture, out airTempvalue))
                     {
                         currentMeasures.airTempvalue = airTempvalue;
 
                         db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = airTemperatureSensor, value = airTempvalue });
                         db.SaveChanges();
                     }
+                    else
+                    {
+                        dbLog.Logs.Add(Log.CreateLog("Error on Convert air temp. value", Log.LogType.Warning));
+                        dbLog.SaveChanges();
+                    }
                 }
 
-                if (!airHumidityContent.Contains("a"))
+                if (!(airHumidityContent.Contains("a") || airHumidityContent.Contains("A")))
                 {
                     decimal humidityvalue = 0;
-                    if (decimal.TryParse(airHumidityContent, out humidityvalue))
+                    if (decimal.TryParse(airHumidityContent, style, culture, out humidityvalue))
                     {
                         currentMeasures.humidityvalue = humidityvalue;
 
                         db.Measures.Add(new Measure() { captureDate = date, productionUnit = currentProductionUnit, sensor = airHumidity, value = humidityvalue });
                         db.SaveChanges();
-                    }                     
+                    }
+                    else
+                    {
+                        dbLog.Logs.Add(Log.CreateLog("Error on Convert humidity value", Log.LogType.Warning));
+                        dbLog.SaveChanges();
+                    }
                 }
+
+                db.SaveChanges();
 
                 DateTime lastDay = date.AddDays(-1);
 
@@ -146,7 +194,7 @@ namespace myfoodapp.Hub.Controllers.Api
                 else
                     currentMeasures.lastDayPHvariation = Math.Abs(currentLastDayPHValue.value - currentMeasures.pHvalue);
 
-                AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id, productionUnitOwnerMail); 
+               // AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id, productionUnitOwnerMail); 
             }
             catch (Exception ex)
             {

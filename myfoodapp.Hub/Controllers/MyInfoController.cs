@@ -3,10 +3,14 @@ using System.Web.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using myfoodapp.Hub.Models;
-using System.Web.Security;
+using System.Data.Entity;
 using System.Linq;
+using Kendo.Mvc.UI;
+using System.Globalization;
+using System.Threading;
+using System;
+using i18n;
 
 namespace myfoodapp.Hub.Controllers
 {   
@@ -40,29 +44,42 @@ namespace myfoodapp.Hub.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
         [Authorize]
         public ActionResult Update()
         {
             var currentUser = this.User.Identity.GetUserName();
             var applicationUser = UserManager.FindByEmail(currentUser);
-            return View(new UserViewModel() { Email = applicationUser.Email });
+
+            var db = new ApplicationDbContext();
+
+            var currentProductOwner = db.ProductionUnitOwners.Include(p => p.language)
+                                                             .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+
+            var currentLanguageId = currentProductOwner.language.Id;
+
+            return View(new UserViewModel() { Email = applicationUser.Email, Language = currentLanguageId });
         }
 
-        //
-        // POST: /Account/Login
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Update(UserViewModel model, string returnUrl)
         {
+            var db = new ApplicationDbContext();
+            var currentUser = this.User.Identity.GetUserName();
+
+            var currentProductionUnitOwner = db.ProductionUnitOwners.Include(p => p.language)
+                                                 .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+
+            currentProductionUnitOwner.language = db.Languages.Where(l => l.Id == model.Language).FirstOrDefault();
+
+            db.SaveChanges();
+
             if (ModelState.IsValid)
             {
-                var currentUser = this.User.Identity.GetUserName();
                 var applicationUser = UserManager.FindByEmail(currentUser);
 
-                if(model.Email != applicationUser.Email)
+                if (model.Email != applicationUser.Email)
                 {
                     applicationUser.Email = model.Email;
                     applicationUser.UserName = model.Email;
@@ -95,17 +112,34 @@ namespace myfoodapp.Hub.Controllers
 
             var db = new ApplicationDbContext();
 
-            var currentProductionOwner = db.ProductionUnitOwners.Include("user")
+            var currentProductionUnitOwner = db.ProductionUnitOwners
+                                                           .Include(p => p.user)
+                                                           .Include(p => p.language)
                                                            .Where(p => p.user.UserName == currentUser).FirstOrDefault();
-            if (currentProductionOwner != null)
+            if (currentProductionUnitOwner != null)
             {
-                currentProductionOwner.notificationPushKey = id;
+                //i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                //   System.Web.HttpContext.Current,
+                //   i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description)
+                //);
+
+                currentProductionUnitOwner.notificationPushKey = id;
                 db.SaveChanges();
 
-                return Json(currentProductionOwner, JsonRequestBehavior.AllowGet);
+                return Json(currentProductionUnitOwner, JsonRequestBehavior.AllowGet);
             }
 
             return null;
+        }
+
+        [Authorize]
+        public ActionResult Languages_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var rslt = db.Languages;
+
+            return Json(rslt, JsonRequestBehavior.AllowGet);
         }
 
         private void AddErrors(IdentityResult result)
