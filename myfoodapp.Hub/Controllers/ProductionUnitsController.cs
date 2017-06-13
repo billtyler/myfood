@@ -463,10 +463,10 @@ namespace myfoodapp.Hub.Controllers
 
             var mes = db.Measures.Include(m => m.sensor)
                        .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
-                       .OrderBy(m => m.captureDate)
-                       .Take(5000);
+                       .OrderByDescending(m => m.captureDate)
+                       .Take(15000);
 
-            mes.ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
+            mes.OrderBy(m => m.captureDate).ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
                         {
                             csv.Append(m.Key + "; ");
 
