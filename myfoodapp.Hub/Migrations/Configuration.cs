@@ -72,6 +72,8 @@ namespace myfoodapp.Hub.Migrations
             context.SensorTypes.Add(new SensorType() { Id = 4, name = "ORP sensor", description = "Common values between 300-800" });
             context.SensorTypes.Add(new SensorType() { Id = 5, name = "Air Temperature Sensor", description = "Common values between 5-32" });
             context.SensorTypes.Add(new SensorType() { Id = 6, name = "Air Humidity Sensor", description = "Common values between 40-80" });
+            context.SensorTypes.Add(new SensorType() { Id = 7, name = "External Air Temperature", description = "From OpenWeatherMap API" });
+            context.SensorTypes.Add(new SensorType() { Id = 8, name = "External Air Humidity", description = "From OpenWeatherMap API" });
 
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "[[[Balcony]]]" });
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "[[[City]]]" });

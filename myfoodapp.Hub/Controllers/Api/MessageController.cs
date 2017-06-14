@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Web.Http;
 using System.Globalization;
+using System.Threading;
 
 namespace myfoodapp.Hub.Controllers.Api
 {
@@ -30,6 +31,8 @@ namespace myfoodapp.Hub.Controllers.Api
             var date = DateTime.Now;
 
             content = content.Replace("a", "A");
+
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
 
             try
             {
@@ -194,7 +197,9 @@ namespace myfoodapp.Hub.Controllers.Api
                 else
                     currentMeasures.lastDayPHvariation = Math.Abs(currentLastDayPHValue.value - currentMeasures.pHvalue);
 
-               // AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id, productionUnitOwnerMail); 
+                AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id);
+
+                ExternalAirHumidityManager.GetExternalAirHumidityValues(currentProductionUnit.Id, date);
             }
             catch (Exception ex)
             {

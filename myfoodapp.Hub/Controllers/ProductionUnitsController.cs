@@ -312,12 +312,72 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
+        public ActionResult TempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            var measuresList = new List<MeasureViewModel>();
+
+            measuresList.AddRange(measureService.Read(SensorTypeEnum.airTemperature, id, range));
+            measuresList.AddRange(measureService.Read(SensorTypeEnum.externalAirTemperature, id, range));
+
+            var groupedMesuresList = new List<GroupedMeasureViewModel>();
+
+            measuresList.GroupBy(m => m.captureDate).ToList().ForEach(m =>
+            {
+                var groupedMeasures = new GroupedMeasureViewModel();
+                groupedMeasures.captureDate = m.Key;
+
+                if(m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.airTemperature).FirstOrDefault() != null)
+                    groupedMeasures.airTemperatureValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.airTemperature).FirstOrDefault().value;
+
+                if (m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalAirTemperature).FirstOrDefault() != null)
+                    groupedMeasures.externalAirTemperatureValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalAirTemperature).FirstOrDefault().value;
+
+                groupedMesuresList.Add(groupedMeasures);
+            });
+
+            return Json(groupedMesuresList, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        public ActionResult AirHumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
             return Json(measureService.Read(SensorTypeEnum.humidity, id, range), JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize]
+        public ActionResult HumidityMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            var measuresList = new List<MeasureViewModel>();
+
+            measuresList.AddRange(measureService.Read(SensorTypeEnum.humidity, id, range));
+            measuresList.AddRange(measureService.Read(SensorTypeEnum.externalHumidity, id, range));
+
+            var groupedMesuresList = new List<GroupedMeasureViewModel>();
+
+            measuresList.GroupBy(m => m.captureDate).ToList().ForEach(m =>
+            {
+                var groupedMeasures = new GroupedMeasureViewModel();
+                groupedMeasures.captureDate = m.Key;
+
+                if (m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.humidity).FirstOrDefault() != null)
+                    groupedMeasures.humidityValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.humidity).FirstOrDefault().value;
+
+                if (m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalHumidity).FirstOrDefault() != null)
+                    groupedMeasures.externalHumidityValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalHumidity).FirstOrDefault().value;
+
+                groupedMesuresList.Add(groupedMeasures);
+            });
+
+            return Json(groupedMesuresList, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]

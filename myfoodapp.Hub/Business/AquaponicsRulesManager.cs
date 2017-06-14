@@ -13,7 +13,7 @@ namespace myfoodapp.Hub.Business
 {
     public class AquaponicsRulesManager
     {
-        public static bool ValidateRules(GroupedMeasure currentMeasures, int productionUnitId, string productionUnitOwnerMail)
+        public static bool ValidateRules(GroupedMeasure currentMeasures, int productionUnitId)
         {
             Evaluator evaluator = new Evaluator();
             bool isValid = true;
@@ -65,5 +65,19 @@ namespace myfoodapp.Hub.Business
 
             return isValid;
         }
+    }
+
+    public class GroupedMeasure
+    {
+        public Int64 Id { get; set; }
+        public DateTime captureDate { get; set; }
+        public decimal pHvalue { get; set; }
+        public decimal waterTempvalue { get; set; }
+        public decimal ORPvalue { get; set; }
+        public decimal DOvalue { get; set; }
+        public decimal airTempvalue { get; set; }
+        public decimal humidityvalue { get; set; }
+        public string hydroponicTypeName { get; set; }
+        public decimal lastDayPHvariation { get; set; }
     }
 }

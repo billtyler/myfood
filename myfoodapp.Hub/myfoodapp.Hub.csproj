@@ -378,6 +378,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Business\AquaponicsRulesManager.cs" />
+    <Compile Include="Business\ExternalAirHumidityManager.cs" />
     <Compile Include="Business\SensorValueSet.cs" />
     <Compile Include="Common\AuthorizationHeaderHandler.cs" />
     <Compile Include="Common\MailManager.cs" />

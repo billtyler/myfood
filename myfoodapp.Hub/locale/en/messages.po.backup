@@ -1,26 +1,26 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-06-12 21:45+02:00\n"
-"PO-Revision-Date: 2017-06-12 21:45+02:00\n"
+"POT-Creation-Date: 2017-06-14 15:39+02:00\n"
+"PO-Revision-Date: 2017-06-14 15:39+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: i18n.POTGenerator\n"
 
-#: Migrations\Configuration.cs:117
+#: Migrations\Configuration.cs:119
 msgid "11 towers"
 msgstr "11 towers"
 
-#: Migrations\Configuration.cs:118
+#: Migrations\Configuration.cs:120
 msgid "18 towers"
 msgstr "18 towers"
 
-#: Migrations\Configuration.cs:119
+#: Migrations\Configuration.cs:121
 msgid "24 towers"
 msgstr "24 towers"
 
-#: Migrations\Configuration.cs:120
+#: Migrations\Configuration.cs:122
 msgid "36 towers"
 msgstr "36 towers"
 
@@ -31,15 +31,15 @@ msgstr "36 towers"
 msgid "About"
 msgstr "About"
 
-#: Migrations\Configuration.cs:125
+#: Migrations\Configuration.cs:127
 msgid "Advanced monitoring"
 msgstr "Advanced monitoring"
 
-#: Migrations\Configuration.cs:102
+#: Migrations\Configuration.cs:104
 msgid "Advices"
 msgstr "Advices"
 
-#: Migrations\Configuration.cs:148
+#: Migrations\Configuration.cs:150
 msgid "Afternoon"
 msgstr "Afternoon"
 
@@ -50,7 +50,7 @@ msgstr "Afternoon"
 msgid "Air Temperature (°C)"
 msgstr "Air Temperature (°C)"
 
-#: Migrations\Configuration.cs:139
+#: Migrations\Configuration.cs:141
 #: Views\Measures\Index.cshtml:92
 #: Views\Messages\Index.cshtml:96
 #: obj\Release\Package\PackageTmp\Views\Measures\Index.cshtml:92
@@ -63,43 +63,43 @@ msgstr "All"
 msgid "Application Logs"
 msgstr ""
 
-#: Migrations\Configuration.cs:163
+#: Migrations\Configuration.cs:165
 msgid "April"
 msgstr "April"
 
-#: Migrations\Configuration.cs:86
+#: Migrations\Configuration.cs:88
 msgid "Aquaponics - Carp"
 msgstr "Aquaponics - Carp"
 
-#: Migrations\Configuration.cs:89
+#: Migrations\Configuration.cs:91
 msgid "Aquaponics - Crayfish"
 msgstr "Aquaponics - Crayfish"
 
-#: Migrations\Configuration.cs:90
+#: Migrations\Configuration.cs:92
 msgid "Aquaponics - Oth. Cold Fish"
 msgstr "Aquaponics - Oth. Cold Fish"
 
-#: Migrations\Configuration.cs:91
+#: Migrations\Configuration.cs:93
 msgid "Aquaponics - Oth. Warm Fish"
 msgstr "Aquaponics - Oth. Warm Fish"
 
-#: Migrations\Configuration.cs:87
+#: Migrations\Configuration.cs:89
 msgid "Aquaponics - Tilapia"
 msgstr "Aquaponics - Tilapia"
 
-#: Migrations\Configuration.cs:88
+#: Migrations\Configuration.cs:90
 msgid "Aquaponics - Trout"
 msgstr "Aquaponics - Trout"
 
-#: Migrations\Configuration.cs:167
+#: Migrations\Configuration.cs:169
 msgid "August"
 msgstr "August"
 
-#: Migrations\Configuration.cs:134
+#: Migrations\Configuration.cs:136
 msgid "Autumn"
 msgstr "Autumn"
 
-#: Migrations\Configuration.cs:106
+#: Migrations\Configuration.cs:108
 msgid "Average"
 msgstr "Average"
 
@@ -119,8 +119,8 @@ msgstr "Average"
 #: Views\ProductionUnits\Details.cshtml:304
 #: Views\ProductionUnits\Details.cshtml:351
 #: Views\ProductionUnits\Details.cshtml:356
-#: Views\ProductionUnits\Details.cshtml:401
-#: Views\ProductionUnits\Details.cshtml:406
+#: Views\ProductionUnits\Details.cshtml:403
+#: Views\ProductionUnits\Details.cshtml:408
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:252
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:257
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:274
@@ -137,12 +137,12 @@ msgstr "Average"
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:304
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:351
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:356
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:401
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:406
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:403
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:408
 msgid "AVERAGE"
 msgstr "AVERAGE"
 
-#: Migrations\Configuration.cs:114
+#: Migrations\Configuration.cs:116
 msgid "Awesome"
 msgstr "Awesome"
 
@@ -153,7 +153,7 @@ msgstr "Awesome"
 msgid "Back to Details"
 msgstr "Back to Details"
 
-#: Migrations\Configuration.cs:76
+#: Migrations\Configuration.cs:78
 msgid "Balcony"
 msgstr "Balcony"
 
@@ -164,7 +164,7 @@ msgstr "Balcony"
 msgid "Best to contact:"
 msgstr "Best to contact:"
 
-#: Migrations\Configuration.cs:85
+#: Migrations\Configuration.cs:87
 msgid "Bioponics"
 msgstr "Bioponics"
 
@@ -193,7 +193,7 @@ msgstr "Choose the application default language"
 msgid "Choose the suitable recipes for your greenhouse"
 msgstr "Choose the suitable recipes for your greenhouse"
 
-#: Migrations\Configuration.cs:77
+#: Migrations\Configuration.cs:79
 msgid "City"
 msgstr "City"
 
@@ -220,7 +220,7 @@ msgstr "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All
 #: Views\ProductionUnits\Details.cshtml:241
 #: Views\ProductionUnits\Details.cshtml:294
 #: Views\ProductionUnits\Details.cshtml:346
-#: Views\ProductionUnits\Details.cshtml:396
+#: Views\ProductionUnits\Details.cshtml:398
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:247
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:269
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:291
@@ -229,11 +229,11 @@ msgstr "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:241
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:294
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:346
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:396
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:398
 msgid "CURRENT"
 msgstr "CURRENT"
 
-#: Migrations\Configuration.cs:82
+#: Migrations\Configuration.cs:84
 msgid "Custom Lab"
 msgstr "Custom Lab"
 
@@ -257,7 +257,7 @@ msgstr "DAY OF<br />GERMINATION<br />FROM SEED"
 msgid "DAY OF<br />HARVEST<br />FROM SOW."
 msgstr "DAY OF<br />HARVEST<br />FROM SOW."
 
-#: Migrations\Configuration.cs:171
+#: Migrations\Configuration.cs:173
 msgid "December"
 msgstr "December"
 
@@ -271,7 +271,7 @@ msgstr "Detailed information"
 msgid "Details"
 msgstr "Details"
 
-#: Migrations\Configuration.cs:81
+#: Migrations\Configuration.cs:83
 msgid "Development Kit"
 msgstr "Development Kit"
 
@@ -295,23 +295,23 @@ msgstr "EST. PROD. "
 msgid "Export CSV"
 msgstr ""
 
-#: Migrations\Configuration.cs:78
+#: Migrations\Configuration.cs:80
 msgid "Family14"
 msgstr "Family14"
 
-#: Migrations\Configuration.cs:79
+#: Migrations\Configuration.cs:81
 msgid "Family22"
 msgstr "Family22"
 
-#: Migrations\Configuration.cs:80
+#: Migrations\Configuration.cs:82
 msgid "Farm"
 msgstr "Farm"
 
-#: Migrations\Configuration.cs:161
+#: Migrations\Configuration.cs:163
 msgid "February"
 msgstr "February"
 
-#: Migrations\Configuration.cs:140
+#: Migrations\Configuration.cs:142
 msgid "Fish Tank"
 msgstr "Fish Tank"
 
@@ -320,7 +320,7 @@ msgstr "Fish Tank"
 msgid "Follow Messages sent by Sigfox from Production Units"
 msgstr "Follow Messages sent by Sigfox from Production Units"
 
-#: Migrations\Configuration.cs:107
+#: Migrations\Configuration.cs:109
 msgid "Good"
 msgstr "Good"
 
@@ -329,14 +329,14 @@ msgstr "Good"
 msgid "health. lvl"
 msgstr "health. lvl"
 
-#: Migrations\Configuration.cs:113
+#: Migrations\Configuration.cs:115
 msgid "High"
 msgstr "High"
 
 #: Views\Home\Index.cshtml:309
-#: Views\ProductionUnits\Details.cshtml:392
+#: Views\ProductionUnits\Details.cshtml:394
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:309
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:392
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:394
 msgid "Humidity (%)"
 msgstr "Humidity (%)"
 
@@ -344,35 +344,42 @@ msgstr "Humidity (%)"
 msgid "hydroponicType"
 msgstr "hydroponicType"
 
-#: Migrations\Configuration.cs:103
+#: Migrations\Configuration.cs:105
 msgid "Improvement"
 msgstr "Improvement"
 
-#: Migrations\Configuration.cs:96
+#: Migrations\Configuration.cs:98
 msgid "In Maintenance"
 msgstr "In Maintenance"
+
+#: Views\ProductionUnits\Details.cshtml:377
+#: Views\ProductionUnits\Details.cshtml:429
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:377
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:429
+msgid "Indoor"
+msgstr ""
 
 #: Viewmodels\ProductionUnitViewModel.cs:24
 msgid "info"
 msgstr "info"
 
-#: Migrations\Configuration.cs:101
+#: Migrations\Configuration.cs:103
 msgid "Info"
 msgstr "Info"
 
-#: Migrations\Configuration.cs:100
+#: Migrations\Configuration.cs:102
 msgid "Issue"
 msgstr "Issue"
 
-#: Migrations\Configuration.cs:160
+#: Migrations\Configuration.cs:162
 msgid "January"
 msgstr "January"
 
-#: Migrations\Configuration.cs:166
+#: Migrations\Configuration.cs:168
 msgid "July"
 msgstr "July"
 
-#: Migrations\Configuration.cs:165
+#: Migrations\Configuration.cs:167
 msgid "June"
 msgstr "June"
 
@@ -388,7 +395,7 @@ msgstr "last measure"
 msgid "Last Month"
 msgstr "Last Month"
 
-#: Migrations\Configuration.cs:142
+#: Migrations\Configuration.cs:144
 msgid "Light"
 msgstr "Light"
 
@@ -407,7 +414,7 @@ msgstr "Log off"
 msgid "Login"
 msgstr "Login"
 
-#: Migrations\Configuration.cs:111
+#: Migrations\Configuration.cs:113
 msgid "Low"
 msgstr "Low"
 
@@ -441,15 +448,15 @@ msgstr "Manage Recognition Records from your Production Units"
 msgid "Manage Unit"
 msgstr "Manage Unit"
 
-#: Migrations\Configuration.cs:162
+#: Migrations\Configuration.cs:164
 msgid "March"
 msgstr "March"
 
-#: Migrations\Configuration.cs:145
+#: Migrations\Configuration.cs:147
 msgid "Maximum"
 msgstr "Maximum"
 
-#: Migrations\Configuration.cs:164
+#: Migrations\Configuration.cs:166
 msgid "May"
 msgstr "May"
 
@@ -463,7 +470,7 @@ msgstr "Measures"
 msgid "Measures Monitoring"
 msgstr "Measures Monitoring"
 
-#: Migrations\Configuration.cs:112
+#: Migrations\Configuration.cs:114
 msgid "Medium"
 msgstr "Medium"
 
@@ -482,19 +489,19 @@ msgstr "Messages"
 msgid "Messages Monitoring"
 msgstr "Messages Monitoring"
 
-#: Migrations\Configuration.cs:143
+#: Migrations\Configuration.cs:145
 msgid "Moderate"
 msgstr "Moderate"
 
-#: Migrations\Configuration.cs:123
+#: Migrations\Configuration.cs:125
 msgid "Monitoring kit v.1"
 msgstr "Monitoring kit v.1"
 
-#: Migrations\Configuration.cs:124
+#: Migrations\Configuration.cs:126
 msgid "Monitoring kit v.2"
 msgstr "Monitoring kit v.2"
 
-#: Migrations\Configuration.cs:147
+#: Migrations\Configuration.cs:149
 msgid "Morning"
 msgstr "Morning"
 
@@ -527,23 +534,23 @@ msgstr "Network Status"
 msgid "New Password"
 msgstr "New Password"
 
-#: Migrations\Configuration.cs:149
+#: Migrations\Configuration.cs:151
 msgid "Night"
 msgstr "Night"
 
-#: Migrations\Configuration.cs:144
+#: Migrations\Configuration.cs:146
 msgid "Normal"
 msgstr "Normal"
 
-#: Migrations\Configuration.cs:84
+#: Migrations\Configuration.cs:86
 msgid "Not applicable"
 msgstr "Not applicable"
 
-#: Migrations\Configuration.cs:170
+#: Migrations\Configuration.cs:172
 msgid "November"
 msgstr "November"
 
-#: Migrations\Configuration.cs:169
+#: Migrations\Configuration.cs:171
 msgid "October"
 msgstr "October"
 
@@ -556,7 +563,7 @@ msgstr "Old Password"
 msgid "On Maintenance"
 msgstr "On Maintenance"
 
-#: Migrations\Configuration.cs:126
+#: Migrations\Configuration.cs:128
 msgid "Onboard touchscreen"
 msgstr "Onboard touchscreen"
 
@@ -564,6 +571,13 @@ msgstr "Onboard touchscreen"
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:226
 msgid "ONLINE SINCE"
 msgstr "ONLINE SINCE"
+
+#: Views\ProductionUnits\Details.cshtml:378
+#: Views\ProductionUnits\Details.cshtml:430
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:378
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:430
+msgid "Outdoor"
+msgstr ""
 
 #: Viewmodels\ProductionUnitViewModel.cs:29
 #: Views\ProductionUnits\Index.cshtml:22
@@ -594,7 +608,7 @@ msgstr "Password"
 msgid "PAST HOUR"
 msgstr "PAST HOUR"
 
-#: Migrations\Configuration.cs:122
+#: Migrations\Configuration.cs:124
 msgid "Pellet stove"
 msgstr "Pellet stove"
 
@@ -605,7 +619,7 @@ msgstr "Pellet stove"
 msgid "PER MONTH"
 msgstr "PER MONTH"
 
-#: Migrations\Configuration.cs:108
+#: Migrations\Configuration.cs:110
 msgid "Perfect"
 msgstr "Perfect"
 
@@ -624,15 +638,15 @@ msgstr "Performance &amp; Health"
 msgid "Performance &amp; Health (Preview)"
 msgstr "Performance &amp; Health (Preview)"
 
-#: Migrations\Configuration.cs:136
+#: Migrations\Configuration.cs:138
 msgid "Permaculture Bed"
 msgstr "Permaculture Bed"
 
-#: Migrations\Configuration.cs:128
+#: Migrations\Configuration.cs:130
 msgid "Permaculture beds"
 msgstr "Permaculture beds"
 
-#: Migrations\Configuration.cs:129
+#: Migrations\Configuration.cs:131
 msgid "Permaculture beds & biochar"
 msgstr "Permaculture beds & biochar"
 
@@ -663,7 +677,7 @@ msgstr "Pioneer Citizen Network"
 msgid "Please Sign In"
 msgstr "Please Sign In"
 
-#: Migrations\Configuration.cs:105
+#: Migrations\Configuration.cs:107
 msgid "Poor"
 msgstr "Poor"
 
@@ -735,25 +749,25 @@ msgstr "See Recommandations for my Production Unit:"
 msgid "sensor type"
 msgstr "sensor type"
 
-#: Migrations\Configuration.cs:168
+#: Migrations\Configuration.cs:170
 msgid "September"
 msgstr "September"
 
 #: Controllers\HomeController.cs:167
 #: Controllers\InteractiveMapController.cs:202
-#: Migrations\Configuration.cs:94
+#: Migrations\Configuration.cs:96
 msgid "Setup Planned"
 msgstr "Setup Planned"
 
-#: Migrations\Configuration.cs:127
+#: Migrations\Configuration.cs:129
 msgid "Sigfox connectivity kit"
 msgstr "Sigfox connectivity kit"
 
-#: Migrations\Configuration.cs:121
+#: Migrations\Configuration.cs:123
 msgid "Solar panels"
 msgstr "Solar panels"
 
-#: Migrations\Configuration.cs:132
+#: Migrations\Configuration.cs:134
 msgid "Spring"
 msgstr "Spring"
 
@@ -764,11 +778,11 @@ msgstr "status"
 
 #: Controllers\HomeController.cs:170
 #: Controllers\InteractiveMapController.cs:205
-#: Migrations\Configuration.cs:97
+#: Migrations\Configuration.cs:99
 msgid "Stopped"
 msgstr "Stopped"
 
-#: Migrations\Configuration.cs:133
+#: Migrations\Configuration.cs:135
 msgid "Summer"
 msgstr "Summer"
 
@@ -811,7 +825,7 @@ msgstr "TOTAL<br />CONNECTED <br />PROD. UNITS"
 msgid "TOTAL<br />EST. PROD. <br />PER MONTH"
 msgstr "TOTAL<br />EST. PROD. <br />PER MONTH"
 
-#: Migrations\Configuration.cs:138
+#: Migrations\Configuration.cs:140
 msgid "Tower Garden"
 msgstr "Tower Garden"
 
@@ -820,8 +834,8 @@ msgstr "Tower Garden"
 msgid "type"
 msgstr "type"
 
-#: Migrations\Configuration.cs:109
-#: Migrations\Configuration.cs:115
+#: Migrations\Configuration.cs:111
+#: Migrations\Configuration.cs:117
 msgid "Unknown"
 msgstr "Unknown"
 
@@ -830,7 +844,7 @@ msgid "Up & Running"
 msgstr "Up & Running"
 
 #: Controllers\HomeController.cs:168
-#: Migrations\Configuration.cs:95
+#: Migrations\Configuration.cs:97
 msgid "Up and Running"
 msgstr "Up and Running"
 
@@ -846,11 +860,11 @@ msgstr ""
 
 #: Controllers\HomeController.cs:166
 #: Controllers\InteractiveMapController.cs:201
-#: Migrations\Configuration.cs:93
+#: Migrations\Configuration.cs:95
 msgid "Wait Confirm."
 msgstr "Wait Confirm."
 
-#: Migrations\Configuration.cs:99
+#: Migrations\Configuration.cs:101
 msgid "Warning"
 msgstr "Warning"
 
@@ -868,7 +882,7 @@ msgstr "Water Temperature (°C)"
 msgid "Watering Level:"
 msgstr "Watering Level:"
 
-#: Migrations\Configuration.cs:150
+#: Migrations\Configuration.cs:152
 msgid "Weekend"
 msgstr "Weekend"
 
@@ -877,11 +891,11 @@ msgstr "Weekend"
 msgid "WEEKS"
 msgstr "WEEKS"
 
-#: Migrations\Configuration.cs:131
+#: Migrations\Configuration.cs:133
 msgid "Winter"
 msgstr "Winter"
 
-#: Migrations\Configuration.cs:137
+#: Migrations\Configuration.cs:139
 msgid "Zipgrow Tower"
 msgstr "Zipgrow Tower"
 
