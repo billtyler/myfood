@@ -35,8 +35,10 @@ namespace myfoodapp.Hub
 
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
-            // Change from the default of 'en'.
-            //i18n.LocalizedApplication.Current.DefaultLanguage = "en";
+            //Change from the default of 'en'.
+            i18n.LocalizedApplication.Current.DefaultLanguage = "en";
+
+            //Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
 
             // Change from the default of 'i18n.langtag'.
             //i18n.LocalizedApplication.Current.CookieName = "i18n_langtag";
@@ -68,24 +70,11 @@ namespace myfoodapp.Hub
                 return true;
             };
 
-            // Extend (+=) or override (=) the default handler for Set-PAL event.
-            // The default handler applies the setting to both the CurrentCulture and CurrentUICulture
-            // settings of the thread, as shown below.
-            //i18n.LocalizedApplication.Current.SetPrincipalAppLanguageForRequestHandlers = delegate (System.Web.HttpContextBase context, ILanguageTag langtag)
-            //{
-            //    // Do own stuff with the language tag.
-            //    // The default handler does the following:
-            //    if (langtag != null)
-            //    {
-            //        Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = langtag.GetCultureInfo();
-            //    }
-            //};
-
-
             System.Timers.Timer timer = new System.Timers.Timer(TimerIntervalInMilliseconds);
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.Start();
+
         }
         static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

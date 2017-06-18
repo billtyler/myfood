@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace myfoodapp.Hub.Controllers
 {
@@ -42,6 +43,49 @@ namespace myfoodapp.Hub.Controllers
             };
 
             return View(map);
+        }
+
+        public ActionResult GetClusterMapData()
+        {
+            var db = new ApplicationDbContext();
+            var measureService = new MeasureService(db);
+
+            var listMarker = new List<Marker>();
+
+            db.ProductionUnits.ToList().ForEach(p =>
+                                        listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
+                                                                  p.info, p.startDate.ToShortDateString()))
+                                        { shape = "redMarker" }));
+
+            var map = new Models.ClusterMap()
+            {
+                Name = "map",
+                CenterLatitude = 44.0235561,
+                CenterLongitude = -10.3640063,
+                Zoom = 4,
+                TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+                TileSubdomains = new string[] { "a", "b", "c" },
+                TileAttribution = "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>"
+            };
+
+            var result = new GeoClusterMapData { type = "FeatureCollection" };
+            var list = new List<GeoFeature>();
+            foreach (var marker in listMarker)
+            {
+                var feature = new GeoFeature { type = "Feature" };
+                feature.properties = new GeoProperties { scalerank = 2, name = marker.name, long_x = marker.latlng[0], lat_y = marker.latlng[1] };
+                feature.geometry = new Geometry { type = "Point", coordinates = new double[] { marker.latlng[1], marker.latlng[0] } };
+                list.Add(feature);
+            }
+            result.features = list.ToArray();
+            map.ClusterData = result;
+
+            var data = new JavaScriptSerializer().Serialize(map);
+
+            return Json(new
+            {
+                data
+            }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetProductionUnitMeasures(int id)
@@ -83,19 +127,36 @@ namespace myfoodapp.Hub.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetProductionUnitIndex(double SelectedProductionUnitLat, double SelectedProductionUnitLong)
+        public ActionResult GetProductionUnitIndex(string SelectedProductionUnitCoord)
         {
             var db = new ApplicationDbContext();
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+            NumberStyles style;
+            CultureInfo culture;
 
-            var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == SelectedProductionUnitLat &&
-                                                                             p.locationLongitude == SelectedProductionUnitLong);
+            style = NumberStyles.AllowDecimalPoint;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
 
-            return Json(new
+            var strLat = SelectedProductionUnitCoord.Split('|')[0];
+            var strLong = SelectedProductionUnitCoord.Split('|')[1];
+
+            double latitude = 0;
+            double longitude = 0;
+
+            if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                CurrentIndex = currentProductionUnitIndex
-            }, JsonRequestBehavior.AllowGet);
+                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+
+                var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
+                                                                                 p.locationLongitude == longitude);
+
+                return Json(new
+                {
+                    CurrentIndex = currentProductionUnitIndex
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return null;
         }
 
         public ActionResult GetProductionUnitDetailList()

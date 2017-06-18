@@ -38,6 +38,8 @@ namespace myfoodapp.Hub.Models
         dissolvedOxygen = 3,
         orp = 4,
         airTemperature = 5,
-        humidity = 6
+        humidity = 6,
+        externalAirTemperature = 7,
+        externalHumidity = 8
     }
 }

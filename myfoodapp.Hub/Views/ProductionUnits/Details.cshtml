@@ -360,12 +360,13 @@
                             </div>
                         </div>
                         <div class="k-content wide">
-                            @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
+                            @(Html.Kendo().Chart<myfoodapp.Hub.Models.GroupedMeasureViewModel>()
                         .Name("chartAirTemp")
                         .Theme("metro")
                         .ChartArea(ch => ch.Background("#eeeeee"))
+                        .Legend(l => l.Position(ChartLegendPosition.Bottom))
                         .DataSource(dataSource => dataSource
-                            .Read(read => read.Action("AirTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                            .Read(read => read.Action("TempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
                             .Sort(sort => sort.Add(model => model.captureDate).Ascending())
                         )
                         .SeriesDefaults(seriesDefaults => seriesDefaults
@@ -373,7 +374,8 @@
                         )
                         .Series(series =>
                         {
-                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                            series.ScatterLine(model => model.captureDate, model => model.airTemperatureValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Indoor]]]");
+                            series.ScatterLine(model => model.captureDate, model => model.externalAirTemperatureValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Outdoor]]]").Visible(false);
                         })
                         .YAxis(y => y
                             .Numeric()
@@ -410,10 +412,11 @@
                             </div>
                         </div>
                         <div class="k-content wide">
-                            @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
+                            @(Html.Kendo().Chart<myfoodapp.Hub.Models.GroupedMeasureViewModel>()
                         .Name("chartHumidity")
                         .Theme("metro")
                         .ChartArea(ch => ch.Background("#eeeeee"))
+                        .Legend(l => l.Position(ChartLegendPosition.Bottom))
                         .DataSource(dataSource => dataSource
                             .Read(read => read.Action("HumidityMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
                             .Sort(sort => sort.Add(model => model.captureDate).Ascending())
@@ -423,7 +426,8 @@
                         )
                         .Series(series =>
                         {
-                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                            series.ScatterLine(model => model.captureDate, model => model.humidityValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Indoor]]]");
+                            series.ScatterLine(model => model.captureDate, model => model.externalHumidityValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Outdoor]]]").Visible(false);
                         })
                         .YAxis(y => y
                             .Numeric()
