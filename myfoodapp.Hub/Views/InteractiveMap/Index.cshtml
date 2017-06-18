@@ -130,12 +130,27 @@
         $.ajax({
             url: "@Url.Action("GetProductionUnitIndex", "InteractiveMap")",
             dataType: "json",
-            data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
+            data: { SelectedProductionUnitCoord: currentProductionUnitLat + "|" + currentProductionUnitLong },
             type: "POST",
             success: function(response) {
                 swiper.slideTo(response.CurrentIndex);
             }
         });
+    }
+
+    window.onClusterShow = function (latLang) {
+
+        var currentProductionUnitLat = latLang[1];
+        var currentProductionUnitLong = latLang[0];
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitIndex", "InteractiveMap")",
+            dataType: "json",
+        data: { SelectedProductionUnitCoord: currentProductionUnitLat + "|" + currentProductionUnitLong },
+        type: "POST",
+        success: function(response) {
+            swiper.slideTo(response.CurrentIndex);
+        }
+    });
     }
 
     function onShapeCreated(e) {
@@ -182,7 +197,7 @@
         <div id="map-container" class="col-md-8">
             <div class="widget large-widget">
                 <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; [[[Pioneer Citizen Map]]]</h3>
-                <div class="maps">
+                @*<div class="maps">
                     @model myfoodapp.Hub.Models.Map
                     @(Html.Kendo().Map()
                     .Name(Model.Name)
@@ -220,7 +235,9 @@
                                           .ShapeMouseLeave("onShapeMouseLeave")
                             )
                     )
-                </div>
+                </div>*@
+
+                <iframe style="height: 350px; width: 100%" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
             </div>
         </div>
     </div>

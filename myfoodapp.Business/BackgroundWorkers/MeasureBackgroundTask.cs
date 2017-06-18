@@ -117,6 +117,8 @@ namespace myfoodapp.Business
             if (userSettings.isDiagnosticModeEnable)
             {
                 TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOTIC_MODE;
+
+                if(userSettings.isSigFoxComEnable && sigfoxManager.isInitialized)
                 sigfoxManager.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAA");
             }
                 

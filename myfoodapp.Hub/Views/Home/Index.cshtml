@@ -1,4 +1,6 @@
-﻿<script type="text/javascript">
+﻿
+
+<script type="text/javascript">
 
     var swiper;
 
@@ -44,66 +46,10 @@
                 });
             }
         });
-
-        $.ajax({
-            url: "@Url.Action("GetProductionUnitMeasures", "Home")",
-            dataType: "json",
-        data: { id: 0 },
-        type: "POST",
-        success: function (response) {
-            $("#CurrentPhValue").text(response.CurrentPhValue);
-            $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
-            $("#AverageHourPhValue").text(response.AverageHourPhValue);
-            $("#AverageDayPhValue").text(response.AverageDayPhValue);
-            $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
-
-            $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
-            $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
-            $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
-            $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
-            $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
-
-            $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
-            $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
-            $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
-            $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
-            $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
-
-            $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
-            $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
-            $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
-            $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
-            $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
-        }
-        });
     }
 
     function onSlideChangeEnd(ep)
     {
-        $("#CurrentPhValue").text('-');
-        $("#CurrentPhCaptureTime").text('-');
-        $("#AverageHourPhValue").text('-');
-        $("#AverageDayPhValue").text('-');
-        $("#LastDayPhCaptureTime").text('-');
-
-        $("#CurrentWaterTempValue").text('-');
-        $("#CurrentWaterTempCaptureTime").text('-');
-        $("#AverageHourWaterTempValue").text('-');
-        $("#AverageDayWaterTempValue").text('-');
-        $("#LastDayWaterTempCaptureTime").text('-');
-
-        $("#CurrentAirTempValue").text('-');
-        $("#CurrentAirTempCaptureTime").text('-');
-        $("#AverageHourAirTempValue").text('-');
-        $("#AverageDayAirTempValue").text('-');
-        $("#LastDayAirTempCaptureTime").text('-');
-
-        $("#CurrentHumidityValue").text('-');
-        $("#CurrentHumidityCaptureTime").text('-');
-        $("#AverageHourHumidityValue").text('-');
-        $("#AverageDayHumidityValue").text('-');
-        $("#LastDayHumidityCaptureTime").text('-');
-
         $.ajax({
             url: "@Url.Action("GetProductionUnitMeasures", "Home")",
             dataType: "json",
@@ -137,7 +83,7 @@
     });
     }
 
-    function onShow(e) {
+    @*function onShow(e) {
 
         var currentProductionUnitLat = this.marker.options.location[0];
         var currentProductionUnitLong = this.marker.options.location[1];
@@ -151,6 +97,21 @@
                 swiper.slideTo(response.CurrentIndex);
             }
         });
+    }*@
+
+    window.onClusterShow = function (latLang) {
+
+        var currentProductionUnitLat = latLang[1];
+        var currentProductionUnitLong = latLang[0];
+        $.ajax({
+            url: "@Url.Action("GetProductionUnitIndex", "Home")",
+            dataType: "json",
+            data: { SelectedProductionUnitCoord: currentProductionUnitLat + "|" + currentProductionUnitLong },
+        type: "POST",
+        success: function(response) {
+            swiper.slideTo(response.CurrentIndex);
+        }
+    });
     }
 
     function onShapeCreated(e) {
@@ -178,6 +139,15 @@
     </div>
 </script>
 
+@*<style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+        }
+    </style>*@
+
+
+
 <div id="main-section-header" class="row">
     <h2 id="title-pioneer" class="col-md-3">[[[Pioneer Citizen Network]]]</h2>
     <div style="clear:both;"></div>
@@ -196,51 +166,53 @@
                 <div class="swiper-button-next swiper-button-white"></div>
             </div>
         </div>
-        <div id="map-container" class="col-md-7">
-        @model myfoodapp.Hub.Models.Map
+        @*<div id="map-container" class="col-md-4">
+            @model myfoodapp.Hub.Models.Map
 
-         @(Html.Kendo().Map()
-        .Name(Model.Name)
-        .Center(Model.CenterLatitude, Model.CenterLongitude)
-        .Zoom(Model.Zoom)
-        .Zoomable(false)
-        .Layers(layers =>
-                {
-                    layers.Add()
-                        .Style(style => style
-                            .Fill(fill => fill.Color("#018001").Opacity(0.7))
-                            .Stroke(stroke => stroke.Color("#FFFFFF"))
-                        )
-                        .Type(MapLayerType.Shape)
-                        .DataSource(dataSource => dataSource
-                            .GeoJson()
-                            .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
-                        );
-                })
-        .Markers(markers =>
-        {
-            foreach (var marker in Model.Markers)
+             @(Html.Kendo().Map()
+            .Name(Model.Name)
+            .Center(Model.CenterLatitude, Model.CenterLongitude)
+            .Zoom(Model.Zoom)
+            .Zoomable(false)
+            .Layers(layers =>
+                    {
+                        layers.Add()
+                            .Style(style => style
+                                .Fill(fill => fill.Color("#018001").Opacity(0.7))
+                                .Stroke(stroke => stroke.Color("#FFFFFF"))
+                            )
+                            .Type(MapLayerType.Shape)
+                            .DataSource(dataSource => dataSource
+                                .GeoJson()
+                                .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
+                            );
+                    })
+            .Markers(markers =>
             {
-                markers.Add()
-                .Location(marker.latlng)
-                .Shape(marker.shape)
-                .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
-                .Tooltip(t => t.Events(e => e.Show("onShow")))
-                .Title(marker.name);               
-            }
-        })
-        .Events(events => events
-                          .ShapeCreated("onShapeCreated")
-                          .ShapeMouseEnter("onShapeMouseEnter")
-                          .ShapeMouseLeave("onShapeMouseLeave")
+                foreach (var marker in Model.Markers)
+                {
+                    markers.Add()
+                    .Location(marker.latlng)
+                    .Shape(marker.shape)
+                    .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
+                    .Tooltip(t => t.Events(e => e.Show("onShow")))
+                    .Title(marker.name);
+                }
+            })
+            .Events(events => events
+                              .ShapeCreated("onShapeCreated")
+                              .ShapeMouseEnter("onShapeMouseEnter")
+                              .ShapeMouseLeave("onShapeMouseLeave")
+                )
             )
-        )
-        </div>
-</div>
+            </div>*@
 
-<div id="statsContainer" class="row">
+        <iframe class="col-md-7" style="height: 350px" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
+    </div>
+
+    <div id="statsContainer" class="row">
         <div id="pHContainer" class="col-md-3">
-            <h3 class="section-header" style="text-align:center;font-size:larger">[[[pH]]]</h3>
+            <h3 class="section-header" style="text-align:center;font-size:larger">pH</h3>
             <div class="sparkline-container">
                 <div style="margin: 3px;">
                     <div class="column-left">
@@ -258,10 +230,10 @@
                         <h1 id="AverageDayPhValue" style="font-size:xx-large;text-align: center;">-</h1>
                         <h2 id="LastDayPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
                     </div>
-                </div>    
+                </div>
             </div>
         </div>
-        <div id = "WaterTempContainer" class="col-md-3">
+        <div id="WaterTempContainer" class="col-md-3">
             <h3 class="section-header" style="text-align:center;font-size:larger">[[[Water Temperature (°C)]]]</h3>
             <div class="sparkline-container">
                 <div style="margin: 3px;">
@@ -280,7 +252,7 @@
                         <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
                         <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
         <div id="AirTempContainer" class="col-md-3">
@@ -306,33 +278,33 @@
             </div>
         </div>
         <div id="HumidityContainer" class="col-md-3">
-        <h3 class="section-header" style="text-align:center;font-size:larger">[[[Humidity (%)]]]</h3>
-        <div class="sparkline-container">
-            <div style="margin: 3px;">
-                <div class="column-left">
-                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
-                    <h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
-                    <h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                </div>
-                <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                    <h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
-                    <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
-                </div>
-                <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                    <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                    <h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
-                    <h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+            <h3 class="section-header" style="text-align:center;font-size:larger">[[[Humidity (%)]]]</h3>
+            <div class="sparkline-container">
+                <div style="margin: 3px;">
+                    <div class="column-left">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
+                        <h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+                        <h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+                        <h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+                        <h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="performanceHealthAnalysis">
-    <div id="performanceHealthAnalysisContainer" class="col-md-4">
-        <h3 class="section-header">[[[Network Status]]]</h3>
-        @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
+    <div id="performanceHealthAnalysis">
+        <div id="performanceHealthAnalysisContainer" class="col-md-4">
+            <h3 class="section-header">[[[Network Status]]]</h3>
+            @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
         .Name("chart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Right)
@@ -360,107 +332,106 @@
             .Visible(true)
             .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
         )
-        )
-    </div>
-    <div id="map-info" class="col-md-4">
-        <div class="widget">
-            <h3 class="section-header">[[[Network Info]]]</h3> 
-            <div style="margin: 25px;">
-                <div class="column-left">
-                    <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CONNECTED <br />PROD. UNITS]]] </h2>
-                    <h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
-                </div>
-                <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                    <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />EST. PROD. <br />PER MONTH]]]</h2>
-                    <h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
-                </div>
-                <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                    <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CO2 SAVED<br />PER MONTH]]]</h2>
-                    <h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
+            )
+        </div>
+        <div id="map-info" class="col-md-4">
+            <div class="widget">
+                <h3 class="section-header">[[[Network Info]]]</h3>
+                <div style="margin: 25px;">
+                    <div class="column-left">
+                        <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CONNECTED <br />PROD. UNITS]]]</h2>
+                        <h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
+                    </div>
+                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
+                        <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />EST. PROD. <br />PER MONTH]]]</h2>
+                        <h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
+                    </div>
+                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
+                        <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CO2 SAVED<br />PER MONTH]]]</h2>
+                        <h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    @*<div id="rightsFooter" style="text-align:center">
-        <img width="25" height="25" src="~/Content/miniLogo.png" />
-        <p>Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
-    </div>*@
-</div>
+        <div id="rightsFooter" style="text-align:center">
+            <img width="25" height="25" src="~/Content/miniLogo.png" />
+            <p>Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
+        </div>
+    </div>
 
 </div>
 
 <style>
-
-            #rightsFooter {
-                    visibility: hidden;
-                    display: none;
-            }
-
-            .swiper-container {
-                width: 100%;
-                height: 100%;
-                background: #000;
-            }
-
-            .swiper-slide {
-                font-size: 18px;
-                color:#fff;
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-            }
-
-            .parallax-bg {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 130%;
-                height: 100%;
-                -webkit-background-size: cover;
-                background-size: cover;
-                background-position: center;
-            }
-
-            .swiper-slide .title {
-              font-weight: 900;
-              color: white;
-              text-transform: uppercase;
-              word-wrap: break-word;
-              margin: 0;
-              padding-top:20px;
-              font-size: 2rem;
-              padding-left:20px;
-            }
-
-            .swiper-slide .subtitle {
-              color: white;
-              margin: 0;
-              font-size: 1rem;
-              padding: 20px;
-              padding-left:20px;
-            }
-
-            .swiper-slide .text {
-              color: white;
-              font-size: 1rem;
-              margin: 0;
-              word-wrap: break-word;
-              padding-left:20px;
-              padding-top:100px;
-            }
-
-            .box{
-              width: 320px;
-              height: 240px;
-              background-size:contain;
-            }
-
-    h1 {
-        font-size:xx-large;
+    #rightsFooter {
+        visibility: hidden;
+        display: none;
     }
 
-     .widget-text {
-        margin:7px;
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        background: #000;
+    }
+
+    .swiper-slide {
+        font-size: 18px;
+        color: #fff;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .parallax-bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 130%;
+        height: 100%;
+        -webkit-background-size: cover;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .swiper-slide .title {
+        font-weight: 900;
+        color: white;
+        text-transform: uppercase;
+        word-wrap: break-word;
+        margin: 0;
+        padding-top: 20px;
+        font-size: 2rem;
+        padding-left: 20px;
+    }
+
+    .swiper-slide .subtitle {
+        color: white;
+        margin: 0;
+        font-size: 1rem;
+        padding: 20px;
+        padding-left: 20px;
+    }
+
+    .swiper-slide .text {
+        color: white;
+        font-size: 1rem;
+        margin: 0;
+        word-wrap: break-word;
+        padding-left: 20px;
+        padding-top: 100px;
+    }
+
+    .box {
+        width: 320px;
+        height: 240px;
+        background-size: contain;
+    }
+
+    h1 {
+        font-size: xx-large;
+    }
+
+    .widget-text {
+        margin: 7px;
     }
 
     .column-left {
@@ -481,7 +452,7 @@
     #OptionList {
         background: transparent;
         border-color: transparent;
-        color: #333      
+        color: #333;
     }
 
     .k-listview:after {
@@ -506,13 +477,13 @@
     }
 
     .k-tooltip-content {
-        background-color:#018001;
-        stroke:black;  
+        background-color: #018001;
+        stroke: black;
     }
 
     .k-widget.k-tooltip {
-        background-color:#018001;
-        stroke:black;  
+        background-color: #018001;
+        stroke: black;
     }
 
     .k-loading-mask {
@@ -521,39 +492,37 @@
 
     @@media screen and (max-width: 480px) {
 
-    #rightsFooter {
-        visibility: visible;
-        display: normal;
+        #rightsFooter {
+            visibility: visible;
+            display: normal;
+        }
+
+        .swiper-container {
+            width: auto;
+            margin-left: -30px;
+            margin-right: -30px;
+        }
+
+        .widget-text {
+            font-size: xx-small;
+            margin: 2px;
+        }
+
+        h1 {
+            font-size: medium;
+        }
+
+        .picture-widget {
+            height: 200px;
+        }
+
+        #map-container {
+            visibility: hidden;
+            display: none;
+        }
     }
-
-    .swiper-container {
-        width: auto;
-        margin-left:-30px;
-        margin-right:-30px;
-    }
-
-   .widget-text {
-         font-size: xx-small;
-         margin:2px;
-    }
-
-    h1 {
-         font-size: medium;
-    }
-
-    .picture-widget {
-         height:200px;
-    }
-
-     #map-container{
-         visibility:hidden;
-         display:none;
-      }
-
-    }
-
 </style>
-
-
+@*<div id="map"></div>
+    <script src="~/Scripts/lib/index.js"></script>*@
 
 

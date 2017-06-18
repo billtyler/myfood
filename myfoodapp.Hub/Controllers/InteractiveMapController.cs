@@ -48,6 +48,35 @@ namespace myfoodapp.Hub.Controllers
             return View(map);
         }
 
+        public ActionResult ClusterMap()
+        {
+            ViewBag.Title = "Interactive Map Page";
+
+            //var db = new ApplicationDbContext();
+            //var measureService = new MeasureService(db);
+
+            //var listMarker = new List<Marker>();
+
+            //db.ProductionUnits.Include(p => p.owner).ToList().ForEach(p =>
+            //                            listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
+            //                                                      p.info, p.startDate.ToShortDateString()))
+            //                            { shape = "redMarker" }));
+
+            //var map = new Models.Map()
+            //{
+            //    Name = "map",
+            //    CenterLatitude = 46.094602,
+            //    CenterLongitude = 10.998050,
+            //    Zoom = 4,
+            //    TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+            //    TileSubdomains = new string[] { "a", "b", "c" },
+            //    TileAttribution = "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>",
+            //    Markers = listMarker
+            //};
+
+            return View();
+        }
+
         public ActionResult GetProductionUnitMeasures(int id)
         {
             var db = new ApplicationDbContext();
@@ -65,19 +94,36 @@ namespace myfoodapp.Hub.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetProductionUnitIndex(double SelectedProductionUnitLat, double SelectedProductionUnitLong)
+        public ActionResult GetProductionUnitIndex(string SelectedProductionUnitCoord)
         {
             var db = new ApplicationDbContext();
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList();
+            NumberStyles style;
+            CultureInfo culture;
 
-            var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == SelectedProductionUnitLat &&
-                                                                             p.locationLongitude == SelectedProductionUnitLong);
+            style = NumberStyles.AllowDecimalPoint;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
 
-            return Json(new
+            var strLat = SelectedProductionUnitCoord.Split('|')[0];
+            var strLong = SelectedProductionUnitCoord.Split('|')[1];
+
+            double latitude = 0;
+            double longitude = 0;
+
+            if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                CurrentIndex = currentProductionUnitIndex
-            }, JsonRequestBehavior.AllowGet);
+                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+
+                var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
+                                                                                 p.locationLongitude == longitude);
+
+                return Json(new
+                {
+                    CurrentIndex = currentProductionUnitIndex
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return null;
         }
 
         public ActionResult GetProductionUnitDetailList()

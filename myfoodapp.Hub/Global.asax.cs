@@ -38,7 +38,7 @@ namespace myfoodapp.Hub
             //Change from the default of 'en'.
             i18n.LocalizedApplication.Current.DefaultLanguage = "en";
 
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+            //Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
 
             // Change from the default of 'i18n.langtag'.
             //i18n.LocalizedApplication.Current.CookieName = "i18n_langtag";
@@ -74,6 +74,7 @@ namespace myfoodapp.Hub
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.Start();
+
         }
         static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {

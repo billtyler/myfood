@@ -128,7 +128,7 @@ namespace myfoodapp.Hub.Migrations
             context.Options.Add(new Option() { Id = 9, name = "[[[Onboard touchscreen]]]" });
             context.Options.Add(new Option() { Id = 10, name = "[[[Sigfox connectivity kit]]]" });
             context.Options.Add(new Option() { Id = 11, name = "[[[Permaculture beds]]]" });
-            context.Options.Add(new Option() { Id = 12, name = "[[[Permaculture beds & biochar]]]" });
+            context.Options.Add(new Option() { Id = 12, name = "[[[Permaculture beds and biochar]]]" });
 
             context.Seasons.Add(new Season() { Id = 0, name = "[[[Winter]]]" });
             context.Seasons.Add(new Season() { Id = 1, name = "[[[Spring]]]" });
