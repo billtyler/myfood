@@ -113,6 +113,8 @@ namespace myfoodapp.Hub.Models
         public ProductionUnit productionUnit { get; set; }
         [Required]
         public EventType eventType { get; set; }
+        public string createdBy { get; set; }
+        public bool? isOpen { get; set; }     
     }
 
     public class EventType
@@ -121,6 +123,20 @@ namespace myfoodapp.Hub.Models
         public int Id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        public bool isDisplayedForUser { get; set; }
+        public int order { get; set; }
+        public List<EventTypeItem> eventTypeItems { get; set; }
+    }
+
+    public class EventTypeItem
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
+        public bool? isRestrictedForAdmin { get; set; }
+        public EventType eventType { get; set; }
+        public int order { get; set; }
     }
 
     public class PreferedMoment

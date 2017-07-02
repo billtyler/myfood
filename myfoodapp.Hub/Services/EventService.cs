@@ -25,6 +25,8 @@ namespace myfoodapp.Hub.Services
                 Id = ev.Id,
                 date = ev.date,
                 description = ev.description,
+                isOpen = ev.isOpen,
+                createdBy = ev.createdBy,
                 productionUnitId = ev.productionUnit.Id,
                 productionUnit = new ProductionUnitViewModel()
                 {
@@ -47,12 +49,14 @@ namespace myfoodapp.Hub.Services
         {
             IList<EventViewModel> result = new List<EventViewModel>();
 
-            result = entities.Events.Include("productionUnit").Where(ev => ev.productionUnit.Id == currentProductionId)
+            result = entities.Events.Include(e => e.productionUnit).Where(ev => ev.productionUnit.Id == currentProductionId)
                                                               .Select(ev => new EventViewModel
             {
                 Id = ev.Id,
                 date = ev.date,
                 description = ev.description,
+                isOpen = ev.isOpen,
+                createdBy = ev.createdBy,
                 productionUnitId = ev.productionUnit.Id,
                 productionUnit = new ProductionUnitViewModel()
                 {

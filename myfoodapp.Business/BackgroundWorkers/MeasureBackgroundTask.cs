@@ -197,7 +197,7 @@ namespace myfoodapp.Business
                             if (sensorManager.isSensorOnline(SensorTypeEnum.ph))
                             {
                                 if (userSettings.isDiagnosticModeEnable)
-                                    logModel.AppendLog(Log.CreateLog("pH capturing", Log.LogType.Information));
+                                    logModel.AppendLog(Log.CreateLog("PH capturing", Log.LogType.Information));
 
                                 decimal capturedValue = 0;
                                 capturedValue = sensorManager.RecordPhMeasure(userSettings.isSleepModeEnable);
@@ -212,13 +212,13 @@ namespace myfoodapp.Business
 
                                     if (userSettings.isDiagnosticModeEnable)
                                     {
-                                        logModel.AppendLog(Log.CreateLog(String.Format("pH captured : {0}", capturedValue), Log.LogType.Information));
+                                        logModel.AppendLog(Log.CreateLog(String.Format("PH captured : {0}", capturedValue), Log.LogType.Information));
                                         var status = sensorManager.GetSensorStatus(SensorTypeEnum.ph, userSettings.isSleepModeEnable);
-                                        logModel.AppendLog(Log.CreateLog(String.Format("pH status : {0}", status), Log.LogType.System));
+                                        logModel.AppendLog(Log.CreateLog(String.Format("PH status : {0}", status), Log.LogType.System));
                                     }              
                                 }
                                 else
-                                logModel.AppendLog(Log.CreateLog(String.Format("pH value out of range - {0}", capturedValue), Log.LogType.Warning));
+                                logModel.AppendLog(Log.CreateLog(String.Format("PH value out of range - {0}", capturedValue), Log.LogType.Warning));
                             }
 
                             if (sensorManager.isSensorOnline(SensorTypeEnum.orp))

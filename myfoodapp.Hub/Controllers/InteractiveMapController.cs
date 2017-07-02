@@ -112,7 +112,7 @@ namespace myfoodapp.Hub.Controllers
 
             if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList();
 
                 var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
                                                                                  p.locationLongitude == longitude);

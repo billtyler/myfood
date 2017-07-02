@@ -16,6 +16,8 @@ namespace myfoodapp.Hub.Models
         public ProductionUnitViewModel productionUnit { get; set; }
         public int eventTypeId { get; set; }
         public EventTypeViewModel eventType { get; set; }
+        public bool? isOpen { get; set; }
+        public string createdBy { get; set; }
     }
 
     public class EventTypeViewModel

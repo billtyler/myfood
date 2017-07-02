@@ -186,6 +186,14 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\..\myfoodapp\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
       <Private>True</Private>
@@ -343,6 +351,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="500.aspx.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="500.aspx.designer.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -384,6 +399,8 @@
     <Compile Include="Common\DecimalModelBinder.cs" />
     <Compile Include="Common\MailManager.cs" />
     <Compile Include="Common\NotificationPushManager.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -439,6 +456,10 @@
     <Compile Include="Migrations\201705081252475_Add_User_Language.Designer.cs">
       <DependentUpon>201705081252475_Add_User_Language.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706220609383_EventTypeList.cs" />
+    <Compile Include="Migrations\201706220609383_EventTypeList.Designer.cs">
+      <DependentUpon>201706220609383_EventTypeList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -455,6 +476,7 @@
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RecognitionRecordModel.cs" />
+    <Compile Include="Models\UserRoles.cs" />
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\RecognitionRecordService.cs" />
     <Compile Include="Services\ProductionUnitService.cs" />
@@ -478,6 +500,8 @@
     <Compile Include="Viewmodels\MessageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="500.aspx" />
+    <Content Include="500.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1159,6 +1183,7 @@
     <Content Include="Content\marker-shadow.png" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\miniLogoWhite.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Pictures\GardeningType\gardeningFishTank.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningPermacultureBed.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningTowerGarden.png" />
@@ -1235,6 +1260,7 @@
     <Content Include="Content\Pictures\Sites\VillevaudeFamily22.jpg" />
     <Content Include="Content\Swiper\swiper.css" />
     <Content Include="Content\Swiper\swiper.min.css" />
+    <Content Include="ErrorServer.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -1247,7 +1273,6 @@
     <Content Include="Global.asax" />
     <Content Include="OneSignalSDKUpdaterWorker.js" />
     <Content Include="OneSignalSDKWorker.js" />
-    <Content Include="readme.txt" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -3184,6 +3209,13 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Views\Admin\AddRole.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\EditRoles.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ViewAllRoles.cshtml" />
+    <Content Include="Views\Error\Error500.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3224,6 +3256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705081252475_Add_User_Language.resx">
       <DependentUpon>201705081252475_Add_User_Language.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706220609383_EventTypeList.resx">
+      <DependentUpon>201706220609383_EventTypeList.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

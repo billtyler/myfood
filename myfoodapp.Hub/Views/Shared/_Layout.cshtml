@@ -49,7 +49,11 @@
             <ul class="nav">
                 @if (Request.IsAuthenticated)
                 {
-                    <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; [[[Messages]]]</a></li>
+                    @*if (User.IsInRole("Admin"))
+                    {
+                        <li><a href="@(Url.Action("Index", "Admin"))"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; [[[User Management]]]</a></li>
+                    }*@
+                        <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; [[[Messages]]]</a></li>
                         <li><a href="@(Url.Action("Index", "Measures"))"><i class="fa fa-thermometer-full" aria-hidden="true"></i>&nbsp; [[[Measures]]]</a></li>
                         <li><a href="@(Url.Action("Index", "ProductionUnits"))"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; [[[Production Units]]]</a></li>
                         <li><a href="@(Url.Action("Index", "PerformanceHealth"))"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[Performance &amp; Health]]]</a></li>

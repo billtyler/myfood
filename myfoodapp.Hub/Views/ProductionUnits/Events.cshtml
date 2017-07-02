@@ -50,6 +50,7 @@
             columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(60);
             columns.Bound(c => c.date).Format("{0:d} - {0:t}").Width(100);
             columns.Bound(c => c.description).Width(250);
+            columns.Bound(c => c.createdBy).Width(100);
             //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
             //columns.Command(command => { command.Destroy(); }).Width(250);
         })

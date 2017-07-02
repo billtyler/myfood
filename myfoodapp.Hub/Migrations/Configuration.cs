@@ -39,8 +39,12 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitStatus.RemoveRange(context.ProductionUnitStatus);
             context.HydroponicTypes.RemoveRange(context.HydroponicTypes);
 
+            context.Languages.RemoveRange(context.Languages);
+            context.PreferedMoments.RemoveRange(context.PreferedMoments);
+
             context.Events.RemoveRange(context.Events);
             context.EventTypes.RemoveRange(context.EventTypes);
+            context.EventTypeItems.RemoveRange(context.EventTypeItems);
 
             context.OptionLists.RemoveRange(context.OptionLists);
             context.Options.RemoveRange(context.Options);
@@ -98,11 +102,16 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "[[[In Maintenance]]]" });
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "[[[Stopped]]]" });
 
-            context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]" });
-            context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]" });
-            context.EventTypes.Add(new EventType() { Id = 3, name = "[[[Info]]]" });
-            context.EventTypes.Add(new EventType() { Id = 4, name = "[[[Advices]]]" });
-            context.EventTypes.Add(new EventType() { Id = 5, name = "[[[Improvement]]]" });
+            context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]", isDisplayedForUser = false });
+            context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]", isDisplayedForUser = true });
+            context.EventTypes.Add(new EventType() { Id = 3, name = "[[[Maintenance]]]", isDisplayedForUser = true });
+            context.EventTypes.Add(new EventType() { Id = 4, name = "[[[Action]]]", isDisplayedForUser = true });
+            context.EventTypes.Add(new EventType() { Id = 5, name = "[[[Plant Health]]]", isDisplayedForUser = true });
+            context.EventTypes.Add(new EventType() { Id = 6, name = "[[[Fish Health]]]", isDisplayedForUser = true });
+            context.EventTypes.Add(new EventType() { Id = 7, name = "[[[Feeling]]]", isDisplayedForUser = true });
+            context.EventTypes.Add(new EventType() { Id = 8, name = "[[[Info]]]", isDisplayedForUser = false });
+            context.EventTypes.Add(new EventType() { Id = 9, name = "[[[Advices]]]", isDisplayedForUser = false });
+            context.EventTypes.Add(new EventType() { Id = 10, name = "[[[Improvement]]]", isDisplayedForUser = false });
 
             context.HealthLevels.Add(new HealthLevel() { Id = 1, name = "[[[Poor]]]" });
             context.HealthLevels.Add(new HealthLevel() { Id = 2, name = "[[[Average]]]" });
@@ -173,6 +182,79 @@ namespace myfoodapp.Hub.Migrations
             context.Months.Add(new Month() { Id = 11, name = "[[[December]]]", order = 12, season = context.Seasons.Where(s => s.Id == 0).FirstOrDefault() });
 
             context.SaveChanges();
+
+            var warningEventTypes = context.EventTypes.Where(g => g.Id == 1).FirstOrDefault();
+            var issueEventTypes = context.EventTypes.Where(g => g.Id == 2).FirstOrDefault();
+            var maintenanceEventTypes = context.EventTypes.Where(g => g.Id == 3).FirstOrDefault();
+            var actionEventTypes = context.EventTypes.Where(g => g.Id == 4).FirstOrDefault();
+            var plantHealthEventTypes = context.EventTypes.Where(g => g.Id == 5).FirstOrDefault();
+            var fishHealthEventTypes = context.EventTypes.Where(g => g.Id == 6).FirstOrDefault();
+            var feelingEventTypes = context.EventTypes.Where(g => g.Id == 7).FirstOrDefault();
+            var infoEventTypes = context.EventTypes.Where(g => g.Id == 8).FirstOrDefault();
+            var advicesEventTypes = context.EventTypes.Where(g => g.Id == 9).FirstOrDefault();
+            var improvementEventTypes = context.EventTypes.Where(g => g.Id == 10).FirstOrDefault();
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 0, order = 0, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Dead fish]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 1, order = 1, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Too much algeas]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 2, order = 2, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Bad looking vegetables]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 3, order = 3, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Insect pest]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 4, order = 4, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[No/Bad data received]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 5, order = 5, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Damaged sensor]]]" });            
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 6, order = 7, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Cracked tank]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 7, order = 8, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Clogged sprinkler]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 9, order = 9, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Clogged tubes]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 10, order = 10, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Broken pump]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 11, order = 11, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Noisy pump]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 12, order = 12, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Water loss]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 13, order = 13, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Ice into towers]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 14, order = 14, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Moisissure]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 15, order = 15, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Filter issue]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 16, order = 16, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Glass broken]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 17, order = 0, eventType = maintenanceEventTypes, isRestrictedForAdmin = false, name = "[[[Filter cleaning]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 18, order = 1, eventType = maintenanceEventTypes, isRestrictedForAdmin = false, name = "[[[Sprinkler cleaning]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 19, order = 2, eventType = maintenanceEventTypes, isRestrictedForAdmin = false, name = "[[[Water purge]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 20, order = 3, eventType = maintenanceEventTypes, isRestrictedForAdmin = false, name = "[[[Glass cleaning]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 21, order = 4, eventType = maintenanceEventTypes, isRestrictedForAdmin = false, name = "[[[Vegetable management]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 22, order = 0, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Feed fish]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 23, order = 1, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Gather vegetables]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 24, order = 2, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Plant seedlings]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 25, order = 3, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add rain water]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 26, order = 4, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add iron]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 27, order = 5, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add peat]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 28, order = 6, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add magnesium]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 29, order = 7, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add potassium]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 30, order = 8, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Use UV filter]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 31, order = 9, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add white on roof]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 32, order = 10, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Open doors]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 33, order = 11, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Perform pH calib.]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 34, order = 12, eventType = actionEventTypes, isRestrictedForAdmin = true, name = "[[[Perform agro analysis]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 35, order = 13, eventType = actionEventTypes, isRestrictedForAdmin = true, name = "[[[Send Mail]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 36, order = 14, eventType = actionEventTypes, isRestrictedForAdmin = true, name = "[[[Call Pioneer]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 37, order = 0, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install extra towers]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 38, order = 1, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install double door front]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 39, order = 2, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install double door back]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 40, order = 3, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install UV filter]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 41, order = 4, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install shadow cloth]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 42, order = 5, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install extra tanks]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 43, order = 6, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install auto feeder]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 44, order = 7, eventType = improvementEventTypes, isRestrictedForAdmin = true, name = "[[[Install solar panels]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 45, order = 0, eventType = plantHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Good]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 46, order = 1, eventType = plantHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Average]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 47, order = 2, eventType = plantHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Bad]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 48, order = 0, eventType = fishHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Good]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 49, order = 1, eventType = fishHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Average]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 50, order = 2, eventType = fishHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Bad]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 51, order = 0, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Happy]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 52, order = 1, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Satify]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 53, order = 2, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Anxious]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 54, order = 3, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Want more]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 55, order = 4, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Need support]]]" });
 
             var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
             var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();
@@ -603,14 +685,19 @@ namespace myfoodapp.Hub.Migrations
             var userRDA = new ApplicationUser() { Email = "rudy@myfood.eu", UserName = "rudy@myfood.eu" };
             var userVBU = new ApplicationUser() { Email = "valerie@myfood.eu", UserName = "valerie@myfood.eu" };
             var userETR = new ApplicationUser() { Email = "emmanuel@myfood.eu", UserName = "emmanuel@myfood.eu" };
+            var userGGR = new ApplicationUser() { Email = "goy@myfood.eu", UserName = "goy@myfood.eu" };
+            var userBDE = new ApplicationUser() { Email = "benoit@myfood.eu", UserName = "benoit@myfood.eu" };
             var userOFE = new ApplicationUser() { Email = "ophelia@myfood.eu", UserName = "ophelia@myfood.eu" };
             var userGTI = new ApplicationUser() { Email = "guillaume@myfood.eu", UserName = "guillaume@myfood.eu" };
+            var userMLE = new ApplicationUser() { Email = "marie@myfood.eu", UserName = "marie@myfood.eu" };
+            var userGME = new ApplicationUser() { Email = "gerard@myfood.eu", UserName = "gerard@myfood.eu" };
+            var userMGV = new ApplicationUser() { Email = "michelg@myfood.eu", UserName = "michelg@myfood.eu" };
+            var userFBA = new ApplicationUser() { Email = "felix@myfood.eu", UserName = "felix@myfood.eu" };
+            var userCGT = new ApplicationUser() { Email = "casinoforges@myfood.eu", UserName = "casinoforges@myfood.eu" };
+            var userMBA = new ApplicationUser() { Email = "myriam@myfood.eu", UserName = "myriam@myfood.eu" };
 
             //TO BE DEPLOYED
             var userYGR = new ApplicationUser() { Email = "yves@myfood.eu", UserName = "yves@myfood.eu" };
-            var userGGR = new ApplicationUser() { Email = "goy@myfood.eu", UserName = "goy@myfood.eu" };
-            var userBDE = new ApplicationUser() { Email = "benoit@myfood.eu", UserName = "benoit@myfood.eu" };
-
             var userMSE = new ApplicationUser() { Email = "sevran@myfood.eu", UserName = "sevran@myfood.eu" };
 
             //TO BE CONFIRMED            
@@ -661,14 +748,21 @@ namespace myfoodapp.Hub.Migrations
                 await manager.CreateAsync(userJBF, defaultPassword);
                 await manager.CreateAsync(userRDA, defaultPassword);
                 await manager.CreateAsync(userVBU, defaultPassword);
+                await manager.CreateAsync(userGGR, defaultPassword);
+                await manager.CreateAsync(userBDE, defaultPassword);
                 await manager.CreateAsync(userETR, defaultPassword);
                 await manager.CreateAsync(userOFE, defaultPassword);
                 await manager.CreateAsync(userGTI, defaultPassword);
+                await manager.CreateAsync(userMLE, defaultPassword);
+                await manager.CreateAsync(userGME, defaultPassword);
+                await manager.CreateAsync(userMGV, defaultPassword);
+                await manager.CreateAsync(userFBA, defaultPassword);
+                await manager.CreateAsync(userCGT, defaultPassword);
+                await manager.CreateAsync(userMBA, defaultPassword);
 
                 //TO BE DEPLOYED       
                 await manager.CreateAsync(userYGR, defaultPassword);
-                await manager.CreateAsync(userGGR, defaultPassword);
-                await manager.CreateAsync(userBDE, defaultPassword);
+
                 await manager.CreateAsync(userMSE, defaultPassword);
 
                 //TO BE CONFIRMED
@@ -725,14 +819,20 @@ namespace myfoodapp.Hub.Migrations
             var JeanBaptisteFOwner = new ProductionUnitOwner() { Id = 38, user = userJBF, pioneerCitizenName = "Jean Baptiste F.", pioneerCitizenNumber = 30 };
             var RudyDOwner = new ProductionUnitOwner() { Id = 39, user = userRDA, pioneerCitizenName = "Rudy D.", pioneerCitizenNumber = 32 };
             var ValerieOwner = new ProductionUnitOwner() { Id = 40, user = userVBU, pioneerCitizenName = "Valérie B.", pioneerCitizenNumber = 33 };
+            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G." };
+            var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
             var EmmmanuelTOwner = new ProductionUnitOwner() { Id = 46, user = userETR, pioneerCitizenName = "Emmanuel T." };
             var OpheliaFOwner = new ProductionUnitOwner() { Id = 47, user = userOFE, pioneerCitizenName = "Ophélia F." };
             var GuillaumeTOwner = new ProductionUnitOwner() { Id = 48, user = userGTI, pioneerCitizenName = "Guillaume T." };
+            var MarieLOwner = new ProductionUnitOwner() { Id = 49, user = userMLE, pioneerCitizenName = "Marie L." };
+            var GerardMOwner = new ProductionUnitOwner() { Id = 50, user = userGME, pioneerCitizenName = "Gérard M." };
+            var MichelGOwner = new ProductionUnitOwner() { Id = 51, user = userMGV, pioneerCitizenName = "Michel G." };
+            var FelixBOwner = new ProductionUnitOwner() { Id = 52, user = userFBA, pioneerCitizenName = "Felix B." };
+            var CasinoForgesFOwner = new ProductionUnitOwner() { Id = 53, user = userCGT, pioneerCitizenName = "Casino Forges" };
+            var MyriamBOwner = new ProductionUnitOwner() { Id = 54, user = userMBA, pioneerCitizenName = "Myriam B." };
 
-            //TO BE DEPLOYED 
-            var YvesGOwner = new ProductionUnitOwner() { Id = 31, user = userYGR, pioneerCitizenName = "Yves G."};
-            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G."};         
-            var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
+            //TO BE DEPLOYED             
+            var YvesGOwner = new ProductionUnitOwner() { Id = 31, user = userYGR, pioneerCitizenName = "Yves G." };
             var MairieSOwner = new ProductionUnitOwner() { Id = 23, user = userMSE, pioneerCitizenName = "Mairie Sevran" };
 
             //TO BE CONFIRMED
@@ -779,14 +879,20 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(JeanBaptisteFOwner);
             context.ProductionUnitOwners.Add(RudyDOwner);
             context.ProductionUnitOwners.Add(ValerieOwner);
+            context.ProductionUnitOwners.Add(GoyGOwner);
+            context.ProductionUnitOwners.Add(BenoitDOwner);
             context.ProductionUnitOwners.Add(EmmmanuelTOwner);
             context.ProductionUnitOwners.Add(OpheliaFOwner);
             context.ProductionUnitOwners.Add(GuillaumeTOwner);
+            context.ProductionUnitOwners.Add(MarieLOwner);
+            context.ProductionUnitOwners.Add(GerardMOwner);
+            context.ProductionUnitOwners.Add(MichelGOwner);
+            context.ProductionUnitOwners.Add(FelixBOwner);
+            context.ProductionUnitOwners.Add(CasinoForgesFOwner);
+            context.ProductionUnitOwners.Add(MyriamBOwner);
 
             //TO BE DEPLOYED 
             context.ProductionUnitOwners.Add(YvesGOwner);
-            context.ProductionUnitOwners.Add(GoyGOwner);
-            context.ProductionUnitOwners.Add(BenoitDOwner);
             context.ProductionUnitOwners.Add(MairieSOwner);
 
             //TO BE CONFIRMED
@@ -1292,6 +1398,34 @@ namespace myfoodapp.Hub.Migrations
                 productionUnitStatus = prodUnitStatusRunning,
             };
 
+            var GGRProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 49.519387,
+                locationLongitude = 6.289128,
+                reference = "1ACCCF ",
+                info = "Grosbusch Academy",
+                startDate = new DateTime(2017, 05, 06),
+                version = "2",
+                owner = GoyGOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var BDEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 45.1842207,
+                locationLongitude = 5.6804372,
+                reference = "1ACCEA",
+                info = "Engineer School Lab",
+                startDate = new DateTime(2017, 03, 06),
+                version = "2",
+                owner = BenoitDOwner,
+                productionUnitType = prodUnitTypeCity,
+                hydroponicType = hydroTypeNotApplicable,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
             var ETRProdUnit = new ProductionUnit()
             {
                 locationLatitude = 46.0732302,
@@ -1303,7 +1437,7 @@ namespace myfoodapp.Hub.Migrations
                 owner = EmmmanuelTOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsWarmFish,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
+                productionUnitStatus = prodUnitStatusRunning,
             };
 
             var OFEProdUnit = new ProductionUnit()
@@ -1317,18 +1451,102 @@ namespace myfoodapp.Hub.Migrations
                 owner = OpheliaFOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsWarmFish,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
+                productionUnitStatus = prodUnitStatusRunning,
             };
 
             var GTIProdUnit = new ProductionUnit()
             {
                 locationLatitude = 47.5321616,
                 locationLongitude = -3.1774892,
-                reference = "FTAT57",
+                reference = "1ACFFB",
                 info = "Family Experimentation",
                 startDate = new DateTime(2017, 06, 25),
                 version = "2",
                 owner = GuillaumeTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
+            var MLEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 44.4160722,
+                locationLongitude = 6.1833746,
+                reference = "FTAT01",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 07, 11),
+                version = "2",
+                owner = MarieLOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var GMEProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 44.2419021,
+                locationLongitude = -1.0765354,
+                reference = "FTAT03",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 07, 13),
+                version = "2",
+                owner = GerardMOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var MGVProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.8715998,
+                locationLongitude = 2.1457637,
+                reference = "FTAT57",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 07, 03),
+                version = "2",
+                owner = MichelGOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var FBAProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 51.4408238,
+                locationLongitude = 6.8759363,
+                reference = "FTAT01",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 07, 06),
+                version = "2",
+                owner = FelixBOwner,
+                productionUnitType = prodUnitTypeFam14,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var CGTProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 49.6129522,
+                locationLongitude = 1.5162938,
+                reference = "FTAT03",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 07, 18),
+                version = "2",
+                owner = CasinoForgesFOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusReadyForInstall,
+            };
+
+            var MBAProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.7439002,
+                locationLongitude = 7.2836429,
+                reference = "FTAT57",
+                info = "Family Experimentation",
+                startDate = new DateTime(2017, 07, 20),
+                version = "2",
+                owner = MyriamBOwner,
                 productionUnitType = prodUnitTypeFam22,
                 hydroponicType = hydroTypeAquaponicsWarmFish,
                 productionUnitStatus = prodUnitStatusReadyForInstall,
@@ -1345,34 +1563,6 @@ namespace myfoodapp.Hub.Migrations
                 version = "2",
                 owner = YvesGOwner,
                 productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
-            };
-
-            var GGRProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 49.519387,
-                locationLongitude = 6.289128,
-                reference = "1ACCCF ",
-                info = "Grosbusch Academy",
-                startDate = new DateTime(2017, 05, 06),
-                version = "2",
-                owner = GoyGOwner,
-                productionUnitType = prodUnitTypeFam22,
-                hydroponicType = hydroTypeNotApplicable,
-                productionUnitStatus = prodUnitStatusReadyForInstall,
-            };
-
-            var BDEProdUnit = new ProductionUnit()
-            {
-                locationLatitude = 45.1842207,
-                locationLongitude = 5.6804372,
-                reference = "76671",
-                info = "Engineer School Lab",
-                startDate = new DateTime(2017, 03, 06),
-                version = "2",
-                owner = BenoitDOwner,
-                productionUnitType = prodUnitTypeCity,
                 hydroponicType = hydroTypeNotApplicable,
                 productionUnitStatus = prodUnitStatusReadyForInstall,
             };
@@ -1480,7 +1670,7 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(CELProdUnit);
             context.ProductionUnits.Add(EDCProdUnit);
             context.ProductionUnits.Add(AHEProdUnit);
-            context.ProductionUnits.Add(BDEProdUnit);
+            context.ProductionUnits.Add(BGUProdUnit);
             context.ProductionUnits.Add(ALHProdUnit);
             context.ProductionUnits.Add(VTHProdUnit);
             context.ProductionUnits.Add(CHIProdUnit);
@@ -1488,18 +1678,25 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(JBFProdUnit);
             context.ProductionUnits.Add(RDAProdUnit);
             context.ProductionUnits.Add(VBUProdUnit);
+            context.ProductionUnits.Add(GGRProdUnit);
+            context.ProductionUnits.Add(BDEProdUnit);
             context.ProductionUnits.Add(ETRProdUnit);
             context.ProductionUnits.Add(OFEProdUnit);
             context.ProductionUnits.Add(GTIProdUnit);
+            context.ProductionUnits.Add(MLEProdUnit);
+            context.ProductionUnits.Add(GMEProdUnit);
+            context.ProductionUnits.Add(MGVProdUnit);
+            context.ProductionUnits.Add(FBAProdUnit);
+            context.ProductionUnits.Add(CGTProdUnit);
+            context.ProductionUnits.Add(MBAProdUnit);
 
             //TO BE DEPLOYED
             context.ProductionUnits.Add(YGRProdUnit);
-            context.ProductionUnits.Add(GGRProdUnit);
             context.ProductionUnits.Add(MSEProdUnit);
 
             //TO BE CONFIRMED
             context.ProductionUnits.Add(MLAProdUnit);
-            context.ProductionUnits.Add(BGUProdUnit);
+            
 
             //CONTRIBUTORS
             context.ProductionUnits.Add(APOProdUnit);
@@ -1714,6 +1911,20 @@ namespace myfoodapp.Hub.Migrations
             optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = towers18Option });
             optionsVBU.Add(new OptionList() { productionUnit = VBUProdUnit, option = permacultureBedOption });
 
+            var optionsGGR = new List<OptionList>();
+
+            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = monitoringKitv2Option });
+            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = towers24Option });
+            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = sigfoxConnectionOption });
+            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = solarPanelOption });
+
+            var optionsBDE = new List<OptionList>();
+
+            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = monitoringKitv2Option });
+            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = towers11Option });
+            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = sigfoxConnectionOption });
+            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = solarPanelOption });
+
             var optionsETR = new List<OptionList>();
 
             optionsETR.Add(new OptionList() { productionUnit = ETRProdUnit, option = monitoringKitv2Option });
@@ -1737,6 +1948,47 @@ namespace myfoodapp.Hub.Migrations
             optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = solarPanelOption });
             optionsGTI.Add(new OptionList() { productionUnit = GTIProdUnit, option = permacultureBedOption });
 
+            var optionsMLE = new List<OptionList>();
+
+            optionsMLE.Add(new OptionList() { productionUnit = MLEProdUnit, option = monitoringKitv2Option });
+            optionsMLE.Add(new OptionList() { productionUnit = MLEProdUnit, option = towers18Option });
+            optionsMLE.Add(new OptionList() { productionUnit = MLEProdUnit, option = sigfoxConnectionOption });
+
+            var optionsGME = new List<OptionList>();
+
+            optionsGME.Add(new OptionList() { productionUnit = GMEProdUnit, option = monitoringKitv2Option });
+            optionsGME.Add(new OptionList() { productionUnit = GMEProdUnit, option = towers18Option });
+            optionsGME.Add(new OptionList() { productionUnit = GMEProdUnit, option = permacultureBedOption });
+            optionsGME.Add(new OptionList() { productionUnit = GMEProdUnit, option = sigfoxConnectionOption });
+
+            var optionsMGV = new List<OptionList>();
+
+            optionsMGV.Add(new OptionList() { productionUnit = MGVProdUnit, option = monitoringKitv2Option });
+            optionsMGV.Add(new OptionList() { productionUnit = MGVProdUnit, option = towers24Option });
+            optionsMGV.Add(new OptionList() { productionUnit = MGVProdUnit, option = sigfoxConnectionOption });
+            optionsMGV.Add(new OptionList() { productionUnit = MGVProdUnit, option = permacultureBedOption });
+
+            var optionsFBA = new List<OptionList>();
+
+            optionsFBA.Add(new OptionList() { productionUnit = FBAProdUnit, option = monitoringKitv2Option });
+            optionsFBA.Add(new OptionList() { productionUnit = FBAProdUnit, option = towers18Option });
+            optionsFBA.Add(new OptionList() { productionUnit = FBAProdUnit, option = permacultureBiocharOption });
+            optionsFBA.Add(new OptionList() { productionUnit = FBAProdUnit, option = sigfoxConnectionOption });
+
+            var optionsCGT = new List<OptionList>();
+
+            optionsCGT.Add(new OptionList() { productionUnit = CGTProdUnit, option = monitoringKitv2Option });
+            optionsCGT.Add(new OptionList() { productionUnit = CGTProdUnit, option = towers18Option });
+            optionsCGT.Add(new OptionList() { productionUnit = CGTProdUnit, option = sigfoxConnectionOption });
+            optionsCGT.Add(new OptionList() { productionUnit = CGTProdUnit, option = pelletStoveOption });
+
+            var optionsMBA = new List<OptionList>();
+
+            optionsMBA.Add(new OptionList() { productionUnit = MBAProdUnit, option = monitoringKitv2Option });
+            optionsMBA.Add(new OptionList() { productionUnit = MBAProdUnit, option = towers18Option });
+            optionsMBA.Add(new OptionList() { productionUnit = MBAProdUnit, option = solarPanelOption });
+            optionsMBA.Add(new OptionList() { productionUnit = MBAProdUnit, option = permacultureBedOption });
+
             //TO BE DEPLOYED
             var optionsYGR = new List<OptionList>();
 
@@ -1744,20 +1996,6 @@ namespace myfoodapp.Hub.Migrations
             optionsYGR.Add(new OptionList() { productionUnit = YGRProdUnit, option = towers24Option });
             optionsYGR.Add(new OptionList() { productionUnit = YGRProdUnit, option = sigfoxConnectionOption });
             optionsYGR.Add(new OptionList() { productionUnit = YGRProdUnit, option = solarPanelOption });
-
-            var optionsGGR = new List<OptionList>();
-
-            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = monitoringKitv2Option });
-            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = towers24Option });
-            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = sigfoxConnectionOption });
-            optionsGGR.Add(new OptionList() { productionUnit = GGRProdUnit, option = solarPanelOption });
-
-            var optionsBDE = new List<OptionList>();
-
-            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = monitoringKitv2Option });
-            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = towers11Option });
-            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = sigfoxConnectionOption });
-            optionsBDE.Add(new OptionList() { productionUnit = BDEProdUnit, option = solarPanelOption });
 
             var optionsMSE = new List<OptionList>();
 
@@ -1816,24 +2054,31 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsAHE);
             context.OptionLists.AddRange(optionsALH);
             context.OptionLists.AddRange(optionsVTH);
-            context.OptionLists.AddRange(optionsBDE);
+            context.OptionLists.AddRange(optionsBGU);
             context.OptionLists.AddRange(optionsCHI);
             context.OptionLists.AddRange(optionsHJE);
             context.OptionLists.AddRange(optionsJBF);
             context.OptionLists.AddRange(optionsRDA);
             context.OptionLists.AddRange(optionsVBU);
+            context.OptionLists.AddRange(optionsGGR);
+            context.OptionLists.AddRange(optionsBDE);
             context.OptionLists.AddRange(optionsETR);
             context.OptionLists.AddRange(optionsOFE);
             context.OptionLists.AddRange(optionsGTI);
+            context.OptionLists.AddRange(optionsMLE);
+            context.OptionLists.AddRange(optionsGME);
+            context.OptionLists.AddRange(optionsMGV);
+            context.OptionLists.AddRange(optionsFBA);
+            context.OptionLists.AddRange(optionsCGT);
+            context.OptionLists.AddRange(optionsMBA);
 
             //TO BE DEPLOYED
             context.OptionLists.AddRange(optionsYGR);
-            context.OptionLists.AddRange(optionsGGR);
             context.OptionLists.AddRange(optionsMSE);
 
             //TO BE CONFIRMED
             context.OptionLists.AddRange(optionsMLA);
-            context.OptionLists.AddRange(optionsBGU);            
+                        
 
             //CONTRIBUTORS
             context.OptionLists.AddRange(optionsAPO);

@@ -7,6 +7,8 @@
 
 <script type="text/javascript">
 
+    var dialog = $("#dialog");
+
     window.onload = function onLoad(e) {
 
         var productionUnitId = $('#routeDataId').val();
@@ -66,6 +68,11 @@
         {
             $("#managementButton").hide();
         }
+
+    }    
+
+    function onAddEventClick() {
+        $('#dialog').data("kendoDialog").open();
     }
 
     function onViewEventsClick() {
@@ -123,6 +130,76 @@
         window.location.href = "@Url.Action("DownloadCSV", "ProductionUnits")?id=" + productionUnitId;
     }
 
+    function onEventTypeChange(arg) {
+        var currentEventypeIndex = $('#listViewEventType').data("kendoListView").select().index();
+        var currentEventypeId = $('#listViewEventType').data("kendoListView").dataSource.view()[currentEventypeIndex].Id;
+
+        var listViewEventTypeItems = $('#listViewEventTypeItems').data("kendoListView");
+        listViewEventTypeItems.dataSource.read({ evenTypeId: currentEventypeId });
+    }
+
+    function onEventTypeItemChange(arg) {
+        $('#descriptionTextBox').css("visibility", "visible");
+    }
+
+    function onInitOpen(e) {
+
+    }
+
+    function onOpen(e) {
+
+    }
+
+    function onShow(e) {
+
+    }
+
+    function onHide(e) {
+
+    }
+
+    function onClose(e) {
+
+    }
+
+    function onCancel(e) {
+
+    }
+
+    function onOK(e) {
+  
+        var currentProductionUnitId = $('#routeDataId').val();
+
+        var currentEventypeIndex = $('#listViewEventType').data("kendoListView").select().index();
+        if (currentEventypeIndex == -1)
+            return;
+
+        var currentEventypeId = $('#listViewEventType').data("kendoListView").dataSource.view()[currentEventypeIndex].Id;
+
+        var currentEventTypeItemIndex = $('#listViewEventTypeItems').data("kendoListView").select().index();
+        if (currentEventTypeItemIndex == -1)
+            return;
+
+        var currentEventTypeItemId = $('#listViewEventTypeItems').data("kendoListView").dataSource.view()[currentEventTypeItemIndex].Id;
+
+        var strNote = $('#descriptionTextBox').val();
+
+        $.ajax({
+            url: "@Url.Action("AddEvent", "ProductionUnits")",
+            dataType: "json",
+            data: { productionUnitId: currentProductionUnitId, eventTypeId: currentEventypeId, eventTypeItemId: currentEventTypeItemId, note: strNote },
+        type: "POST",
+        success: function (response) {
+            $('#routeDataId').val() = '';
+            $('#listViewEventType').data("kendoListView").select().index() = -1;
+            $('#listViewEventTypeItems').data("kendoListView").select().index() = -1;
+            $('#descriptionTextBox').css("visibility", "hidden");
+        }
+    });
+
+    }
+
+
 </script>
 
 <script type="text/x-kendo-tmpl" id="templateOption">
@@ -144,6 +221,14 @@
         <br />
 
         <div id="managementButton">
+            <p>
+                @(Html.Kendo().Button()
+            .Name("addEventButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .Content("[[[Add Event]]]")
+            .Events(ev => ev.Click("onAddEventClick")))
+            </p>
+
             <p>
                 @(Html.Kendo().Button()
             .Name("viewEventsButton")
@@ -186,16 +271,82 @@
 
         <div id="exportButton">
             <p>
-                @(Html.Kendo().Button()
+            @(Html.Kendo().Button()
             .Name("thisExportButton")
             .HtmlAttributes(new { @class = "exportButton k-state-active btn-block" })
             .Content("[[[Export CSV]]]")
             .Events(ev => ev.Click("onExportCSVClick")))
             </p>
         </div>
+
     </div>
     <div id="measures-container" class="col-md-10" style="padding-bottom:40px">
+        <div id="dialog">
+            @(Html.Kendo().Dialog()
+                        .Name("dialog")
+                        .Title("[[[Add Event]]]")
+                        .Width(680)
+                        .Height(720)
+                        .Modal(true)
+                        .Visible(false)
+                        .Closable(true)
+                        .Content("<p>[[[Log your Actions / Events here]]]<p>" +
 
+                        "<div id='listViewEventTypeDiv'>" +
+
+                         Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
+                        .Name("listViewEventType")
+                        .TagName("div")
+                        .ClientTemplateId("template")
+                        .DataSource(dataSource =>
+                        {
+                            dataSource.Read(read => read.Action("EventType_Read", "ProductionUnits"));
+                            dataSource.PageSize(15);
+                        })
+                        .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
+                        .Events(events => events.Change("onEventTypeChange"))
+
+                        + "</div><br/>"
+
+                        + " <div id='listViewEventTypeItemsDiv'>" +
+
+                        Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
+                        .Name("listViewEventTypeItems")
+                        .TagName("div")
+                        .ClientTemplateId("template")
+                        .DataSource(dataSource =>
+                        {
+                            dataSource.Read(read => read.Action("EventTypeItem_Read", "ProductionUnits"));
+                            dataSource.PageSize(15);
+                        })
+                        .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
+                        .Events(events => events.Change("onEventTypeItemChange"))
+
+                        + "</div><br/>" +
+
+                        Html.Kendo().TextBox()
+                        .Name("descriptionTextBox")
+                        .HtmlAttributes(new { placeholder = "Note", required = "required", style = "width:100%; height:40px; visibility:hidden" })
+                                                
+                        )
+                        .Actions(actions =>
+                        {
+                        actions.Add()
+                        .Text("Cancel")
+                        .Action("onCancel");
+                        actions.Add().Text("OK")
+                        .Primary(true)
+                        .Action("onOK");
+                        })
+                        .Events(ev => ev
+                        .InitOpen("onInitOpen")
+                        .Open("onOpen")
+                        .Show("onShow")
+                        .Close("onClose")
+                        .Hide("onHide")
+                        )
+            )
+        </div>
                <div id="detailedContainer" class="row">
                     <div id="imageContainer" class="col-md-6">
                         <h3 class="section-header">[[[Detailed information]]]</h3>
@@ -204,7 +355,7 @@
                                 <div class="text">
                                     <h3 id="ProductionUnitType"></h3>
                                     <h2 id="PioneerCitizenName"></h2>
-                                    <p id="ProductionUnitOptions" />
+                                    <p id="ProductionUnitOptions"></p>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +381,8 @@
                         </div>
                    </div>
                 </div>
-            <div class="sparkline-container">
+
+               <div class="sparkline-container">
 
                 <div id="statsContainerTop" class="row">
                     <div id="pHContainer" class="col-md-6">
@@ -447,6 +599,13 @@
         </div>
 </div>
 
+        <script type="text/x-kendo-tmpl" id="template">
+            <div class="eventType">
+                <h2>#:name#</h2>
+                <h3 style="visibility:hidden">#:Id#</h3>
+            </div>
+        </script>
+
         <style>
 
         @@media screen and (max-width: 480px) {
@@ -542,6 +701,29 @@
             .column-center {
                 display: inline-block;
                 width: 33%;
+            }
+
+             .eventType
+            {
+                float: left;
+                width: 120px;
+                height: 60px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                padding: 5px;
+                cursor: pointer;
+            }
+
+            #listViewEventTypeDiv
+            {
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+
+            #listViewEventTypeItemsDiv
+            {
+                margin-top: 200px;
+                margin-bottom: 10px;
             }
 
         </style>

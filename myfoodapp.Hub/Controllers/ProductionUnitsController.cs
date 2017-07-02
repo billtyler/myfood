@@ -1,4 +1,5 @@
-﻿using Kendo.Mvc.Extensions;
+﻿using i18n;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -508,6 +509,81 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
+        public ActionResult EventType_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var db = new ApplicationDbContext();
+
+            var eventTypes = db.EventTypes.Where(et => et.isDisplayedForUser).ToList();
+
+            var eventTypesModel = eventTypes.Select(vm => new
+            {
+                Id = vm.Id,
+                description = vm.description,
+                order = vm.order,
+                name = vm.name,
+            });
+
+            return Json(eventTypesModel.ToDataSourceResult(request, ModelState));       
+        }
+
+        [Authorize]
+        public ActionResult EventTypeItem_Read([DataSourceRequest] DataSourceRequest request, int evenTypeId)
+        {
+            var db = new ApplicationDbContext();
+
+            var currentUser = this.User.Identity.GetUserName();
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
+            var eventTypesItems = new List<EventTypeItem>();
+
+            if (isAdmin)
+                eventTypesItems = db.EventTypeItems.Where(et => et.eventType.Id == evenTypeId).ToList();
+            else
+                eventTypesItems = db.EventTypeItems.Where(et => et.eventType.Id == evenTypeId && et.isRestrictedForAdmin == false).ToList();
+
+            return Json(eventTypesItems.ToDataSourceResult(request, ModelState));
+        }
+
+        [Authorize]
+        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ApplicationDbContext dbLog = new ApplicationDbContext();
+
+            var currentUser = this.User.Identity.GetUserName();
+            var userId = UserManager.FindByName(currentUser).Id;
+
+            var currentProductUnitOwner = db.ProductionUnitOwners.Where(p => p.user.Id == userId).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
+            var currentEventType = db.EventTypes.Where(et => et.Id == eventTypeId).FirstOrDefault();
+
+            var currentEventTypeItem = db.EventTypeItems.Where(et => et.eventType.Id == eventTypeId && et.Id == eventTypeItemId).FirstOrDefault();
+
+            var newEvent = new Event() { productionUnit = currentProductionUnit,
+                                         description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note),
+                                         eventType = currentEventType,
+                                         isOpen = false,
+                                         date = DateTime.Now,
+                                         createdBy = currentProductUnitOwner.pioneerCitizenName
+            };
+
+            try
+            {
+                db.Events.Add(newEvent);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                dbLog.SaveChanges();
+                return false;
+            }
+
+            return true;
+        }
+
+        [Authorize]
         public FileContentResult DownloadCSV(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -515,7 +591,7 @@ namespace myfoodapp.Hub.Controllers
                                                           .Include(p => p.productionUnitType)
                                                           .Where(p => p.Id == id).FirstOrDefault();
 
-            string fileName = String.Format("{0}_#{1}_[{2}].csv",     currentProductionUnit.owner.pioneerCitizenName,
+            string fileName = String.Format("{0}_#{1}_[{2}].csv",   currentProductionUnit.owner.pioneerCitizenName,
                                                                     currentProductionUnit.owner.pioneerCitizenNumber,
                                                                     DateTime.Now.ToShortDateString());
 
