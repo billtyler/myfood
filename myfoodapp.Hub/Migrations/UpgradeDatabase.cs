@@ -13,154 +13,138 @@ namespace myfoodapp.Hub.Migrations
     {
         public static void DoWork(ApplicationDbContext context)
         {
-            var warningEventTypes = context.EventTypes.Where(g => g.Id == 1).FirstOrDefault();
-            var issueEventTypes = context.EventTypes.Where(g => g.Id == 2).FirstOrDefault();
-            var maintenanceEventTypes = context.EventTypes.Where(g => g.Id == 3).FirstOrDefault();
-            var actionEventTypes = context.EventTypes.Where(g => g.Id == 4).FirstOrDefault();
-            var plantHealthEventTypes = context.EventTypes.Where(g => g.Id == 5).FirstOrDefault();
-            var fishHealthEventTypes = context.EventTypes.Where(g => g.Id == 6).FirstOrDefault();
-            var feelingEventTypes = context.EventTypes.Where(g => g.Id == 7).FirstOrDefault();
-            var infoEventTypes = context.EventTypes.Where(g => g.Id == 8).FirstOrDefault();
-            var advicesEventTypes = context.EventTypes.Where(g => g.Id == 9).FirstOrDefault();
-            var improvementEventTypes = context.EventTypes.Where(g => g.Id == 10).FirstOrDefault();
+            ////var warningEventTypes = context.EventTypes.Where(g => g.Id == 1).FirstOrDefault();
+            ////var issueEventTypes = context.EventTypes.Where(g => g.Id == 2).FirstOrDefault();
+            ////var maintenanceEventTypes = context.EventTypes.Where(g => g.Id == 3).FirstOrDefault();
+            ////var actionEventTypes = context.EventTypes.Where(g => g.Id == 4).FirstOrDefault();
+            ////var plantHealthEventTypes = context.EventTypes.Where(g => g.Id == 5).FirstOrDefault();
+            ////var fishHealthEventTypes = context.EventTypes.Where(g => g.Id == 6).FirstOrDefault();
+            ////var feelingEventTypes = context.EventTypes.Where(g => g.Id == 7).FirstOrDefault();
+            ////var infoEventTypes = context.EventTypes.Where(g => g.Id == 8).FirstOrDefault();
+            ////var advicesEventTypes = context.EventTypes.Where(g => g.Id == 9).FirstOrDefault();
+            ////var improvementEventTypes = context.EventTypes.Where(g => g.Id == 10).FirstOrDefault();
 
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 37, order = 0, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install extra towers]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 38, order = 1, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install double door front]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 39, order = 2, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install double door back]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 40, order = 3, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install UV filter]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 41, order = 4, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install shadow cloth]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 42, order = 5, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install extra tanks]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 43, order = 6, eventType = improvementEventTypes, isRestrictedForAdmin = false, name = "[[[Install auto feeder]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 44, order = 7, eventType = improvementEventTypes, isRestrictedForAdmin = true, name = "[[[Install solar panels]]]" });
+            ////var harvestEventTypes = context.EventTypes.Where(g => g.Id == 11).FirstOrDefault();
 
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 45, order = 0, eventType = plantHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Good]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 46, order = 1, eventType = plantHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Average]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 47, order = 2, eventType = plantHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Bad]]]" });
+            ////context.EventTypeItems.Add(new EventTypeItem() { Id = 56, order = 0, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Leaf vegetables - less than 200gr]]]" });
+            ////context.EventTypeItems.Add(new EventTypeItem() { Id = 57, order = 1, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Leaf vegetables - more than 200gr]]]" });
+            ////context.EventTypeItems.Add(new EventTypeItem() { Id = 58, order = 2, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Root vegetables - less than 200gr]]]" });
+            ////context.EventTypeItems.Add(new EventTypeItem() { Id = 59, order = 3, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Root vegetables - more than 200gr]]]" });
 
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 48, order = 0, eventType = fishHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Good]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 49, order = 1, eventType = fishHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Average]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 50, order = 2, eventType = fishHealthEventTypes, isRestrictedForAdmin = false, name = "[[[Bad]]]" });
+            ////context.SaveChanges();
 
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 51, order = 0, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Happy]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 52, order = 1, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Satify]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 53, order = 2, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Anxious]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 54, order = 3, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Want more]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 55, order = 4, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Need support]]]" });
+            var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
+            var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();
+            var towerGardenGardeningType = context.GardeningTypes.Where(g => g.Id == 2).FirstOrDefault();
+            var allGardeningType = context.GardeningTypes.Where(g => g.Id == 3).FirstOrDefault();
+            var fishTanksGardeningType = context.GardeningTypes.Where(g => g.Id == 4).FirstOrDefault();
 
-            context.SaveChanges();
+            var lightWateringLevel = context.WateringLevels.Where(g => g.Id == 0).FirstOrDefault();
+            var moderateWateringLevel = context.WateringLevels.Where(g => g.Id == 1).FirstOrDefault();
+            var normalWateringLevel = context.WateringLevels.Where(g => g.Id == 2).FirstOrDefault();
+            var maximumWateringLevel = context.WateringLevels.Where(g => g.Id == 3).FirstOrDefault();
 
-            //var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
-            //var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();
-            //var towerGardenGardeningType = context.GardeningTypes.Where(g => g.Id == 2).FirstOrDefault();
-            //var allGardeningType = context.GardeningTypes.Where(g => g.Id == 3).FirstOrDefault();
-            //var fishTanksGardeningType = context.GardeningTypes.Where(g => g.Id == 4).FirstOrDefault();
+            var januaryMonth = context.Months.Where(g => g.Id == 0).FirstOrDefault();
+            var februaryMonth = context.Months.Where(g => g.Id == 1).FirstOrDefault();
+            var marchMonth = context.Months.Where(g => g.Id == 2).FirstOrDefault();
+            var aprilMonth = context.Months.Where(g => g.Id == 3).FirstOrDefault();
+            var mayMonth = context.Months.Where(g => g.Id == 4).FirstOrDefault();
+            var juneMonth = context.Months.Where(g => g.Id == 5).FirstOrDefault();
+            var julyMonth = context.Months.Where(g => g.Id == 6).FirstOrDefault();
+            var augustMonth = context.Months.Where(g => g.Id == 7).FirstOrDefault();
+            var septemberMonth = context.Months.Where(g => g.Id == 8).FirstOrDefault();
+            var octoberMonth = context.Months.Where(g => g.Id == 9).FirstOrDefault();
+            var novemberMonth = context.Months.Where(g => g.Id == 10).FirstOrDefault();
+            var decemberMonth = context.Months.Where(g => g.Id == 11).FirstOrDefault();
 
-            //var lightWateringLevel = context.WateringLevels.Where(g => g.Id == 0).FirstOrDefault();
-            //var moderateWateringLevel = context.WateringLevels.Where(g => g.Id == 1).FirstOrDefault();
-            //var normalWateringLevel = context.WateringLevels.Where(g => g.Id == 2).FirstOrDefault();
-            //var maximumWateringLevel = context.WateringLevels.Where(g => g.Id == 3).FirstOrDefault();
+            var prodUnitTypeBalcony = context.ProductionUnitTypes.Where(m => m.Id == 1).FirstOrDefault();
+            var prodUnitTypeCity = context.ProductionUnitTypes.Where(m => m.Id == 2).FirstOrDefault();
+            var prodUnitTypeFam14 = context.ProductionUnitTypes.Where(m => m.Id == 3).FirstOrDefault();
+            var prodUnitTypeFam22 = context.ProductionUnitTypes.Where(m => m.Id == 4).FirstOrDefault();
+            var prodUnitTypeFarm = context.ProductionUnitTypes.Where(m => m.Id == 5).FirstOrDefault();
+            var prodUnitTypeDevKit = context.ProductionUnitTypes.Where(m => m.Id == 6).FirstOrDefault();
+            var prodUnitTypeExperimental = context.ProductionUnitTypes.Where(m => m.Id == 7).FirstOrDefault();
 
-            //var januaryMonth = context.Months.Where(g => g.Id == 0).FirstOrDefault();
-            //var februaryMonth = context.Months.Where(g => g.Id == 1).FirstOrDefault();
-            //var marchMonth = context.Months.Where(g => g.Id == 2).FirstOrDefault();
-            //var aprilMonth = context.Months.Where(g => g.Id == 3).FirstOrDefault();
-            //var mayMonth = context.Months.Where(g => g.Id == 4).FirstOrDefault();
-            //var juneMonth = context.Months.Where(g => g.Id == 5).FirstOrDefault();
-            //var julyMonth = context.Months.Where(g => g.Id == 6).FirstOrDefault();
-            //var augustMonth = context.Months.Where(g => g.Id == 7).FirstOrDefault();
-            //var septemberMonth = context.Months.Where(g => g.Id == 8).FirstOrDefault();
-            //var octoberMonth = context.Months.Where(g => g.Id == 9).FirstOrDefault();
-            //var novemberMonth = context.Months.Where(g => g.Id == 10).FirstOrDefault();
-            //var decemberMonth = context.Months.Where(g => g.Id == 11).FirstOrDefault();
+            var prodUnitStatusWait = context.ProductionUnitStatus.Where(m => m.Id == 1).FirstOrDefault();
+            var prodUnitStatusReadyForInstall = context.ProductionUnitStatus.Where(m => m.Id == 2).FirstOrDefault();
+            var prodUnitStatusRunning = context.ProductionUnitStatus.Where(m => m.Id == 3).FirstOrDefault();
+            var prodUnitStatusMaintenance = context.ProductionUnitStatus.Where(m => m.Id == 4).FirstOrDefault();
+            var prodUnitStatusStopped = context.ProductionUnitStatus.Where(m => m.Id == 5).FirstOrDefault();
 
-            //var prodUnitTypeBalcony = context.ProductionUnitTypes.Where(m => m.Id == 1).FirstOrDefault();
-            //var prodUnitTypeCity = context.ProductionUnitTypes.Where(m => m.Id == 2).FirstOrDefault();
-            //var prodUnitTypeFam14 = context.ProductionUnitTypes.Where(m => m.Id == 3).FirstOrDefault();
-            //var prodUnitTypeFam22 = context.ProductionUnitTypes.Where(m => m.Id == 4).FirstOrDefault();
-            //var prodUnitTypeFarm = context.ProductionUnitTypes.Where(m => m.Id == 5).FirstOrDefault();
-            //var prodUnitTypeDevKit = context.ProductionUnitTypes.Where(m => m.Id == 6).FirstOrDefault();
-            //var prodUnitTypeExperimental = context.ProductionUnitTypes.Where(m => m.Id == 7).FirstOrDefault();
+            var hydroTypeNotApplicable = context.HydroponicTypes.Where(m => m.Id == 1).FirstOrDefault();
+            var hydroTypeBioponics = context.HydroponicTypes.Where(m => m.Id == 2).FirstOrDefault();
+            var hydroTypeAquaponicsCarp = context.HydroponicTypes.Where(m => m.Id == 3).FirstOrDefault();
+            var hydroTypeAquaponicsTilapia = context.HydroponicTypes.Where(m => m.Id == 4).FirstOrDefault();
+            var hydroTypeAquaponicsTruit = context.HydroponicTypes.Where(m => m.Id == 5).FirstOrDefault();
+            var hydroTypeAquaponicsCrayfish = context.HydroponicTypes.Where(m => m.Id == 6).FirstOrDefault();
+            var hydroTypeAquaponicsColdFish = context.HydroponicTypes.Where(m => m.Id == 7).FirstOrDefault();
+            var hydroTypeAquaponicsWarmFish = context.HydroponicTypes.Where(m => m.Id == 8).FirstOrDefault();
 
-            //var prodUnitStatusWait = context.ProductionUnitStatus.Where(m => m.Id == 1).FirstOrDefault();
-            //var prodUnitStatusReadyForInstall = context.ProductionUnitStatus.Where(m => m.Id == 2).FirstOrDefault();
-            //var prodUnitStatusRunning = context.ProductionUnitStatus.Where(m => m.Id == 3).FirstOrDefault();
-            //var prodUnitStatusMaintenance = context.ProductionUnitStatus.Where(m => m.Id == 4).FirstOrDefault();
-            //var prodUnitStatusStopped = context.ProductionUnitStatus.Where(m => m.Id == 5).FirstOrDefault();
+            var towers11Option = context.Options.Where(m => m.Id == 0).FirstOrDefault();
+            var towers18Option = context.Options.Where(m => m.Id == 1).FirstOrDefault();
+            var towers24Option = context.Options.Where(m => m.Id == 2).FirstOrDefault();
+            var towers36Option = context.Options.Where(m => m.Id == 3).FirstOrDefault();
+            var solarPanelOption = context.Options.Where(m => m.Id == 4).FirstOrDefault();
+            var pelletStoveOption = context.Options.Where(m => m.Id == 5).FirstOrDefault();
+            var monitoringKitv1Option = context.Options.Where(m => m.Id == 6).FirstOrDefault();
+            var monitoringKitv2Option = context.Options.Where(m => m.Id == 7).FirstOrDefault();
+            var advancedMonitoringOption = context.Options.Where(m => m.Id == 8).FirstOrDefault();
+            var touchlessScreenOption = context.Options.Where(m => m.Id == 9).FirstOrDefault();
+            var sigfoxConnectionOption = context.Options.Where(m => m.Id == 10).FirstOrDefault();
+            var permacultureBedOption = context.Options.Where(m => m.Id == 11).FirstOrDefault();
+            var permacultureBiocharOption = context.Options.Where(m => m.Id == 12).FirstOrDefault();
 
-            //var hydroTypeNotApplicable = context.HydroponicTypes.Where(m => m.Id == 1).FirstOrDefault();
-            //var hydroTypeBioponics = context.HydroponicTypes.Where(m => m.Id == 2).FirstOrDefault();
-            //var hydroTypeAquaponicsCarp = context.HydroponicTypes.Where(m => m.Id == 3).FirstOrDefault();
-            //var hydroTypeAquaponicsTilapia = context.HydroponicTypes.Where(m => m.Id == 4).FirstOrDefault();
-            //var hydroTypeAquaponicsTruit = context.HydroponicTypes.Where(m => m.Id == 5).FirstOrDefault();
-            //var hydroTypeAquaponicsCrayfish = context.HydroponicTypes.Where(m => m.Id == 6).FirstOrDefault();
-            //var hydroTypeAquaponicsColdFish = context.HydroponicTypes.Where(m => m.Id == 7).FirstOrDefault();
-            //var hydroTypeAquaponicsWarmFish = context.HydroponicTypes.Where(m => m.Id == 8).FirstOrDefault();
-
-            //var towers11Option = context.Options.Where(m => m.Id == 0).FirstOrDefault();
-            //var towers18Option = context.Options.Where(m => m.Id == 1).FirstOrDefault();
-            //var towers24Option = context.Options.Where(m => m.Id == 2).FirstOrDefault();
-            //var towers36Option = context.Options.Where(m => m.Id == 3).FirstOrDefault();
-            //var solarPanelOption = context.Options.Where(m => m.Id == 4).FirstOrDefault();
-            //var pelletStoveOption = context.Options.Where(m => m.Id == 5).FirstOrDefault();
-            //var monitoringKitv1Option = context.Options.Where(m => m.Id == 6).FirstOrDefault();
-            //var monitoringKitv2Option = context.Options.Where(m => m.Id == 7).FirstOrDefault();
-            //var advancedMonitoringOption = context.Options.Where(m => m.Id == 8).FirstOrDefault();
-            //var touchlessScreenOption = context.Options.Where(m => m.Id == 9).FirstOrDefault();
-            //var sigfoxConnectionOption = context.Options.Where(m => m.Id == 10).FirstOrDefault();
-            //var permacultureBedOption = context.Options.Where(m => m.Id == 11).FirstOrDefault();
-            //var permacultureBiocharOption = context.Options.Where(m => m.Id == 12).FirstOrDefault();
-
-            //var userMLE = new ApplicationUser() { Email = "marie@myfood.eu", UserName = "marie@myfood.eu" };
+            var userCTA = new ApplicationUser() { Email = "colette@myfood.eu", UserName = "colette@myfood.eu" };
             //var userGME = new ApplicationUser() { Email = "gerard@myfood.eu", UserName = "gerard@myfood.eu" };
             //var userMGV = new ApplicationUser() { Email = "michelg@myfood.eu", UserName = "michelg@myfood.eu" };
             //var userFBA = new ApplicationUser() { Email = "felix@myfood.eu", UserName = "felix@myfood.eu" };
             //var userCGT = new ApplicationUser() { Email = "casinoforges@myfood.eu", UserName = "casinoforges@myfood.eu" };
             //var userMBA = new ApplicationUser() { Email = "myriam@myfood.eu", UserName = "myriam@myfood.eu" };
 
-            //var store = new UserStore<ApplicationUser>(context);
-            //var manager = new ApplicationUserManager(store);
+            var store = new UserStore<ApplicationUser>(context);
+            var manager = new ApplicationUserManager(store);
 
-            //var defaultPassword = ConfigurationManager.AppSettings["defaultPassword"];
+            var defaultPassword = ConfigurationManager.AppSettings["defaultPassword"];
 
-            //var t = Task.Run(async () =>
-            //{
-            //    await manager.CreateAsync(userMLE, defaultPassword);
-            //    await manager.CreateAsync(userGME, defaultPassword);
-            //    await manager.CreateAsync(userMGV, defaultPassword);
-            //    await manager.CreateAsync(userFBA, defaultPassword);
-            //    await manager.CreateAsync(userCGT, defaultPassword);
-            //    await manager.CreateAsync(userMBA, defaultPassword);
-            //});
+            var t = Task.Run(async () =>
+            {
+                await manager.CreateAsync(userCTA, defaultPassword);
+                //await manager.CreateAsync(userGME, defaultPassword);
+                //await manager.CreateAsync(userMGV, defaultPassword);
+                //await manager.CreateAsync(userFBA, defaultPassword);
+                //await manager.CreateAsync(userCGT, defaultPassword);
+                //await manager.CreateAsync(userMBA, defaultPassword);
+            });
 
-            //t.Wait();
+            t.Wait();
 
-            //var MarieLOwner = new ProductionUnitOwner() { Id = 49, user = userMLE, pioneerCitizenName = "Marie L." };
+            var ColetteTOwner = new ProductionUnitOwner() { Id = 49, user = userCTA, pioneerCitizenName = "Colette T." };
             //var GerardMOwner = new ProductionUnitOwner() { Id = 50, user = userGME, pioneerCitizenName = "Gérard M." };
             //var MichelGOwner = new ProductionUnitOwner() { Id = 51, user = userMGV, pioneerCitizenName = "Michel G." };
             //var FelixBOwner = new ProductionUnitOwner() { Id = 52, user = userFBA, pioneerCitizenName = "Felix B." };
             //var CasinoForgesFOwner = new ProductionUnitOwner() { Id = 53, user = userCGT, pioneerCitizenName = "Casino Forges" };
             //var MyriamBOwner = new ProductionUnitOwner() { Id = 54, user = userMBA, pioneerCitizenName = "Myriam B." };
 
-            //context.ProductionUnitOwners.Add(MarieLOwner);
+            context.ProductionUnitOwners.Add(ColetteTOwner);
             //context.ProductionUnitOwners.Add(GerardMOwner);
             //context.ProductionUnitOwners.Add(MichelGOwner);
             //context.ProductionUnitOwners.Add(FelixBOwner);
             //context.ProductionUnitOwners.Add(CasinoForgesFOwner);
             //context.ProductionUnitOwners.Add(MyriamBOwner);
 
-            //var MLEProdUnit = new ProductionUnit()
-            //{
-            //    locationLatitude = 44.4160722,
-            //    locationLongitude = 6.1833746,
-            //    reference = "FTAT01",
-            //    info = "Family Experimentation",
-            //    startDate = new DateTime(2017, 07, 11),
-            //    version = "2",
-            //    owner = MarieLOwner,
-            //    productionUnitType = prodUnitTypeFam22,
-            //    hydroponicType = hydroTypeAquaponicsWarmFish,
-            //    productionUnitStatus = prodUnitStatusReadyForInstall,
-            //};
+            var CTAProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.9311498,
+                locationLongitude = 2.188086,
+                reference = "FTATXX",
+                info = "Restaurant Luzzu",
+                startDate = new DateTime(2017, 07, 8),
+                version = "2",
+                owner = ColetteTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
 
             //var GMEProdUnit = new ProductionUnit()
             //{
@@ -232,20 +216,21 @@ namespace myfoodapp.Hub.Migrations
             //    productionUnitStatus = prodUnitStatusReadyForInstall,
             //};
 
-            //context.ProductionUnits.Add(MLEProdUnit);
+            context.ProductionUnits.Add(CTAProdUnit);
             //context.ProductionUnits.Add(GMEProdUnit);
             //context.ProductionUnits.Add(MGVProdUnit);
             //context.ProductionUnits.Add(FBAProdUnit);
             //context.ProductionUnits.Add(CGTProdUnit);
             //context.ProductionUnits.Add(MBAProdUnit);
 
-            //context.SaveChanges();
+            context.SaveChanges();
 
-            //var optionsMLE = new List<OptionList>();
+            var optionsCTA = new List<OptionList>();
 
-            //optionsMLE.Add(new OptionList() { productionUnit = MLEProdUnit, option = monitoringKitv2Option });
-            //optionsMLE.Add(new OptionList() { productionUnit = MLEProdUnit, option = towers18Option });
-            //optionsMLE.Add(new OptionList() { productionUnit = MLEProdUnit, option = sigfoxConnectionOption });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = monitoringKitv2Option });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = towers18Option });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = sigfoxConnectionOption });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = permacultureBedOption });
 
             //var optionsGME = new List<OptionList>();
 
@@ -282,14 +267,14 @@ namespace myfoodapp.Hub.Migrations
             //optionsMBA.Add(new OptionList() { productionUnit = MBAProdUnit, option = solarPanelOption });
             //optionsMBA.Add(new OptionList() { productionUnit = MBAProdUnit, option = permacultureBedOption });
 
-            //context.OptionLists.AddRange(optionsMLE);
+            context.OptionLists.AddRange(optionsCTA);
             //context.OptionLists.AddRange(optionsGME);
             //context.OptionLists.AddRange(optionsMGV);
             //context.OptionLists.AddRange(optionsFBA);
             //context.OptionLists.AddRange(optionsCGT);
             //context.OptionLists.AddRange(optionsMBA);
 
-            //context.SaveChanges();
+            context.SaveChanges();
 
         }
     }

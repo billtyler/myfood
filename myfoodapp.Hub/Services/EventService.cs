@@ -85,6 +85,40 @@ namespace myfoodapp.Hub.Services
             return GetAll().FirstOrDefault(predicate);
         }
 
+        public void Update(EventViewModel currentEventViewModel)
+        {
+            Event target = new Event();
+            target = entities.Events.Where(p => p.Id == currentEventViewModel.Id).FirstOrDefault();
+
+            if (target != null)
+            {
+                target.date = currentEventViewModel.date;
+                target.description = currentEventViewModel.description;
+                target.isOpen = currentEventViewModel.isOpen;
+                target.createdBy = currentEventViewModel.createdBy;
+
+                ProductionUnit currentProductionUnit = new ProductionUnit();
+                currentProductionUnit = entities.ProductionUnits.Where(p => p.Id == currentEventViewModel.productionUnitId).FirstOrDefault();
+
+                EventType currentEventType = new EventType();
+                currentEventType = entities.EventTypes.Where(p => p.Id == currentEventViewModel.eventTypeId).FirstOrDefault();
+
+                target.productionUnit = currentProductionUnit;
+                target.eventType = currentEventType;
+            }
+
+            entities.SaveChanges();
+        }
+
+        public void Destroy(EventViewModel currentEventViewModel)
+        {
+            Event currentEventType = new Event();
+            currentEventType = entities.Events.Where(p => p.Id == currentEventViewModel.Id).FirstOrDefault();
+
+            entities.Events.Remove(currentEventType);
+            entities.SaveChanges();
+        }
+
         public void Dispose()
         {
             entities.Dispose();

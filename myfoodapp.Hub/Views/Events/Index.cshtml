@@ -1,4 +1,4 @@
-﻿@model IEnumerable<myfoodapp.Hub.Models.Event>
+﻿@model myfoodapp.Hub.Models.EventViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -20,6 +20,7 @@
         window.location = window.location.origin + "/ProductionUnits/Details/" + productionUnitId;
     }
 
+
 </script>
 
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
@@ -37,10 +38,11 @@
         <p>
             @(Html.Kendo().Button()
             .Name("backButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Back to Details]]]")
             .Events(ev => ev.Click("onBackClick")))
         </p>
+
     </div>
     <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.EventViewModel>()
@@ -50,22 +52,19 @@
             columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(60);
             columns.Bound(c => c.date).Format("{0:d} - {0:t}").Width(100);
             columns.Bound(c => c.description).Width(250);
+            columns.Bound(c => c.isOpen).Width(50);
             columns.Bound(c => c.createdBy).Width(100);
-            //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
-            //columns.Command(command => { command.Destroy(); }).Width(250);
+            columns.Command(command => { command.Edit(); command.Destroy(); }).Width(150);
         })
-        //.ToolBar(toolbar =>
-        //{
-        //    toolbar.Create();
-        //    toolbar.Save();
-        //})
+        .ToolBar(toolbar =>
+        {
+           // toolbar.Save();
+        })
         .HtmlAttributes(new { style = "height: 80vh" })
-        //.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("ProductionUnitEditTemplate"))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Event"))
         //.Editable(editable => editable.Mode(GridEditMode.InCell))
         .Scrollable()
         .Filterable()
-        .Groupable()
-        .ColumnMenu()
         .Pageable(pageable => pageable
             .Refresh(true)
             .PageSizes(true)
@@ -73,19 +72,19 @@
             .DataSource(dataSource => dataSource
             .Ajax()
             .PageSize(20)
-            .ServerOperation(false)
             .Model(model =>
             {
                 model.Id(c => c.Id);
                 model.Field(c => c.Id).Editable(false);
-                model.Field(c => c.date).Editable(false);
-                model.Field(c => c.description).Editable(false);
+                model.Field(c => c.date).Editable(true);
+                model.Field(c => c.description).Editable(true);
+                model.Field(c => c.createdBy).Editable(false);
             })
             .Events(events => events.Error("error_handler"))
             //.Create("Editing_Create", "ProductionUnits")
-            .Read("Event_Read", "ProductionUnits")
-        //.Update("Editing_Update", "ProductionUnits")
-        //.Destroy("Editing_Destroy", "ProductionUnits")
+            .Read("Event_Read", "Events")
+            .Update("Event_Update", "Events")
+            .Destroy("Event_Destroy", "Events")
         )
         )
     </div>
@@ -109,8 +108,13 @@
 </script>
    
 <style>
-       .k-button {
-        height: 50px;
+        .k-button {
+            color: #018001;
+            background-color: #018001;
+        }
+
+        .k-icon {
+            color: #ffffff;
         }
 </style>
 

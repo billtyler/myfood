@@ -136,17 +136,6 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public ActionResult Event_Read([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            ApplicationDbContext db = new ApplicationDbContext();
-            EventService eventService = new EventService(db);
-
-            var rslt = eventService.GetAll(id).OrderByDescending(ev => ev.date);
-
-            return Json(rslt.ToDataSourceResult(request));
-        }
-
-        [Authorize]
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -513,7 +502,7 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var eventTypes = db.EventTypes.Where(et => et.isDisplayedForUser).ToList();
+            var eventTypes = db.EventTypes.Where(et => et.isDisplayedForUser).OrderBy(et=> et.order).ToList();
 
             var eventTypesModel = eventTypes.Select(vm => new
             {
@@ -538,15 +527,15 @@ namespace myfoodapp.Hub.Controllers
             var eventTypesItems = new List<EventTypeItem>();
 
             if (isAdmin)
-                eventTypesItems = db.EventTypeItems.Where(et => et.eventType.Id == evenTypeId).ToList();
+                eventTypesItems = db.EventTypeItems.OrderBy(et => et.order).Where(et => et.eventType.Id == evenTypeId).ToList();
             else
-                eventTypesItems = db.EventTypeItems.Where(et => et.eventType.Id == evenTypeId && et.isRestrictedForAdmin == false).ToList();
+                eventTypesItems = db.EventTypeItems.OrderBy(et => et.order).Where(et => et.eventType.Id == evenTypeId && et.isRestrictedForAdmin == false).ToList();
 
             return Json(eventTypesItems.ToDataSourceResult(request, ModelState));
         }
 
         [Authorize]
-        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note)
+        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
@@ -560,11 +549,16 @@ namespace myfoodapp.Hub.Controllers
 
             var currentEventTypeItem = db.EventTypeItems.Where(et => et.eventType.Id == eventTypeId && et.Id == eventTypeItemId).FirstOrDefault();
 
+            bool isOpen = false;
+
+            if (currentEventType.name.Contains("Issue"))
+                isOpen = true;
+
             var newEvent = new Event() { productionUnit = currentProductionUnit,
                                          description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note),
                                          eventType = currentEventType,
-                                         isOpen = false,
-                                         date = DateTime.Now,
+                                         isOpen = isOpen,
+                                         date = currentDate,
                                          createdBy = currentProductUnitOwner.pioneerCitizenName
             };
 

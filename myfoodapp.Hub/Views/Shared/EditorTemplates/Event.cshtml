@@ -1,0 +1,28 @@
+@model myfoodapp.Hub.Models.EventViewModel
+
+<div style="margin:20px">
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.createdBy)
+    @Html.HiddenFor(model => model.productionUnitId)
+    @Html.HiddenFor(model => model.eventTypeId)
+
+    <div style="margin:10px">
+        @Html.LabelFor(model => model.date)
+        <br />
+        @Html.Kendo().DatePickerFor(model => model.date)
+    </div>
+
+    <div style="margin:10px">
+        @Html.LabelFor(model => model.description)
+        <br />
+        @Html.EditorFor(model => model.description)
+    </div>
+    <div style="margin:10px">
+        @Html.LabelFor(model => model.isOpen)
+        <br />
+        @Html.Kendo().CheckBoxFor(model => model.isOpen)
+    </div>
+
+</div>
+

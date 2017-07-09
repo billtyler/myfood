@@ -102,16 +102,17 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "[[[In Maintenance]]]" });
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "[[[Stopped]]]" });
 
-            context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]", isDisplayedForUser = false });
-            context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]", isDisplayedForUser = true });
-            context.EventTypes.Add(new EventType() { Id = 3, name = "[[[Maintenance]]]", isDisplayedForUser = true });
-            context.EventTypes.Add(new EventType() { Id = 4, name = "[[[Action]]]", isDisplayedForUser = true });
-            context.EventTypes.Add(new EventType() { Id = 5, name = "[[[Plant Health]]]", isDisplayedForUser = true });
-            context.EventTypes.Add(new EventType() { Id = 6, name = "[[[Fish Health]]]", isDisplayedForUser = true });
-            context.EventTypes.Add(new EventType() { Id = 7, name = "[[[Feeling]]]", isDisplayedForUser = true });
-            context.EventTypes.Add(new EventType() { Id = 8, name = "[[[Info]]]", isDisplayedForUser = false });
-            context.EventTypes.Add(new EventType() { Id = 9, name = "[[[Advices]]]", isDisplayedForUser = false });
-            context.EventTypes.Add(new EventType() { Id = 10, name = "[[[Improvement]]]", isDisplayedForUser = false });
+            context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]", isDisplayedForUser = false, order = 0 });
+            context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]", isDisplayedForUser = true, order = 4 });
+            context.EventTypes.Add(new EventType() { Id = 3, name = "[[[Maintenance]]]", isDisplayedForUser = true, order = 1 });
+            context.EventTypes.Add(new EventType() { Id = 4, name = "[[[Action]]]", isDisplayedForUser = true, order = 0 });
+            context.EventTypes.Add(new EventType() { Id = 5, name = "[[[Plant Health]]]", isDisplayedForUser = true, order = 2 });
+            context.EventTypes.Add(new EventType() { Id = 6, name = "[[[Fish Health]]]", isDisplayedForUser = true, order = 3 });
+            context.EventTypes.Add(new EventType() { Id = 7, name = "[[[Feeling]]]", isDisplayedForUser = true, order = 5 });
+            context.EventTypes.Add(new EventType() { Id = 8, name = "[[[Info]]]", isDisplayedForUser = false, order = 0 });
+            context.EventTypes.Add(new EventType() { Id = 9, name = "[[[Advices]]]", isDisplayedForUser = false, order = 0 });
+            context.EventTypes.Add(new EventType() { Id = 10, name = "[[[Improvement]]]", isDisplayedForUser = true, order = 0 });
+            context.EventTypes.Add(new EventType() { Id = 11, name = "[[[Harvest]]]", isDisplayedForUser = true, order = 6 });
 
             context.HealthLevels.Add(new HealthLevel() { Id = 1, name = "[[[Poor]]]" });
             context.HealthLevels.Add(new HealthLevel() { Id = 2, name = "[[[Average]]]" });
@@ -193,6 +194,7 @@ namespace myfoodapp.Hub.Migrations
             var infoEventTypes = context.EventTypes.Where(g => g.Id == 8).FirstOrDefault();
             var advicesEventTypes = context.EventTypes.Where(g => g.Id == 9).FirstOrDefault();
             var improvementEventTypes = context.EventTypes.Where(g => g.Id == 10).FirstOrDefault();
+            var harvestEventTypes = context.EventTypes.Where(g => g.Id == 11).FirstOrDefault();
 
             context.EventTypeItems.Add(new EventTypeItem() { Id = 0, order = 0, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Dead fish]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 1, order = 1, eventType = issueEventTypes, isRestrictedForAdmin = false, name = "[[[Too much algeas]]]" });
@@ -255,6 +257,11 @@ namespace myfoodapp.Hub.Migrations
             context.EventTypeItems.Add(new EventTypeItem() { Id = 53, order = 2, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Anxious]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 54, order = 3, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Want more]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 55, order = 4, eventType = feelingEventTypes, isRestrictedForAdmin = false, name = "[[[Need support]]]" });
+
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 56, order = 0, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Leaf vegetables - less than 200gr]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 57, order = 1, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Leaf vegetables - more than 200gr]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 58, order = 2, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Root vegetables - less than 200gr]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 59, order = 3, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Root vegetables - more than 200gr]]]" });
 
             var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
             var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();
@@ -692,6 +699,7 @@ namespace myfoodapp.Hub.Migrations
             var userMLE = new ApplicationUser() { Email = "marie@myfood.eu", UserName = "marie@myfood.eu" };
             var userGME = new ApplicationUser() { Email = "gerard@myfood.eu", UserName = "gerard@myfood.eu" };
             var userMGV = new ApplicationUser() { Email = "michelg@myfood.eu", UserName = "michelg@myfood.eu" };
+            var userCTA = new ApplicationUser() { Email = "colette@myfood.eu", UserName = "colette@myfood.eu" };
             var userFBA = new ApplicationUser() { Email = "felix@myfood.eu", UserName = "felix@myfood.eu" };
             var userCGT = new ApplicationUser() { Email = "casinoforges@myfood.eu", UserName = "casinoforges@myfood.eu" };
             var userMBA = new ApplicationUser() { Email = "myriam@myfood.eu", UserName = "myriam@myfood.eu" };
@@ -756,13 +764,13 @@ namespace myfoodapp.Hub.Migrations
                 await manager.CreateAsync(userMLE, defaultPassword);
                 await manager.CreateAsync(userGME, defaultPassword);
                 await manager.CreateAsync(userMGV, defaultPassword);
+                await manager.CreateAsync(userCTA, defaultPassword);
                 await manager.CreateAsync(userFBA, defaultPassword);
                 await manager.CreateAsync(userCGT, defaultPassword);
                 await manager.CreateAsync(userMBA, defaultPassword);
 
                 //TO BE DEPLOYED       
                 await manager.CreateAsync(userYGR, defaultPassword);
-
                 await manager.CreateAsync(userMSE, defaultPassword);
 
                 //TO BE CONFIRMED
@@ -819,17 +827,18 @@ namespace myfoodapp.Hub.Migrations
             var JeanBaptisteFOwner = new ProductionUnitOwner() { Id = 38, user = userJBF, pioneerCitizenName = "Jean Baptiste F.", pioneerCitizenNumber = 30 };
             var RudyDOwner = new ProductionUnitOwner() { Id = 39, user = userRDA, pioneerCitizenName = "Rudy D.", pioneerCitizenNumber = 32 };
             var ValerieOwner = new ProductionUnitOwner() { Id = 40, user = userVBU, pioneerCitizenName = "Valérie B.", pioneerCitizenNumber = 33 };
-            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G." };
-            var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D." };
-            var EmmmanuelTOwner = new ProductionUnitOwner() { Id = 46, user = userETR, pioneerCitizenName = "Emmanuel T." };
-            var OpheliaFOwner = new ProductionUnitOwner() { Id = 47, user = userOFE, pioneerCitizenName = "Ophélia F." };
-            var GuillaumeTOwner = new ProductionUnitOwner() { Id = 48, user = userGTI, pioneerCitizenName = "Guillaume T." };
-            var MarieLOwner = new ProductionUnitOwner() { Id = 49, user = userMLE, pioneerCitizenName = "Marie L." };
-            var GerardMOwner = new ProductionUnitOwner() { Id = 50, user = userGME, pioneerCitizenName = "Gérard M." };
-            var MichelGOwner = new ProductionUnitOwner() { Id = 51, user = userMGV, pioneerCitizenName = "Michel G." };
-            var FelixBOwner = new ProductionUnitOwner() { Id = 52, user = userFBA, pioneerCitizenName = "Felix B." };
-            var CasinoForgesFOwner = new ProductionUnitOwner() { Id = 53, user = userCGT, pioneerCitizenName = "Casino Forges" };
-            var MyriamBOwner = new ProductionUnitOwner() { Id = 54, user = userMBA, pioneerCitizenName = "Myriam B." };
+            var GoyGOwner = new ProductionUnitOwner() { Id = 32, user = userGGR, pioneerCitizenName = "Goy G.", pioneerCitizenNumber = 31 };
+            var BenoitDOwner = new ProductionUnitOwner() { Id = 23, user = userBDE, pioneerCitizenName = "Benoit D.", pioneerCitizenNumber = 38 };
+            var EmmmanuelTOwner = new ProductionUnitOwner() { Id = 46, user = userETR, pioneerCitizenName = "Emmanuel T.", pioneerCitizenNumber = 34 };
+            var OpheliaFOwner = new ProductionUnitOwner() { Id = 47, user = userOFE, pioneerCitizenName = "Ophélia F.", pioneerCitizenNumber = 36 };
+            var GuillaumeTOwner = new ProductionUnitOwner() { Id = 48, user = userGTI, pioneerCitizenName = "Guillaume T.", pioneerCitizenNumber = 35 };
+            var MarieLOwner = new ProductionUnitOwner() { Id = 49, user = userMLE, pioneerCitizenName = "Marie L.", pioneerCitizenNumber = 0 };
+            var GerardMOwner = new ProductionUnitOwner() { Id = 50, user = userGME, pioneerCitizenName = "Gérard M.", pioneerCitizenNumber = 0 };
+            var MichelGOwner = new ProductionUnitOwner() { Id = 51, user = userMGV, pioneerCitizenName = "Michel G.", pioneerCitizenNumber = 39 };
+            var ColetteTOwner = new ProductionUnitOwner() { Id = 49, user = userCTA, pioneerCitizenName = "Colette T.", pioneerCitizenNumber = 41 };
+            var FelixBOwner = new ProductionUnitOwner() { Id = 52, user = userFBA, pioneerCitizenName = "Felix B.", pioneerCitizenNumber = 40 };
+            var CasinoForgesFOwner = new ProductionUnitOwner() { Id = 53, user = userCGT, pioneerCitizenName = "Casino Forges", pioneerCitizenNumber = 42 };
+            var MyriamBOwner = new ProductionUnitOwner() { Id = 54, user = userMBA, pioneerCitizenName = "Myriam B.", pioneerCitizenNumber = 0 };
 
             //TO BE DEPLOYED             
             var YvesGOwner = new ProductionUnitOwner() { Id = 31, user = userYGR, pioneerCitizenName = "Yves G." };
@@ -887,6 +896,7 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitOwners.Add(MarieLOwner);
             context.ProductionUnitOwners.Add(GerardMOwner);
             context.ProductionUnitOwners.Add(MichelGOwner);
+            context.ProductionUnitOwners.Add(ColetteTOwner);
             context.ProductionUnitOwners.Add(FelixBOwner);
             context.ProductionUnitOwners.Add(CasinoForgesFOwner);
             context.ProductionUnitOwners.Add(MyriamBOwner);
@@ -1510,6 +1520,20 @@ namespace myfoodapp.Hub.Migrations
                 productionUnitStatus = prodUnitStatusReadyForInstall,
             };
 
+            var CTAProdUnit = new ProductionUnit()
+            {
+                locationLatitude = 48.9311498,
+                locationLongitude = 2.188086,
+                reference = "FTATXX",
+                info = "Restaurant Luzzu",
+                startDate = new DateTime(2017, 07, 8),
+                version = "2",
+                owner = ColetteTOwner,
+                productionUnitType = prodUnitTypeFam22,
+                hydroponicType = hydroTypeAquaponicsWarmFish,
+                productionUnitStatus = prodUnitStatusRunning,
+            };
+
             var FBAProdUnit = new ProductionUnit()
             {
                 locationLatitude = 51.4408238,
@@ -1686,6 +1710,7 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnits.Add(MLEProdUnit);
             context.ProductionUnits.Add(GMEProdUnit);
             context.ProductionUnits.Add(MGVProdUnit);
+            context.ProductionUnits.Add(CTAProdUnit);
             context.ProductionUnits.Add(FBAProdUnit);
             context.ProductionUnits.Add(CGTProdUnit);
             context.ProductionUnits.Add(MBAProdUnit);
@@ -1968,6 +1993,13 @@ namespace myfoodapp.Hub.Migrations
             optionsMGV.Add(new OptionList() { productionUnit = MGVProdUnit, option = sigfoxConnectionOption });
             optionsMGV.Add(new OptionList() { productionUnit = MGVProdUnit, option = permacultureBedOption });
 
+            var optionsCTA = new List<OptionList>();
+
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = monitoringKitv2Option });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = towers18Option });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = sigfoxConnectionOption });
+            optionsCTA.Add(new OptionList() { productionUnit = CTAProdUnit, option = permacultureBedOption });
+
             var optionsFBA = new List<OptionList>();
 
             optionsFBA.Add(new OptionList() { productionUnit = FBAProdUnit, option = monitoringKitv2Option });
@@ -2068,6 +2100,7 @@ namespace myfoodapp.Hub.Migrations
             context.OptionLists.AddRange(optionsMLE);
             context.OptionLists.AddRange(optionsGME);
             context.OptionLists.AddRange(optionsMGV);
+            context.OptionLists.AddRange(optionsCTA);
             context.OptionLists.AddRange(optionsFBA);
             context.OptionLists.AddRange(optionsCGT);
             context.OptionLists.AddRange(optionsMBA);

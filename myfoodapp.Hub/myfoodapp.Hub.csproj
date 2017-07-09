@@ -411,6 +411,7 @@
     <Compile Include="Controllers\MeasuresController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\PerformanceHealthController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\ProductionUnitsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1232,6 +1233,7 @@
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\GrenobleCity.jpg" />
     <Content Include="Content\Pictures\Sites\GrosbuschFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LaChapelleFamily22.jpg" />
@@ -1252,6 +1254,7 @@
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\SaintPierreFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SeppoisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SfaxFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
@@ -3192,7 +3195,7 @@
     <Content Include="Scripts\kendo\2016.3.1118\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\2016.3.1118\kendo.webcomponents.min.js.map" />
     <Content Include="Scripts\kendo\2016.3.1118\kendo.window.min.js.map" />
-    <Content Include="Views\ProductionUnits\Events.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\ProductionUnits\Update.cshtml" />
     <Content Include="Views\Recipes\Index.cshtml" />
     <Content Include="Views\PerformanceHealth\Index.cshtml" />
@@ -3216,6 +3219,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ViewAllRoles.cshtml" />
     <Content Include="Views\Error\Error500.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Event.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
