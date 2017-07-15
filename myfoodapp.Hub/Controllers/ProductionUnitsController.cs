@@ -555,12 +555,16 @@ namespace myfoodapp.Hub.Controllers
                 isOpen = true;
 
             var newEvent = new Event() { productionUnit = currentProductionUnit,
-                                         description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note),
                                          eventType = currentEventType,
                                          isOpen = isOpen,
                                          date = currentDate,
                                          createdBy = currentProductUnitOwner.pioneerCitizenName
             };
+
+            if (!String.IsNullOrEmpty(note))
+                newEvent.description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note);
+            else
+                newEvent.description = String.Format("{0}", HttpContext.ParseAndTranslate(currentEventTypeItem.name));
 
             try
             {
@@ -580,36 +584,49 @@ namespace myfoodapp.Hub.Controllers
         [Authorize]
         public FileContentResult DownloadCSV(int id)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
-                                                          .Include(p => p.productionUnitType)
-                                                          .Where(p => p.Id == id).FirstOrDefault();
+            var dbLog = new ApplicationDbContext();
 
-            string fileName = String.Format("{0}_#{1}_[{2}].csv",   currentProductionUnit.owner.pioneerCitizenName,
-                                                                    currentProductionUnit.owner.pioneerCitizenNumber,
-                                                                    DateTime.Now.ToShortDateString());
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                                              .Include(p => p.productionUnitType)
+                                                              .Where(p => p.Id == id).FirstOrDefault();
 
-            StringBuilder csv = new StringBuilder();
+                string fileName = String.Format("{0}_#{1}_[{2}].csv", currentProductionUnit.owner.pioneerCitizenName,
+                                                                        currentProductionUnit.owner.pioneerCitizenNumber,
+                                                                        DateTime.Now.ToShortDateString());
 
-            var mes = db.Measures.Include(m => m.sensor)
-                       .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
-                       .OrderByDescending(m => m.captureDate)
-                       .Take(15000);
+                StringBuilder csv = new StringBuilder();
 
-            mes.OrderBy(m => m.captureDate).ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
-                        {
-                            csv.Append(m.Key + "; ");
+                var mes = db.Measures.Include(m => m.sensor)
+                           .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
+                           .OrderByDescending(m => m.captureDate)
+                           .Take(15000);
 
-                            m.OrderBy(c => c.sensor.Id).ToList().ForEach(g => {
-                                csv.Append(g.value + "; ");
-                                });
+                mes.OrderBy(m => m.captureDate).ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
+                {
+                    csv.Append(m.Key + "; ");
 
-                            csv.Remove(csv.Length - 2, 1);
-                            csv.Append("\r\n");
-                        }
-            );
+                    m.OrderBy(c => c.sensor.Id).ToList().ForEach(g => {
+                        csv.Append(g.value + "; ");
+                    });
 
-            return File(new UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+                    csv.Remove(csv.Length - 2, 1);
+                    csv.Append("\r\n");
+                }
+                );
+
+                return File(new UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+            }
+            catch (Exception ex)
+            {
+                dbLog.Logs.Add(Log.CreateErrorLog("Error on Convert Message into Measure", ex));
+                dbLog.SaveChanges();
+            }
+
+            return null;
+
         }
 
         protected override void Dispose(bool disposing)

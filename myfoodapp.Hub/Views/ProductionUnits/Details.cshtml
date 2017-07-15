@@ -289,6 +289,7 @@
                         .Title("[[[Add Event]]]")
                         .Width(680)
                         .Height(720)
+                        .Animation(c => c.Open(a => a.Fade(FadeDirection.In).Zoom(ZoomDirection.In)).Close(a => a.Fade(FadeDirection.Out).Zoom(ZoomDirection.Out)))
                         .Modal(true)
                         .Visible(false)
                         .Closable(true)

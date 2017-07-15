@@ -31,6 +31,16 @@ namespace myfoodapp.Hub.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Manage()
+        {
+            ViewBag.Title = "Production Units Event Page";
+
+            PopulateEventType();
+
+            return View();
+        }
+
         private void PopulateEventType()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -46,13 +56,23 @@ namespace myfoodapp.Hub.Controllers
             ViewData["EventTypes"] = eventTypes;
         }
 
+        public ActionResult Events_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            EventService eventService = new EventService(db);
+
+            var rslt = eventService.GetAll().OrderByDescending(ev => ev.date).OrderByDescending(ev => ev.Id);
+
+            return Json(rslt.ToDataSourceResult(request));
+        }
+
         [Authorize]
         public ActionResult Event_Read([DataSourceRequest] DataSourceRequest request, int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
-            var rslt = eventService.GetAll(id).OrderByDescending(ev => ev.date);
+            var rslt = eventService.GetAll(id).OrderByDescending(ev => ev.date).OrderByDescending(ev => ev.Id);
 
             return Json(rslt.ToDataSourceResult(request));
         }
@@ -85,7 +105,49 @@ namespace myfoodapp.Hub.Controllers
             }
 
             return Json(new[] { currentEvent }.ToDataSourceResult(request, ModelState));
-        }    
+        }
+
+        [Authorize]
+        public FileContentResult DownloadCSV()
+        {
+            var dbLog = new ApplicationDbContext();
+
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+
+                string fileName = String.Format("Events_All_[{0}].csv", DateTime.Now.ToShortDateString());
+
+                StringBuilder csv = new StringBuilder();
+
+                var events = db.Events.Include(p => p.productionUnit.owner).Include(p => p.eventType).Take(15000);
+
+                events.OrderBy(m => m.date).ToList().ForEach(m =>
+                {
+                    csv.Append(m.Id + "; ");
+                    csv.Append(m.date + "; ");
+                    csv.Append(m.description + "; ");
+                    csv.Append(m.isOpen + "; ");
+                    csv.Append(m.createdBy + "; ");
+                    csv.Append(m.productionUnit.info + "; ");
+                    csv.Append(m.productionUnit.owner.pioneerCitizenName + "; ");
+
+                    csv.Remove(csv.Length - 2, 1);
+                    csv.Append("\r\n");
+                }
+                );
+                
+                return File(Encoding.Unicode.GetBytes(csv.ToString()), "text/csv", fileName);
+            } 
+            catch (Exception ex)
+            {
+                dbLog.Logs.Add(Log.CreateErrorLog("Error on File Generation", ex));
+                dbLog.SaveChanges();
+            }
+
+            return null;
+
+        }
 
         protected override void Dispose(bool disposing)
         {

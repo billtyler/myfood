@@ -20,6 +20,7 @@
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
             parallax: true,
+            lazyLoading: true,
             speed: 600,
             onSlideChangeEnd: onSlideChangeEnd,
         });
@@ -42,13 +43,13 @@
             success: function (response) {
 
                 $.each(response, function (index, item) {
-                    if (item.ContactMail !== undefined && item.PhoneNumber !== undefined && item.PreferedMoment !== undefined)
+                    if (item.ContactMail !== undefined && item.PhoneNumber !== undefined && item.PreferedMoment !== undefined && item.Location !== undefined)
                     {
                     swiper.appendSlide(
                     '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
                         '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
                         '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
-                        '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-100"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:'+ item.ContactMail +'">'+ item.ContactMail +'</a></br><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:' + item.PhoneNumber + '">' + item.PhoneNumber + '</a></br> <i class="fa fa-clock-o" aria-hidden="true"></i> [[[Best to contact:]]] ' + item.PreferedMoment + '</div>' +
+                        '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-100"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:' + item.ContactMail + '">' + item.ContactMail + '</a></br><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:' + item.PhoneNumber + '">' + item.PhoneNumber + '</a></br> <i class="fa fa-clock-o" aria-hidden="true"></i> [[[Best to contact:]]] ' + item.PreferedMoment + '</br> <i class="fa fa-location-arrow" aria-hidden="true"></i> [[[Location:]]] ' + item.Location + '</div>' +
                         '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
                             '<p>' + item.ProductionUnitOptions + '</p>' +
                         '</div>' +
@@ -197,46 +198,6 @@
         <div id="map-container" class="col-md-8">
             <div class="widget large-widget">
                 <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; [[[Pioneer Citizen Map]]]</h3>
-                @*<div class="maps">
-                    @model myfoodapp.Hub.Models.Map
-                    @(Html.Kendo().Map()
-                    .Name(Model.Name)
-                    .Center(Model.CenterLatitude, Model.CenterLongitude)
-                    .Zoom(Model.Zoom)
-                    .Zoomable(false)
-                    .Layers(layers =>
-                        {
-                            layers.Add()
-                                .Style(style => style
-                                    .Fill(fill => fill.Color("#018001").Opacity(0.7))
-                                    .Stroke(stroke => stroke.Color("#FFFFFF"))
-                                )
-                                .Type(MapLayerType.Shape)
-                                .DataSource(dataSource => dataSource
-                                    .GeoJson()
-                                    .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
-                                );
-                        })
-                        .Markers(markers =>
-                        {
-                            foreach (var marker in Model.Markers)
-                            {
-                                markers.Add()
-                                .Location(marker.latlng)
-                                .Shape(marker.shape)
-                                .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
-                                .Tooltip(t => t.Events(e => e.Show("onShow")))
-                                .Title(marker.name);
-                            }
-                        })
-                        .Events(events => events
-                                          .ShapeCreated("onShapeCreated")
-                                          .ShapeMouseEnter("onShapeMouseEnter")
-                                          .ShapeMouseLeave("onShapeMouseLeave")
-                            )
-                    )
-                </div>*@
-
                 <iframe style="height: 350px; width: 100%" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
             </div>
         </div>

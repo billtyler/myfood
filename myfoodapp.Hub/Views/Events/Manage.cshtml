@@ -7,21 +7,18 @@
 
 <script type="text/javascript">
     window.onload = function onLoad(e) {
-
-        var Events = $("#Events").data("kendoGrid");
-
-        var productionUnitId = $('#routeDataId').val();
-
-        Events.dataSource.read({ id: productionUnitId });       
+      
     }
 
     function onBackClick() {
-        var productionUnitId = $('#routeDataId').val();
-        window.location = window.location.origin + "/ProductionUnits/Details/" + productionUnitId;
+        window.location = window.location.origin + "/ProductionUnits/";
     }
-</script>
 
-<input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
+    function onExportCSVClick() {
+        window.location.href = "@Url.Action("DownloadCSV", "Events")";
+    }
+
+</script>
 
 <div id="main-section-header" class="row">
     <h2 class="col-md-3">[[[Production Units Management]]]</h2>
@@ -30,7 +27,7 @@
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-md-2">
-        <h3 class="section-header">[[[Manage Production Unit Events]]]</h3>
+        <h3 class="section-header">[[[Manage Production Units Events]]]</h3>
         <br />
 
         <p>
@@ -41,26 +38,39 @@
             .Events(ev => ev.Click("onBackClick")))
         </p>
 
+        <br />
+
+        <div id="exportButton">
+            <p>
+                @(Html.Kendo().Button()
+            .Name("thisExportButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
+            .Content("[[[Export CSV]]]")
+            .Events(ev => ev.Click("onExportCSVClick")))
+            </p>
+        </div>
+
     </div>
     <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.EventViewModel>()
         .Name("Events")
         .Columns(columns =>
         {
-            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(60);
+            columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(80);
             columns.Bound(c => c.date).Format("{0:d}").Width(80);
             columns.Bound(c => c.description).Width(250);
-            columns.Bound(c => c.isOpen).Title("[[[open]]]").Width(50);
+            columns.Bound(c => c.isOpen).Title("[[[open]]]").Width(80);
+            columns.Bound(c => c.productionUnit.info).Title("[[[info]]]").Groupable(true).Width(120);
             columns.Bound(c => c.createdBy).Width(100);
             columns.Command(command => { command.Edit(); command.Destroy(); }).Width(150);
         })
         .ToolBar(toolbar =>
         {
-           // toolbar.Save();
         })
         .HtmlAttributes(new { style = "height: 80vh" })
         .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Event"))
         .Scrollable()
+        .Groupable()
         .Filterable()
         .Pageable(pageable => pageable
             .Refresh(true)
@@ -73,17 +83,18 @@
             {
                 model.Id(c => c.Id);
                 model.Field(c => c.Id).Editable(false);
-                model.Field(c => c.date).Editable(true);
-                model.Field(c => c.description).Editable(true);
+                model.Field(c => c.date).Editable(false);
+                model.Field(c => c.description).Editable(false);
                 model.Field(c => c.createdBy).Editable(false);
             })
             .Events(events => events.Error("error_handler"))
-            .Read("Event_Read", "Events", new { Id = this.ViewContext.RouteData.Values["id"] })
+            .Read("Events_Read", "Events")
             .Update("Event_Update", "Events")
             .Destroy("Event_Destroy", "Events")
         )
         )
     </div>
+
 </div>
 
 <script type="text/javascript">
@@ -107,7 +118,7 @@
             color: #018001;
             background-color: #018001;
         }
-
+    
         .k-grid-edit span.k-icon {
             display:none;
         }

@@ -1399,7 +1399,7 @@ namespace myfoodapp.Hub.Migrations
                 locationLatitude = 43.2803691,
                 locationLongitude = 5.3349279,
                 reference = "894811",
-                info = "Family Experimentation </br> Black Greenhouse",
+                info = "Family Black Greenhouse",
                 startDate = new DateTime(2017, 06, 01),
                 version = "2",
                 owner = ValerieOwner,

@@ -31,7 +31,14 @@ namespace myfoodapp.Hub.Services
                 productionUnit = new ProductionUnitViewModel()
                 {
                     Id = ev.productionUnit.Id,
-                    info = ev.productionUnit.info
+                    info = ev.productionUnit.info,
+                    ownerId = ev.productionUnit.owner.Id,
+                    owner = new OwnerViewModel()
+                    {
+                        Id = ev.productionUnit.owner.Id,
+                        pioneerCitizenName = ev.productionUnit.owner.pioneerCitizenName,
+                        pioneerCitizenNumber = ev.productionUnit.owner.pioneerCitizenNumber
+                    }
                 },
                 eventTypeId = ev.eventType.Id,
                 eventType = new EventTypeViewModel()
@@ -41,6 +48,11 @@ namespace myfoodapp.Hub.Services
                 }
 
             }).ToList();
+
+            result.ToList().ForEach(ev => {
+
+                ev.productionUnit.info = String.Format("{0} - {1} #{2}", ev.productionUnit.info, ev.productionUnit.owner.pioneerCitizenName, ev.productionUnit.owner.pioneerCitizenNumber);
+            });
 
             return result;
         }

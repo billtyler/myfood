@@ -461,6 +461,10 @@
     <Compile Include="Migrations\201706220609383_EventTypeList.Designer.cs">
       <DependentUpon>201706220609383_EventTypeList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707151622012_Add-ProductionOwner-Location.cs" />
+    <Compile Include="Migrations\201707151622012_Add-ProductionOwner-Location.Designer.cs">
+      <DependentUpon>201707151622012_Add-ProductionOwner-Location.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -1231,11 +1235,13 @@
     <Content Include="Content\Pictures\Sites\BraineFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\EssenFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GrenobleCity.jpg" />
     <Content Include="Content\Pictures\Sites\GrosbuschFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\HouillesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LaChapelleFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LandserFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\LauterbourgFamily22.jpg" />
@@ -1392,7 +1398,6 @@
     <Content Include="Content\kendo\kendo.silver.mobile.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.mobile.min.css.map" />
-    <Content Include="Content\countries.geo.txt" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -3220,6 +3225,7 @@
     <Content Include="Views\Admin\ViewAllRoles.cshtml" />
     <Content Include="Views\Error\Error500.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Event.cshtml" />
+    <Content Include="Views\Events\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3263,6 +3269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706220609383_EventTypeList.resx">
       <DependentUpon>201706220609383_EventTypeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707151622012_Add-ProductionOwner-Location.resx">
+      <DependentUpon>201707151622012_Add-ProductionOwner-Location.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

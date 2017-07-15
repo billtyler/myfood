@@ -1,6 +1,4 @@
-﻿
-
-<script type="text/javascript">
+﻿<script type="text/javascript">
 
     var swiper;
 
@@ -12,6 +10,7 @@
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev',
             parallax: true,
+            lazyLoading: true,
             speed: 600,
             onSlideChangeEnd: onSlideChangeEnd,
         });
@@ -139,15 +138,6 @@
     </div>
 </script>
 
-@*<style>
-        html, body, #map {
-            height: 100%;
-            margin: 0;
-        }
-    </style>*@
-
-
-
 <div id="main-section-header" class="row">
     <h2 id="title-pioneer" class="col-md-3">[[[Pioneer Citizen Network]]]</h2>
     <div style="clear:both;"></div>
@@ -167,46 +157,8 @@
             </div>
         </div>
         <div id="map-container" class="col-md-7">
-          @*  @model myfoodapp.Hub.Models.Map
-
-     @(Html.Kendo().Map()
-    .Name(Model.Name)
-    .Center(Model.CenterLatitude, Model.CenterLongitude)
-    .Zoom(Model.Zoom)
-    .Zoomable(false)
-    .Layers(layers =>
-            {
-                layers.Add()
-                    .Style(style => style
-                        .Fill(fill => fill.Color("#018001").Opacity(0.7))
-                        .Stroke(stroke => stroke.Color("#FFFFFF"))
-                    )
-                    .Type(MapLayerType.Shape)
-                    .DataSource(dataSource => dataSource
-                        .GeoJson()
-                        .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
-                    );
-            })
-    .Markers(markers =>
-    {
-        foreach (var marker in Model.Markers)
-        {
-            markers.Add()
-            .Location(marker.latlng)
-            .Shape(marker.shape)
-            .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
-            .Tooltip(t => t.Events(e => e.Show("onShow")))
-            .Title(marker.name);
-        }
-    })
-    .Events(events => events
-                      .ShapeCreated("onShapeCreated")
-                      .ShapeMouseEnter("onShapeMouseEnter")
-                      .ShapeMouseLeave("onShapeMouseLeave")
-        )
-    )*@
-
-            <iframe style="height: 350px; width: 100%" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
+   
+        <iframe style="height: 350px; width: 100%" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
     </div>
 
     </div>
