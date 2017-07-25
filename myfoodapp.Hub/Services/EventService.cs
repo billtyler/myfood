@@ -45,7 +45,9 @@ namespace myfoodapp.Hub.Services
                 {
                     Id = ev.eventType.Id,
                     name = ev.eventType.name
-                }
+                },
+                details = ev.details,
+                picture = ev.picture
 
             }).ToList();
 
@@ -80,7 +82,9 @@ namespace myfoodapp.Hub.Services
                 {
                     Id = ev.eventType.Id,
                     name = ev.eventType.name
-                }
+                },
+                details = ev.details,
+                picture = ev.picture
 
             }).ToList();
 
@@ -117,9 +121,13 @@ namespace myfoodapp.Hub.Services
 
                 target.productionUnit = currentProductionUnit;
                 target.eventType = currentEventType;
+
+                target.details = currentEventViewModel.details;
+                target.picture = currentEventViewModel.picture;
             }
 
-            entities.SaveChanges();
+                entities.SaveChanges();
+           
         }
 
         public void Destroy(EventViewModel currentEventViewModel)

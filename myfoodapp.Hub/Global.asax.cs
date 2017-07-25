@@ -16,6 +16,7 @@ using System.Globalization;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using System.Web;
+using myfoodapp.Hub.Business;
 
 namespace myfoodapp.Hub
 {
@@ -141,6 +142,7 @@ namespace myfoodapp.Hub
                 var mailContent = new StringBuilder();
 
                 NotificationPushManager.PushMessage(mailSubject, "Click to see your production unit's status", productionUnitId, notificationPushKey);
+
             }
         }
 

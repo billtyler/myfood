@@ -4,17 +4,6 @@
 
     window.onload = function onLoad(e) {
 
-        swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            parallax: true,
-            lazyLoading: true,
-            speed: 600,
-            onSlideChangeEnd: onSlideChangeEnd,
-        });
-
         $.ajax({
             url: "@Url.Action("GetNetworkStats", "Home")",
             dataType: "json",
@@ -33,15 +22,30 @@
             success: function (response) {
 
                 $.each(response, function (index, item) {
-                    swiper.appendSlide(
-                        '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
+                    $('.swiper-wrapper').append(
+                        '<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
+                            '<div class="layer">' +
                             '<div class="subtitle" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
                             '<div class="title" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
                             '<div class="text" data-swiper-parallax="-300">' +
                                 '<p>' + item.ProductionUnitOptions + '</p>' +
                             '</div>' +
+                            '<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>' +
+                            '</div>' +
                         '</div>'
                         );
+                });
+
+                swiper = new Swiper('.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    preloadImages: false,
+                    parallax: true,
+                    lazyLoading: true,
+                    speed: 600,
+                    onSlideChangeEnd: onSlideChangeEnd,
                 });
             }
         });
@@ -81,22 +85,6 @@
         }
     });
     }
-
-    @*function onShow(e) {
-
-        var currentProductionUnitLat = this.marker.options.location[0];
-        var currentProductionUnitLong = this.marker.options.location[1];
-
-        $.ajax({
-            url: "@Url.Action("GetProductionUnitIndex", "Home")",
-            dataType: "json",
-            data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
-            type: "POST",
-            success: function(response) {
-                swiper.slideTo(response.CurrentIndex);
-            }
-        });
-    }*@
 
     window.onClusterShow = function (latLang) {
 
@@ -441,6 +429,15 @@
 
     .k-loading-mask {
         opacity: 0;
+    }
+
+    .layer {
+    background-color: rgba(0, 0, 0, .3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     }
 
     @@media screen and (max-width: 480px) {

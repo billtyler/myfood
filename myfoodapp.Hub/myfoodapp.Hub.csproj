@@ -465,6 +465,10 @@
     <Compile Include="Migrations\201707151622012_Add-ProductionOwner-Location.Designer.cs">
       <DependentUpon>201707151622012_Add-ProductionOwner-Location.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707240648196_Add-Event-Details-Picture.cs" />
+    <Compile Include="Migrations\201707240648196_Add-Event-Details-Picture.Designer.cs">
+      <DependentUpon>201707240648196_Add-Event-Details-Picture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -475,6 +479,7 @@
     <Compile Include="Models\GeoProperties.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Map.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\MeasureModel.cs" />
     <Compile Include="Models\ProductionUnitModel.cs" />
@@ -513,6 +518,10 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cluster.css" />
+    <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\prev.png" />
     <Content Include="Content\kendo\2016.3.1118\Black\editor.png" />
     <Content Include="Content\kendo\2016.3.1118\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2016.3.1118\Black\indeterminate.gif" />
@@ -1237,6 +1246,7 @@
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\EssenFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
+    <Content Include="Content\Pictures\Sites\ForgesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GrenobleCity.jpg" />
     <Content Include="Content\Pictures\Sites\GrosbuschFamily22.jpg" />
@@ -1258,6 +1268,7 @@
     <Content Include="Content\Pictures\Sites\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\PavillyFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\RueilFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SaintPierreFamily22.jpg" />
@@ -3272,6 +3283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707151622012_Add-ProductionOwner-Location.resx">
       <DependentUpon>201707151622012_Add-ProductionOwner-Location.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707240648196_Add-Event-Details-Picture.resx">
+      <DependentUpon>201707240648196_Add-Event-Details-Picture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

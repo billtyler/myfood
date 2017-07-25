@@ -72,12 +72,21 @@ namespace myfoodapp.Hub.Business
         public Int64 Id { get; set; }
         public DateTime captureDate { get; set; }
         public decimal pHvalue { get; set; }
+        public decimal lastDayMinpHvalue { get; set; }
+        public decimal lastDayMaxpHvalue { get; set; }
+        public decimal lastDayPHvariation { get; set; }
+        public decimal threeLastDayPHvariation { get; set; }
         public decimal waterTempvalue { get; set; }
+        public decimal lastDayMinWaterTempvalue { get; set; }
+        public decimal lastDayMaxWaterTempvalue { get; set; }
         public decimal ORPvalue { get; set; }
         public decimal DOvalue { get; set; }
         public decimal airTempvalue { get; set; }
+        public decimal lastDayMinAirTempvalue { get; set; }
+        public decimal lastDayMaxAirTempvalue { get; set; }
+        public decimal lastDayMeanAirTempvalue { get; set; }
         public decimal humidityvalue { get; set; }
+        public decimal lastDayMaxHumidityvalue { get; set; }
         public string hydroponicTypeName { get; set; }
-        public decimal lastDayPHvariation { get; set; }
     }
 }

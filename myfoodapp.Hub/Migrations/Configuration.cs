@@ -263,6 +263,12 @@ namespace myfoodapp.Hub.Migrations
             context.EventTypeItems.Add(new EventTypeItem() { Id = 58, order = 2, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Root vegetables - less than 200gr]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 59, order = 3, eventType = harvestEventTypes, isRestrictedForAdmin = false, name = "[[[Root vegetables - more than 200gr]]]" });
 
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 60, order = 0, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Plants]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 61, order = 1, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Fish]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 62, order = 2, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Performance]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 63, order = 3, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Pest]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 63, order = 3, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Equipment]]]" });
+
             var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
             var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();
             var towerGardenGardeningType = context.GardeningTypes.Where(g => g.Id == 2).FirstOrDefault();

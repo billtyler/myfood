@@ -45,30 +45,47 @@
                 $.each(response, function (index, item) {
                     if (item.ContactMail !== undefined && item.PhoneNumber !== undefined && item.PreferedMoment !== undefined && item.Location !== undefined)
                     {
-                    swiper.appendSlide(
-                    '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
-                        '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
-                        '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
-                        '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-100"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:' + item.ContactMail + '">' + item.ContactMail + '</a></br><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:' + item.PhoneNumber + '">' + item.PhoneNumber + '</a></br> <i class="fa fa-clock-o" aria-hidden="true"></i> [[[Best to contact:]]] ' + item.PreferedMoment + '</br> <i class="fa fa-location-arrow" aria-hidden="true"></i> [[[Location:]]] ' + item.Location + '</div>' +
-                        '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
-                            '<p>' + item.ProductionUnitOptions + '</p>' +
-                        '</div>' +
-                    '</div>'
+                        $('.swiper-wrapper').append(
+                            '<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
+                                '<div class="layer">' +
+                                    '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
+                                    '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
+                                    '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-100"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:' + item.ContactMail + '">' + item.ContactMail + '</a></br><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:' + item.PhoneNumber + '">' + item.PhoneNumber + '</a></br> <i class="fa fa-clock-o" aria-hidden="true"></i> [[[Best to contact:]]] ' + item.PreferedMoment + '</br> <i class="fa fa-location-arrow" aria-hidden="true"></i> [[[Location:]]] ' + item.Location + '</div>' +
+                                    '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
+                                        '<p>' + item.ProductionUnitOptions + '</p>' +
+                                    '</div>' +
+                                    '<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>' +
+                                    '</div>' +
+                            '</div>'
                     );
                     }
                     else
                     {
-                    swiper.appendSlide(
-                    '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .8)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
-                        '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
-                        '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
-                        '<div class="subtitle" style="font-family: Open Sans;visibility: hidden" data-swiper-parallax="-100"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:' + item.ContactMail + '">' + item.ContactMail + '</a></br><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:' + item.PhoneNumber + '">' + item.PhoneNumber + '</a></br> <i class="fa fa-clock-o" aria-hidden="true"></i> [[[Best to contact:]]] ' + item.PreferedMoment + '</div>' +
-                        '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
-                            '<p>' + item.ProductionUnitOptions + '</p>' +
-                        '</div>' +
+                    $('.swiper-wrapper').append(
+                        '<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
+                            '<div class="layer">' +
+                            '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
+                            '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
+                            '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
+                                '<p>' + item.ProductionUnitOptions + '</p>' +
+                            '</div>' +
+                            '<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>' +
+                            '</div>' +
                     '</div>'
                     );
                     }
+
+                    swiper = new Swiper('.swiper-container', {
+                        pagination: '.swiper-pagination',
+                        paginationClickable: true,
+                        nextButton: '.swiper-button-next',
+                        prevButton: '.swiper-button-prev',
+                        preloadImages: false,
+                        parallax: true,
+                        lazyLoading: true,
+                        speed: 600,
+                        onSlideChangeEnd: onSlideChangeEnd,
+                    });
                 });
             }
         });
@@ -241,11 +258,6 @@
                     )
                     .Series(series => series
                     .Pie(model => model.Value, model => model.Category, model => model.Color)
-                    //.Labels(labels => labels
-                    //                .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
-                    //                .Background("transparent")
-                    //                .Visible(true)
-                    //               )
                     .StartAngle(150)
                     .Padding(0)
                     )
@@ -476,6 +488,15 @@
                 height: 150px;
                 padding-top:10px;
         }
+
+       .layer {
+                background-color: rgba(0, 0, 0, .3);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+       }
 
         @@media screen and (max-width: 480px) {
             .image-div {

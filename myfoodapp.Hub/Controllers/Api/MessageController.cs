@@ -187,18 +187,72 @@ namespace myfoodapp.Hub.Controllers.Api
                 db.SaveChanges();
 
                 DateTime lastDay = date.AddDays(-1);
+                DateTime twoDaysAgo = date.AddDays(-2);
+                DateTime threeDaysAgo = date.AddDays(-3);
 
-                var currentLastDayPHValue = db.Measures.Where(m => m.captureDate > lastDay &&
+                var currentLastDayPHValueMax = db.Measures.Where(m => m.captureDate > lastDay &&
                                                    m.productionUnit.Id == currentProductionUnit.Id &&
-                                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).FirstOrDefault();
+                                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).Max(t => t.value);
 
-                if (currentLastDayPHValue == null)
-                    currentMeasures.lastDayPHvariation = 0;
-                else
-                    currentMeasures.lastDayPHvariation = Math.Abs(currentLastDayPHValue.value - currentMeasures.pHvalue);
+                var currentLastDayPHValueMin = db.Measures.Where(m => m.captureDate > lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).Min(t => t.value);
+
+                var currentTwoDaysPHValueMax = db.Measures.Where(m => m.captureDate > twoDaysAgo &&  m.captureDate < lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).Max(t => t.value);
+
+                var currentTwoDaysPHValueMin = db.Measures.Where(m => m.captureDate > twoDaysAgo && m.captureDate < lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).Min(t => t.value);
+
+                var currentThreeDaysPHValueMax = db.Measures.Where(m => m.captureDate > threeDaysAgo && m.captureDate < twoDaysAgo &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).Max(t => t.value);
+
+                var currentThreeDaysPHValueMin = db.Measures.Where(m => m.captureDate > threeDaysAgo && m.captureDate < twoDaysAgo &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).Min(t => t.value);
+
+
+                currentMeasures.lastDayPHvariation = Math.Round(Math.Abs(currentLastDayPHValueMax - currentLastDayPHValueMin),2);
+
+                currentMeasures.threeLastDayPHvariation = Math.Round((Math.Abs(currentLastDayPHValueMax - currentLastDayPHValueMin) + Math.Abs(currentTwoDaysPHValueMax - currentTwoDaysPHValueMin) + Math.Abs(currentThreeDaysPHValueMax - currentThreeDaysPHValueMin)) / 3, 2);
+
+                var currentTwoDaysAirTempValueMax = db.Measures.Where(m => m.captureDate > lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == airTemperatureSensor.Id).OrderBy(m => m.Id).Max(t => t.value);
+
+                var currentLastDayAirTempValueMin = db.Measures.Where(m => m.captureDate > lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == airTemperatureSensor.Id).OrderBy(m => m.Id).Min(t => t.value);
+
+                var currentLastDayAirTempValueMean = db.Measures.Where(m => m.captureDate > lastDay &&
+                   m.productionUnit.Id == currentProductionUnit.Id &&
+                   m.sensor.Id == airTemperatureSensor.Id).OrderBy(m => m.Id).Sum(t => t.value) / (6 * 24);
+
+                currentMeasures.lastDayMaxAirTempvalue = Math.Round(currentTwoDaysAirTempValueMax, 2);
+                currentMeasures.lastDayMinAirTempvalue = Math.Round(currentLastDayAirTempValueMin, 2);
+                currentMeasures.lastDayMeanAirTempvalue = Math.Round(currentLastDayAirTempValueMean, 2);
+
+                var currentTwoDaysWaterTempValueMax = db.Measures.Where(m => m.captureDate > lastDay &&
+                   m.productionUnit.Id == currentProductionUnit.Id &&
+                   m.sensor.Id == waterTemperatureSensor.Id).OrderBy(m => m.Id).Max(t => t.value);
+
+                var currentLastDayWaterTempValueMin = db.Measures.Where(m => m.captureDate > lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == waterTemperatureSensor.Id).OrderBy(m => m.Id).Min(t => t.value);
+
+                currentMeasures.lastDayMaxWaterTempvalue = Math.Round(currentTwoDaysWaterTempValueMax, 2);
+                currentMeasures.lastDayMinWaterTempvalue = Math.Round(currentLastDayWaterTempValueMin, 2);
+
+                var currentTwoDaysHumidityValueMax = db.Measures.Where(m => m.captureDate > lastDay &&
+                                   m.productionUnit.Id == currentProductionUnit.Id &&
+                                   m.sensor.Id == airHumidity.Id).OrderBy(m => m.Id).Max(t => t.value);
+
+                currentMeasures.lastDayMaxHumidityvalue = Math.Round(currentTwoDaysHumidityValueMax, 2);
 
                 AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id);
-
                 ExternalAirHumidityManager.GetExternalAirHumidityValues(currentProductionUnit.Id, date);
             }
             catch (Exception ex)

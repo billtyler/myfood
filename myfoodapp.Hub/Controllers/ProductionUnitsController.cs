@@ -535,7 +535,7 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate)
+        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate, string details)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
@@ -558,6 +558,7 @@ namespace myfoodapp.Hub.Controllers
                                          eventType = currentEventType,
                                          isOpen = isOpen,
                                          date = currentDate,
+                                         details = details,
                                          createdBy = currentProductUnitOwner.pioneerCitizenName
             };
 

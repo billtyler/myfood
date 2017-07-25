@@ -62,13 +62,13 @@
             columns.Bound(c => c.isOpen).Title("[[[open]]]").Width(80);
             columns.Bound(c => c.productionUnit.info).Title("[[[info]]]").Groupable(true).Width(120);
             columns.Bound(c => c.createdBy).Width(100);
-            columns.Command(command => { command.Edit(); command.Destroy(); }).Width(150);
+            columns.Command(command => { command.Edit(); command.Destroy();}).Width(150);
         })
         .ToolBar(toolbar =>
         {
         })
         .HtmlAttributes(new { style = "height: 80vh" })
-        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Event"))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).Window(w => w.Width(700)).TemplateName("Event"))
         .Scrollable()
         .Groupable()
         .Filterable()
@@ -89,7 +89,7 @@
             })
             .Events(events => events.Error("error_handler"))
             .Read("Events_Read", "Events")
-            .Update("Event_Update", "Events")
+            .Update(update => update.Action("Event_Update", "Events").Data("convertDate"))
             .Destroy("Event_Destroy", "Events")
         )
         )
@@ -98,6 +98,10 @@
 </div>
 
 <script type="text/javascript">
+    function convertDate(data) {
+        data.date = kendo.toString(kendo.parseDate(data.date), "G");
+    }
+
     function error_handler(e) {
         if (e.errors) {
             var measure = "Errors:\n";
@@ -114,9 +118,18 @@
 </script>
    
 <style>
+    @@media screen and (max-width: 800px) {
+
+        .k-widget.k-window  {
+            width:100% !important;
+            height:90% !important;
+        }
+
+    }
+
         .k-button {
-            color: #018001;
             background-color: #018001;
+            color: #ffffff;
         }
     
         .k-grid-edit span.k-icon {

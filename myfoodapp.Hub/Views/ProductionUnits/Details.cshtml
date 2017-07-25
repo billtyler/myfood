@@ -187,10 +187,12 @@
 
         var date = $('#datePicker').data("kendoDatePicker").value().toISOString();
 
+        var strDetails = $('#detailsTextArea').val();
+
         $.ajax({
             url: "@Url.Action("AddEvent", "ProductionUnits")",
             dataType: "json",
-            data: { productionUnitId: currentProductionUnitId, eventTypeId: currentEventypeId, eventTypeItemId: currentEventTypeItemId, note: strNote, currentDate: date },
+            data: { productionUnitId: currentProductionUnitId, eventTypeId: currentEventypeId, eventTypeItemId: currentEventTypeItemId, note: strNote, currentDate: date, details: strDetails, },
         type: "POST",
         success: function (response) {
             $('#routeDataId').val() = '';
@@ -287,13 +289,27 @@
             @(Html.Kendo().Dialog()
                         .Name("dialog")
                         .Title("[[[Add Event]]]")
-                        .Width(680)
-                        .Height(720)
+                        .Width(720)
+                        .Height(780)
                         .Animation(c => c.Open(a => a.Fade(FadeDirection.In).Zoom(ZoomDirection.In)).Close(a => a.Fade(FadeDirection.Out).Zoom(ZoomDirection.Out)))
                         .Modal(true)
                         .Visible(false)
                         .Closable(true)
-                        .Content("<p>[[[Log your Actions / Events here]]]<p>" +
+                        .Content(" " +
+
+          Html.Kendo().TabStrip()
+          .Name("tabstrip")
+          .HtmlAttributes(new { style = "border-width:0px; height:500px;" })
+          .Animation(animation =>
+              animation.Open(effect =>
+                  effect.Fade(FadeDirection.In)))
+          .Items(tabstrip =>
+          {
+              tabstrip.Add().Text("Basic Info")
+                  .ContentHtmlAttributes(new { style = "height:560px;" })
+                  .Selected(true)
+                  .Content(
+            "<p>[[[Log your Actions / Events here]]]<p>" +
 
                         "<div id='listViewEventTypeDiv'>" +
 
@@ -340,18 +356,33 @@
                        .Value(DateTime.Today)
                        .HtmlAttributes(new { style = "width: 100%;", title = "datepicker" })
 
-                        +  "</div>"
+                        + "</div>"
+
+              );
+
+              tabstrip.Add().Text("Detailed")
+                  .ContentHtmlAttributes(new { style = "height:560px;" })
+                  .Content(
+                "<p>[[[Detailed event description]]]<p>" +
+
+                " <div id='detailsDiv'>" +
+                         Html.TextArea("detailsTextArea", "", new { @class = "k-textbox", style = "width: 100%; height: 500px" })
+
+               + "</div>"
+              );
+
+          })
 
                         )
                         .Actions(actions =>
-                         {
-                             actions.Add()
-                             .Text("Cancel")
-                             .Action("onCancel");
-                             actions.Add().Text("OK")
-                             .Primary(true)
-                             .Action("onOK");
-                         })
+                        {
+                            actions.Add()
+                            .Text("Cancel")
+                            .Action("onCancel");
+                            actions.Add().Text("OK")
+                            .Primary(true)
+                            .Action("onOK");
+                        })
                         .Events(ev => ev
                         .InitOpen("onInitOpen")
                         .Open("onOpen")

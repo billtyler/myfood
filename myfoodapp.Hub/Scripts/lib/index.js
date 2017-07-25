@@ -40,7 +40,7 @@ function initializeClusterMap(data) {
     map = L.map(data.Name).setView([data.CenterLatitude, data.CenterLongitude], data.Zoom);
     // var map = L.map(mapName).setView([lat, long], zoom);
 
-    L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.png', //data.TileUrlTemplate
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', //data.TileUrlTemplate
     {
         attribution: data.TileAttribution,
         subdomains: data.TileSubdomains
@@ -53,6 +53,8 @@ function initializeClusterMap(data) {
 
     map.on('moveend', update);
     map.on('zoomend', update);
+
+    
 }
 
 function update() {
