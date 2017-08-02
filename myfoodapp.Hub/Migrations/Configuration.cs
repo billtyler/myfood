@@ -101,6 +101,7 @@ namespace myfoodapp.Hub.Migrations
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 3, name = "[[[Up and Running]]]" });
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 4, name = "[[[In Maintenance]]]" });
             context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 5, name = "[[[Stopped]]]" });
+            context.ProductionUnitStatus.Add(new ProductionUnitStatus() { Id = 6, name = "[[[Offline]]]" });
 
             context.EventTypes.Add(new EventType() { Id = 1, name = "[[[Warning]]]", isDisplayedForUser = false, order = 0 });
             context.EventTypes.Add(new EventType() { Id = 2, name = "[[[Issue]]]", isDisplayedForUser = true, order = 4 });

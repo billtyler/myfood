@@ -567,6 +567,11 @@ namespace myfoodapp.Hub.Controllers
             else
                 newEvent.description = String.Format("{0}", HttpContext.ParseAndTranslate(currentEventTypeItem.name));
 
+            UnicodeEncoding unicode = new UnicodeEncoding();
+            Byte[] encodedBytes = unicode.GetBytes(newEvent.description);
+
+            newEvent.description = unicode.GetString(encodedBytes);
+
             try
             {
                 db.Events.Add(newEvent);

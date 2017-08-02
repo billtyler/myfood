@@ -51,7 +51,7 @@
     <div id="grid-container" class="col-xs-10">
         <div id="center">
             <div class="row">
-                <div class="col-md-8">
+                <div>
                     <section id="loginForm">
                         @using (Html.BeginForm("Update", "MyInfo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                         {
@@ -60,30 +60,41 @@
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                                 <div class="col-md-10">
-                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @(Html.Kendo().TextBoxFor(model => model.Email)
+                                                                .Name("info")
+                                                                .HtmlAttributes(new { @style = "width:100%" })
+                                    )
                                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
                                 <div class="col-md-10">
-                                    @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                                    @(Html.Kendo().TextBoxFor(model => model.OldPassword)
+                                                                .Name("info")
+                                                                .HtmlAttributes(new { @style = "width:100%", type = "password" })
+                                    )
                                     @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
                                 <div class="col-md-10">
-                                    @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                                    @(Html.Kendo().TextBoxFor(model => model.NewPassword)
+                                                                .Name("info")
+                                                                .HtmlAttributes(new { @style = "width:100%", type = "password" })
+                                    )
                                     @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <h3 class="section-header">[[[Choose the application default language]]]</h3>
-                            <br />
-                            @(Html.Kendo().DropDownListFor(m => m.Language)
+                            <div class="form-group">
+                                <h3 class="col-md-2 control-label">[[[Choose the application default language]]]</h3>
+                                <div class="col-md-10">
+                                    @(Html.Kendo().DropDownListFor(m => m.Language)
                                   .DataTextField("name")
                                   .DataValueField("Id")
                                   .AutoBind(true)
+                                  .HtmlAttributes(new { @style = "width:100%" })
                                   .DataSource(source =>
                                   {
                                       source.Read(read =>
@@ -91,9 +102,13 @@
                                           read.Action("Languages_Read", "MyInfo");
                                       });
                                   })
-                            )
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
+                                    )
+                                </div>
+                                   
+                                </div>
+                           
+                            <div>
+                                <div style="text-align:right">
                                     <input type="submit" value="[[[Save]]]" class="btn btn-default" />
                                 </div>
                             </div>
@@ -111,7 +126,7 @@
     #center {
     margin: auto;
     width: 80%;
-    border: 3px solid green;
+    border: 1px solid green;
     padding: 10px;
     position: relative;
     top: 50%;

@@ -6,13 +6,6 @@
 }
 
 <script type="text/javascript">
-    function onAddProductionUnitClick() {
-
-    }
-
-    function onDeleteProductionClick() {
-
-    }
 
     function onManageProductionUnitsEventsClick() {
         window.location = window.location.origin + "/Events/Manage/";
@@ -21,6 +14,11 @@
     function onManageProductionUnitOwnerClick() {
 
     }
+
+    function onManageUserClick() {
+        window.location = window.location.origin + "/Admin/Index/";
+    }
+
 </script>
 
 <div id="main-section-header" class="row">
@@ -37,24 +35,6 @@
         <div id="managementButton">
             <p>
                 @(Html.Kendo().Button()
-            .Name("addProductionUnitButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
-            .Content("[[[Add Production Unit]]]")
-            .Events(ev => ev.Click("onAddProductionUnitClick")))
-            </p>
-
-            <p>
-                @(Html.Kendo().Button()
-            .Name("deleteProductionUnitButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
-            .Content("[[[Delete Production Unit]]]")
-            .Events(ev => ev.Click("onDeleteProductionClick")))
-            </p>
-
-            <br/>
-
-            <p>
-                @(Html.Kendo().Button()
             .Name("manageProductionUnitsEventsButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Manage Production Units Events]]]")
@@ -65,8 +45,18 @@
                 @(Html.Kendo().Button()
             .Name("manageProductionUnitOwnerButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
-            .Content("[[[Manage Production Unit Owner]]]")
+            .Content("[[[Manage Production Unit Owners]]]")
             .Events(ev => ev.Click("onManageProductionUnitOwnerClick")))
+            </p>
+
+            <br/>
+
+            <p>
+                @(Html.Kendo().Button()
+            .Name("manageUserButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
+            .Content("[[[Manage Users]]]")
+            .Events(ev => ev.Click("onManageUserClick")))
             </p>
         </div>
     </div>

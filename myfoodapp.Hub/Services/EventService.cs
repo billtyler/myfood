@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -101,14 +102,16 @@ namespace myfoodapp.Hub.Services
             return GetAll().FirstOrDefault(predicate);
         }
 
-        public void Update(EventViewModel currentEventViewModel)
+        public void Update(EventViewModel currentEventViewModel, string formatedDateTime)
         {
             Event target = new Event();
             target = entities.Events.Where(p => p.Id == currentEventViewModel.Id).FirstOrDefault();
 
             if (target != null)
             {
-                target.date = currentEventViewModel.date;
+                CultureInfo culture = new CultureInfo("EN-us");
+
+                target.date = Convert.ToDateTime(formatedDateTime, culture);
                 target.description = currentEventViewModel.description;
                 target.isOpen = currentEventViewModel.isOpen;
                 target.createdBy = currentEventViewModel.createdBy;

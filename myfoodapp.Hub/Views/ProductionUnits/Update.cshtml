@@ -62,8 +62,8 @@
                         @Html.LabelFor(m => m.info, new { @class = "col-md-2 control-label" })
                         <div class="col-md-10">
                             @(Html.Kendo().TextBoxFor(model => model.info)
-                                .Name("info")
-                                .HtmlAttributes(new { @readonly = "true" })
+                            .Name("info")
+                            .HtmlAttributes(new { @readonly = "true", @style = "width:100%" })
                             )
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                             @Html.LabelFor(m => m.owner, new { @class = "col-md-2 control-label" })
                             <div class="col-md-10">
                                 @(Html.Kendo().TextBoxFor(model => model.owner.pioneerCitizenName)
-                                .HtmlAttributes(new { @readonly = "true" })
+                                .HtmlAttributes(new { @readonly = "true", @style = "width:100%" })
                                 )
                             </div>
                         </div>
@@ -82,6 +82,7 @@
                                   .DataTextField("name")
                                   .DataValueField("Id")
                                   .AutoBind(true)
+                                  .HtmlAttributes(new { @style = "width:100%" })
                                   .DataSource(source =>
                                   {
                                       source.Read(read =>
@@ -93,8 +94,8 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
+                        <div>
+                            <div style="text-align:right">
                                 <input type="submit" value="[[[Save & Close]]]" class="btn btn-default" />
                             </div>
                         </div>
@@ -113,7 +114,7 @@
     #center {
     margin: auto;
     width: 80%;
-    border: 3px solid green;
+    border: 1px solid green;
     padding: 20px;
     position: relative;
     top: 50%;

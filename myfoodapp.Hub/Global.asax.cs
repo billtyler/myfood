@@ -22,7 +22,8 @@ namespace myfoodapp.Hub
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        private static double TimerIntervalInMilliseconds = Convert.ToDouble(WebConfigurationManager.AppSettings["timerIntervalInMilliseconds"]);
+        private static double RulesTimerIntervalInMilliseconds = Convert.ToDouble(WebConfigurationManager.AppSettings["rulesTimerIntervalInMilliseconds"]);
+        private static double OfflineTimerIntervalInMilliseconds = Convert.ToDouble(WebConfigurationManager.AppSettings["offlineTimerIntervalInMilliseconds"]);
 
         protected void Application_Start()
         {
@@ -63,21 +64,96 @@ namespace myfoodapp.Hub
                 return true;
             };
 
-            System.Timers.Timer timer = new System.Timers.Timer(TimerIntervalInMilliseconds);
-            timer.Enabled = true;
-            timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-            timer.Start();
+            System.Timers.Timer rulesTimer = new System.Timers.Timer(RulesTimerIntervalInMilliseconds);
+            rulesTimer.Enabled = true;
+            rulesTimer.Elapsed += new ElapsedEventHandler(rulesTimer_Elapsed);
+            rulesTimer.Start();
+
+            System.Timers.Timer offineTimer = new System.Timers.Timer(OfflineTimerIntervalInMilliseconds);
+            offineTimer.Enabled = true;
+            offineTimer.Elapsed += new ElapsedEventHandler(offlineTimer_Elapsed);
+            offineTimer.Start();
 
         }
-        static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+
+        static void offlineTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             DateTime MyScheduledRunTime = DateTime.Parse(WebConfigurationManager.AppSettings["timerStartTime"]);
             DateTime CurrentSystemTime = DateTime.Now;
-            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
+            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(RulesTimerIntervalInMilliseconds);
             if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
             {
+                var db = new ApplicationDbContext();
+
+            var devKitType = db.ProductionUnitTypes.Where(s => s.Id == 6).FirstOrDefault();
+            var customType = db.ProductionUnitTypes.Where(s => s.Id == 7).FirstOrDefault();
+
+            var onlineStatus = db.ProductionUnitStatus.Where(s => s.Id == 3).FirstOrDefault();
+            var offlineStatus = db.ProductionUnitStatus.Where(s => s.Id == 6).FirstOrDefault();
+
+            var activeProductionUnits = db.ProductionUnits.Where(p => p.productionUnitStatus == onlineStatus 
+                                                             && p.productionUnitType != devKitType
+                                                             && p.productionUnitType != customType).ToList();
+
+            var currentDate = DateTime.Now;
+
+            activeProductionUnits.ForEach(p =>
+                {
+                if (p.lastMeasureReceived == null ||  currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(30))
+                    p.productionUnitStatus = offlineStatus;
+                });
+
+                db.SaveChanges();
+           }
+        }
+
+        static void rulesTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            DateTime MyScheduledRunTime = DateTime.Parse(WebConfigurationManager.AppSettings["timerStartTime"]);
+            DateTime CurrentSystemTime = DateTime.Now;
+            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(RulesTimerIntervalInMilliseconds);
+
+            var dbLog = new ApplicationDbContext();
+
+            if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
+            {
+                var db = new ApplicationDbContext();
+
+            var upRunningStatus = db.ProductionUnitStatus.Where(p => p.Id == 3).FirstOrDefault();
+
+            var upRunningProductionUnits = db.ProductionUnits.Include(p => p.productionUnitStatus)
+                                                             .Where(p => p.productionUnitStatus.Id == upRunningStatus.Id).ToList();
+
+            dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Processing starts @{0} for {1} Production Units", CurrentSystemTime.ToShortTimeString(), upRunningProductionUnits.Count), Log.LogType.Information));
+            dbLog.SaveChanges();
+
+            upRunningProductionUnits.ForEach(p => 
+                {
+                    dbLog.Logs.Add(Log.CreateLog(String.Format("Measures Processing for {0}", p.info), Log.LogType.Information));
+                    dbLog.SaveChanges();
+
+                    var currentMeasures = AquaponicsRulesManager.MeasuresProcessor(p.Id);
+
+                    dbLog.Logs.Add(Log.CreateLog(String.Format("Measures Validating for {0}", p.info), Log.LogType.Information));
+                    dbLog.SaveChanges();
+
+                    try
+                    {
+                        AquaponicsRulesManager.ValidateRules(currentMeasures, p.Id);
+                    }
+                    catch (Exception ex)
+                    {
+                        dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                        dbLog.SaveChanges();
+                    }
+                    
+
+                    dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Validation ended for {0}", p.info), Log.LogType.Information));
+                    dbLog.SaveChanges();
+                });
+
                 SendDailyMessage();
-            }
+         }
         }
 
         protected void Application_AuthenticateRequest()
@@ -138,11 +214,10 @@ namespace myfoodapp.Hub
                 var productionUnitId = item.Key.Id;
                 var productionUnitInfo = item.Key.info;
 
-                var mailSubject = String.Format("Daily Events on your myfood Unit {0}", productionUnitInfo);
+                var mailSubject = String.Format("[[[Daily Events on your myfood Unit {0}]]]", productionUnitInfo);
                 var mailContent = new StringBuilder();
 
-                NotificationPushManager.PushMessage(mailSubject, "Click to see your production unit's status", productionUnitId, notificationPushKey);
-
+                NotificationPushManager.PushMessage(mailSubject, "[[[Click to see your production unit's status]]]", productionUnitId, notificationPushKey);
             }
         }
 

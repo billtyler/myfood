@@ -101,8 +101,8 @@ namespace myfoodapp.Hub.Controllers
 
         // GET: /Admin/Edit/Create 
           //[Authorize(Roles = "Administrator")]
-        #region public ActionResult Create()
-        public ActionResult Create()
+        #region public ActionResult CreateUser()
+        public ActionResult CreateUser()
         {
             ExpandedUser objExpandedUser = new ExpandedUser();
 
@@ -116,8 +116,8 @@ namespace myfoodapp.Hub.Controllers
           //[Authorize(Roles = "Administrator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        #region public ActionResult Create(ExpandedUser paramExpandedUser)
-        public ActionResult Create(ExpandedUser paramExpandedUser)
+        #region public ActionResult CreateUser(ExpandedUser paramExpandedUser)
+        public ActionResult CreateUser(ExpandedUser paramExpandedUser)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace myfoodapp.Hub.Controllers
             {
                 ViewBag.Roles = GetAllRolesAsSelectList();
                 ModelState.AddModelError(string.Empty, "Error: " + ex);
-                return View("Create");
+                return View("CreateUser");
             }
         }
         #endregion

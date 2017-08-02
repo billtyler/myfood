@@ -83,8 +83,8 @@
             {
                 model.Id(c => c.Id);
                 model.Field(c => c.Id).Editable(false);
-                model.Field(c => c.date).Editable(false);
-                model.Field(c => c.description).Editable(false);
+                model.Field(c => c.date).Editable(true);
+                model.Field(c => c.description).Editable(true);
                 model.Field(c => c.createdBy).Editable(false);
             })
             .Events(events => events.Error("error_handler"))
@@ -99,7 +99,9 @@
 
 <script type="text/javascript">
     function convertDate(data) {
-        data.date = kendo.toString(kendo.parseDate(data.date), "G");
+        return {
+            formatedDateTime: kendo.toString(kendo.parseDate(data.date), "G")
+        };
     }
 
     function error_handler(e) {

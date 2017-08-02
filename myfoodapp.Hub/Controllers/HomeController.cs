@@ -221,6 +221,7 @@ namespace myfoodapp.Hub.Controllers
             var upRunningCount = rslt.Where(p => p.productionUnitStatus.Id == 3).Count();
             var onMaintenanceCount = rslt.Where(p => p.productionUnitStatus.Id == 4).Count();
             var stoppedCount  = rslt.Where(p => p.productionUnitStatus.Id == 5).Count();
+            var offlineCount = rslt.Where(p => p.productionUnitStatus.Id == 6).Count();
 
             var statusList = new List<PieChartViewModel>();
 
@@ -228,7 +229,8 @@ namespace myfoodapp.Hub.Controllers
             statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setuPlannedCount, Color = "#90cc38" });
             statusList.Add(new PieChartViewModel() { Category = "[[[Up and Running]]]", Value = upRunningCount, Color = "#068c35" });
             statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#004d38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#003F38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Offline]]]", Value = offlineCount, Color = "#004d38" });
 
             return Json(statusList);
         }

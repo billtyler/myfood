@@ -59,7 +59,7 @@
            // toolbar.Save();
         })
         .HtmlAttributes(new { style = "height: 80vh" })
-        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Event"))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).Window(w => w.Width(700)).TemplateName("Event"))
         .Scrollable()
         .Filterable()
         .Pageable(pageable => pageable
@@ -103,6 +103,15 @@
 </script>
    
 <style>
+        @@media screen and (max-width: 800px) {
+
+        .k-widget.k-window  {
+            width:100% !important;
+            height:90% !important;
+        }
+
+    }
+
         .k-button {
             background-color: #018001;
             color: #ffffff;

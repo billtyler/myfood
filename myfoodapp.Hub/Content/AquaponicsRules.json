@@ -15,9 +15,14 @@
     "bindingPropertyValue": "lastDayPHvariation"
   },
   {
-    "ruleEvaluator": "(lastDayPHvariation != 0) && (threeLastDayPHvariation > 0.5)",
+    "ruleEvaluator": "(threeLastDayPHvariation != 0) && (threeLastDayPHvariation > 0.5)",
     "warningContent": "High pH fluctuation : mean delta last 3 days {0} - Watch for algeas",
     "bindingPropertyValue": "threeLastDayPHvariation"
+  },
+  {
+    "ruleEvaluator": "(lastWeekPHmean != 0) && (lastWeekPHmean >= 8)",
+    "warningContent": "High pH level : mean last week {0} - Performances can be improved",
+    "bindingPropertyValue": "lastWeekPHmean"
   },
   {
     "ruleEvaluator": "(lastDayMinAirTempvalue != 0) && (lastDayMinAirTempvalue <= 2)",
@@ -98,26 +103,5 @@
     "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Oth. Warm Fish') && (lastDayMaxWaterTempvalue >= 32))",
     "warningContent": "Water Temperature value is out of range for Cold Water Fish: max {0}°C",
     "bindingPropertyValue": "lastDayMaxWaterTempvalue"
-  },
-  {
-    "ruleEvaluator": "(ORPvalue != 0) && ((ORPvalue < 300) || (ORPvalue > 450))",
-    "warningContent": "ORP value is out of range : {0}",
-    "bindingPropertyValue": "ORPvalue"
-  },
-  {
-    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Carp') && (DOvalue <= 5)",
-    "warningContent": "Dissolved Oxygen value is out of range : {0}",
-    "bindingPropertyValue": "DOvalue"
-  },
-  {
-    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Tilapia') && (DOvalue <= 4)",
-    "warningContent": "Dissolved Oxygen value is out of range : {0}",
-    "bindingPropertyValue": "DOvalue"
-  },
-  {
-    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Trout') && (DOvalue <= 6)",
-    "warningContent": "Dissolved Oxygen value is out of range : {0}",
-    "bindingPropertyValue": "DOvalue"
   }
-] 
-
+]

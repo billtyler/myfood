@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,15 +80,18 @@ namespace myfoodapp.Hub.Controllers
 
         [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Event_Update([DataSourceRequest] DataSourceRequest request, EventViewModel currentEvent)
+        public ActionResult Event_Update([DataSourceRequest] DataSourceRequest request, EventViewModel currentEvent, string formatedDateTime)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
             if (currentEvent != null)
             {
-                    eventService.Update(currentEvent);
+                eventService.Update(currentEvent, formatedDateTime);
             }
+            CultureInfo culture = new CultureInfo("EN-us");
+
+            currentEvent.date = Convert.ToDateTime(formatedDateTime, culture);
 
             return Json(new[] { currentEvent }.ToDataSourceResult(request, ModelState));
         }
