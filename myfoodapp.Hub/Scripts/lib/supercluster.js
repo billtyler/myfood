@@ -36,10 +36,10 @@ SuperCluster.prototype = {
     load: function (points) {
         var log = this.options.log;
 
-        if (log) console.time('total time');
+        //if (log) console.time('total time');
 
         var timerId = 'prepare ' + points.length + ' points';
-        if (log) console.time(timerId);
+        //if (log) console.time(timerId);
 
         this.points = points;
 
@@ -47,7 +47,7 @@ SuperCluster.prototype = {
         var clusters = points.map(createPointCluster);
         this.trees[this.options.maxZoom + 1] = kdbush(clusters, getX, getY, this.options.nodeSize, Float32Array);
 
-        if (log) console.timeEnd(timerId);
+        //if (log) console.timeEnd(timerId);
 
         // cluster points on max zoom, then cluster the results on previous zoom, etc.;
         // results in a cluster hierarchy across zoom levels
@@ -58,10 +58,10 @@ SuperCluster.prototype = {
             clusters = this._cluster(clusters, z);
             this.trees[z] = kdbush(clusters, getX, getY, this.options.nodeSize, Float32Array);
 
-            if (log) console.log('z%d: %d clusters in %dms', z, clusters.length, +Date.now() - now);
+            //if (log) console.log('z%d: %d clusters in %dms', z, clusters.length, +Date.now() - now);
         }
 
-        if (log) console.timeEnd('total time');
+        //if (log) console.timeEnd('total time');
 
         return this;
     },

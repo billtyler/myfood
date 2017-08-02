@@ -1,4 +1,5 @@
-﻿using Kendo.Mvc.Extensions;
+﻿using i18n;
+using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -132,17 +133,6 @@ namespace myfoodapp.Hub.Controllers
             // }
 
             return Redirect("/ProductionUnits/Details/" + model.Id);
-        }
-
-        [Authorize]
-        public ActionResult Event_Read([DataSourceRequest] DataSourceRequest request, int id)
-        {
-            ApplicationDbContext db = new ApplicationDbContext();
-            EventService eventService = new EventService(db);
-
-            var rslt = eventService.GetAll(id).OrderByDescending(ev => ev.date);
-
-            return Json(rslt.ToDataSourceResult(request));
         }
 
         [Authorize]
@@ -508,38 +498,141 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public FileContentResult DownloadCSV(int id)
+        public ActionResult EventType_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            var db = new ApplicationDbContext();
+
+            var eventTypes = db.EventTypes.Where(et => et.isDisplayedForUser).OrderBy(et=> et.order).ToList();
+
+            var eventTypesModel = eventTypes.Select(vm => new
+            {
+                Id = vm.Id,
+                description = vm.description,
+                order = vm.order,
+                name = vm.name,
+            });
+
+            return Json(eventTypesModel.ToDataSourceResult(request, ModelState));       
+        }
+
+        [Authorize]
+        public ActionResult EventTypeItem_Read([DataSourceRequest] DataSourceRequest request, int evenTypeId)
+        {
+            var db = new ApplicationDbContext();
+
+            var currentUser = this.User.Identity.GetUserName();
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
+            var eventTypesItems = new List<EventTypeItem>();
+
+            if (isAdmin)
+                eventTypesItems = db.EventTypeItems.OrderBy(et => et.order).Where(et => et.eventType.Id == evenTypeId).ToList();
+            else
+                eventTypesItems = db.EventTypeItems.OrderBy(et => et.order).Where(et => et.eventType.Id == evenTypeId && et.isRestrictedForAdmin == false).ToList();
+
+            return Json(eventTypesItems.ToDataSourceResult(request, ModelState));
+        }
+
+        [Authorize]
+        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate, string details)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
-                                                          .Include(p => p.productionUnitType)
-                                                          .Where(p => p.Id == id).FirstOrDefault();
+            ApplicationDbContext dbLog = new ApplicationDbContext();
 
-            string fileName = String.Format("{0}_#{1}_[{2}].csv",     currentProductionUnit.owner.pioneerCitizenName,
-                                                                    currentProductionUnit.owner.pioneerCitizenNumber,
-                                                                    DateTime.Now.ToShortDateString());
+            var currentUser = this.User.Identity.GetUserName();
+            var userId = UserManager.FindByName(currentUser).Id;
 
-            StringBuilder csv = new StringBuilder();
+            var currentProductUnitOwner = db.ProductionUnitOwners.Where(p => p.user.Id == userId).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
+            var currentEventType = db.EventTypes.Where(et => et.Id == eventTypeId).FirstOrDefault();
 
-            var mes = db.Measures.Include(m => m.sensor)
-                       .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
-                       .OrderByDescending(m => m.captureDate)
-                       .Take(15000);
+            var currentEventTypeItem = db.EventTypeItems.Where(et => et.eventType.Id == eventTypeId && et.Id == eventTypeItemId).FirstOrDefault();
 
-            mes.OrderBy(m => m.captureDate).ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
-                        {
-                            csv.Append(m.Key + "; ");
+            bool isOpen = false;
 
-                            m.OrderBy(c => c.sensor.Id).ToList().ForEach(g => {
-                                csv.Append(g.value + "; ");
-                                });
+            if (currentEventType.name.Contains("Issue"))
+                isOpen = true;
 
-                            csv.Remove(csv.Length - 2, 1);
-                            csv.Append("\r\n");
-                        }
-            );
+            var newEvent = new Event() { productionUnit = currentProductionUnit,
+                                         eventType = currentEventType,
+                                         isOpen = isOpen,
+                                         date = currentDate,
+                                         details = details,
+                                         createdBy = currentProductUnitOwner.pioneerCitizenName
+            };
 
-            return File(new UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+            if (!String.IsNullOrEmpty(note))
+                newEvent.description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note);
+            else
+                newEvent.description = String.Format("{0}", HttpContext.ParseAndTranslate(currentEventTypeItem.name));
+
+            UnicodeEncoding unicode = new UnicodeEncoding();
+            Byte[] encodedBytes = unicode.GetBytes(newEvent.description);
+
+            newEvent.description = unicode.GetString(encodedBytes);
+
+            try
+            {
+                db.Events.Add(newEvent);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                dbLog.SaveChanges();
+                return false;
+            }
+
+            return true;
+        }
+
+        [Authorize]
+        public FileContentResult DownloadCSV(int id)
+        {
+            var dbLog = new ApplicationDbContext();
+
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                                              .Include(p => p.productionUnitType)
+                                                              .Where(p => p.Id == id).FirstOrDefault();
+
+                string fileName = String.Format("{0}_#{1}_[{2}].csv", currentProductionUnit.owner.pioneerCitizenName,
+                                                                        currentProductionUnit.owner.pioneerCitizenNumber,
+                                                                        DateTime.Now.ToShortDateString());
+
+                StringBuilder csv = new StringBuilder();
+
+                var mes = db.Measures.Include(m => m.sensor)
+                           .Where(m => m.productionUnit.Id == currentProductionUnit.Id)
+                           .OrderByDescending(m => m.captureDate)
+                           .Take(15000);
+
+                mes.OrderBy(m => m.captureDate).ToList().GroupBy(m => m.captureDate).ToList().ForEach(m =>
+                {
+                    csv.Append(m.Key + "; ");
+
+                    m.OrderBy(c => c.sensor.Id).ToList().ForEach(g => {
+                        csv.Append(g.value + "; ");
+                    });
+
+                    csv.Remove(csv.Length - 2, 1);
+                    csv.Append("\r\n");
+                }
+                );
+
+                return File(new UTF8Encoding().GetBytes(csv.ToString()), "text/csv", fileName);
+            }
+            catch (Exception ex)
+            {
+                dbLog.Logs.Add(Log.CreateErrorLog("Error on Convert Message into Measure", ex));
+                dbLog.SaveChanges();
+            }
+
+            return null;
+
         }
 
         protected override void Dispose(bool disposing)

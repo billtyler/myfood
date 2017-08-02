@@ -131,7 +131,7 @@ namespace myfoodapp.Hub.Services
             var entity = new ProductionUnit();
 
             entity.Id = productionUnit.Id;
-            entity.startDate = productionUnit.startDate;
+            entity.startDate = productionUnit.startDate.Value;
             entity.locationLatitude = productionUnit.locationLatitude;
             entity.locationLongitude = productionUnit.locationLongitude;
             entity.version = productionUnit.version;
@@ -180,7 +180,7 @@ namespace myfoodapp.Hub.Services
 
             if (target != null)
             {
-                target.startDate = productionUnit.startDate;
+                target.startDate = productionUnit.startDate.Value;
                 target.locationLatitude = productionUnit.locationLatitude;
                 target.locationLongitude = productionUnit.locationLongitude;
                 target.version = productionUnit.version;

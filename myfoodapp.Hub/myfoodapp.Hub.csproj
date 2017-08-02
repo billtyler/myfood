@@ -186,6 +186,14 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Remotion.Linq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\..\myfoodapp\packages\Remotion.Linq.2.1.1\lib\net45\Remotion.Linq.dll</HintPath>
       <Private>True</Private>
@@ -343,6 +351,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="500.aspx.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="500.aspx.designer.cs">
+      <DependentUpon>500.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -384,6 +399,8 @@
     <Compile Include="Common\DecimalModelBinder.cs" />
     <Compile Include="Common\MailManager.cs" />
     <Compile Include="Common\NotificationPushManager.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -394,6 +411,7 @@
     <Compile Include="Controllers\MeasuresController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\PerformanceHealthController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Controllers\ProductionUnitsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -439,6 +457,18 @@
     <Compile Include="Migrations\201705081252475_Add_User_Language.Designer.cs">
       <DependentUpon>201705081252475_Add_User_Language.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706220609383_EventTypeList.cs" />
+    <Compile Include="Migrations\201706220609383_EventTypeList.Designer.cs">
+      <DependentUpon>201706220609383_EventTypeList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707151622012_Add-ProductionOwner-Location.cs" />
+    <Compile Include="Migrations\201707151622012_Add-ProductionOwner-Location.Designer.cs">
+      <DependentUpon>201707151622012_Add-ProductionOwner-Location.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707240648196_Add-Event-Details-Picture.cs" />
+    <Compile Include="Migrations\201707240648196_Add-Event-Details-Picture.Designer.cs">
+      <DependentUpon>201707240648196_Add-Event-Details-Picture.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\UpgradeDatabase.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
@@ -449,12 +479,14 @@
     <Compile Include="Models\GeoProperties.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Map.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\MeasureModel.cs" />
     <Compile Include="Models\ProductionUnitModel.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RecognitionRecordModel.cs" />
+    <Compile Include="Models\UserRoles.cs" />
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\RecognitionRecordService.cs" />
     <Compile Include="Services\ProductionUnitService.cs" />
@@ -478,12 +510,18 @@
     <Compile Include="Viewmodels\MessageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="500.aspx" />
+    <Content Include="500.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cluster.css" />
+    <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\prev.png" />
     <Content Include="Content\kendo\2016.3.1118\Black\editor.png" />
     <Content Include="Content\kendo\2016.3.1118\Black\imagebrowser.png" />
     <Content Include="Content\kendo\2016.3.1118\Black\indeterminate.gif" />
@@ -1159,6 +1197,7 @@
     <Content Include="Content\marker-shadow.png" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\miniLogoWhite.png" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Pictures\GardeningType\gardeningFishTank.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningPermacultureBed.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningTowerGarden.png" />
@@ -1205,10 +1244,14 @@
     <Content Include="Content\Pictures\Sites\BraineFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\EssenFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
+    <Content Include="Content\Pictures\Sites\ForgesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\GrenobleCity.jpg" />
     <Content Include="Content\Pictures\Sites\GrosbuschFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\HouillesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LaChapelleFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LandserFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\LauterbourgFamily22.jpg" />
@@ -1225,8 +1268,10 @@
     <Content Include="Content\Pictures\Sites\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\PavillyFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\RueilFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\SaintPierreFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SeppoisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SfaxFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
@@ -1235,6 +1280,7 @@
     <Content Include="Content\Pictures\Sites\VillevaudeFamily22.jpg" />
     <Content Include="Content\Swiper\swiper.css" />
     <Content Include="Content\Swiper\swiper.min.css" />
+    <Content Include="ErrorServer.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -1247,7 +1293,6 @@
     <Content Include="Global.asax" />
     <Content Include="OneSignalSDKUpdaterWorker.js" />
     <Content Include="OneSignalSDKWorker.js" />
-    <Content Include="readme.txt" />
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -1364,7 +1409,6 @@
     <Content Include="Content\kendo\kendo.silver.mobile.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.min.css.map" />
     <Content Include="Content\kendo\kendo.uniform.mobile.min.css.map" />
-    <Content Include="Content\countries.geo.txt" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\font-awesome\fonts\fontawesome-webfont.woff" />
@@ -3167,7 +3211,7 @@
     <Content Include="Scripts\kendo\2016.3.1118\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\2016.3.1118\kendo.webcomponents.min.js.map" />
     <Content Include="Scripts\kendo\2016.3.1118\kendo.window.min.js.map" />
-    <Content Include="Views\ProductionUnits\Events.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
     <Content Include="Views\ProductionUnits\Update.cshtml" />
     <Content Include="Views\Recipes\Index.cshtml" />
     <Content Include="Views\PerformanceHealth\Index.cshtml" />
@@ -3184,6 +3228,15 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.woff" />
+    <Content Include="Views\Admin\AddRole.cshtml" />
+    <Content Include="Views\Admin\CreateUser.cshtml" />
+    <Content Include="Views\Admin\EditRoles.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ViewAllRoles.cshtml" />
+    <Content Include="Views\Error\Error500.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Event.cshtml" />
+    <Content Include="Views\Events\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3224,6 +3277,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705081252475_Add_User_Language.resx">
       <DependentUpon>201705081252475_Add_User_Language.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706220609383_EventTypeList.resx">
+      <DependentUpon>201706220609383_EventTypeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707151622012_Add-ProductionOwner-Location.resx">
+      <DependentUpon>201707151622012_Add-ProductionOwner-Location.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707240648196_Add-Event-Details-Picture.resx">
+      <DependentUpon>201707240648196_Add-Event-Details-Picture.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

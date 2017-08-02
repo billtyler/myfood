@@ -1,4 +1,4 @@
-﻿@model IEnumerable<myfoodapp.Hub.Models.Event>
+﻿@model myfoodapp.Hub.Models.EventViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -19,7 +19,6 @@
         var productionUnitId = $('#routeDataId').val();
         window.location = window.location.origin + "/ProductionUnits/Details/" + productionUnitId;
     }
-
 </script>
 
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
@@ -31,16 +30,17 @@
 
 <div id="productionUnits-grid" class="main-section-content row">
     <div id="productionUnits-details" class="col-md-2">
-        <h3 class="section-header">[[[Manage Production Units Events]]]</h3>
+        <h3 class="section-header">[[[Manage Production Unit Events]]]</h3>
         <br />
 
         <p>
             @(Html.Kendo().Button()
             .Name("backButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Back to Details]]]")
             .Events(ev => ev.Click("onBackClick")))
         </p>
+
     </div>
     <div id="grid-container" class="col-md-10" style="padding-bottom:40px">
         @(Html.Kendo().Grid<myfoodapp.Hub.Models.EventViewModel>()
@@ -48,23 +48,20 @@
         .Columns(columns =>
         {
             columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(60);
-            columns.Bound(c => c.date).Format("{0:d} - {0:t}").Width(100);
+            columns.Bound(c => c.date).Format("{0:d}").Width(80);
             columns.Bound(c => c.description).Width(250);
-            //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(250);
-            //columns.Command(command => { command.Destroy(); }).Width(250);
+            columns.Bound(c => c.isOpen).Title("[[[open]]]").Width(50);
+            columns.Bound(c => c.createdBy).Width(100);
+            columns.Command(command => { command.Edit(); command.Destroy(); }).Width(150);
         })
-        //.ToolBar(toolbar =>
-        //{
-        //    toolbar.Create();
-        //    toolbar.Save();
-        //})
+        .ToolBar(toolbar =>
+        {
+           // toolbar.Save();
+        })
         .HtmlAttributes(new { style = "height: 80vh" })
-        //.Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("ProductionUnitEditTemplate"))
-        //.Editable(editable => editable.Mode(GridEditMode.InCell))
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).Window(w => w.Width(700)).TemplateName("Event"))
         .Scrollable()
         .Filterable()
-        .Groupable()
-        .ColumnMenu()
         .Pageable(pageable => pageable
             .Refresh(true)
             .PageSizes(true)
@@ -72,23 +69,21 @@
             .DataSource(dataSource => dataSource
             .Ajax()
             .PageSize(20)
-            .ServerOperation(false)
             .Model(model =>
             {
                 model.Id(c => c.Id);
                 model.Field(c => c.Id).Editable(false);
-                model.Field(c => c.date).Editable(false);
-                model.Field(c => c.description).Editable(false);
+                model.Field(c => c.date).Editable(true);
+                model.Field(c => c.description).Editable(true);
+                model.Field(c => c.createdBy).Editable(false);
             })
             .Events(events => events.Error("error_handler"))
-            //.Create("Editing_Create", "ProductionUnits")
-            .Read("Event_Read", "ProductionUnits")
-        //.Update("Editing_Update", "ProductionUnits")
-        //.Destroy("Editing_Destroy", "ProductionUnits")
+            .Read("Event_Read", "Events", new { Id = this.ViewContext.RouteData.Values["id"] })
+            .Update("Event_Update", "Events")
+            .Destroy("Event_Destroy", "Events")
         )
         )
     </div>
-
 </div>
 
 <script type="text/javascript">
@@ -108,8 +103,26 @@
 </script>
    
 <style>
-       .k-button {
-        height: 50px;
+        @@media screen and (max-width: 800px) {
+
+        .k-widget.k-window  {
+            width:100% !important;
+            height:90% !important;
+        }
+
+    }
+
+        .k-button {
+            background-color: #018001;
+            color: #ffffff;
+        }
+
+        .k-grid-edit span.k-icon {
+            display:none;
+        }
+
+        .k-grid-delete span.k-icon {
+            display:none;
         }
 </style>
 

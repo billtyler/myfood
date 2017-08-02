@@ -180,28 +180,28 @@ namespace myfoodapp.Business.Sensor
 
                                     logModel.AppendLog(Log.CreateLog(String.Format("Sensor Information - {0}", r), Log.LogType.System));
 
-                                    if (r.Contains("RTD"))
+                                    if (r.ToUpper().Contains("RTD"))
                                     {
                                         newSensor.sensorType = SensorTypeEnum.waterTemperature;
                                         logModel.AppendLog(Log.CreateLog("Water Temperature online", Log.LogType.Information));
                                         logModel.AppendLog(Log.CreateLog(String.Format("Water Temperature status - {0}", s), Log.LogType.System));
                                     }
 
-                                    if (r.Contains("pH"))
+                                    if (r.ToUpper().Contains("PH"))
                                     {
                                         newSensor.sensorType = SensorTypeEnum.ph;
-                                        logModel.AppendLog(Log.CreateLog("pH online", Log.LogType.Information));
-                                        logModel.AppendLog(Log.CreateLog(String.Format("pH status - {0}", s), Log.LogType.System));
+                                        logModel.AppendLog(Log.CreateLog("PH online", Log.LogType.Information));
+                                        logModel.AppendLog(Log.CreateLog(String.Format("PH status - {0}", s), Log.LogType.System));
                                     }
 
-                                    if (r.Contains("ORP"))
+                                    if (r.ToUpper().Contains("ORP"))
                                     {
                                         newSensor.sensorType = SensorTypeEnum.orp;
                                         logModel.AppendLog(Log.CreateLog("ORP online", Log.LogType.Information));
                                         logModel.AppendLog(Log.CreateLog(String.Format("ORP status - {0}", s), Log.LogType.System));
                                     }
 
-                                    if (r.Contains("DO"))
+                                    if (r.ToUpper().Contains("DO"))
                                     {
                                         newSensor.sensorType = SensorTypeEnum.dissolvedOxygen;
                                         logModel.AppendLog(Log.CreateLog("Dissolved Oxygen online", Log.LogType.Information));

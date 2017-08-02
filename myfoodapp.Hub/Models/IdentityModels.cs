@@ -86,6 +86,8 @@ namespace myfoodapp.Hub.Models
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.EventType> EventTypes { get; set; }
 
+        public System.Data.Entity.DbSet<myfoodapp.Hub.Models.EventTypeItem> EventTypeItems { get; set; }
+
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.RecognitionRecord> RecognitionRecords { get; set; }
 
         public System.Data.Entity.DbSet<myfoodapp.Hub.Models.HealthLevel> HealthLevels { get; set; }

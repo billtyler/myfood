@@ -10,7 +10,7 @@ namespace myfoodapp.Hub.Models
     public class ProductionUnitViewModel
     {
         public int Id { get; set; }
-        public DateTime startDate { get; set; }
+        public DateTime? startDate { get; set; }
         public string reference { get; set; }
         public int productionUnitTypeId { get; set; }
         public ProductionUnitTypeViewModel productionUnitType { get; set; }

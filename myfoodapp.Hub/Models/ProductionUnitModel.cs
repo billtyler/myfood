@@ -53,6 +53,7 @@ namespace myfoodapp.Hub.Models
         public string pioneerCitizenName { get; set; }
         public string contactMail { get; set; }
         public string phoneNumber { get; set; }
+        public string location { get; set; }
         public Language language { get; set; }
         public PreferedMoment preferedMoment { get; set; }
         public string notificationPushKey { get; set; }
@@ -99,28 +100,6 @@ namespace myfoodapp.Hub.Models
         public string name { get; set; }
         public string description { get; set; }
         public string imagePath { get; set; }
-    }
-
-    public class Event
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Int64 Id { get; set; }
-        [Required]
-        public DateTime date { get; set; }
-        [Required]
-        public string description { get; set; }
-        [Required]
-        public ProductionUnit productionUnit { get; set; }
-        [Required]
-        public EventType eventType { get; set; }
-    }
-
-    public class EventType
-    {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
     }
 
     public class PreferedMoment

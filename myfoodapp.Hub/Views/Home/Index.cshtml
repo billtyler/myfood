@@ -1,20 +1,8 @@
-﻿
-
-<script type="text/javascript">
+﻿<script type="text/javascript">
 
     var swiper;
 
     window.onload = function onLoad(e) {
-
-        swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            paginationClickable: true,
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            parallax: true,
-            speed: 600,
-            onSlideChangeEnd: onSlideChangeEnd,
-        });
 
         $.ajax({
             url: "@Url.Action("GetNetworkStats", "Home")",
@@ -34,15 +22,30 @@
             success: function (response) {
 
                 $.each(response, function (index, item) {
-                    swiper.appendSlide(
-                        '<div class="swiper-slide" style="background-repeat:no-repeat;background-size: cover;background-image:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .5)), url(/Content/Pictures/Sites/' + item.PicturePath + ')">' +
+                    $('.swiper-wrapper').append(
+                        '<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
+                            '<div class="layer">' +
                             '<div class="subtitle" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
                             '<div class="title" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
                             '<div class="text" data-swiper-parallax="-300">' +
                                 '<p>' + item.ProductionUnitOptions + '</p>' +
                             '</div>' +
+                            '<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>' +
+                            '</div>' +
                         '</div>'
                         );
+                });
+
+                swiper = new Swiper('.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    preloadImages: false,
+                    parallax: true,
+                    lazyLoading: true,
+                    speed: 600,
+                    onSlideChangeEnd: onSlideChangeEnd,
                 });
             }
         });
@@ -82,22 +85,6 @@
         }
     });
     }
-
-    @*function onShow(e) {
-
-        var currentProductionUnitLat = this.marker.options.location[0];
-        var currentProductionUnitLong = this.marker.options.location[1];
-
-        $.ajax({
-            url: "@Url.Action("GetProductionUnitIndex", "Home")",
-            dataType: "json",
-            data: { SelectedProductionUnitLat: currentProductionUnitLat, SelectedProductionUnitLong: currentProductionUnitLong },
-            type: "POST",
-            success: function(response) {
-                swiper.slideTo(response.CurrentIndex);
-            }
-        });
-    }*@
 
     window.onClusterShow = function (latLang) {
 
@@ -139,15 +126,6 @@
     </div>
 </script>
 
-@*<style>
-        html, body, #map {
-            height: 100%;
-            margin: 0;
-        }
-    </style>*@
-
-
-
 <div id="main-section-header" class="row">
     <h2 id="title-pioneer" class="col-md-3">[[[Pioneer Citizen Network]]]</h2>
     <div style="clear:both;"></div>
@@ -166,48 +144,11 @@
                 <div class="swiper-button-next swiper-button-white"></div>
             </div>
         </div>
-        @*<div id="map-container" class="col-md-4">
-            @model myfoodapp.Hub.Models.Map
+        <div id="map-container" class="col-md-7">
+   
+        <iframe style="height: 350px; width: 100%" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
+    </div>
 
-             @(Html.Kendo().Map()
-            .Name(Model.Name)
-            .Center(Model.CenterLatitude, Model.CenterLongitude)
-            .Zoom(Model.Zoom)
-            .Zoomable(false)
-            .Layers(layers =>
-                    {
-                        layers.Add()
-                            .Style(style => style
-                                .Fill(fill => fill.Color("#018001").Opacity(0.7))
-                                .Stroke(stroke => stroke.Color("#FFFFFF"))
-                            )
-                            .Type(MapLayerType.Shape)
-                            .DataSource(dataSource => dataSource
-                                .GeoJson()
-                                .Read(read => read.Url(Url.Content("~/Content/countries.geo.txt")))
-                            );
-                    })
-            .Markers(markers =>
-            {
-                foreach (var marker in Model.Markers)
-                {
-                    markers.Add()
-                    .Location(marker.latlng)
-                    .Shape(marker.shape)
-                    .Tooltip(t => t.ShowOn(TooltipShowOnEvent.MouseEnter))
-                    .Tooltip(t => t.Events(e => e.Show("onShow")))
-                    .Title(marker.name);
-                }
-            })
-            .Events(events => events
-                              .ShapeCreated("onShapeCreated")
-                              .ShapeMouseEnter("onShapeMouseEnter")
-                              .ShapeMouseLeave("onShapeMouseLeave")
-                )
-            )
-            </div>*@
-
-        <iframe class="col-md-7" style="height: 350px" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
     </div>
 
     <div id="statsContainer" class="row">
@@ -488,6 +429,15 @@
 
     .k-loading-mask {
         opacity: 0;
+    }
+
+    .layer {
+    background-color: rgba(0, 0, 0, .3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     }
 
     @@media screen and (max-width: 480px) {

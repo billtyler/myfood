@@ -61,7 +61,10 @@ namespace myfoodapp.Hub.Controllers.Api
                     db.SaveChanges();
                 }
 
+                var upRunningStatus = db.ProductionUnitStatus.Where(p => p.Id == 3).FirstOrDefault();
+
                 currentProductionUnit.lastMeasureReceived = date;
+                currentProductionUnit.productionUnitStatus = upRunningStatus;
 
                 //var productionUnitOwnerMail = currentProductionUnit.owner.user.Email;
 
@@ -184,22 +187,8 @@ namespace myfoodapp.Hub.Controllers.Api
                     }
                 }
 
-                db.SaveChanges();
-
-                DateTime lastDay = date.AddDays(-1);
-
-                var currentLastDayPHValue = db.Measures.Where(m => m.captureDate > lastDay &&
-                                                   m.productionUnit.Id == currentProductionUnit.Id &&
-                                                   m.sensor.Id == phSensor.Id).OrderBy(m => m.Id).FirstOrDefault();
-
-                if (currentLastDayPHValue == null)
-                    currentMeasures.lastDayPHvariation = 0;
-                else
-                    currentMeasures.lastDayPHvariation = Math.Abs(currentLastDayPHValue.value - currentMeasures.pHvalue);
-
-                AquaponicsRulesManager.ValidateRules(currentMeasures, currentProductionUnit.Id);
-
                 ExternalAirHumidityManager.GetExternalAirHumidityValues(currentProductionUnit.Id, date);
+
             }
             catch (Exception ex)
             {

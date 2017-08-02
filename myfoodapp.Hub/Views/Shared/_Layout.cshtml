@@ -3,6 +3,7 @@
 <head>
     <title>myfood Hub Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.metro.min.css" rel="stylesheet">
     <link href="https://kendo.cdn.telerik.com/2016.3.1118/styles/kendo.dataviz.min.css" rel="stylesheet">
@@ -12,6 +13,7 @@
     <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/jszip.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.all.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2016.3.1118/js/kendo.aspnetmvc.min.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
 
@@ -49,7 +51,11 @@
             <ul class="nav">
                 @if (Request.IsAuthenticated)
                 {
-                    <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; [[[Messages]]]</a></li>
+                    @*if (User.IsInRole("Admin"))
+                    {
+                        <li><a href="@(Url.Action("Index", "Admin"))"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; [[[User Management]]]</a></li>
+                    }*@
+                        <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; [[[Messages]]]</a></li>
                         <li><a href="@(Url.Action("Index", "Measures"))"><i class="fa fa-thermometer-full" aria-hidden="true"></i>&nbsp; [[[Measures]]]</a></li>
                         <li><a href="@(Url.Action("Index", "ProductionUnits"))"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; [[[Production Units]]]</a></li>
                         <li><a href="@(Url.Action("Index", "PerformanceHealth"))"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[Performance &amp; Health]]]</a></li>

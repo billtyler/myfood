@@ -52,28 +52,6 @@ namespace myfoodapp.Hub.Controllers
         {
             ViewBag.Title = "Interactive Map Page";
 
-            //var db = new ApplicationDbContext();
-            //var measureService = new MeasureService(db);
-
-            //var listMarker = new List<Marker>();
-
-            //db.ProductionUnits.Include(p => p.owner).ToList().ForEach(p =>
-            //                            listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
-            //                                                      p.info, p.startDate.ToShortDateString()))
-            //                            { shape = "redMarker" }));
-
-            //var map = new Models.Map()
-            //{
-            //    Name = "map",
-            //    CenterLatitude = 46.094602,
-            //    CenterLongitude = 10.998050,
-            //    Zoom = 4,
-            //    TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-            //    TileSubdomains = new string[] { "a", "b", "c" },
-            //    TileAttribution = "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>",
-            //    Markers = listMarker
-            //};
-
             return View();
         }
 
@@ -112,7 +90,7 @@ namespace myfoodapp.Hub.Controllers
 
             if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null).ToList();
+                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList();
 
                 var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
                                                                                  p.locationLongitude == longitude);
@@ -171,6 +149,7 @@ namespace myfoodapp.Hub.Controllers
                         ContactMail = p.owner.contactMail,
                         PicturePath = p.picturePath,
                         PreferedMoment = p.owner.preferedMoment.name,
+                        Location = p.owner.location,
 
                         LocationLatitude = p.locationLatitude,
                         LocationLongitude = p.locationLongitude,
@@ -241,6 +220,7 @@ namespace myfoodapp.Hub.Controllers
             var upRunningCount = rslt.Where(p => p.productionUnitStatus.Id == 3).Count();
             var onMaintenanceCount = rslt.Where(p => p.productionUnitStatus.Id == 4).Count();
             var stoppedCount = rslt.Where(p => p.productionUnitStatus.Id == 5).Count();
+            var offineCount = rslt.Where(p => p.productionUnitStatus.Id == 6).Count();
 
             var statusList = new List<PieChartViewModel>();
 
@@ -249,6 +229,7 @@ namespace myfoodapp.Hub.Controllers
             statusList.Add(new PieChartViewModel() { Category = "[[[Up & Running]]]", Value = upRunningCount, Color = "#068c35" });
             statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
             statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#004d38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Offline]]]", Value = offineCount, Color = "#003F38" });
 
             return Json(statusList);
         }

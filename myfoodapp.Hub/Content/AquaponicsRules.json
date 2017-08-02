@@ -1,83 +1,107 @@
 ﻿[
   {
-    "ruleEvaluator": "(pHvalue != 0) && ((pHvalue < 5.5M) || (pHvalue > 8.9))",
-    "warningContent": "Ph value is out of range : {0}",
-    "bindingPropertyValue": "pHvalue"
+    "ruleEvaluator": "(lastDayMinpHvalue != 0) && (lastDayMinpHvalue < 6)",
+    "warningContent": "Fish and vegetable won't appreciate - pH value is out of range : min last 24h {0}",
+    "bindingPropertyValue": "lastDayMinpHvalue"
   },
   {
-    "ruleEvaluator": "(pHvalue != 0) && (lastDayPHvariation != 0) && (lastDayPHvariation > 0.5)",
-    "warningContent": "Ph value is moving fast since 24h: {0}",
-    "bindingPropertyValue": "pHvalue"
+    "ruleEvaluator": "(lastDayMaxpHvalue != 0) && (lastDayMaxpHvalue > 9)",
+    "warningContent": "Fish and vegetable won't appreciate - pH value is out of range : max last 24h {0}",
+    "bindingPropertyValue": "lastDayMaxpHvalue"
   },
   {
-    "ruleEvaluator": "(airTempvalue <= 0)",
-    "warningContent": "It's a bit cold there: {0}",
-    "bindingPropertyValue": "airTempvalue"
+    "ruleEvaluator": "(lastDayPHvariation != 0) && (lastDayPHvariation > 2)",
+    "warningContent": "High pH variation : delta last 24h {0}",
+    "bindingPropertyValue": "lastDayPHvariation"
   },
   {
-    "ruleEvaluator": "(waterTempvalue <= 0)",
-    "warningContent": "It's a bit cold there: {0}",
-    "bindingPropertyValue": "waterTempvalue"
+    "ruleEvaluator": "(threeLastDayPHvariation != 0) && (threeLastDayPHvariation > 0.5)",
+    "warningContent": "High pH fluctuation : mean delta last 3 days {0} - Watch for algeas",
+    "bindingPropertyValue": "threeLastDayPHvariation"
   },
   {
-    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Carp') && ((waterTempvalue <= 0) || (waterTempvalue >= 30)))",
-    "warningContent": "Water Temperature value is out of range for Carps: {0}",
-    "bindingPropertyValue": "waterTempvalue"
+    "ruleEvaluator": "(lastWeekPHmean != 0) && (lastWeekPHmean >= 8)",
+    "warningContent": "High pH level : mean last week {0} - Performances can be improved",
+    "bindingPropertyValue": "lastWeekPHmean"
   },
   {
-    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Tilapia') && ((waterTempvalue <= 5) || (waterTempvalue >= 35))",
-    "warningContent": "Water Temperature value is out of range for Tilapias: {0}",
-    "bindingPropertyValue": "waterTempvalue"
+    "ruleEvaluator": "(lastDayMinAirTempvalue != 0) && (lastDayMinAirTempvalue <= 2)",
+    "warningContent": "It's cold inside ({0}°C) - Add greenhouse insulation",
+    "bindingPropertyValue": "lastDayMinAirTempvalue"
   },
   {
-    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Trout') && ((waterTempvalue <= 5) || (waterTempvalue >= 25))",
-    "warningContent": "Water Temperature value is out of range for Trouts : {0}",
-    "bindingPropertyValue": "waterTempvalue"
-  },
-  {
-    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Crayfish') && ((waterTempvalue <= 5) || (waterTempvalue >= 22))",
-    "warningContent": "Water Temperature value is out of range for Crayfish: {0}",
-    "bindingPropertyValue": "waterTempvalue"
-  },
-  {
-    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Oth. Cold Fish') && ((waterTempvalue <= 5) || (waterTempvalue >= 22))",
-    "warningContent": "Water Temperature value is out of range for Cold Water Fish: {0}",
-    "bindingPropertyValue": "waterTempvalue"
-  },
-  {
-    "ruleEvaluator": "(hydroponicTypeName = 'Aquaponics - Oth. Warm Fish') && ((waterTempvalue <= 10) || (waterTempvalue >= 32))",
-    "warningContent": "Water Temperature value is out of range for Cold Water Fish: {0}",
-    "bindingPropertyValue": "waterTempvalue"
-  },
-  {
-    "ruleEvaluator": "(ORPvalue != 0) && ((ORPvalue < 300) || (ORPvalue > 450))",
-    "warningContent": "ORP value is out of range : {0}",
-    "bindingPropertyValue": "ORPvalue"
-  },
-  {
-    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Carp') && (DOvalue <= 5)",
-    "warningContent": "Dissolved Oxygen value is out of range : {0}",
-    "bindingPropertyValue": "DOvalue"
-  },
-  {
-    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Tilapia') && (DOvalue <= 4)",
-    "warningContent": "Dissolved Oxygen value is out of range : {0}",
-    "bindingPropertyValue": "DOvalue"
-  },
-  {
-    "ruleEvaluator": "(DOvalue != 0) && (hydroponicTypeName = 'Aquaponics - Trout') && (DOvalue <= 6)",
-    "warningContent": "Dissolved Oxygen value is out of range : {0}",
-    "bindingPropertyValue": "DOvalue"
-  },
-  {
-    "ruleEvaluator": "((airTempvalue <= 0) || (airTempvalue >= 40))",
-    "warningContent": "Air Temperature value is out of range : {0}",
-    "bindingPropertyValue": "airTempvalue"
+    "ruleEvaluator": "(lastDayMaxAirTempvalue != 0) && (lastDayMaxAirTempvalue >= 45)",
+    "warningContent": "It's too hot inside ({0}°C) : {0} - Open the doors and add a shadows cloths",
+    "bindingPropertyValue": "lastDayMaxAirTempvalue"
   },
   {
     "ruleEvaluator": "((airTempvalue <= 10 ) && (humidityvalue >= 83)) || ((airTempvalue <= 15 ) && (humidityvalue >= 89)) || ((airTempvalue <= 30 ) && (humidityvalue >= 95))",
     "warningContent": "Air Humidity value is out of range : {0}",
     "bindingPropertyValue": "humidityvalue"
+  },
+  {
+    "ruleEvaluator": "(lastDayMinWaterTempvalue <= 5)",
+    "warningContent": "Water is cold there ({0}°C) - Add water heater on tanks",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Carp') && (lastDayMinWaterTempvalue <= 2))",
+    "warningContent": "Water Temperature value is out of range for Carps: min {0}°C",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Carp') && ((lastDayMaxWaterTempvalue >= 30))",
+    "warningContent": "Water Temperature value is out of range for Carps: max {0}°C",
+    "bindingPropertyValue": "lastDayMaxWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Tilapia') && (lastDayMinWaterTempvalue <= 14))",
+    "warningContent": "Water Temperature value is out of range for Tilapias:  min {0}°C}",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Tilapia') && (lastDayMaxWaterTempvalue >= 35))",
+    "warningContent": "Water Temperature value is out of range for Tilapias:  max {0}°C",
+    "bindingPropertyValue": "lastDayMaxWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Trout') && (lastDayMinWaterTempvalue <= 5))",
+    "warningContent": "Water Temperature value is out of range for Trouts : min {0}°C",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Trout') && (lastDayMaxWaterTempvalue >= 25))",
+    "warningContent": "Water Temperature value is out of range for Trouts : max {0}°C",
+    "bindingPropertyValue": "lastDayMaxWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "'((hydroponicTypeName = 'Aquaponics - Crayfish') && (lastDayMinWaterTempvalue <= 5))",
+    "warningContent": "Water Temperature value is out of range for Crayfish: min {0}°C",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Crayfish') && (lastDayMaxWaterTempvalue >= 22))",
+    "warningContent": "Water Temperature value is out of range for Crayfish: max {0}°C",
+    "bindingPropertyValue": "lastDayMaxWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Oth. Cold Fish') && (lastDayMinWaterTempvalue <= 5))",
+    "warningContent": "Water Temperature value is out of range for Cold Water Fish: min {0}°C",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Oth. Cold Fish') && (lastDayMaxWaterTempvalue >= 22))",
+    "warningContent": "Water Temperature value is out of range for Cold Water Fish: max {0}°C",
+    "bindingPropertyValue": "lastDayMaxWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Oth. Warm Fish') && (lastDayMinWaterTempvalue <= 14))",
+    "warningContent": "Water Temperature value is out of range for Cold Water Fish: min {0}°C",
+    "bindingPropertyValue": "lastDayMinWaterTempvalue"
+  },
+  {
+    "ruleEvaluator": "((hydroponicTypeName = 'Aquaponics - Oth. Warm Fish') && (lastDayMaxWaterTempvalue >= 32))",
+    "warningContent": "Water Temperature value is out of range for Cold Water Fish: max {0}°C",
+    "bindingPropertyValue": "lastDayMaxWaterTempvalue"
   }
-] 
-
+]

@@ -55,6 +55,9 @@ namespace myfoodapp.Hub.Controllers
             var currentProductOwner = db.ProductionUnitOwners.Include(p => p.language)
                                                              .Where(p => p.user.UserName == currentUser).FirstOrDefault();
 
+            if (currentProductOwner.language == null)
+                return View(); 
+
             var currentLanguageId = currentProductOwner.language.Id;
 
             return View(new UserViewModel() { Email = applicationUser.Email, Language = currentLanguageId });
@@ -118,11 +121,6 @@ namespace myfoodapp.Hub.Controllers
                                                            .Where(p => p.user.UserName == currentUser).FirstOrDefault();
             if (currentProductionUnitOwner != null)
             {
-                //i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
-                //   System.Web.HttpContext.Current,
-                //   i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description)
-                //);
-
                 currentProductionUnitOwner.notificationPushKey = id;
                 db.SaveChanges();
 
