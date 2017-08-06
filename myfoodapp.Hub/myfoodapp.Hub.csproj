@@ -401,6 +401,7 @@
     <Compile Include="Common\NotificationPushManager.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\ProductionUnitOwnerController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MyInfoController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -487,6 +488,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\RecognitionRecordModel.cs" />
     <Compile Include="Models\UserRoles.cs" />
+    <Compile Include="Services\ProductionUnitOwnerService.cs" />
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\RecognitionRecordService.cs" />
     <Compile Include="Services\ProductionUnitService.cs" />
@@ -505,6 +507,7 @@
     <Compile Include="Viewmodels\MessageTypeViewModel.cs" />
     <Compile Include="Viewmodels\MeasureViewModel.cs" />
     <Compile Include="Viewmodels\PieChartViewModel.cs" />
+    <Compile Include="Viewmodels\ProductionUnitOwnerViewModel.cs" />
     <Compile Include="Viewmodels\RecognitionRecordViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitViewModel.cs" />
     <Compile Include="Viewmodels\MessageViewModel.cs" />
@@ -1244,6 +1247,7 @@
     <Content Include="Content\Pictures\Sites\BraineFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\ChanteheuxFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\EssenFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\ForgesFamily22.jpg" />
@@ -3237,6 +3241,9 @@
     <Content Include="Views\Error\Error500.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Event.cshtml" />
     <Content Include="Views\Events\Manage.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ProductionUnit.cshtml" />
+    <Content Include="Views\ProductionUnitOwner\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ProductionUnitOwner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

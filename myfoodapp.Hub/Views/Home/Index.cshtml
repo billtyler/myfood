@@ -243,9 +243,10 @@
     </div>
 
     <div id="performanceHealthAnalysis">
-        <div id="performanceHealthAnalysisContainer" class="col-md-4">
+        <div id="performanceHealthAnalysisContainer" class="col-md-5">
             <h3 class="section-header">[[[Network Status]]]</h3>
-            @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
+            <div style="text-align: center">
+                @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
         .Name("chart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Right)
@@ -273,9 +274,10 @@
             .Visible(true)
             .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
         )
-            )
+                )
+            </div>
         </div>
-        <div id="map-info" class="col-md-4">
+        <div id="map-info" class="col-md-7">
             <div class="widget">
                 <h3 class="section-header">[[[Network Info]]]</h3>
                 <div style="margin: 25px;">

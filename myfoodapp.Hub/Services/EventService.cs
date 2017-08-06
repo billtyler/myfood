@@ -102,16 +102,14 @@ namespace myfoodapp.Hub.Services
             return GetAll().FirstOrDefault(predicate);
         }
 
-        public void Update(EventViewModel currentEventViewModel, string formatedDateTime)
+        public void Update(EventViewModel currentEventViewModel)
         {
             Event target = new Event();
             target = entities.Events.Where(p => p.Id == currentEventViewModel.Id).FirstOrDefault();
 
             if (target != null)
             {
-                CultureInfo culture = new CultureInfo("EN-us");
-
-                target.date = Convert.ToDateTime(formatedDateTime, culture);
+                target.date = currentEventViewModel.date;
                 target.description = currentEventViewModel.description;
                 target.isOpen = currentEventViewModel.isOpen;
                 target.createdBy = currentEventViewModel.createdBy;

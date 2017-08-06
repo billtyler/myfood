@@ -12,11 +12,14 @@ namespace myfoodapp.Hub.Models
         public int Id { get; set; }
         public DateTime? startDate { get; set; }
         public string reference { get; set; }
+        [UIHint("GridForeignKey")]
         public int productionUnitTypeId { get; set; }
         public ProductionUnitTypeViewModel productionUnitType { get; set; }
+        [UIHint("GridForeignKey")]
         public int hydroponicTypeId { get; set; }
         [Display(Name = "[[[hydroponicType]]]")]
         public HydroponicTypeViewModel hydroponicType { get; set; }
+        [UIHint("GridForeignKey")]
         public int productionUnitStatusId { get; set; }
         public ProductionUnitStatusViewModel productionUnitStatus { get; set; }
         public double locationLatitude { get; set; }
@@ -25,6 +28,7 @@ namespace myfoodapp.Hub.Models
         public String info { get; set; }
         public String version { get; set; }
         public List<Option> options { get; set; }
+        [UIHint("GridForeignKey")]
         public int ownerId { get; set; }
         [Display(Name = "[[[owner]]]")]
         public OwnerViewModel owner { get; set; }

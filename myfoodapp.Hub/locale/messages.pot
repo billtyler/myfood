@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-08-02 11:31+02:00\n"
+"POT-Creation-Date: 2017-08-06 14:26+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,9 +24,9 @@ msgid "36 towers"
 msgstr ""
 
 #: Views\About\Index.cshtml:8
-#: Views\Shared\_Layout.cshtml:65
+#: Views\Shared\_Layout.cshtml:67
 #: obj\Release\Package\PackageTmp\Views\About\Index.cshtml:8
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:67
 msgid "About"
 msgstr ""
 
@@ -188,9 +188,11 @@ msgstr ""
 
 #: Views\Events\Index.cshtml:40
 #: Views\Events\Manage.cshtml:37
+#: Views\ProductionUnitOwner\Index.cshtml:30
 #: Views\ProductionUnits\Update.cshtml:37
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:40
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:37
+#: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:30
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:37
 msgid "Back to Details"
 msgstr ""
@@ -281,8 +283,8 @@ msgstr ""
 msgid "content from Sigfox backend"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:81
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:81
+#: Views\Shared\_Layout.cshtml:83
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:83
 msgid "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
 msgstr ""
 
@@ -366,8 +368,8 @@ msgstr ""
 msgid "Detailed information"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:75
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:75
+#: Views\ProductionUnits\Index.cshtml:72
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:72
 msgid "Details"
 msgstr ""
 
@@ -494,7 +496,7 @@ msgstr ""
 msgid "Humidity (%)"
 msgstr ""
 
-#: Viewmodels\ProductionUnitViewModel.cs:18
+#: Viewmodels\ProductionUnitViewModel.cs:20
 msgid "hydroponicType"
 msgstr ""
 
@@ -517,7 +519,7 @@ msgstr ""
 msgid "Indoor"
 msgstr ""
 
-#: Viewmodels\ProductionUnitViewModel.cs:24
+#: Viewmodels\ProductionUnitViewModel.cs:27
 #: Views\Events\Manage.cshtml:63
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:63
 msgid "info"
@@ -579,8 +581,13 @@ msgstr ""
 msgid "June"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:73
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:73
+#: Views\ProductionUnitOwner\Index.cshtml:46
+#: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:46
+msgid "lang"
+msgstr ""
+
+#: Views\ProductionUnits\Index.cshtml:70
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:70
 msgid "last measure"
 msgstr ""
 
@@ -613,8 +620,8 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:71
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:71
+#: Views\Shared\_Layout.cshtml:73
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:73
 msgid "Log off"
 msgstr ""
 
@@ -623,8 +630,8 @@ msgstr ""
 msgid "Log your Actions / Events here"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:76
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:76
+#: Views\Shared\_Layout.cshtml:78
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:78
 msgid "Login"
 msgstr ""
 
@@ -651,21 +658,26 @@ msgstr ""
 msgid "Manage Production Unit Events"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:48
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:48
+#: Views\ProductionUnits\Index.cshtml:46
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:46
 msgid "Manage Production Unit Owners"
 msgstr ""
 
 #: Views\Events\Manage.cshtml:30
-#: Views\ProductionUnits\Index.cshtml:40
+#: Views\ProductionUnits\Index.cshtml:38
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:30
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:40
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:38
 msgid "Manage Production Units Events"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:31
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:31
+#: Views\ProductionUnits\Index.cshtml:29
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:29
 msgid "Manage Production Units from Pioneer Citizen Network"
+msgstr ""
+
+#: Views\ProductionUnitOwner\Index.cshtml:21
+#: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:21
+msgid "Manage Production Units Owners from Pioneer Citizen Network"
 msgstr ""
 
 #: Views\PerformanceHealth\Index.cshtml:18
@@ -679,9 +691,9 @@ msgid "Manage Unit"
 msgstr ""
 
 #: Views\Admin\Index.cshtml:24
-#: Views\ProductionUnits\Index.cshtml:58
+#: Views\ProductionUnits\Index.cshtml:54
 #: obj\Release\Package\PackageTmp\Views\Admin\Index.cshtml:24
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:58
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:54
 msgid "Manage Users"
 msgstr ""
 
@@ -697,8 +709,8 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:59
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:59
+#: Views\Shared\_Layout.cshtml:61
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
 msgid "Measures"
 msgstr ""
 
@@ -716,8 +728,8 @@ msgstr ""
 msgid "message type"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:58
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:58
+#: Views\Shared\_Layout.cshtml:60
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:60
 msgid "Messages"
 msgstr ""
 
@@ -747,9 +759,9 @@ msgid "Morning"
 msgstr ""
 
 #: Views\MyInfo\Update.cshtml:43
-#: Views\Shared\_Layout.cshtml:63
+#: Views\Shared\_Layout.cshtml:65
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:43
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
 msgid "My Information"
 msgstr ""
 
@@ -761,10 +773,10 @@ msgstr ""
 msgid "Need support"
 msgstr ""
 
-#: Views\Home\Index.cshtml:280
+#: Views\Home\Index.cshtml:282
 #: Views\InteractiveMap\Index.cshtml:225
 #: Views\InteractiveMap\Index.cshtml:244
-#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:280
+#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:282
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:225
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:244
 msgid "Network Info"
@@ -849,9 +861,9 @@ msgstr ""
 msgid "Outdoor"
 msgstr ""
 
-#: Viewmodels\ProductionUnitViewModel.cs:29
-#: Views\ProductionUnits\Index.cshtml:68
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:68
+#: Viewmodels\ProductionUnitViewModel.cs:33
+#: Views\ProductionUnits\Index.cshtml:64
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:64
 msgid "owner"
 msgstr ""
 
@@ -908,8 +920,8 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:61
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
+#: Views\Shared\_Layout.cshtml:63
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
 msgid "Performance &amp; Health"
 msgstr ""
 
@@ -982,8 +994,8 @@ msgstr ""
 msgid "prod. lvl"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:71
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:71
+#: Views\ProductionUnits\Index.cshtml:67
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:67
 msgid "prod. type"
 msgstr ""
 
@@ -992,18 +1004,28 @@ msgstr ""
 msgid "prod. unit"
 msgstr ""
 
+#: Controllers\ProductionUnitsController.cs:189
+msgid "Production Unit already in use"
+msgstr ""
+
 #: Views\ProductionUnits\Details.cshtml:219
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:219
 msgid "Production Unit Details"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:60
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:60
+#: Controllers\ProductionUnitOwnerController.cs:156
+msgid "Production Unit Owner already in use"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:62
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:62
 msgid "Production Units"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:25
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:25
+#: Views\ProductionUnitOwner\Index.cshtml:15
+#: Views\ProductionUnits\Index.cshtml:23
+#: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:15
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:23
 msgid "Production Units List"
 msgstr ""
 
@@ -1017,9 +1039,9 @@ msgid "Production Units Management"
 msgstr ""
 
 #: Views\Recipes\Index.cshtml:78
-#: Views\Shared\_Layout.cshtml:62
+#: Views\Shared\_Layout.cshtml:64
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:78
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:62
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
 msgid "Recipes"
 msgstr ""
 
@@ -1089,8 +1111,8 @@ msgstr ""
 msgid "Sprinkler cleaning"
 msgstr ""
 
-#: Views\ProductionUnits\Index.cshtml:72
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:72
+#: Views\ProductionUnits\Index.cshtml:68
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:68
 msgid "status"
 msgstr ""
 
@@ -1126,23 +1148,23 @@ msgstr ""
 msgid "Too much algeas"
 msgstr ""
 
-#: Views\Home\Index.cshtml:291
+#: Views\Home\Index.cshtml:293
 #: Views\InteractiveMap\Index.cshtml:236
-#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:291
+#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:293
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:236
 msgid "TOTAL<br />CO2 SAVED<br />PER MONTH"
 msgstr ""
 
-#: Views\Home\Index.cshtml:283
+#: Views\Home\Index.cshtml:285
 #: Views\InteractiveMap\Index.cshtml:228
-#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:283
+#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:285
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:228
 msgid "TOTAL<br />CONNECTED <br />PROD. UNITS"
 msgstr ""
 
-#: Views\Home\Index.cshtml:287
+#: Views\Home\Index.cshtml:289
 #: Views\InteractiveMap\Index.cshtml:232
-#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:287
+#: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:289
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:232
 msgid "TOTAL<br />EST. PROD. <br />PER MONTH"
 msgstr ""
@@ -1176,8 +1198,13 @@ msgstr ""
 msgid "Use UV filter"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:56
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:56
+#: Views\ProductionUnitOwner\Index.cshtml:42
+#: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:42
+msgid "user"
+msgstr ""
+
+#: Views\Shared\_Layout.cshtml:58
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:58
 msgid "User Management"
 msgstr ""
 

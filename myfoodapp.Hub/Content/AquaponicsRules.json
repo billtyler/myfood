@@ -40,7 +40,7 @@
     "bindingPropertyValue": "humidityvalue"
   },
   {
-    "ruleEvaluator": "(lastDayMinWaterTempvalue <= 5)",
+    "ruleEvaluator": "(lastDayMinWaterTempvalue != 0) && (lastDayMinWaterTempvalue <= 5)",
     "warningContent": "Water is cold there ({0}°C) - Add water heater on tanks",
     "bindingPropertyValue": "lastDayMinWaterTempvalue"
   },

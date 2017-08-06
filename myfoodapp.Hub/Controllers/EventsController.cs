@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -21,6 +22,12 @@ namespace myfoodapp.Hub.Controllers
 {
     public class EventsController : Controller
     {
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
+            base.Initialize(requestContext);
+        }
 
         [Authorize]
         public ActionResult Index(int id)
@@ -80,18 +87,15 @@ namespace myfoodapp.Hub.Controllers
 
         [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Event_Update([DataSourceRequest] DataSourceRequest request, EventViewModel currentEvent, string formatedDateTime)
+        public ActionResult Event_Update([DataSourceRequest] DataSourceRequest request, EventViewModel currentEvent)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
             if (currentEvent != null)
             {
-                eventService.Update(currentEvent, formatedDateTime);
+                eventService.Update(currentEvent);
             }
-            CultureInfo culture = new CultureInfo("EN-us");
-
-            currentEvent.date = Convert.ToDateTime(formatedDateTime, culture);
 
             return Json(new[] { currentEvent }.ToDataSourceResult(request, ModelState));
         }
