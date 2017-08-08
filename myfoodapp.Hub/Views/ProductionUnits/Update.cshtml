@@ -16,6 +16,10 @@
         window.location = window.location.origin + "/ProductionUnits/Details/" + productionUnitId;
     }
 
+    function onSuccess() {
+
+    }
+
 </script>
 
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
@@ -93,7 +97,28 @@
                                 )
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.picturePath, new { @class = "col-md-2 control-label" })
+                            <div class="col-md-10">
+                                @(Html.Kendo().Upload()
+                                .Name("files")
+                                .Multiple(false)
+                                .Async(a => a
+                                    .Save("SavePicture", "ProductionUnits", new { picturePath = Model.picturePath })
+                                    .Remove("RemovePicture", "ProductionUnits")
+                                    .AutoUpload(true)
+                                )
+                                .Validation(validation =>
+                                {
+                                    validation.AllowedExtensions(new string[] { ".jpg", ".jpeg" });
+                                    validation.MaxFileSize(2000000);
+                                })
+                                .Events(e => e.Success("onSuccess"))
+                                )
+                            </div>
+                            @*<div class="box" id="ProductionUnitPicture"/>*@
+                        </div>
+                        <br/>
                         <div>
                             <div style="text-align:right">
                                 <input type="submit" value="[[[Save & Close]]]" class="btn btn-default" />
@@ -106,6 +131,21 @@
 </div>
 
 <style type="text/css">
+
+        @@media screen and (max-width: 800px) {
+
+            #center {
+                margin: auto;
+                width: 80%;
+                border: 1px solid green;
+                padding: 10px;
+                position: relative;
+                top: 10%;
+                transform: translateY(50%);
+            }
+
+            #grid-container { width: 100%}
+    }
      
     .k-button {
      height: 50px;
@@ -120,4 +160,5 @@
     top: 50%;
     transform: translateY(50%);
 }
+
 </style>

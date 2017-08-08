@@ -1,5 +1,5 @@
-MainPackage=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.62.0_ARM.appx
-ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.62.0_language-fr.appx
-ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.62.0_scale-140.appx
-ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.62.0_scale-180.appx
-ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.62.0_scale-240.appx
+MainPackage=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.63.0_ARM.appx
+ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.63.0_language-fr.appx
+ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.63.0_scale-140.appx
+ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.63.0_scale-180.appx
+ResourcePack=E:\Dev\myfoodapp\myfoodapp\bin\ARM\Release\myfoodapp_1.0.63.0_scale-240.appx

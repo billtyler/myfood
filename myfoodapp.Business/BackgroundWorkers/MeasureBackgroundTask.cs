@@ -6,12 +6,15 @@ using myfoodapp.Common;
 using myfoodapp.Model;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Networking.Connectivity;
+using Windows.Networking.NetworkOperators;
 
 namespace myfoodapp.Business
 {
@@ -20,13 +23,14 @@ namespace myfoodapp.Business
         private BackgroundWorker bw = new BackgroundWorker();
         private AtlasSensorManager sensorManager;
         private SigfoxInterfaceManager sigfoxManager;
+        private UserSettings userSettings;
 
         private UserSettingsModel userSettingsModel = UserSettingsModel.GetInstance;
         private LogModel logModel = LogModel.GetInstance;
         private DatabaseModel databaseModel = DatabaseModel.GetInstance;
 
         private int TICKSPERCYCLE = 600000;
-        private int TICKSPERCYCLE_DIAGNOTIC_MODE = 60000;
+        private int TICKSPERCYCLE_DIAGNOSTIC_MODE = 60000;
 
         public event EventHandler Completed;
 
@@ -47,6 +51,81 @@ namespace myfoodapp.Business
         private MeasureBackgroundTask()
         {
             logModel.AppendLog(Log.CreateLog("Measure Service starting...", Log.LogType.System));
+
+            userSettings = new UserSettings();
+
+            var taskUser = Task.Run(async () => { userSettings = await userSettingsModel.GetUserSettingsAsync(); });
+            taskUser.Wait();
+
+            logModel.AppendLog(Log.CreateLog("UserSettings retreived", Log.LogType.System));
+
+            var taskTethering = Task.Run(async () =>
+            {
+                try
+                {
+                    var connectedProfile = NetworkInformation.GetInternetConnectionProfile();
+
+                    if(connectedProfile != null)
+                        logModel.AppendLog(Log.CreateLog(String.Format("Connected Profile found - {0}", connectedProfile.ProfileName), Log.LogType.System));
+
+                    bool isWLANConnection = (connectedProfile == null) ? false : connectedProfile.IsWlanConnectionProfile;
+
+                    if (isWLANConnection == false)
+                    {
+                        logModel.AppendLog(Log.CreateLog("Device offline", Log.LogType.System));
+
+                        ConnectionProfileFilter filter = new ConnectionProfileFilter();
+                        filter.IsWlanConnectionProfile = true;
+
+                        var profile = await NetworkInformation.FindConnectionProfilesAsync(filter);
+
+                        var defaultProfile = profile.FirstOrDefault();
+
+                        if(defaultProfile != null)
+                        {                           
+                            logModel.AppendLog(Log.CreateLog(String.Format("Default Profile found - {0}", defaultProfile.ProfileName), Log.LogType.System));
+
+                        var networkOperatorTetheringManager = NetworkOperatorTetheringManager.CreateFromConnectionProfile(defaultProfile);
+
+                        if (networkOperatorTetheringManager.TetheringOperationalState != TetheringOperationalState.On)
+                        {
+                            var config = new NetworkOperatorTetheringAccessPointConfiguration();
+
+                            config.Ssid = userSettings.SSID;
+                            config.Passphrase = userSettings.ACCESS_POINT_PWD;
+
+                            logModel.AppendLog(Log.CreateLog("Access Point creation init...", Log.LogType.System));
+                            await networkOperatorTetheringManager.ConfigureAccessPointAsync(config);
+
+                            var rslt = await networkOperatorTetheringManager.StartTetheringAsync();
+                            await Task.Delay(5000);
+                            logModel.AppendLog(Log.CreateLog("Access Point creation ending...", Log.LogType.System));
+
+                            if (rslt.Status == TetheringOperationStatus.Success)
+                            {
+                                logModel.AppendLog(Log.CreateLog("Access Point created", Log.LogType.System));
+                            }
+                            else
+                            {
+                                logModel.AppendLog(Log.CreateLog(String.Format("Access Point creation failed - {0}", rslt.AdditionalErrorMessage), Log.LogType.Warning));
+                            }
+                        }
+                        else
+                            logModel.AppendLog(Log.CreateLog(String.Format("Access Point already on - {0}", networkOperatorTetheringManager.TetheringOperationalState.ToString()), Log.LogType.System));
+                        }
+                        else
+                            logModel.AppendLog(Log.CreateLog("No default profile found", Log.LogType.System));
+                    }
+                    else
+                        logModel.AppendLog(Log.CreateLog("No connection profile found", Log.LogType.System));
+                }
+                catch (Exception ex)
+                {
+                    logModel.AppendLog(Log.CreateErrorLog("Error on Access Point init", ex));
+                }
+            });
+
+            taskTethering.Wait();
 
             bw.WorkerSupportsCancellation = true;
             bw.WorkerReportsProgress = true;
@@ -84,12 +163,7 @@ namespace myfoodapp.Business
         {
             var watch = Stopwatch.StartNew();
 
-            var userSettings = new UserSettings();
-
-            var taskUser = Task.Run(async () => { userSettings = await userSettingsModel.GetUserSettingsAsync(); });
-            taskUser.Wait();
-
-            if(userSettings.measureFrequency >= 60000)
+            if (userSettings.measureFrequency >= 60000)
             TICKSPERCYCLE = userSettings.measureFrequency;
 
             var clockManager = ClockManager.GetInstance;
@@ -111,12 +185,15 @@ namespace myfoodapp.Business
 
             sigfoxManager = SigfoxInterfaceManager.GetInstance;
 
-            var taskSigfox = Task.Run(async () => { await sigfoxManager.InitSensors(); });
-            taskSigfox.Wait();
+            if(userSettings.isSigFoxComEnable)
+            {
+                var taskSigfox = Task.Run(async () => { await sigfoxManager.InitSensors(); });
+                taskSigfox.Wait();
+            }
 
             if (userSettings.isDiagnosticModeEnable)
             {
-                TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOTIC_MODE;
+                TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOSTIC_MODE;
 
                 if(userSettings.isSigFoxComEnable && sigfoxManager.isInitialized)
                 sigfoxManager.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAA");

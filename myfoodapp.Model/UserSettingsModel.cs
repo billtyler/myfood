@@ -50,7 +50,9 @@ namespace myfoodapp.Model
                         isDiagnosticModeEnable = false,
                         measureFrequency = 60000,
                         productionSiteId = "XXXXX",
-                        hubMessageAPI = "https://hub.myfood.eu/api/Messages"
+                        hubMessageAPI = "https://hub.myfood.eu/api/Messages",
+                        SSID = "MYFOODPI_AP",
+                        ACCESS_POINT_PWD = "myfoodpi"
                     };
 #endif
 
@@ -65,7 +67,9 @@ namespace myfoodapp.Model
                         isDiagnosticModeEnable = false,
                         measureFrequency = 600000,
                         productionSiteId = "XXXXX",
-                        hubMessageAPI = "https://hub.myfood.eu/api/Messages"
+                        hubMessageAPI = "https://hub.myfood.eu/api/Messages",
+                        SSID = "MYFOODPI_AP",
+                        ACCESS_POINT_PWD = "myfoodpi"
                     };
 #endif
 

@@ -4,6 +4,7 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Business;
+using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
 using System;
@@ -11,7 +12,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -593,6 +596,46 @@ namespace myfoodapp.Hub.Controllers
             }
 
             return true;
+        }
+
+        public ActionResult SavePicture(IEnumerable<HttpPostedFileBase> files, string picturePath)
+        {
+            var fileName = Path.GetFileName(files.FirstOrDefault().FileName);
+
+            if (fileName != picturePath)
+            {
+                var db = new ApplicationDbContext();
+                var prodUnit = db.ProductionUnits.Include(p => p.owner)
+                                                 .Include(p => p.hydroponicType)
+                                                 .Include(p => p.productionUnitType)
+                                                 .Include(p => p.productionUnitStatus)
+                                                 .Where(p => p.picturePath == picturePath).FirstOrDefault();
+                if (prodUnit != null)
+                {
+                    prodUnit.picturePath = fileName;
+                    db.SaveChanges();
+
+                    var fullPath = Path.Combine(Server.MapPath("~/Content/Pictures/Sites/"), picturePath);
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }         
+            }
+
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    var currentfileName = Path.GetFileName(file.FileName);
+                    var physicalPath = Path.Combine(Server.MapPath("~/Content/Pictures/Sites/"), currentfileName);
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    file.SaveAs(physicalPath);
+                }
+            }
+
+            return Json("");
         }
 
         [Authorize]

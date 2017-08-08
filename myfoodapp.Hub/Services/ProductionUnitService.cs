@@ -79,6 +79,7 @@ namespace myfoodapp.Hub.Services
             result = entities.ProductionUnits.Include(m => m.productionUnitType)
                                              .Include(m => m.owner)
                                              .Include(m => m.hydroponicType)
+                                             .Include(m => m.productionUnitStatus)
                                              .Where(p => p.Id == productionUnitId).Select(pu => new ProductionUnitViewModel
             {
                 Id = pu.Id,

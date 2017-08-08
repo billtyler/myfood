@@ -1,4 +1,4 @@
-﻿/// <autosync enabled="true" />
+/// <autosync enabled="false" />
 /// <reference path="../onesignalsdkupdaterworker.js" />
 /// <reference path="../onesignalsdkworker.js" />
 /// <reference path="ai.0.22.19-build00125.min.js" />
