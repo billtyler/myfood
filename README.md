@@ -27,3 +27,11 @@ Material pre-requisite:
 
 Greenhouse setup:
 <a href="https://myfood.eu/wp-content/uploads/2017/03/myfood-greenhouse-setup.pdf">see the plan</a>
+
+OpenData API
+
+Get the Production Units List
+ ```https://hub.myfood.eu/opendata/productionunits/ ```
+ 
+ Get the Production Units Measures (last 1000)
+ ```https://hub.myfood.eu/opendata/productionunits/{id}/measures ```
