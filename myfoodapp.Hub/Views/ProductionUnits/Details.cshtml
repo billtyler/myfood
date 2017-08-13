@@ -194,14 +194,14 @@
             data: { productionUnitId: currentProductionUnitId, eventTypeId: currentEventypeId, eventTypeItemId: currentEventTypeItemId, note: strNote, currentDate: date, details: strDetails, },
         type: "POST",
         success: function (response) {
-            $('#routeDataId').val() = '';
-            $('#listViewEventType').data("kendoListView").select().index() = -1;
-            $('#listViewEventTypeItems').data("kendoListView").select().index() = -1;
+            $('#descriptionTextBox').val('');
+            $('#detailsTextArea').val('');
+
+            $('#listViewEventTypeItems').data("kendoListView").clearSelection();
         }
     });
 
     }
-
 
 </script>
 
@@ -215,7 +215,7 @@
 <input type="hidden" id="displayManagementBtn" value="@ViewBag.DisplayManagementBtn" />
 
 <div id="main-section-header" class="row">
-    <h2>[[[Production Unit Details]]]</h2>
+    <h2 id="title" class="col-md-3">[[[Production Unit Details]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -227,7 +227,7 @@
             <p>
                 @(Html.Kendo().Button()
             .Name("addEventButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Add Event]]]")
             .Events(ev => ev.Click("onAddEventClick")))
             </p>
@@ -235,7 +235,7 @@
             <p>
                 @(Html.Kendo().Button()
             .Name("viewEventsButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[View Events]]]")
             .Events(ev => ev.Click("onViewEventsClick")))
             </p>
@@ -243,7 +243,7 @@
             <p>
                 @(Html.Kendo().Button()
             .Name("manageUnitButton")
-            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Manage Unit]]]")
             .Events(ev => ev.Click("onManageUnitClick")))
             </p>
@@ -276,7 +276,7 @@
             <p>
             @(Html.Kendo().Button()
             .Name("thisExportButton")
-            .HtmlAttributes(new { @class = "exportButton k-state-active btn-block" })
+            .HtmlAttributes(new { @class = "k-state-active btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Export CSV]]]")
             .Events(ev => ev.Click("onExportCSVClick")))
             </p>
@@ -319,7 +319,6 @@
                         .DataSource(dataSource =>
                         {
                             dataSource.Read(read => read.Action("EventType_Read", "ProductionUnits"));
-                            dataSource.PageSize(15);
                         })
                         .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
                         .Events(events => events.Change("onEventTypeChange"))
@@ -335,7 +334,6 @@
                         .DataSource(dataSource =>
                         {
                             dataSource.Read(read => read.Action("EventTypeItem_Read", "ProductionUnits"));
-                            dataSource.PageSize(15);
                         })
                         .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
                         .Events(events => events.Change("onEventTypeItemChange"))
@@ -452,33 +450,33 @@
                         </div>
                         <div class="k-content wide">
                          @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
-                        .Name("chartPh")
-                        .Theme("metro")
-                        .AutoBind(true)
-                        .ChartArea(ch => ch.Background("#eeeeee"))
-                        .DataSource(dataSource => dataSource
+                            .Name("chartPh")
+                            .Theme("metro")
+                            .AutoBind(true)
+                            .ChartArea(ch => ch.Background("#eeeeee"))
+                            .DataSource(dataSource => dataSource
 
-                            .Read(read => read.Action("PHMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
-                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                                .Read(read => read.Action("PHMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                                .Sort(sort => sort.Add(model => model.captureDate).Ascending())
 
-                        )
-                        .SeriesDefaults(seriesDefaults => seriesDefaults
-                            .ScatterLine().Markers(markers => markers.Size(6))
-                        )
-                        .Series(series =>
-                        {
-                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
-                        })
-                        .YAxis(y => y
-                            .Numeric()
-                            .Min(4)
-                            .Max(10)
-                            .Labels(labels => labels.Format("{0}").Skip(1))
-                        )
-                        .Tooltip(tooltip => tooltip
-                            .Format("ph - {0:d} </br> {0:t} : {1}")
-                            .Visible(true)
-                        )
+                            )
+                            .SeriesDefaults(seriesDefaults => seriesDefaults
+                                .ScatterLine().Markers(markers => markers.Size(6))
+                            )
+                            .Series(series =>
+                            {
+                                series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                            })
+                            .YAxis(y => y
+                                .Numeric()
+                                .Min(4)
+                                .Max(10)
+                                .Labels(labels => labels.Format("{0}").Skip(1))
+                            )
+                            .Tooltip(tooltip => tooltip
+                                .Format("ph - {0:d} </br> {0:t} : {1}")
+                                .Visible(true)
+                            )
                             )
                         </div>
                     </div>
@@ -505,30 +503,30 @@
                         </div>
                         <div class="k-content wide">
                         @(Html.Kendo().Chart<myfoodapp.Hub.Models.MeasureViewModel>()
-                        .Name("chartWatTemp")
-                        .Theme("metro")
-                        .ChartArea(ch => ch.Background("#eeeeee"))
-                        .DataSource(dataSource => dataSource
-                            .Read(read => read.Action("WaterTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"]}))
-                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
-                        )
-                        .SeriesDefaults(seriesDefaults => seriesDefaults
-                            .ScatterLine().Markers(markers => markers.Size(6))
-                        )
-                        .Series(series =>
-                        {
-                            series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
-                        })
-                        .YAxis(y => y
-                            .Numeric()
-                            .Min(0)
-                            .Max(50)
-                            .Labels(labels => labels.Format("{0}").Skip(1))
-                        )
-                        .Tooltip(tooltip => tooltip
-                            .Format("Water Temp. - {0:d} </br> {0:t} : {1}°C")
-                            .Visible(true)
-                        )
+                            .Name("chartWatTemp")
+                            .Theme("metro")
+                            .ChartArea(ch => ch.Background("#eeeeee"))
+                            .DataSource(dataSource => dataSource
+                                .Read(read => read.Action("WaterTempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"]}))
+                                .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                            )
+                            .SeriesDefaults(seriesDefaults => seriesDefaults
+                                .ScatterLine().Markers(markers => markers.Size(6))
+                            )
+                            .Series(series =>
+                            {
+                                series.ScatterLine(model => model.captureDate, model => model.value).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false));
+                            })
+                            .YAxis(y => y
+                                .Numeric()
+                                .Min(0)
+                                .Max(50)
+                                .Labels(labels => labels.Format("{0}").Skip(1))
+                            )
+                            .Tooltip(tooltip => tooltip
+                                .Format("Water Temp. - {0:d} </br> {0:t} : {1}°C")
+                                .Visible(true)
+                            )
                             )
                         </div>
                     </div>
@@ -557,32 +555,32 @@
                         </div>
                         <div class="k-content wide">
                             @(Html.Kendo().Chart<myfoodapp.Hub.Models.GroupedMeasureViewModel>()
-                        .Name("chartAirTemp")
-                        .Theme("metro")
-                        .ChartArea(ch => ch.Background("#eeeeee"))
-                        .Legend(l => l.Position(ChartLegendPosition.Bottom))
-                        .DataSource(dataSource => dataSource
-                            .Read(read => read.Action("TempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
-                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
-                        )
-                        .SeriesDefaults(seriesDefaults => seriesDefaults
-                            .ScatterLine().Markers(markers => markers.Size(6))
-                        )
-                        .Series(series =>
-                        {
-                            series.ScatterLine(model => model.captureDate, model => model.airTemperatureValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Indoor]]]");
-                            series.ScatterLine(model => model.captureDate, model => model.externalAirTemperatureValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Outdoor]]]").Visible(false);
-                        })
-                        .YAxis(y => y
-                            .Numeric()
-                            .Min(0)
-                            .Max(50)
-                            .Labels(labels => labels.Format("{0}").Skip(1))
-                        )
-                        .Tooltip(tooltip => tooltip
-                            .Format("Air Temp - {0:d} </br> {0:t} : {1}°C")
-                            .Visible(true)
-                        )
+                            .Name("chartAirTemp")
+                            .Theme("metro")
+                            .ChartArea(ch => ch.Background("#eeeeee"))
+                            .Legend(l => l.Position(ChartLegendPosition.Bottom))
+                            .DataSource(dataSource => dataSource
+                                .Read(read => read.Action("TempMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                                .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                            )
+                            .SeriesDefaults(seriesDefaults => seriesDefaults
+                                .ScatterLine().Markers(markers => markers.Size(6))
+                            )
+                            .Series(series =>
+                            {
+                                series.ScatterLine(model => model.captureDate, model => model.airTemperatureValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Indoor]]]");
+                                series.ScatterLine(model => model.captureDate, model => model.externalAirTemperatureValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Outdoor]]]").Visible(false);
+                            })
+                            .YAxis(y => y
+                                .Numeric()
+                                .Min(0)
+                                .Max(50)
+                                .Labels(labels => labels.Format("{0}").Skip(1))
+                            )
+                            .Tooltip(tooltip => tooltip
+                                .Format("Air Temp - {0:d} </br> {0:t} : {1}°C")
+                                .Visible(true)
+                            )
                             )
                         </div>
                     </div>
@@ -609,32 +607,32 @@
                         </div>
                         <div class="k-content wide">
                             @(Html.Kendo().Chart<myfoodapp.Hub.Models.GroupedMeasureViewModel>()
-                        .Name("chartHumidity")
-                        .Theme("metro")
-                        .ChartArea(ch => ch.Background("#eeeeee"))
-                        .Legend(l => l.Position(ChartLegendPosition.Bottom))
-                        .DataSource(dataSource => dataSource
-                            .Read(read => read.Action("HumidityMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
-                            .Sort(sort => sort.Add(model => model.captureDate).Ascending())
-                        )
-                        .SeriesDefaults(seriesDefaults => seriesDefaults
-                            .ScatterLine().Markers(markers => markers.Size(6))
-                        )
-                        .Series(series =>
-                        {
-                            series.ScatterLine(model => model.captureDate, model => model.humidityValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Indoor]]]");
-                            series.ScatterLine(model => model.captureDate, model => model.externalHumidityValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Outdoor]]]").Visible(false);
-                        })
-                        .YAxis(y => y
-                            .Numeric()
-                            .Min(0)
-                            .Max(100)
-                            .Labels(labels => labels.Format("{0}").Skip(1))
-                        )
-                        .Tooltip(tooltip => tooltip
-                            .Format("Humidity - {0:d} </br> {0:t} : {1}%")
-                            .Visible(true)
-                        )
+                            .Name("chartHumidity")
+                            .Theme("metro")
+                            .ChartArea(ch => ch.Background("#eeeeee"))
+                            .Legend(l => l.Position(ChartLegendPosition.Bottom))
+                            .DataSource(dataSource => dataSource
+                                .Read(read => read.Action("HumidityMeasure_Read", "ProductionUnits", new { id = Url.RequestContext.RouteData.Values["id"] }))
+                                .Sort(sort => sort.Add(model => model.captureDate).Ascending())
+                            )
+                            .SeriesDefaults(seriesDefaults => seriesDefaults
+                                .ScatterLine().Markers(markers => markers.Size(6))
+                            )
+                            .Series(series =>
+                            {
+                                series.ScatterLine(model => model.captureDate, model => model.humidityValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Indoor]]]");
+                                series.ScatterLine(model => model.captureDate, model => model.externalHumidityValue).Style(ChartScatterLineStyle.Smooth).Markers(markers => markers.Visible(false)).Name("[[[Outdoor]]]").Visible(false);
+                            })
+                            .YAxis(y => y
+                                .Numeric()
+                                .Min(0)
+                                .Max(100)
+                                .Labels(labels => labels.Format("{0}").Skip(1))
+                            )
+                            .Tooltip(tooltip => tooltip
+                                .Format("Humidity - {0:d} </br> {0:t} : {1}%")
+                                .Visible(true)
+                            )
                             )
                         </div>
                     </div>
@@ -681,11 +679,11 @@
               padding-left:20px;
             }
 
-            .box{
-                  width: 320px;
-                  height: 240px;
-                  background-size:contain;
-                }
+            .box {
+              width: 320px;
+              height: 240px;
+              background-size:contain;
+            }
 
             .k-button {
                 height: 50px;
@@ -724,7 +722,7 @@
                 width: 33%;
             }
 
-             .eventType
+            .eventType
             {
                 float: left;
                 width: 120px;

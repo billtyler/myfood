@@ -395,10 +395,12 @@
     <Compile Include="Business\ExternalAirHumidityManager.cs" />
     <Compile Include="Business\SensorValueSet.cs" />
     <Compile Include="Common\AuthorizationHeaderHandler.cs" />
+    <Compile Include="Common\BrowserJSONFormatter.cs" />
     <Compile Include="Common\DecimalModelBinder.cs" />
     <Compile Include="Common\MailManager.cs" />
     <Compile Include="Common\NotificationPushManager.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\API\OpenData\OpenDataController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ProductionUnitOwnerController.cs" />
     <Compile Include="Controllers\LogController.cs" />
@@ -489,8 +491,9 @@
     <Compile Include="Models\UserRoles.cs" />
     <Compile Include="Services\ProductionUnitOwnerService.cs" />
     <Compile Include="Services\EventService.cs" />
-    <Compile Include="Services\RecognitionRecordService.cs" />
     <Compile Include="Services\ProductionUnitService.cs" />
+    <Compile Include="Services\RecognitionRecordService.cs" />
+    <Compile Include="Services\OpenData\OpenDataService.cs" />
     <Compile Include="Services\MeasureService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -499,6 +502,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\AccountViewModels.cs" />
     <Compile Include="Viewmodels\EventViewModel.cs" />
+    <Compile Include="Viewmodels\OpenData\OpenMeasureViewModel.cs" />
+    <Compile Include="Viewmodels\OpenData\OpenProductionUnitViewModel.cs" />
     <Compile Include="Viewmodels\OwnerViewModel.cs" />
     <Compile Include="Viewmodels\HydroponicTypeViewModel.cs" />
     <Compile Include="Viewmodels\ProductionUnitStatusViewModel.cs" />

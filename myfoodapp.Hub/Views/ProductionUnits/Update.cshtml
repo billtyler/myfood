@@ -25,7 +25,7 @@
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">[[[Production Units Management]]]</h2>
+    <h2 id="title" class="col-md-3">[[[Production Units Management]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -53,6 +53,7 @@
                     @Html.HiddenFor(model => model.options)
                     @Html.HiddenFor(model => model.picturePath)
 
+                    @Html.HiddenFor(model => model.productionUnitStatusId)
                     @Html.HiddenFor(model => model.productionUnitTypeId)
                     @Html.HiddenFor(model => model.ownerId)
                     @Html.HiddenFor(model => model.version)
@@ -116,8 +117,38 @@
                                 .Events(e => e.Success("onSuccess"))
                                 )
                             </div>
+                       </div>
                             @*<div class="box" id="ProductionUnitPicture"/>*@
-                        </div>
+
+                       <div class="form-group">
+                                @Html.LabelFor(m => m.options, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @(Html.Kendo().ListBox()
+                                        .Name("optionList")
+                                        .Toolbar(toolbar =>
+                                        {
+                                            toolbar.Position(Kendo.Mvc.UI.Fluent.ListBoxToolbarPosition.Right);
+                                            toolbar.Tools(tools => tools
+                                                    .TransferTo()
+                                                    .TransferFrom()
+                                                );
+                                        })
+                                        .HtmlAttributes(new { title = "[[[Option List]]]", @style = "width:50%" })
+                                        .DataTextField("name")
+                                        .ConnectWith("installedList")
+                                        .BindTo(ViewBag.Options)
+                                    )
+
+                                   @(Html.Kendo().ListBox()
+                                        .Name("installedList")
+                                        .HtmlAttributes(new { title = "[[[Installed Options]]]", @style = "width:49%" })
+                                        .BindTo(Model.options)
+                                        .DataValueField("Id")
+                                        .DataTextField("name")
+                                        .Selectable(ListBoxSelectable.Single)
+                                    )
+                                </div>
+                       </div>
                         <br/>
                         <div>
                             <div style="text-align:right">
@@ -132,7 +163,7 @@
 
 <style type="text/css">
 
-        @@media screen and (max-width: 800px) {
+    @@media screen and (max-width: 800px) {
 
             #center {
                 margin: auto;
@@ -140,25 +171,35 @@
                 border: 1px solid green;
                 padding: 10px;
                 position: relative;
-                top: 10%;
-                transform: translateY(50%);
+                top: 10% !important;
+                transform: translateY(10%) !important;
             }
 
-            #grid-container { width: 100%}
+            #grid-container {
+                width: 100%;
+            }
+
+            div.k-listbox {
+                width: 100% !important;
+            }
     }
      
     .k-button {
      height: 50px;
-}
+    }
 
+    a.k-tool {
+        background-color: gray;
+    }
+    
     #center {
-    margin: auto;
-    width: 80%;
-    border: 1px solid green;
-    padding: 20px;
-    position: relative;
-    top: 50%;
-    transform: translateY(50%);
-}
+        margin: auto;
+        width: 80%;
+        border: 1px solid green;
+        padding: 20px;
+        position: relative;
+        top: 50%;
+        transform: translateY(25%);
+    }
 
 </style>

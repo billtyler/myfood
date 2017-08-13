@@ -11,7 +11,6 @@ namespace myfoodapp.Hub.Services
     {
         private ApplicationDbContext entities;
 
-
         public ProductionUnitService(ApplicationDbContext entities)
         {
             this.entities = entities;
@@ -29,7 +28,7 @@ namespace myfoodapp.Hub.Services
                 locationLongitude = pu.locationLongitude,
                 version = pu.version,
                 info = pu.info,
-                options = pu.options,
+                //options = pu.options,
                 reference = pu.reference,
                 picturePath = pu.picturePath,
                 lastMeasureReceived = pu.lastMeasureReceived,
@@ -88,7 +87,7 @@ namespace myfoodapp.Hub.Services
                 locationLongitude = pu.locationLongitude,
                 version = pu.version,
                 info = pu.info,
-                options = pu.options,
+                //options = pu.options,
                 reference = pu.reference,
                 picturePath = pu.picturePath,
                 lastMeasureReceived = pu.lastMeasureReceived,
@@ -137,7 +136,7 @@ namespace myfoodapp.Hub.Services
             entity.locationLongitude = productionUnit.locationLongitude;
             entity.version = productionUnit.version;
             entity.info = productionUnit.info;
-            entity.options = productionUnit.options;
+            //entity.options = productionUnit.options;
             entity.reference = productionUnit.reference;
             entity.picturePath = productionUnit.picturePath;
             entity.lastMeasureReceived = productionUnit.lastMeasureReceived;
@@ -185,6 +184,7 @@ namespace myfoodapp.Hub.Services
         {
             ProductionUnit target = new ProductionUnit();
             target = entities.ProductionUnits.Where(p => p.Id == productionUnit.Id).Include(m => m.productionUnitType)
+                                                                                   .Include(m => m.productionUnitStatus)
                                                                                    .Include(m => m.owner)
                                                                                    .Include(m => m.hydroponicType).FirstOrDefault();
 

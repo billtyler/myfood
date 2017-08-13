@@ -27,7 +27,7 @@ namespace myfoodapp.Hub.Models
         [Display(Name = "[[[info]]]")]
         public String info { get; set; }
         public String version { get; set; }
-        public List<Option> options { get; set; }
+        public List<OptionViewModel> options { get; set; }
         [UIHint("GridForeignKey")]
         public int ownerId { get; set; }
         [Display(Name = "[[[owner]]]")]
@@ -35,5 +35,11 @@ namespace myfoodapp.Hub.Models
         public string picturePath { get; set; }
         public DateTime? lastMeasureReceived { get; set; }
         
+    }
+
+    public class OptionViewModel
+    {
+        public int Id { get; set; }
+        public string name { get; set; }
     }
 }

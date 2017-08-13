@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-08-08 18:41+02:00\n"
-"PO-Revision-Date: 2017-08-08 18:41+02:00\n"
+"POT-Creation-Date: 2017-08-13 14:57+02:00\n"
+"PO-Revision-Date: 2017-08-13 14:57+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -79,9 +79,9 @@ msgid "Afternoon"
 msgstr "Afternoon"
 
 #: Views\Home\Index.cshtml:200
-#: Views\ProductionUnits\Details.cshtml:538
+#: Views\ProductionUnits\Details.cshtml:536
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:200
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:538
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:536
 msgid "Air Temperature (°C)"
 msgstr "Air Temperature (°C)"
 
@@ -154,14 +154,14 @@ msgstr "Average"
 #: Views\Home\Index.cshtml:236
 #: Views\InteractiveMap\Index.cshtml:282
 #: Views\InteractiveMap\Index.cshtml:287
-#: Views\ProductionUnits\Details.cshtml:442
-#: Views\ProductionUnits\Details.cshtml:447
-#: Views\ProductionUnits\Details.cshtml:495
-#: Views\ProductionUnits\Details.cshtml:500
-#: Views\ProductionUnits\Details.cshtml:547
-#: Views\ProductionUnits\Details.cshtml:552
-#: Views\ProductionUnits\Details.cshtml:599
-#: Views\ProductionUnits\Details.cshtml:604
+#: Views\ProductionUnits\Details.cshtml:440
+#: Views\ProductionUnits\Details.cshtml:445
+#: Views\ProductionUnits\Details.cshtml:493
+#: Views\ProductionUnits\Details.cshtml:498
+#: Views\ProductionUnits\Details.cshtml:545
+#: Views\ProductionUnits\Details.cshtml:550
+#: Views\ProductionUnits\Details.cshtml:597
+#: Views\ProductionUnits\Details.cshtml:602
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:165
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:170
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:187
@@ -172,14 +172,14 @@ msgstr "Average"
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:236
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:282
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:287
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:442
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:447
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:495
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:500
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:547
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:552
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:599
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:604
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:440
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:445
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:493
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:498
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:545
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:550
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:597
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:602
 msgid "AVERAGE"
 msgstr "AVERAGE"
 
@@ -274,8 +274,8 @@ msgstr ""
 msgid "Clogged tubes"
 msgstr ""
 
-#: Views\ProductionUnits\Details.cshtml:416
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:416
+#: Views\ProductionUnits\Details.cshtml:414
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:414
 msgid "CO2 SAVED"
 msgstr "CO2 SAVED"
 
@@ -283,11 +283,6 @@ msgstr "CO2 SAVED"
 #: obj\Release\Package\PackageTmp\Views\Messages\Index.cshtml:108
 msgid "content from Sigfox backend"
 msgstr "content from Sigfox backend"
-
-#: Views\Shared\_Layout.cshtml:83
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:83
-msgid "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
-msgstr "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
 
 #: Migrations\Configuration.cs:206
 msgid "Cracked tank"
@@ -303,19 +298,19 @@ msgstr ""
 #: Views\Home\Index.cshtml:204
 #: Views\Home\Index.cshtml:226
 #: Views\InteractiveMap\Index.cshtml:277
-#: Views\ProductionUnits\Details.cshtml:437
-#: Views\ProductionUnits\Details.cshtml:490
-#: Views\ProductionUnits\Details.cshtml:542
-#: Views\ProductionUnits\Details.cshtml:594
+#: Views\ProductionUnits\Details.cshtml:435
+#: Views\ProductionUnits\Details.cshtml:488
+#: Views\ProductionUnits\Details.cshtml:540
+#: Views\ProductionUnits\Details.cshtml:592
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:160
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:182
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:204
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:226
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:277
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:437
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:490
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:542
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:594
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:435
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:488
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:540
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:592
 msgid "CURRENT"
 msgstr "CURRENT"
 
@@ -359,13 +354,13 @@ msgstr ""
 msgid "December"
 msgstr "December"
 
-#: Views\ProductionUnits\Details.cshtml:365
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:365
+#: Views\ProductionUnits\Details.cshtml:363
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:363
 msgid "Detailed event description"
 msgstr ""
 
-#: Views\ProductionUnits\Details.cshtml:396
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:396
+#: Views\ProductionUnits\Details.cshtml:394
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:394
 msgid "Detailed information"
 msgstr "Detailed information"
 
@@ -393,8 +388,8 @@ msgstr "Email"
 msgid "Equipment"
 msgstr ""
 
-#: Views\ProductionUnits\Details.cshtml:411
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:411
+#: Views\ProductionUnits\Details.cshtml:409
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:409
 msgid "EST. PROD. "
 msgstr "EST. PROD. "
 
@@ -491,9 +486,9 @@ msgid "High"
 msgstr "High"
 
 #: Views\Home\Index.cshtml:222
-#: Views\ProductionUnits\Details.cshtml:590
+#: Views\ProductionUnits\Details.cshtml:588
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:222
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:590
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:588
 msgid "Humidity (%)"
 msgstr "Humidity (%)"
 
@@ -513,10 +508,10 @@ msgstr "Improvement"
 msgid "In Maintenance"
 msgstr "In Maintenance"
 
-#: Views\ProductionUnits\Details.cshtml:573
-#: Views\ProductionUnits\Details.cshtml:625
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:573
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:625
+#: Views\ProductionUnits\Details.cshtml:571
+#: Views\ProductionUnits\Details.cshtml:623
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:571
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:623
 msgid "Indoor"
 msgstr ""
 
@@ -564,6 +559,11 @@ msgstr ""
 
 #: Migrations\Configuration.cs:242
 msgid "Install UV filter"
+msgstr ""
+
+#: Views\ProductionUnits\Update.cshtml:144
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:144
+msgid "Installed Options"
 msgstr ""
 
 #: Migrations\Configuration.cs:107
@@ -839,8 +839,8 @@ msgstr "On Maintenance"
 msgid "Onboard touchscreen"
 msgstr "Onboard touchscreen"
 
-#: Views\ProductionUnits\Details.cshtml:421
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:421
+#: Views\ProductionUnits\Details.cshtml:419
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:419
 msgid "ONLINE SINCE"
 msgstr "ONLINE SINCE"
 
@@ -855,10 +855,15 @@ msgstr ""
 msgid "Open doors"
 msgstr ""
 
-#: Views\ProductionUnits\Details.cshtml:574
-#: Views\ProductionUnits\Details.cshtml:626
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:574
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:626
+#: Views\ProductionUnits\Update.cshtml:136
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:136
+msgid "Option List"
+msgstr ""
+
+#: Views\ProductionUnits\Details.cshtml:572
+#: Views\ProductionUnits\Details.cshtml:624
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:572
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:624
 msgid "Outdoor"
 msgstr ""
 
@@ -877,17 +882,17 @@ msgstr "Password"
 #: Views\Home\Index.cshtml:211
 #: Views\Home\Index.cshtml:233
 #: Views\InteractiveMap\Index.cshtml:284
-#: Views\ProductionUnits\Details.cshtml:444
-#: Views\ProductionUnits\Details.cshtml:497
-#: Views\ProductionUnits\Details.cshtml:549
+#: Views\ProductionUnits\Details.cshtml:442
+#: Views\ProductionUnits\Details.cshtml:495
+#: Views\ProductionUnits\Details.cshtml:547
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:167
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:189
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:211
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:233
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:284
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:444
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:497
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:549
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:442
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:495
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:547
 msgid "PAST HOUR"
 msgstr "PAST HOUR"
 
@@ -895,10 +900,10 @@ msgstr "PAST HOUR"
 msgid "Pellet stove"
 msgstr "Pellet stove"
 
-#: Views\ProductionUnits\Details.cshtml:413
-#: Views\ProductionUnits\Details.cshtml:418
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:413
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:418
+#: Views\ProductionUnits\Details.cshtml:411
+#: Views\ProductionUnits\Details.cshtml:416
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:411
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:416
 msgid "PER MONTH"
 msgstr "PER MONTH"
 
@@ -916,8 +921,8 @@ msgstr ""
 
 #: Migrations\Configuration.cs:269
 #: Migrations\UpgradeDatabase.cs:31
-#: Views\ProductionUnits\Details.cshtml:408
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:408
+#: Views\ProductionUnits\Details.cshtml:406
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:406
 msgid "Performance"
 msgstr "Performance"
 
@@ -948,8 +953,8 @@ msgstr ""
 msgid "Pest"
 msgstr ""
 
-#: Views\ProductionUnits\Details.cshtml:433
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:433
+#: Views\ProductionUnits\Details.cshtml:431
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:431
 msgid "pH"
 msgstr "pH"
 
@@ -1005,7 +1010,7 @@ msgstr "prod. type"
 msgid "prod. unit"
 msgstr "unit. prod"
 
-#: Controllers\ProductionUnitsController.cs:192
+#: Controllers\ProductionUnitsController.cs:195
 msgid "Production Unit already in use"
 msgstr ""
 
@@ -1067,8 +1072,8 @@ msgstr ""
 msgid "Save"
 msgstr "Save"
 
-#: Views\ProductionUnits\Update.cshtml:124
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:124
+#: Views\ProductionUnits\Update.cshtml:155
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:155
 msgid "Save & Close"
 msgstr "Save & Close"
 
@@ -1252,10 +1257,10 @@ msgstr ""
 
 #: Views\Home\Index.cshtml:178
 #: Views\InteractiveMap\Index.cshtml:273
-#: Views\ProductionUnits\Details.cshtml:486
+#: Views\ProductionUnits\Details.cshtml:484
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:178
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:273
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:486
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:484
 msgid "Water Temperature (°C)"
 msgstr "Water Temperature (°C)"
 
@@ -1268,8 +1273,8 @@ msgstr "Watering Level:"
 msgid "Weekend"
 msgstr "Weekend"
 
-#: Views\ProductionUnits\Details.cshtml:423
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:423
+#: Views\ProductionUnits\Details.cshtml:421
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:421
 msgid "WEEKS"
 msgstr "WEEKS"
 
@@ -1295,6 +1300,9 @@ msgstr "Zipgrow Tower"
 
 #~ msgid "App Logs"
 #~ msgstr ""
+
+#~ msgid "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
+#~ msgstr "Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved."
 
 #~ msgid "Delete Production Unit"
 #~ msgstr ""

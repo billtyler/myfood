@@ -116,6 +116,7 @@ namespace myfoodapp.Hub.Controllers
             if (currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser || isAdmin)
             {
                 var currentProductionUnitViewModel = productionUnitService.One(id);
+                PopulateOptions(currentProductionUnitViewModel);
                 return View(currentProductionUnitViewModel);
             }
 
@@ -132,8 +133,10 @@ namespace myfoodapp.Hub.Controllers
                 var db = new ApplicationDbContext();
                 var productionUnitService = new ProductionUnitService(db);
 
+                var tt = model.options;
+
                 productionUnitService.Update(model);
-            // }
+            //}
 
             return Redirect("/ProductionUnits/Details/" + model.Id);
         }
@@ -271,6 +274,32 @@ namespace myfoodapp.Hub.Controllers
                        .OrderBy(e => e.name);
 
             ViewData["EventTypes"] = eventTypes;
+        }
+
+        private void PopulateOptions(ProductionUnitViewModel productionUnitViewModel)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var currentOptions = db.OptionLists.Include(o => o.productionUnit)
+            .Include(o => o.option)
+            .Where(p => p.productionUnit.Id == productionUnitViewModel.Id)
+            .Select(p => p.option);
+
+            productionUnitViewModel.options = currentOptions.Select(m => new OptionViewModel
+            {
+                Id = m.Id,
+                name = m.name
+            })
+           .OrderBy(e => e.name).ToList();
+
+            var options = db.Options;
+
+            ViewBag.Options = options.Except(currentOptions).Select(m => new OptionViewModel
+            {
+                Id = m.Id,
+                name = m.name
+            })
+           .OrderBy(e => e.name); 
         }
 
         [Authorize]
@@ -546,7 +575,7 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate, string details)
+        public ActionResult AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate, string details)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
@@ -592,10 +621,10 @@ namespace myfoodapp.Hub.Controllers
             {
                 dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Event Creation"), ex));
                 dbLog.SaveChanges();
-                return false;
+                return Json(false);
             }
 
-            return true;
+            return Json(true);
         }
 
         public ActionResult SavePicture(IEnumerable<HttpPostedFileBase> files, string picturePath)
