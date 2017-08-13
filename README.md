@@ -30,10 +30,10 @@ __Greenhouse setup:__
 
 __OpenData API__
 
-__Get the Production Units List:__
+__Get the Production Units list:__
 
  ```https://hub.myfood.eu/opendata/productionunits/ ```
  
- __Get the Production Units Measures (last 1000):__
+ __Get the Production Units measures (last 1000):__
  
  ```https://hub.myfood.eu/opendata/productionunits/{id}/measures ```
