@@ -104,15 +104,6 @@
     <Content Include="Assets\miniLogo.png" />
     <Content Include="Assets\pioneerCitizenNetwork.png" />
     <None Include="App.config" />
-    <None Include="Assets\Web\bootstrap-theme.css.map" />
-    <None Include="Assets\Web\bootstrap.css.map" />
-    <None Include="Assets\Web\bootstrap.less" />
-    <None Include="Assets\Web\glyphicons-halflings-regular.eot" />
-    <Content Include="Assets\Web\bootstrap.js" />
-    <Content Include="Assets\Web\bootstrap.min.js" />
-    <Content Include="Assets\Web\glyphicons-halflings-regular.ttf" />
-    <None Include="Assets\Web\glyphicons-halflings-regular.woff" />
-    <None Include="Assets\Web\glyphicons-halflings-regular.woff2" />
     <None Include="project.json" />
     <PRIResource Include="Strings\fr-FR\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
@@ -203,30 +194,11 @@
     <None Include="myfoodapp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\logoACD.png" />
-    <Content Include="Assets\logoBrightAgrotech.png" />
     <Content Include="Assets\logoMyFoodapp.png" />
     <Content Include="Assets\Action\settingGear.png" />
-    <Content Include="Assets\Web\bootstrap-theme.css" />
-    <Content Include="Assets\Web\bootstrap-theme.min.css" />
-    <Content Include="Assets\Web\bootstrap.css" />
-    <Content Include="Assets\Web\bootstrap.min.css" />
-    <Content Include="Assets\Web\creativecommon.png" />
-    <Content Include="Assets\Web\dygraph-combined.js" />
-    <Content Include="Assets\Web\glyphicons-halflings-regular.svg" />
-    <Content Include="Assets\Web\index.html" />
-    <Content Include="Assets\Web\logoOwnFoodFooter.png" />
-    <Content Include="Assets\Web\logoOwnFoodTiny.png" />
-    <Content Include="Assets\Web\npm.js" />
-    <Content Include="Assets\Web\theme.min.css" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -342,9 +314,9 @@
       <Project>{eef3d211-2b1c-403f-adc2-8601de17afee}</Project>
       <Name>myfoodapp.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\myfoodapp.WebApp\myfoodapp.WebApp.csproj">
-      <Project>{920a51ee-ca17-414b-bee3-25622595ab12}</Project>
-      <Name>myfoodapp.WebApp</Name>
+    <ProjectReference Include="..\myfoodapp.WebServer\myfoodapp.WebServer.csproj">
+      <Project>{69a1435d-195c-4fe6-b1da-00df57773d63}</Project>
+      <Name>myfoodapp.WebServer</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

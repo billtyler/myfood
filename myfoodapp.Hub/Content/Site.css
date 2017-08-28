@@ -169,6 +169,10 @@ body,
     background-color: #fff;
 }
 
+a.k-grid-filter {
+    color: forestgreen !important;
+}
+
 /* Main section */
 #main-section {
     float: none;

@@ -444,19 +444,24 @@ namespace myfoodapp.Hub.Controllers
             switch (currentProductionUnit.productionUnitType.Id)
             {
                 case 1:
-                    averageMonthlyProduction = 5;
+                    //AeroSpring
+                    averageMonthlyProduction = 4;
                     break;
                 case 2:
-                    averageMonthlyProduction = 10;
+                    //City
+                    averageMonthlyProduction = 7;
                     break;
                 case 3:
-                    averageMonthlyProduction = 15;
+                    //Family14
+                    averageMonthlyProduction = 10;
                     break;
                 case 4:
-                    averageMonthlyProduction = 25;
+                    //Family22
+                    averageMonthlyProduction = 15;
                     break;
                 case 5:
-                    averageMonthlyProduction = 50;
+                    //Farm
+                    averageMonthlyProduction = 25;
                     break;
                 default:
                     break;

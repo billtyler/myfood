@@ -17,21 +17,17 @@ namespace myfoodapp.Model
 
             protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             {
-          //   optionsBuilder.UseSqlite("Data Source=" + Path.Combine(ApplicationData.Current.LocalFolder.Path, "myfood.db"));
             optionsBuilder.UseSqlite("Filename=myfood.db");
-        }
+            }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
-
                 modelBuilder.Entity<Measure>()
                         .HasKey(k => new { k.Id });                      
 
                modelBuilder.Entity<Measure>()
                         .Property(b => b.value)
                         .IsRequired();
-    
-
             }
         }
 
@@ -61,5 +57,4 @@ namespace myfoodapp.Model
             airTemperature = 5,
             humidity = 6
         }
-
 }

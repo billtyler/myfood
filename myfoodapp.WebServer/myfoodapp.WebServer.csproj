@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{920A51EE-CA17-414B-BEE3-25622595AB12}</ProjectGuid>
+    <ProjectGuid>{69A1435D-195C-4FE6-B1DA-00DF57773D63}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>myfoodapp.WebApp</RootNamespace>
-    <AssemblyName>myfoodapp.WebApp</AssemblyName>
+    <RootNamespace>myfoodapp.WebServer</RootNamespace>
+    <AssemblyName>myfoodapp.WebServer</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -102,23 +102,54 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <None Include="project.json" />
+    <Compile Include="WebServerEngine.cs" />
+    <Compile Include="HomeController.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\myfoodapp.WebServer.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HTTPServer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\myfoodapp.WebApp.rd.xml" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.2.3</Version>
+    </PackageReference>
+    <PackageReference Include="Restup">
+      <Version>1.0.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web\content\gpl.png" />
+    <Content Include="Web\content\logoMyFoodFooter.png" />
+    <Content Include="Web\content\logoMyFoodTiny.png" />
+    <Content Include="Web\css\bootstrap-theme.css" />
+    <Content Include="Web\css\bootstrap-theme.min.css" />
+    <Content Include="Web\css\bootstrap.css" />
+    <Content Include="Web\js\bootstrap.js" />
+    <Content Include="Web\css\bootstrap.min.css" />
+    <Content Include="Web\js\bootstrap.min.js" />
+    <Content Include="Web\js\dygraph-combined.js" />
+    <Content Include="Web\font\glyphicons-halflings-regular.svg" />
+    <Content Include="Web\index.html" />
+    <Content Include="Web\js\jquery-3.2.1.min.js" />
+    <Content Include="Web\js\jquery.csv.min.js" />
+    <Content Include="Web\js\npm.js" />
+    <Content Include="Web\css\theme.min.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web\css\bootstrap-theme.css.map" />
+    <None Include="Web\css\bootstrap.css.map" />
+    <None Include="Web\css\bootstrap.less" />
+    <None Include="Web\font\glyphicons-halflings-regular.eot" />
+    <Content Include="Web\font\glyphicons-halflings-regular.ttf" />
+    <None Include="Web\font\glyphicons-halflings-regular.woff" />
+    <None Include="Web\font\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\myfoodapp.Business\myfoodapp.Business.csproj">
       <Project>{ad00c69b-4b59-4553-89ea-49822a91edfd}</Project>
       <Name>myfoodapp.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\myfoodapp.Common\myfoodapp.Common.csproj">
-      <Project>{36b938d0-85a3-47ac-9ef1-00668307430e}</Project>
-      <Name>myfoodapp.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\myfoodapp.Model\myfoodapp.Model.csproj">
       <Project>{eef3d211-2b1c-403f-adc2-8601de17afee}</Project>

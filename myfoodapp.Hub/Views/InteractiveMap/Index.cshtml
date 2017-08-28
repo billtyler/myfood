@@ -242,30 +242,33 @@
         <div id="map-details" class="col-md-4">
             <div class="widget">
                 <h3><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp; [[[Network Info]]]</h3>
-                @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
-                .Name("chart")
-                .Legend(legend => legend
-                    .Position(ChartLegendPosition.Right).Labels(x => x.Font(font: "12px Open Sans"))
-                )
-                .HtmlAttributes(new { @class = "small-chart" })
-                .ChartArea(chart => chart
-                    .Background("transparent")
-                 )
-                 .DataSource(ds =>
-                 {
-                     ds.Read(read => read.Action("ProductionUnitStatus_Read", "InteractiveMap"));
-                 }
+                <div style="text-align: center">
+                    @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
+                    .Name("chart")
+                    .Legend(legend => legend
+                        .Position(ChartLegendPosition.Right).Labels(x => x.Font(font: "12px Open Sans"))
                     )
-                    .Series(series => series
-                    .Pie(model => model.Value, model => model.Category, model => model.Color)
-                    .StartAngle(150)
-                    .Padding(0)
+                    .HtmlAttributes(new { @class = "small-chart" })
+                    .ChartArea(chart => chart
+                        .Background("transparent")
+                     )
+                     .DataSource(ds =>
+                     {
+                         ds.Read(read => read.Action("ProductionUnitStatus_Read", "InteractiveMap"));
+                     }
+                        )
+                        .Series(series => series
+                        .Pie(model => model.Value, model => model.Category, model => model.Color)
+                        .StartAngle(150)
+                        .Padding(0)
+                        )
+                    .Tooltip(tooltip => tooltip
+                        .Visible(true)
+                        .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
                     )
-                .Tooltip(tooltip => tooltip
-                    .Visible(true)
-                    .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
-                )
-                )
+                    )
+                </div>
+
             </div>
         </div>
         <div id="map-options" class="col-md-4">

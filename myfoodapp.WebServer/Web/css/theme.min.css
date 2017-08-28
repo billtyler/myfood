@@ -1006,7 +1006,7 @@ select[multiple].input-group-sm>.form-control,select[multiple].input-group-sm>.i
 .navbar-right{float:right!important;margin-right:-15px}
 .navbar-right~.navbar-right{margin-right:0}
 }
-.navbar-default{background-color:#27ae61;border-color:#219352}
+.navbar-default{background-color:#219352;border-color:#219352}
 .navbar-default .navbar-brand{color:#fff}
 .navbar-default .navbar-brand:focus,.navbar-default .navbar-brand:hover{color:#e6e6e6;background-color:transparent}
 .navbar-default .navbar-nav>li>a,.navbar-default .navbar-text{color:#fff}
@@ -1101,7 +1101,7 @@ a.badge:focus,a.badge:hover{color:#fff;text-decoration:none;cursor:pointer}
 .list-group-item>.badge{float:right}
 .list-group-item>.badge+.badge{margin-right:5px}
 .nav-pills>li>a>.badge{margin-left:3px}
-.jumbotron{padding-top:30px;padding-bottom:30px;margin-bottom:30px;background-color:#c4decf}
+.jumbotron{padding-top:30px;padding-bottom:30px;margin-bottom:30px;background-color:#fff}
 .jumbotron p{margin-bottom:15px;font-size:21px;font-weight:200}
 .alert .alert-link,.close{font-weight:700}
 .alert,.thumbnail{margin-bottom:20px}
@@ -1242,8 +1242,7 @@ a.list-group-item-danger.active,a.list-group-item-danger.active:focus,a.list-gro
 .panel-primary>.panel-heading+.panel-collapse>.panel-body{border-top-color:#337ab7}
 .panel-primary>.panel-heading .badge{color:#337ab7;background-color:#fff}
 .panel-primary>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#337ab7}
-.panel-success{border-color:#b4d5bc}
-.panel-success>.panel-heading{color:#3c763d;background-color:#c4decf;border-color:#b4d5bc}
+.panel-success{border-color:#b4d5bc}.panel-success > .panel-heading {color: #fff;background-color: #219352;border-color: #219352}
 .panel-success>.panel-heading+.panel-collapse>.panel-body{border-top-color:#b4d5bc}
 .panel-success>.panel-heading .badge{color:#c4decf;background-color:#3c763d}
 .panel-success>.panel-footer+.panel-collapse>.panel-body{border-bottom-color:#b4d5bc}

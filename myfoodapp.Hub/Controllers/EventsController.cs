@@ -139,6 +139,7 @@ namespace myfoodapp.Hub.Controllers
                     csv.Append(m.createdBy + "; ");
                     csv.Append(m.productionUnit.info + "; ");
                     csv.Append(m.productionUnit.owner.pioneerCitizenName + "; ");
+                    //csv.Append(StringToCSVCell(m.details) + "; ");
 
                     csv.Remove(csv.Length - 2, 1);
                     csv.Append("\r\n");
@@ -155,6 +156,29 @@ namespace myfoodapp.Hub.Controllers
 
             return null;
 
+        }
+
+        private string StringToCSVCell(string str)
+        {
+            if (str == null)
+                return String.Empty;
+
+            bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
+            if (mustQuote)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\"");
+                foreach (char nextChar in str)
+                {
+                    sb.Append(nextChar);
+                    if (nextChar == '"')
+                        sb.Append("\"");
+                }
+                sb.Append("\"");
+                return sb.ToString();
+            }
+
+            return str;
         }
 
         protected override void Dispose(bool disposing)

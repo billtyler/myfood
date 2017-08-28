@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-08-13 14:57+02:00\n"
+"POT-Creation-Date: 2017-08-28 09:16+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,7 +24,7 @@ msgid "36 towers"
 msgstr ""
 
 #: Views\About\Index.cshtml:8
-#: Views\Shared\_Layout.cshtml:67
+#: Views\Shared\_Layout.cshtml:68
 #: obj\Release\Package\PackageTmp\Views\About\Index.cshtml:8
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:67
 msgid "About"
@@ -151,8 +151,8 @@ msgstr ""
 #: Views\Home\Index.cshtml:214
 #: Views\Home\Index.cshtml:231
 #: Views\Home\Index.cshtml:236
-#: Views\InteractiveMap\Index.cshtml:282
-#: Views\InteractiveMap\Index.cshtml:287
+#: Views\InteractiveMap\Index.cshtml:285
+#: Views\InteractiveMap\Index.cshtml:290
 #: Views\ProductionUnits\Details.cshtml:440
 #: Views\ProductionUnits\Details.cshtml:445
 #: Views\ProductionUnits\Details.cshtml:493
@@ -296,7 +296,7 @@ msgstr ""
 #: Views\Home\Index.cshtml:182
 #: Views\Home\Index.cshtml:204
 #: Views\Home\Index.cshtml:226
-#: Views\InteractiveMap\Index.cshtml:277
+#: Views\InteractiveMap\Index.cshtml:280
 #: Views\ProductionUnits\Details.cshtml:435
 #: Views\ProductionUnits\Details.cshtml:488
 #: Views\ProductionUnits\Details.cshtml:540
@@ -620,7 +620,7 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:73
+#: Views\Shared\_Layout.cshtml:74
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:73
 msgid "Log off"
 msgstr ""
@@ -630,7 +630,7 @@ msgstr ""
 msgid "Log your Actions / Events here"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:78
+#: Views\Shared\_Layout.cshtml:79
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:78
 msgid "Login"
 msgstr ""
@@ -709,7 +709,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:61
+#: Views\Shared\_Layout.cshtml:62
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
 msgid "Measures"
 msgstr ""
@@ -728,7 +728,7 @@ msgstr ""
 msgid "message type"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:60
+#: Views\Shared\_Layout.cshtml:61
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:60
 msgid "Messages"
 msgstr ""
@@ -759,7 +759,7 @@ msgid "Morning"
 msgstr ""
 
 #: Views\MyInfo\Update.cshtml:43
-#: Views\Shared\_Layout.cshtml:65
+#: Views\Shared\_Layout.cshtml:66
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:43
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
 msgid "My Information"
@@ -819,8 +819,8 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: Controllers\HomeController.cs:233
-#: Controllers\InteractiveMapController.cs:232
+#: Controllers\HomeController.cs:231
+#: Controllers\InteractiveMapController.cs:234
 #: Migrations\Configuration.cs:104
 msgid "Offline"
 msgstr ""
@@ -829,8 +829,8 @@ msgstr ""
 msgid "Old Password"
 msgstr ""
 
-#: Controllers\HomeController.cs:231
-#: Controllers\InteractiveMapController.cs:230
+#: Controllers\HomeController.cs:229
+#: Controllers\InteractiveMapController.cs:232
 msgid "On Maintenance"
 msgstr ""
 
@@ -880,7 +880,7 @@ msgstr ""
 #: Views\Home\Index.cshtml:189
 #: Views\Home\Index.cshtml:211
 #: Views\Home\Index.cshtml:233
-#: Views\InteractiveMap\Index.cshtml:284
+#: Views\InteractiveMap\Index.cshtml:287
 #: Views\ProductionUnits\Details.cshtml:442
 #: Views\ProductionUnits\Details.cshtml:495
 #: Views\ProductionUnits\Details.cshtml:547
@@ -925,7 +925,7 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:63
+#: Views\Shared\_Layout.cshtml:64
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
 msgid "Performance &amp; Health"
 msgstr ""
@@ -1022,7 +1022,7 @@ msgstr ""
 msgid "Production Unit Owner already in use"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:62
+#: Views\Shared\_Layout.cshtml:63
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:62
 msgid "Production Units"
 msgstr ""
@@ -1044,7 +1044,7 @@ msgid "Production Units Management"
 msgstr ""
 
 #: Views\Recipes\Index.cshtml:78
-#: Views\Shared\_Layout.cshtml:64
+#: Views\Shared\_Layout.cshtml:65
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:78
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
 msgid "Recipes"
@@ -1094,8 +1094,8 @@ msgstr ""
 msgid "September"
 msgstr ""
 
-#: Controllers\HomeController.cs:229
-#: Controllers\InteractiveMapController.cs:228
+#: Controllers\HomeController.cs:227
+#: Controllers\InteractiveMapController.cs:230
 #: Migrations\Configuration.cs:100
 msgid "Setup Planned"
 msgstr ""
@@ -1121,8 +1121,8 @@ msgstr ""
 msgid "status"
 msgstr ""
 
-#: Controllers\HomeController.cs:232
-#: Controllers\InteractiveMapController.cs:231
+#: Controllers\HomeController.cs:230
+#: Controllers\InteractiveMapController.cs:233
 #: Migrations\Configuration.cs:103
 msgid "Stopped"
 msgstr ""
@@ -1190,11 +1190,11 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: Controllers\InteractiveMapController.cs:229
+#: Controllers\InteractiveMapController.cs:231
 msgid "Up & Running"
 msgstr ""
 
-#: Controllers\HomeController.cs:230
+#: Controllers\HomeController.cs:228
 #: Migrations\Configuration.cs:101
 msgid "Up and Running"
 msgstr ""
@@ -1208,7 +1208,7 @@ msgstr ""
 msgid "user"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:58
+#: Views\Shared\_Layout.cshtml:59
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:58
 msgid "User Management"
 msgstr ""
@@ -1232,8 +1232,8 @@ msgstr ""
 msgid "View Logs"
 msgstr ""
 
-#: Controllers\HomeController.cs:228
-#: Controllers\InteractiveMapController.cs:227
+#: Controllers\HomeController.cs:226
+#: Controllers\InteractiveMapController.cs:229
 #: Migrations\Configuration.cs:99
 msgid "Wait Confirm."
 msgstr ""
@@ -1255,7 +1255,7 @@ msgid "Water purge"
 msgstr ""
 
 #: Views\Home\Index.cshtml:178
-#: Views\InteractiveMap\Index.cshtml:273
+#: Views\InteractiveMap\Index.cshtml:276
 #: Views\ProductionUnits\Details.cshtml:484
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:178
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:273

@@ -15,6 +15,7 @@ namespace myfoodapp.Model
         private StorageFolder folder = ApplicationData.Current.LocalFolder;
 
         private static UserSettingsModel instance;
+        private LogModel logModel = LogModel.GetInstance;
         public static UserSettings CurrentUserSettings = new UserSettings();
 
         public static UserSettingsModel GetInstance
@@ -83,6 +84,7 @@ namespace myfoodapp.Model
             catch (FileNotFoundException ex)
             {
                 var newFile = await folder.CreateFileAsync(FILE_NAME, CreationCollisionOption.FailIfExists);
+                logModel.AppendLog(Log.CreateErrorLog("Configuration file created", ex));
             }
         }
 

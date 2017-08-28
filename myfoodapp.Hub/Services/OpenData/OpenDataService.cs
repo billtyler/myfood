@@ -32,7 +32,7 @@ namespace myfoodapp.Hub.Services.OpenData
                 //options = pu.options,
                 lastMeasureReceived = pu.lastMeasureReceived,
                 productionUnitType = pu.productionUnitType.name,
-                hydroponicType = pu.productionUnitType.name,
+                hydroponicType = pu.hydroponicType.name,
                 productionUnitStatus = pu.productionUnitStatus.name,
                 pioneerCitizen = pu.owner.pioneerCitizenName,
                 pioneerCitizenNumber = pu.owner.pioneerCitizenNumber

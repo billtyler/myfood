@@ -59,6 +59,18 @@ namespace myfoodapp.Business
 
             logModel.AppendLog(Log.CreateLog("UserSettings retreived", Log.LogType.System));
 
+            //Disable Diagnostic Mode on restart
+            if(userSettings.isDiagnosticModeEnable)
+            {
+                userSettings.isDiagnosticModeEnable = false;
+
+                var taskUserSync = Task.Run(async () =>
+                {
+                    await userSettingsModel.SyncUserSettings(userSettings);
+                });
+                taskUserSync.Wait();
+            }
+
             var taskTethering = Task.Run(async () =>
             {
                 try

@@ -150,7 +150,6 @@ namespace myfoodapp.ViewModel
             MeasureFrequency = currentUserSettings.measureFrequency;
             ProductionSiteId = currentUserSettings.productionSiteId;
             HubMessageAPI = currentUserSettings.hubMessageAPI;
-
         }
 
         public async Task<UInt64> GetFreeSpace()
