@@ -176,7 +176,7 @@ namespace myfoodapp.Business
             var watch = Stopwatch.StartNew();
 
             if (userSettings.measureFrequency >= 60000)
-            TICKSPERCYCLE = userSettings.measureFrequency;
+                TICKSPERCYCLE = userSettings.measureFrequency;
 
             var clockManager = ClockManager.GetInstance;
 
@@ -195,6 +195,9 @@ namespace myfoodapp.Business
                 clockManager.Dispose();
             }
 
+            var taskUser = Task.Run(async () => { userSettings = await userSettingsModel.GetUserSettingsAsync(); });
+            taskUser.Wait();
+
             sigfoxManager = SigfoxInterfaceManager.GetInstance;
 
             if(userSettings.isSigFoxComEnable)
@@ -208,7 +211,7 @@ namespace myfoodapp.Business
                 TICKSPERCYCLE = TICKSPERCYCLE_DIAGNOSTIC_MODE;
 
                 if(userSettings.isSigFoxComEnable && sigfoxManager.isInitialized)
-                sigfoxManager.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAA");
+                    sigfoxManager.SendMessage("AAAAAAAAAAAAAAAAAAAAAAAA");
             }
                 
             sensorManager = AtlasSensorManager.GetInstance;

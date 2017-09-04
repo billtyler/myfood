@@ -3,8 +3,6 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/jquery.csv.min.js"></script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -13,9 +11,26 @@
     <title>myfoodpi Local Manager</title>
 
     <link rel="icon" href="content/logoMyFoodTiny.png">
-    <!-- CSS -->
+
+    <!-- JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery.csv.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+
+    <!-- CSS -->  
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/theme.min.css" rel="stylesheet">
+
     <style style="display:none">
+      @font-face {
+            font-family: 'Glyphicons Halflings';
+            src: url('/fonts/glyphicons-halflings-regular.eot');
+            src: url('/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+      }
+
       body {
         padding-top: 50px;
       }
@@ -35,11 +50,72 @@
         max-width: 100%;
       }
 
-      @media (max-width: 991px) {
+     /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        display: none;
+    }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #219352;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #219352;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    @media (max-width: 991px) {
         .graph {
           margin-left: -20px;
         }
-      }
+    }
 
     .footer {
             background-color: #219352;
@@ -48,7 +124,7 @@
             padding-bottom: 48px;
             color: #fff;
             font-family: 'Open Sans';
-        }
+    }
 
 	.footerLogo{
 		width: 25%;
@@ -90,6 +166,9 @@
             color: white;
             display: block;
             width: 100%;
+            height:50px;
+            padding-top:15px;
+            padding-bottom:15px;
     }
 
     </style>
@@ -173,21 +252,73 @@
               <div class="col-xs-12 col-sm-6">
                   <div class="panel panel-success">
                       <div class="panel-heading">Settings</div>
-                      <div class="panel-body">
-                          
+                      <div class="panel-body" style="padding:30px">
+                          <div class="row">
+                              <div class="col-xs-6 col-sm-6">
+                                  <div>Enable Debug Led</div>
+                                  <label class="switch">
+                                      <input id="enableDebugLedToogle" type="checkbox">
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                              <div class="col-xs-6 col-sm-6">
+                                  <div>Enable Diagnostic Mode</div>
+                                  <label class="switch">
+                                      <input id="enableDiagnosticToogle" type="checkbox">
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-xs-6 col-sm-6">
+                                  <div>Enable Humidity/Temp sensors</div>
+                                  <label class="switch">
+                                      <input id="enableHumidityTempToogle" type="checkbox">
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                              <div class="col-xs-6 col-sm-6">
+                                  <div>Enable Sigfox</div>
+                                  <label class="switch">
+                                      <input id="enableSigfoxToogle" type="checkbox">
+                                      <span class="slider round"></span>
+                                  </label>
+                              </div>
+                          </div>                      
+                          <div id="hubProductionId">
+                              Hub ProductionId:<br/>
+                              <input id="strHubProductionId" type="text"><br/>
+                          </div>
+                          <br/>
+                          <button class="niceButton" onclick="onSaveSettingsClick()">Save Settings</button>
+                          <br/>
+                          <div for="clockDateTime">Internal Clock</div>
+                          <div id="currentClockDatetime">Current Clock:</div>
+
+                          <div class="form-group">
+                              <div class='input-group date' id='clockDatetime'>
+                                  <input type='text' class="form-control" />
+                                  <span class="input-group-addon">
+                                      <span class="glyphicon glyphicon-calendar"></span>
+                                  </span>
+                              </div>
+                          </div>
+
+                          <button class="niceButton" onclick="onSetClockClick()">Set Internal Clock</button>
                       </div>
                   </div>
               </div>
               <div class="col-xs-12 col-sm-6">
                   <div class="panel panel-success">
                       <div class="panel-heading">Admin Console</div>
-                      <div class="panel-body">
+                      <div class="panel-body" style="padding:30px">
                           <button class="niceButton" onclick="onSetpHTo7Click()">Set pH Calibration to 7</button>
                           <button class="niceButton" onclick="onResetToFactoryClick()">Reset Calibration to Factory</button>
                           <button class="niceButton" onclick="onDownloadMeasuresClick()">Download Measures</button>
                           <button class="niceButton" onclick="onDownloadLogsClick()">Download Log</button>
                           <button class="niceButton" onclick="onEraseLogsClick()">Erase Logs</button>
                           <button class="niceButton" onclick="onEraseMeasuresClick()">Erase Measures</button>
+                          <button class="niceButton" onclick="onPerformSigfoxTestClick()">Perform Sigfox Test</button>
                           <button class="niceButton" onclick="onRestartAppClick()">Restart App</button>
                       </div>
                   </div>
@@ -220,12 +351,121 @@
 
     <script type="text/javascript" src="js/dygraph-combined.js"></script>
     <script>
+        $("#clockDatetime").datetimepicker({
+            format: "mm-dd-yyyy HH:ii:ss P",
+            ampm: true,
+            weekStart: 1,
+            todayBtn: 0,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 1,
+            forceParse: 1,
+            showMeridian: 0
+        });
+
+        $("#enableSigfoxToogle").change(function () {
+            if (this.checked) {
+                $("#hubProductionId").hide();
+            }
+            if (!this.checked) {
+                $("#hubProductionId").show();
+            }
+        });
+
         window.onload = function onLoad(e) {
+            getUserSettings();
+            getClockDateTime();
 
             getpH();
             getWaterTemp();
             getAirTemp();
             getAirHum();                 
+        };
+
+        function getClockDateTime() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://myfoodpi:5000/api/getclockdatetime", true);
+
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        $('#currentClockDatetime').html("Current Clock: " + xhr.responseText);
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function onSetClockClick() {
+            var r = confirm("The internal clock will be changed, are you sure? ");
+            if (r == false) return;
+
+            var xhr = new XMLHttpRequest();
+            var strDate = $('#clockDatetime').data('date')
+            var date = Date.parse(strDate)
+
+            if (date == undefined)
+                return;
+            
+            xhr.open("PUT", "http://myfoodpi:5000/api/setclock/" + strDate, true);
+
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        $('#currentClockDatetime').html("Current Clock: " + strDate);
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+
+        function getUserSettings() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://myfoodpi:5000/api/getusersettings", true);
+
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var data = JSON.parse(xhr.responseText);
+
+                        if (data.isDiagnosticModeEnable === true)
+                            $('#enableDiagnosticToogle').attr('checked', true);
+                        else
+                            $('#enableDiagnosticToogle').attr('checked', false);
+
+                        if (data.isSigFoxComEnable === true)
+                            {
+                                $('#enableSigfoxToogle').attr('checked', true);
+                                $("#hubProductionId").hide();
+                            }
+                        else
+                            $('#enableSigfoxToogle').attr('checked', false);
+
+                        if (data.isDebugLedEnable === true)
+                            $('#enableDebugLedToogle').attr('checked', true);
+                        else
+                            $('#enableDebugLedToogle').attr('checked', false);
+
+                        if (data.isTempHumiditySensorEnable === true)
+                            $('#enableHumidityTempToogle').attr('checked', true);
+                        else
+                            $('#enableHumidityTempToogle').attr('checked', false);
+
+                        $("#strHubProductionId").val(data.productionSiteId);
+
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+            
+            xhr.send();
         };
 
         function getpH() {
@@ -321,6 +561,9 @@
         };
 
         function onRestartAppClick() {
+            var r = confirm("The app will be restarted, are you sure? ");
+            if (r == false) return;
+
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://myfoodpi:5000/api/restartApp", true);
             xhr.onload = function (e) {
@@ -336,6 +579,9 @@
         };
 
         function onEraseLogsClick() {
+            var r = confirm("The logs will be erased, are you sure? ");
+            if (r == false) return;
+
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://myfoodpi:5000/api/eraseLogs", true);
             xhr.onload = function (e) {
@@ -351,6 +597,9 @@
         };
 
         function onEraseMeasuresClick() {
+            var r = confirm("The measures will be erased, are you sure? ");
+            if (r == false) return;
+
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://myfoodpi:5000/api/eraseMeasures", true);
             xhr.onload = function (e) {
@@ -366,6 +615,9 @@
         };
 
         function onSetpHTo7Click() {
+            var r = confirm("The pH sensor will be set at 7, are you sure? ");
+            if (r == false) return;
+
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://myfoodpi:5000/api/setPHTo7", true);
             xhr.onload = function (e) {
@@ -380,7 +632,28 @@
             xhr.send();
         };
 
+        function onPerformSigfoxTestClick() {
+            var r = confirm("A communication testing routine will be performed, are you sure? ");
+            if (r == false) return;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://myfoodpi:5000/api/performTest", true);
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+            xhr.send();
+        };
+
         function onResetToFactoryClick() {
+            var r = confirm("The sensors calibration will be reset to factory, are you sure? ");
+            if (r == false) return;
+
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "http://myfoodpi:5000/api/resetToFactory", true);
             xhr.onload = function (e) {
@@ -394,6 +667,29 @@
             };
             xhr.send();
         };
+
+        function onSaveSettingsClick() {
+            var xhr = new XMLHttpRequest(); 
+
+            var debugLedVal = $('#enableDebugLedToogle').prop('checked');
+            var diagVal = $('#enableDiagnosticToogle').prop('checked');
+            var sigfoxVal = $('#enableSigfoxToogle').prop('checked');  
+            var humTempVal = $('#enableHumidityTempToogle').prop('checked');
+
+            var strHubProductionId = $("#strHubProductionId").val();
+                     
+            xhr.open("PUT", 'http://myfoodpi:5000/api/putusersettings?args=' + debugLedVal + ";" + diagVal + ";" + sigfoxVal + ";" + humTempVal + "&id=" + strHubProductionId + "&quot", true);
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+            xhr.send();
+        };       
 
         var headersMeasures = {
             date: "Date",

@@ -109,7 +109,6 @@
                         <TextBlock FontSize="23" FontWeight="Bold" Text="System Information"/>
                         <TextBlock FontSize="23" Text="{x:Bind ViewModel.PackageVersion}"/>
                         <TextBlock FontSize="23" Text="{x:Bind ViewModel.FreeDiskSpace}"/>
-                        <TextBlock FontSize="23" Text="Free Memory: 102Mo (13%)"/>
                     </StackPanel>
 
                     <Grid Margin="2" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2">
@@ -129,20 +128,34 @@
                         <TextBlock Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource TitleText}" Text="Enable Debug Led"/>
                         <ToggleSwitch Grid.Row="0" Grid.Column="1" IsOn="{x:Bind ViewModel.IsDebugLedEnable, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="0" Grid.Column="3" TextWrapping="Wrap" Style="{StaticResource TitleText}" Text="Enable Sleep Mode"/>
-                        <ToggleSwitch Grid.Row="0" Grid.Column="4" IsOn="{x:Bind ViewModel.IsSleepModeEnable, Mode=TwoWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="3" TextWrapping="Wrap" Style="{StaticResource TitleText}" Text="Enable Sigfox Com"/>
+                        <ToggleSwitch Grid.Row="0" Grid.Column="4" IsOn="{x:Bind ViewModel.IsSigFoxComEnable, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="2" TextWrapping="Wrap" Style="{StaticResource TitleText}" Text="Enable Sigfox Com"/>
+                        <TextBlock Grid.Row="1" TextWrapping="Wrap" Style="{StaticResource TitleText}" Text="Enable Temp/Hum Sensors"/>
                         <ToggleSwitch Grid.Row="1" Grid.Column="1" IsOn="{x:Bind ViewModel.IsTempHumiditySensorEnable, Mode=TwoWay}"/>
 
                         <TextBlock Grid.Row="1" TextWrapping="Wrap" Grid.Column="3" Style="{StaticResource TitleText}" Text="Enable Diagnostic Mode"/>
                         <ToggleSwitch Grid.Row="1" Grid.Column="4" IsOn="{x:Bind ViewModel.IsDiagnosticModeEnable, Mode=TwoWay}"/>
 
-                        <TextBlock Grid.Row="1" TextWrapping="Wrap" Style="{StaticResource TitleText}" Text="Enable Temp/Hum Sensors"/>
-                        <ToggleSwitch Grid.Row="2" Grid.Column="1" IsOn="{x:Bind ViewModel.IsSigFoxComEnable, Mode=TwoWay}"/>
-                                              
-                        <TextBlock Grid.Row="2" TextWrapping="Wrap" Grid.Column="3" Style="{StaticResource TitleText}" Text="Enable Screensaver"/>
-                        <ToggleSwitch Grid.Row="2" Grid.Column="4" IsOn="{x:Bind ViewModel.IsScreenSaverEnable, Mode=TwoWay}"/>
+                        <Button x:Name="performSigfoxTestButton" Grid.Row="3" Grid.ColumnSpan="5" Style="{StaticResource OpenFormButton}" Content="Perform Sigfox Test">
+                            <Button.Flyout>
+                                <Flyout Placement="Right">
+                                    <Grid MaxWidth="300">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="10" Text="A Sigfox integration test will be performed. Are you sure ?"/>
+                                        <AppBarButton Grid.Row="1" VerticalAlignment="Center" Icon="Accept" Label="Start" Click="{x:Bind ViewModel.OnPerformSigfoxTestClicked}"/>
+                                        <AppBarButton Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" Icon="Cancel" Label="Cancel" Click="{x:Bind ViewModel.CancelClicked}"/>
+                                    </Grid>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
                     </Grid>
                 </Grid>
             </PivotItem>

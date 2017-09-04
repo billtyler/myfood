@@ -1,4 +1,6 @@
 ﻿using myfoodapp.Business;
+using myfoodapp.Business.Bench;
+using myfoodapp.Business.Clock;
 using myfoodapp.Business.Sensor;
 using myfoodapp.Model;
 using Restup.Webserver.Attributes;
@@ -7,6 +9,7 @@ using Restup.Webserver.Models.Schemas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace myfoodapp.WebServer
@@ -141,6 +144,175 @@ namespace myfoodapp.WebServer
               GetResponse.ResponseStatus.OK);
         }
 
+        [UriFormat("/performTest")]
+        public IGetResponse PerformTest()
+        {
+            var logModel = LogModel.GetInstance;
+            logModel.AppendLog(Log.CreateLog("Sigfox Test started", Log.LogType.Information));
+
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            mesureBackgroundTask.Completed += PerformSigfoxTestBackgroundTask_Completed;
+            mesureBackgroundTask.Stop();
+
+            return new GetResponse(
+              GetResponse.ResponseStatus.OK);
+        }
+
+        [UriFormat("/getusersettings")]
+        public IGetResponse GetUserSettings()
+        {
+            var userSettingsModel = UserSettingsModel.GetInstance;
+            UserSettings currentUserSettings = new UserSettings();
+
+            var taskFile = Task.Run(async () => { currentUserSettings = await userSettingsModel.GetUserSettingsAsync(); });
+            taskFile.Wait();
+
+            return new GetResponse(
+              GetResponse.ResponseStatus.OK, currentUserSettings);
+        }
+
+        [UriFormat("/getclockdatetime")]
+        public IGetResponse GetClockDateTime()
+        {
+            var clockManager = ClockManager.GetInstance;
+            var captureDateTime = DateTime.Now;
+
+            if (clockManager != null)
+            {
+                var taskClock = Task.Run(async () =>
+                {
+                    await clockManager.Connect();
+                });
+                taskClock.Wait();
+
+                captureDateTime = clockManager.ReadDate();
+
+                clockManager.Dispose();
+            }
+
+            return new GetResponse(
+              GetResponse.ResponseStatus.OK, captureDateTime.ToString("g"));
+        }
+
+        [UriFormat("/setclock/{strDate}")]
+        public IPutResponse SetClockDateTime(string strDate)
+        {
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            var logModel = LogModel.GetInstance;
+
+            DateTime date = DateTime.Now; 
+
+            try
+            {
+                date = DateTime.Parse(strDate);
+            }
+            catch (Exception ex)
+            {
+                logModel.AppendLog(Log.CreateErrorLog("Exception on Date Format", ex));
+            }
+             
+            EventHandler handler = null;
+
+            handler = (sender, eventArgs) =>
+            {
+                mesureBackgroundTask.Completed -= handler;
+                try
+                {
+                    var clockManager = ClockManager.GetInstance;
+
+                    if (clockManager != null)
+                    {
+                        var taskClock = Task.Run(async () =>
+                        {
+                            await clockManager.Connect();
+                        });
+                        taskClock.Wait();
+
+                        clockManager.SetDate(date);
+
+                        clockManager.Dispose();
+                    }
+
+                    mesureBackgroundTask.Run();
+
+                }
+                catch (Exception ex)
+                {
+                    logModel.AppendLog(Log.CreateErrorLog("Exception on Clock Settings", ex));
+                }
+                finally
+                {
+                    logModel.AppendLog(Log.CreateLog("Clock setting ended", Log.LogType.Information));
+                }
+            };
+
+            mesureBackgroundTask.Completed += handler;
+            mesureBackgroundTask.Stop();
+
+            return new PutResponse(
+              PutResponse.ResponseStatus.OK);
+        }
+
+        [UriFormat("/putusersettings?args={settings}&id={productionSiteId}")]
+        public IPutResponse PutSettings(IEnumerable<bool> settings,string productionSiteId)
+        {
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            var userSettingsModel = UserSettingsModel.GetInstance;
+            var logModel = LogModel.GetInstance;
+
+            EventHandler handler = null;
+
+            handler = (sender, eventArgs) =>
+            {
+                mesureBackgroundTask.Completed -= handler;
+                try
+                {
+                    UserSettings currentUserSettings = new UserSettings();
+
+                    var taskFile = Task.Run(async () => { currentUserSettings = await userSettingsModel.GetUserSettingsAsync(); });
+                    taskFile.Wait();
+
+                    var newUserSettings = new UserSettings();
+                    var args = settings.ToList();
+
+                    newUserSettings.isDebugLedEnable = args[0];
+                    newUserSettings.isDiagnosticModeEnable = args[1];
+                    newUserSettings.isTempHumiditySensorEnable = args[2];
+                    newUserSettings.isSigFoxComEnable = args[3];
+                    newUserSettings.productionSiteId = productionSiteId;
+
+                    newUserSettings.ACCESS_POINT_PWD = currentUserSettings.ACCESS_POINT_PWD;
+                    newUserSettings.SSID = currentUserSettings.SSID;
+                    newUserSettings.hubMessageAPI = currentUserSettings.hubMessageAPI;
+                    newUserSettings.isScreenSaverEnable = currentUserSettings.isScreenSaverEnable;
+                    newUserSettings.isSleepModeEnable = currentUserSettings.isSleepModeEnable;
+                    newUserSettings.measureFrequency = currentUserSettings.measureFrequency;
+
+                    var taskUserSync = Task.Run(async () =>
+                    {
+                        await userSettingsModel.SyncUserSettings(newUserSettings);
+                    });
+                    taskUserSync.Wait();
+
+                    mesureBackgroundTask.Run();
+                }
+                catch (Exception ex)
+                {
+                    logModel.AppendLog(Log.CreateErrorLog("Exception on Save Settings", ex));
+                }
+                finally
+                {
+                    logModel.AppendLog(Log.CreateLog("Settings saved", Log.LogType.Information));
+                }
+            };
+
+            mesureBackgroundTask.Completed += handler;
+            mesureBackgroundTask.Stop();
+
+            return new PutResponse(
+              PutResponse.ResponseStatus.OK);
+        }
+
         [UriFormat("data/type/{sensorType}")]
         public IGetResponse GetMeasures(string sensorType)
         {
@@ -245,5 +417,29 @@ namespace myfoodapp.WebServer
                 logModel.AppendLog(Log.CreateLog("App restart ended", Log.LogType.Information));
             }
         }
+
+        private void PerformSigfoxTestBackgroundTask_Completed(object sender, EventArgs e)
+        {
+            var logModel = LogModel.GetInstance;
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            mesureBackgroundTask.Completed -= PerformSigfoxTestBackgroundTask_Completed;
+
+            try
+            {
+                var sigfoxIntegrationTest = new SigfoxIntegrationTest();
+                sigfoxIntegrationTest.Run();
+
+                mesureBackgroundTask.Run();
+            }
+            catch (Exception ex)
+            {
+                logModel.AppendLog(Log.CreateErrorLog("Exception on Sigfox Integration Test", ex));
+            }
+            finally
+            {
+                logModel.AppendLog(Log.CreateLog("[UTest Done] Sigfox Integration Test", Log.LogType.Information));
+            }
+        }
+
     }
 }

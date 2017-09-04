@@ -107,7 +107,8 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackgroundWorkers\MeasureBackgroundTask.cs" />
+    <Compile Include="BackgroundWorker\MeasureBackgroundTask.cs" />
+    <Compile Include="Bench\SigfoxIntegrationTest.cs" />
     <Compile Include="Clock\ClockManager.cs" />
     <Compile Include="Clock\RTCPiHelper.cs" />
     <Compile Include="Network\SigfoxInterfaceManager.cs" />
