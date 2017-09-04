@@ -24,7 +24,7 @@
 <input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">[[[Production Units Management]]]</h2>
+    <h2 id="title" class="col-md-3">[[[Production Units Management]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -48,7 +48,7 @@
         .Columns(columns =>
         {
             columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(60);
-            columns.Bound(c => c.date).Format("{0:d}").Width(80);
+            columns.Bound(c => c.date).Format("{0:d}").Width(80).Sortable(true);
             columns.Bound(c => c.description).Width(250);
             columns.Bound(c => c.isOpen).Title("[[[open]]]").Width(50);
             columns.Bound(c => c.createdBy).Width(100);
@@ -110,7 +110,7 @@
             height:90% !important;
         }
 
-    }
+        }
 
         .k-button {
             background-color: #018001;

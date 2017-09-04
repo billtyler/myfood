@@ -11,7 +11,6 @@ namespace myfoodapp.Hub.Services
     {
         private ApplicationDbContext entities;
 
-
         public ProductionUnitService(ApplicationDbContext entities)
         {
             this.entities = entities;
@@ -29,7 +28,7 @@ namespace myfoodapp.Hub.Services
                 locationLongitude = pu.locationLongitude,
                 version = pu.version,
                 info = pu.info,
-                options = pu.options,
+                //options = pu.options,
                 reference = pu.reference,
                 picturePath = pu.picturePath,
                 lastMeasureReceived = pu.lastMeasureReceived,
@@ -79,6 +78,7 @@ namespace myfoodapp.Hub.Services
             result = entities.ProductionUnits.Include(m => m.productionUnitType)
                                              .Include(m => m.owner)
                                              .Include(m => m.hydroponicType)
+                                             .Include(m => m.productionUnitStatus)
                                              .Where(p => p.Id == productionUnitId).Select(pu => new ProductionUnitViewModel
             {
                 Id = pu.Id,
@@ -87,7 +87,7 @@ namespace myfoodapp.Hub.Services
                 locationLongitude = pu.locationLongitude,
                 version = pu.version,
                 info = pu.info,
-                options = pu.options,
+                //options = pu.options,
                 reference = pu.reference,
                 picturePath = pu.picturePath,
                 lastMeasureReceived = pu.lastMeasureReceived,
@@ -136,37 +136,46 @@ namespace myfoodapp.Hub.Services
             entity.locationLongitude = productionUnit.locationLongitude;
             entity.version = productionUnit.version;
             entity.info = productionUnit.info;
-            entity.options = productionUnit.options;
+            //entity.options = productionUnit.options;
             entity.reference = productionUnit.reference;
             entity.picturePath = productionUnit.picturePath;
             entity.lastMeasureReceived = productionUnit.lastMeasureReceived;
 
             if (entity.productionUnitType == null)
             {
-                entity.productionUnitType = new ProductionUnitType();
-                entity.productionUnitType.Id = productionUnit.productionUnitTypeId;
+                var productionUnitType = entities.ProductionUnitTypes.Where(p => p.Id == productionUnit.productionUnitTypeId).FirstOrDefault();
+                entity.productionUnitType = productionUnitType;
             }
 
             if (entity.hydroponicType == null)
             {
-                entity.hydroponicType = new HydroponicType();
-                entity.hydroponicType.Id = productionUnit.hydroponicTypeId;
+                var hydroponicType = entities.HydroponicTypes.Where(p => p.Id == productionUnit.hydroponicTypeId).FirstOrDefault();
+                entity.hydroponicType = hydroponicType;
             }
 
             if (entity.productionUnitStatus == null)
             {
-                entity.productionUnitStatus = new ProductionUnitStatus();
-                entity.productionUnitStatus.Id = productionUnit.productionUnitStatusId;
+                var productionUnitStatus = entities.ProductionUnitStatus.Where(p => p.Id == productionUnit.productionUnitStatusId).FirstOrDefault();
+                entity.productionUnitStatus = productionUnitStatus;
             }
 
             if (entity.owner == null)
             {
-                entity.owner = new ProductionUnitOwner();
-                entity.owner.Id = productionUnit.ownerId;
+                var owner = entities.ProductionUnitOwners.Where(p => p.Id == productionUnit.ownerId).FirstOrDefault();
+                entity.owner = owner;
             }
 
             entities.ProductionUnits.Add(entity);
-            entities.SaveChanges();
+
+            try
+            {
+                entities.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                var ttt = ex;
+                throw;
+            }         
 
             productionUnit.Id = entity.Id;
         }
@@ -175,6 +184,7 @@ namespace myfoodapp.Hub.Services
         {
             ProductionUnit target = new ProductionUnit();
             target = entities.ProductionUnits.Where(p => p.Id == productionUnit.Id).Include(m => m.productionUnitType)
+                                                                                   .Include(m => m.productionUnitStatus)
                                                                                    .Include(m => m.owner)
                                                                                    .Include(m => m.hydroponicType).FirstOrDefault();
 
@@ -203,27 +213,24 @@ namespace myfoodapp.Hub.Services
                 ProductionUnitStatus currentProductionUnitStatus = new ProductionUnitStatus();
                 currentProductionUnitStatus = entities.ProductionUnitStatus.Where(p => p.Id == productionUnit.productionUnitStatusId).FirstOrDefault();
 
-                target.hydroponicType = currentHydroponicType;
+                target.productionUnitStatus = currentProductionUnitStatus;
 
-                //ProductionUnitOwner currentProductionUnitOwner = new ProductionUnitOwner();
-                //currentProductionUnitOwner = entities.ProductionUnitOwners.Where(p => p.Id == productionUnit.ownerId).FirstOrDefault();
+                ProductionUnitOwner currentProductionUnitOwner = new ProductionUnitOwner();
+                currentProductionUnitOwner = entities.ProductionUnitOwners.Where(p => p.Id == productionUnit.ownerId).FirstOrDefault();
 
-                //target.owner = currentProductionUnitOwner;
+                target.owner = currentProductionUnitOwner;
             }
 
                 entities.SaveChanges();                 
         }
 
-        public void Destroy(ProductionUnitViewModel message)
+        public void Destroy(ProductionUnitViewModel productionUnit)
         {
-                var entity = new Measure();
+            var currentProductionUnit = entities.ProductionUnits.Where(p => p.Id == productionUnit.Id).FirstOrDefault();
 
-                entity.Id = message.Id;
+            entities.ProductionUnits.Remove(currentProductionUnit);
 
-                entities.Measures.Attach(entity);
-                entities.Measures.Remove(entity);
-
-                entities.SaveChanges();
+            entities.SaveChanges();
         }
 
         public ProductionUnitViewModel One(Func<ProductionUnitViewModel, bool> predicate)

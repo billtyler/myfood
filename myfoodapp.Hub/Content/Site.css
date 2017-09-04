@@ -169,6 +169,10 @@ body,
     background-color: #fff;
 }
 
+a.k-grid-filter {
+    color: forestgreen !important;
+}
+
 /* Main section */
 #main-section {
     float: none;
@@ -178,8 +182,8 @@ body,
     background-color: #eee;
 }
 
-#employee-list {
-    height: 100%;
+#title {
+    padding-left: 30px !important;
 }
 
 #dash-logo,
@@ -376,6 +380,10 @@ body,
 @media screen and (max-width: 768px) {
     .column {
         height: auto;
+    }
+
+    #title {
+        padding-left: 0px !important;
     }
 
     .row-offcanvas {

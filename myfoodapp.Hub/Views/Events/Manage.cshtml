@@ -21,7 +21,7 @@
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">[[[Production Units Management]]]</h2>
+    <h2 id="title" class="col-md-3">[[[Production Units Management]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -89,7 +89,7 @@
             })
             .Events(events => events.Error("error_handler"))
             .Read("Events_Read", "Events")
-            .Update(update => update.Action("Event_Update", "Events").Data("convertDate"))
+            .Update("Event_Update", "Events")
             .Destroy("Event_Destroy", "Events")
         )
         )
@@ -98,11 +98,11 @@
 </div>
 
 <script type="text/javascript">
-    function convertDate(data) {
-        return {
-            formatedDateTime: kendo.toString(kendo.parseDate(data.date), "G")
-        };
-    }
+    //function convertDate(data) {
+    //    return {
+    //        formatedDateTime: kendo.toString(kendo.parseDate(data.date), "G")
+    //    };
+    //}
 
     function error_handler(e) {
         if (e.errors) {

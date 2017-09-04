@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="myfoodapp" Publisher="CN=Dev" Version="1.0.62.0" />
+  <Identity Name="myfoodapp" Publisher="CN=Dev" Version="1.0.64.0" />
   <mp:PhoneIdentity PhoneProductId="6483cc21-1a8f-43e1-b1a6-d7c694fbfdba" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>myfood Management System</DisplayName>
@@ -16,7 +16,11 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="myfoodapp.App">
       <uap:VisualElements DisplayName="myfoodapp" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="myfoodapp" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\BadgeLogo.png" />
+        <uap:DefaultTile Square310x310Logo="Assets\LargeTile.png" Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+          </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
@@ -26,7 +30,6 @@
     <Capability Name="internetClientServer" />
     <Capability Name="internetClient" />
     <Capability Name="privateNetworkClientServer" />
-    <DeviceCapability Name="bluetooth" />
     <DeviceCapability Name="proximity" />
     <DeviceCapability Name="916EF1CB-8426-468D-A6F7-9AE8076881B3" />
     <DeviceCapability Name="serialcommunication">

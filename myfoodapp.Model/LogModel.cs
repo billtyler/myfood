@@ -2,17 +2,11 @@
 using MetroLog.Targets;
 using myfoodapp.Business;
 using myfoodapp.Common;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Storage;
-using Windows.Storage.Search;
 
 namespace myfoodapp.Model
 {
@@ -46,8 +40,7 @@ namespace myfoodapp.Model
         }
 
         public async Task<List<Log>> GetLogsAsync()
-        {
-            
+        {          
             using (await asyncLock.LockAsync())
             {
                 var metrologFolder = await folder.GetFolderAsync("MetroLogs");
@@ -92,10 +85,10 @@ namespace myfoodapp.Model
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        Console.Write(ex.InnerException);
                     }
 
-                    return logs.OrderByDescending(l => l.Id).ToList();
+                    return logs.OrderByDescending(l => l.date).ToList();
                 }
                 return null;
             }
@@ -125,13 +118,27 @@ namespace myfoodapp.Model
             }
             catch (Exception ex)
             {
-                throw ex ;
+                Console.Write(ex.InnerException);
             }
         }
 
         public async Task ClearLog()
         {
+            try
+            {
+                using (await asyncLock.LockAsync())
+                {
+                    var metrologFolder = await folder.GetFolderAsync("MetroLogs");
 
+                    var files = await metrologFolder.GetFilesAsync();
+
+                    files.ToList().ForEach(async (f) => await f.DeleteAsync());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.InnerException);
+            }
         }
     }
 }

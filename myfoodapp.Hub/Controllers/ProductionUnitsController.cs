@@ -4,14 +4,19 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Business;
+using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +25,13 @@ namespace myfoodapp.Hub.Controllers
 {
     public class ProductionUnitsController : Controller
     {
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
+            base.Initialize(requestContext);
+        }
+
         private ApplicationUserManager _userManager;
         public ApplicationUserManager UserManager
         {
@@ -34,7 +46,7 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             var currentUser = this.User.Identity.GetUserName();
             var db = new ApplicationDbContext();
@@ -47,13 +59,14 @@ namespace myfoodapp.Hub.Controllers
                 PopulateProductionUnitTypes();
                 PopulateOwners();
                 PopulateProductionUnitStatus();
+                PopulateHydroponicType();
 
-                return View(await db.ProductionUnits.OrderBy(p => p.startDate).ToListAsync());
+                return View();
             }
             else
             {
                 var currentProductionUnits = db.ProductionUnits.Include(p => p.owner.user)
-                                                               .Where(p => p.owner.user.UserName == currentUser).ToList();
+                                               .Where(p => p.owner.user.UserName == currentUser).ToList();
                 if (currentProductionUnits != null)
                 {
                     return RedirectToAction("Details", "ProductionUnits", new { Id = currentProductionUnits.FirstOrDefault().Id });
@@ -90,16 +103,6 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public ActionResult Events(int id)
-        {
-            ViewBag.Title = "Production Unit Event Page";
-
-            PopulateEventType();
-
-            return View();
-        }
-
-        [Authorize]
         public ActionResult Update(int id)
         {
             var currentUser = this.User.Identity.GetUserName();
@@ -113,6 +116,7 @@ namespace myfoodapp.Hub.Controllers
             if (currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser || isAdmin)
             {
                 var currentProductionUnitViewModel = productionUnitService.One(id);
+                PopulateOptions(currentProductionUnitViewModel);
                 return View(currentProductionUnitViewModel);
             }
 
@@ -129,8 +133,10 @@ namespace myfoodapp.Hub.Controllers
                 var db = new ApplicationDbContext();
                 var productionUnitService = new ProductionUnitService(db);
 
+                var tt = model.options;
+
                 productionUnitService.Update(model);
-            // }
+            //}
 
             return Redirect("/ProductionUnits/Details/" + model.Id);
         }
@@ -146,59 +152,52 @@ namespace myfoodapp.Hub.Controllers
 
         [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Editing_Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ProductionUnitViewModel> productionUnits)
+        public ActionResult Editing_Create([DataSourceRequest] DataSourceRequest request, ProductionUnitViewModel currentProductionUnit)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ProductionUnitService productionUnitService = new ProductionUnitService(db);
 
             var results = new List<ProductionUnitViewModel>();
 
-            if (productionUnits != null && ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                foreach (var productionUnit in productionUnits)
-                {
-                    productionUnitService.Create(productionUnit);
-                    results.Add(productionUnit);
-                }
+                    productionUnitService.Create(currentProductionUnit);
             }
 
-            return Json(results.ToDataSourceResult(request, ModelState));
+            return Json(new[] { currentProductionUnit }.ToDataSourceResult(request, ModelState));
         }
 
         [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Editing_Update([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ProductionUnitViewModel> productionUnits)
+        public ActionResult Editing_Update([DataSourceRequest] DataSourceRequest request, ProductionUnitViewModel currentProductionUnit)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ProductionUnitService productionUnitService = new ProductionUnitService(db);
 
-            if (productionUnits != null && ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                foreach (var productionUnit in productionUnits)
-                {
-                    productionUnitService.Update(productionUnit);
-                }
+                    productionUnitService.Update(currentProductionUnit);
             }
-
-            return Json(productionUnits.ToDataSourceResult(request, ModelState));
+            
+            return Json(new[] { currentProductionUnit }.ToDataSourceResult(request, ModelState));
         }
 
         [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Editing_Destroy([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<ProductionUnitViewModel> productionUnits)
+        public ActionResult Editing_Destroy([DataSourceRequest] DataSourceRequest request, ProductionUnitViewModel currentProductionUnit)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ProductionUnitService productionUnitService = new ProductionUnitService(db);
 
-            if (productionUnits.Any())
+            if (currentProductionUnit != null)
             {
-                foreach (var productionUnit in productionUnits)
-                {
-                    productionUnitService.Destroy(productionUnit);
-                }
+                if (currentProductionUnit.lastMeasureReceived != null)
+                    ModelState.AddModelError("inUse", new Exception("[[[Production Unit already in use]]]"));
+                else
+                    productionUnitService.Destroy(currentProductionUnit);
             }
 
-            return Json(productionUnits.ToDataSourceResult(request, ModelState));
+            return Json(new[] { currentProductionUnit }.ToDataSourceResult(request, ModelState));
         }
 
         private void PopulateProductionUnitTypes()
@@ -247,6 +246,21 @@ namespace myfoodapp.Hub.Controllers
             ViewData["ProductionUnitStatus"] = productionUnitStatus;
         }
 
+        private void PopulateHydroponicType()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var hydroponicTypes = db.HydroponicTypes
+                       .Select(m => new ProductionUnitStatusViewModel
+                       {
+                           Id = m.Id,
+                           name = m.name
+                       })
+                       .OrderBy(e => e.name);
+
+            ViewData["HydroponicType"] = hydroponicTypes;
+        }
+
         private void PopulateEventType()
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -260,6 +274,32 @@ namespace myfoodapp.Hub.Controllers
                        .OrderBy(e => e.name);
 
             ViewData["EventTypes"] = eventTypes;
+        }
+
+        private void PopulateOptions(ProductionUnitViewModel productionUnitViewModel)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            var currentOptions = db.OptionLists.Include(o => o.productionUnit)
+            .Include(o => o.option)
+            .Where(p => p.productionUnit.Id == productionUnitViewModel.Id)
+            .Select(p => p.option);
+
+            productionUnitViewModel.options = currentOptions.Select(m => new OptionViewModel
+            {
+                Id = m.Id,
+                name = m.name
+            })
+           .OrderBy(e => e.name).ToList();
+
+            var options = db.Options;
+
+            ViewBag.Options = options.Except(currentOptions).Select(m => new OptionViewModel
+            {
+                Id = m.Id,
+                name = m.name
+            })
+           .OrderBy(e => e.name); 
         }
 
         [Authorize]
@@ -404,19 +444,24 @@ namespace myfoodapp.Hub.Controllers
             switch (currentProductionUnit.productionUnitType.Id)
             {
                 case 1:
-                    averageMonthlyProduction = 5;
+                    //AeroSpring
+                    averageMonthlyProduction = 4;
                     break;
                 case 2:
-                    averageMonthlyProduction = 10;
+                    //City
+                    averageMonthlyProduction = 7;
                     break;
                 case 3:
-                    averageMonthlyProduction = 15;
+                    //Family14
+                    averageMonthlyProduction = 10;
                     break;
                 case 4:
-                    averageMonthlyProduction = 25;
+                    //Family22
+                    averageMonthlyProduction = 15;
                     break;
                 case 5:
-                    averageMonthlyProduction = 50;
+                    //Farm
+                    averageMonthlyProduction = 25;
                     break;
                 default:
                     break;
@@ -535,7 +580,7 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public bool AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate, string details)
+        public ActionResult AddEvent(int productionUnitId, int eventTypeId, int eventTypeItemId, string note, DateTime currentDate, string details)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
@@ -579,12 +624,52 @@ namespace myfoodapp.Hub.Controllers
             }
             catch (Exception ex)
             {
-                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Event Creation"), ex));
                 dbLog.SaveChanges();
-                return false;
+                return Json(false);
             }
 
-            return true;
+            return Json(true);
+        }
+
+        public ActionResult SavePicture(IEnumerable<HttpPostedFileBase> files, string picturePath)
+        {
+            var fileName = Path.GetFileName(files.FirstOrDefault().FileName);
+
+            if (fileName != picturePath)
+            {
+                var db = new ApplicationDbContext();
+                var prodUnit = db.ProductionUnits.Include(p => p.owner)
+                                                 .Include(p => p.hydroponicType)
+                                                 .Include(p => p.productionUnitType)
+                                                 .Include(p => p.productionUnitStatus)
+                                                 .Where(p => p.picturePath == picturePath).FirstOrDefault();
+                if (prodUnit != null)
+                {
+                    prodUnit.picturePath = fileName;
+                    db.SaveChanges();
+
+                    var fullPath = Path.Combine(Server.MapPath("~/Content/Pictures/Sites/"), picturePath);
+
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }         
+            }
+
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    var currentfileName = Path.GetFileName(file.FileName);
+                    var physicalPath = Path.Combine(Server.MapPath("~/Content/Pictures/Sites/"), currentfileName);
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    file.SaveAs(physicalPath);
+                }
+            }
+
+            return Json("");
         }
 
         [Authorize]

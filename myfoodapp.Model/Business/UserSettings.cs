@@ -11,5 +11,7 @@
         public int measureFrequency { get; set; }
         public string productionSiteId { get; set; }
         public string hubMessageAPI { get; set; }
+        public string SSID { get; set; }
+        public string ACCESS_POINT_PWD { get; set; }
     }
 }

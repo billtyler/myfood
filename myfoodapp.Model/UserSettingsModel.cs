@@ -15,6 +15,7 @@ namespace myfoodapp.Model
         private StorageFolder folder = ApplicationData.Current.LocalFolder;
 
         private static UserSettingsModel instance;
+        private LogModel logModel = LogModel.GetInstance;
         public static UserSettings CurrentUserSettings = new UserSettings();
 
         public static UserSettingsModel GetInstance
@@ -50,7 +51,9 @@ namespace myfoodapp.Model
                         isDiagnosticModeEnable = false,
                         measureFrequency = 60000,
                         productionSiteId = "XXXXX",
-                        hubMessageAPI = "https://hub.myfood.eu/api/Messages"
+                        hubMessageAPI = "https://hub.myfood.eu/api/Messages",
+                        SSID = "MYFOODPI_AP",
+                        ACCESS_POINT_PWD = "myfoodpi"
                     };
 #endif
 
@@ -65,7 +68,9 @@ namespace myfoodapp.Model
                         isDiagnosticModeEnable = false,
                         measureFrequency = 600000,
                         productionSiteId = "XXXXX",
-                        hubMessageAPI = "https://hub.myfood.eu/api/Messages"
+                        hubMessageAPI = "https://hub.myfood.eu/api/Messages",
+                        SSID = "MYFOODPI_AP",
+                        ACCESS_POINT_PWD = "myfoodpi"
                     };
 #endif
 
@@ -79,6 +84,7 @@ namespace myfoodapp.Model
             catch (FileNotFoundException ex)
             {
                 var newFile = await folder.CreateFileAsync(FILE_NAME, CreationCollisionOption.FailIfExists);
+                logModel.AppendLog(Log.CreateErrorLog("Configuration file created", ex));
             }
         }
 

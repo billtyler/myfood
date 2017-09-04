@@ -127,7 +127,7 @@
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 id="title-pioneer" class="col-md-3">[[[Pioneer Citizen Network]]]</h2>
+    <h2 id="title" class="col-md-3">[[[Pioneer Citizen Network]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -243,9 +243,10 @@
     </div>
 
     <div id="performanceHealthAnalysis">
-        <div id="performanceHealthAnalysisContainer" class="col-md-4">
+        <div id="performanceHealthAnalysisContainer" class="col-md-5">
             <h3 class="section-header">[[[Network Status]]]</h3>
-            @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
+            <div style="text-align: center">
+                @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
         .Name("chart")
         .Legend(legend => legend
             .Position(ChartLegendPosition.Right)
@@ -273,9 +274,10 @@
             .Visible(true)
             .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
         )
-            )
+                )
+            </div>
         </div>
-        <div id="map-info" class="col-md-4">
+        <div id="map-info" class="col-md-7">
             <div class="widget">
                 <h3 class="section-header">[[[Network Info]]]</h3>
                 <div style="margin: 25px;">
@@ -295,10 +297,10 @@
             </div>
         </div>
 
-        <div id="rightsFooter" style="text-align:center">
+        @*<div id="rightsFooter" style="text-align:center; background-color:forestgreen">
+            <p style="color:white">.:myfoodapphub is licensed under a GPLv3:.</p>
             <img width="25" height="25" src="~/Content/miniLogo.png" />
-            <p>Copyright &copy; 2017, myfood and/or its subsidiaries or affiliates. All Rights Reserved.</p>
-        </div>
+        </div>*@
     </div>
 
 </div>
@@ -440,11 +442,18 @@
     height: 100%;
     }
 
-    @@media screen and (max-width: 480px) {
+    /*#title-pioneer {
+        padding-left:30px !important;
+    }*/
 
+    .section-header{
+        font-size:15px;
+    }
+    
+    @@media screen and (max-width: 800px) {
         #rightsFooter {
             visibility: visible;
-            display: normal;
+            display:inline;
         }
 
         .swiper-container {
@@ -453,10 +462,10 @@
             margin-right: -30px;
         }
 
-        .widget-text {
+        /*.widget-text {
             font-size: xx-small;
             margin: 2px;
-        }
+        }*/
 
         h1 {
             font-size: medium;
@@ -472,7 +481,6 @@
         }
     }
 </style>
-@*<div id="map"></div>
-    <script src="~/Scripts/lib/index.js"></script>*@
+
 
 

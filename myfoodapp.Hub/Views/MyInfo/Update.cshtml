@@ -40,7 +40,7 @@
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 class="col-md-3">[[[My Information]]]</h2>
+    <h2 id="title" class="col-md-3">[[[My Information]]]</h2>
     <div style="clear:both;"></div>
 </div>
 
@@ -123,6 +123,23 @@
 </div>
 
 <style type="text/css">
+    @@media screen and (max-width: 800px) {
+
+        #center {
+            margin: auto;
+            width: 80%;
+            border: 1px solid green;
+            padding: 10px;
+            position: relative;
+            top: 10%;
+            transform: translateY(10%);
+        }
+
+        #grid-container {
+            width: 100%
+        }
+    }
+
     #center {
     margin: auto;
     width: 80%;

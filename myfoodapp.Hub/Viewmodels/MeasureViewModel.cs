@@ -38,7 +38,6 @@ namespace myfoodapp.Hub.Models
 
     }
 
-
     public class Rule
     {
         public string ruleEvaluator { get; set; }

@@ -21,28 +21,29 @@ namespace myfoodapp.Hub.Controllers
     {
         public ActionResult Index()
         {
-            var db = new ApplicationDbContext();
+            //var db = new ApplicationDbContext();
 
-            var listMarker = new List<Marker>();
+            //var listMarker = new List<Marker>();
 
-            db.ProductionUnits.ToList().ForEach(p =>
-                                        listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
-                                                                  p.info, p.startDate.ToShortDateString()))
-                                        { shape = "redMarker" }));
+            //db.ProductionUnits.ToList().ForEach(p =>
+            //                            listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
+            //                                                      p.info, p.startDate.ToShortDateString()))
+            //                            { shape = "redMarker" }));
 
-            var map = new Models.Map()
-            {
-                Name = "map",
-                CenterLatitude = 44.0235561,
-                CenterLongitude = -10.3640063,
-                Zoom = 4,
-                TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-                TileSubdomains = new string[] { "a", "b", "c" },
-                TileAttribution = "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>",
-                Markers = listMarker
-            };
+            //var map = new Models.Map()
+            //{
+            //    Name = "map",
+            //    CenterLatitude = 44.0235561,
+            //    CenterLongitude = -10.3640063,
+            //    Zoom = 4,
+            //    TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
+            //    TileSubdomains = new string[] { "a", "b", "c" },
+            //    TileAttribution = "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>",
+            //    Markers = listMarker
+            //};
 
-            return View(map);
+            //return View(map);
+            return View();
         }
 
         public ActionResult GetClusterMapData()
@@ -82,10 +83,7 @@ namespace myfoodapp.Hub.Controllers
 
             var data = new JavaScriptSerializer().Serialize(map);
 
-            return Json(new
-            {
-                data
-            }, JsonRequestBehavior.AllowGet);
+            return Json(new {data}, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetProductionUnitMeasures(int id)
@@ -217,7 +215,7 @@ namespace myfoodapp.Hub.Controllers
             var rslt = db.ProductionUnits.Include(p => p.productionUnitStatus).ToList();
 
             var waitConfCount = rslt.Where(p => p.productionUnitStatus.Id == 1).Count();
-            var setuPlannedCount = rslt.Where(p => p.productionUnitStatus.Id == 2).Count();
+            var setupPlannedCount = rslt.Where(p => p.productionUnitStatus.Id == 2).Count();
             var upRunningCount = rslt.Where(p => p.productionUnitStatus.Id == 3).Count();
             var onMaintenanceCount = rslt.Where(p => p.productionUnitStatus.Id == 4).Count();
             var stoppedCount  = rslt.Where(p => p.productionUnitStatus.Id == 5).Count();
@@ -226,7 +224,7 @@ namespace myfoodapp.Hub.Controllers
             var statusList = new List<PieChartViewModel>();
 
             statusList.Add(new PieChartViewModel() { Category = "[[[Wait Confirm.]]]", Value = waitConfCount, Color = "#9de219" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setuPlannedCount, Color = "#90cc38" });
+            statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setupPlannedCount, Color = "#90cc38" });
             statusList.Add(new PieChartViewModel() { Category = "[[[Up and Running]]]", Value = upRunningCount, Color = "#068c35" });
             statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
             statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#003F38" });
@@ -251,7 +249,7 @@ namespace myfoodapp.Hub.Controllers
             var totalFamily22 = rslt.Where(p => p.productionUnitType.Id == 4).Count();
             var totalFarm = rslt.Where(p => p.productionUnitType.Id == 5).Count();
 
-            var totalMonthlyProduction = totalBalcony * 5 + totalCity * 10 + totalFamily14 * 15 + totalFamily22 * 25 + totalFarm * 50;
+            var totalMonthlyProduction = totalBalcony * 4 + totalCity * 7 + totalFamily14 * 10 + totalFamily22 * 15 + totalFarm * 25;
             var totalMonthlySparedCO2 = Math.Round(totalMonthlyProduction * 0.3);
 
             return Json(new

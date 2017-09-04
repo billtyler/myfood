@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -21,6 +22,12 @@ namespace myfoodapp.Hub.Controllers
 {
     public class EventsController : Controller
     {
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
+            base.Initialize(requestContext);
+        }
 
         [Authorize]
         public ActionResult Index(int id)
@@ -80,18 +87,15 @@ namespace myfoodapp.Hub.Controllers
 
         [Authorize]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Event_Update([DataSourceRequest] DataSourceRequest request, EventViewModel currentEvent, string formatedDateTime)
+        public ActionResult Event_Update([DataSourceRequest] DataSourceRequest request, EventViewModel currentEvent)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
             if (currentEvent != null)
             {
-                eventService.Update(currentEvent, formatedDateTime);
+                eventService.Update(currentEvent);
             }
-            CultureInfo culture = new CultureInfo("EN-us");
-
-            currentEvent.date = Convert.ToDateTime(formatedDateTime, culture);
 
             return Json(new[] { currentEvent }.ToDataSourceResult(request, ModelState));
         }
@@ -135,6 +139,7 @@ namespace myfoodapp.Hub.Controllers
                     csv.Append(m.createdBy + "; ");
                     csv.Append(m.productionUnit.info + "; ");
                     csv.Append(m.productionUnit.owner.pioneerCitizenName + "; ");
+                    //csv.Append(StringToCSVCell(m.details) + "; ");
 
                     csv.Remove(csv.Length - 2, 1);
                     csv.Append("\r\n");
@@ -151,6 +156,29 @@ namespace myfoodapp.Hub.Controllers
 
             return null;
 
+        }
+
+        private string StringToCSVCell(string str)
+        {
+            if (str == null)
+                return String.Empty;
+
+            bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
+            if (mustQuote)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\"");
+                foreach (char nextChar in str)
+                {
+                    sb.Append(nextChar);
+                    if (nextChar == '"')
+                        sb.Append("\"");
+                }
+                sb.Append("\"");
+                return sb.ToString();
+            }
+
+            return str;
         }
 
         protected override void Dispose(bool disposing)

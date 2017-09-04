@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using myfoodapp.Business;
+using myfoodapp.Business.Bench;
 using myfoodapp.Business.Sensor;
 using myfoodapp.Common;
 using myfoodapp.Model;
@@ -150,7 +151,6 @@ namespace myfoodapp.ViewModel
             MeasureFrequency = currentUserSettings.measureFrequency;
             ProductionSiteId = currentUserSettings.productionSiteId;
             HubMessageAPI = currentUserSettings.hubMessageAPI;
-
         }
 
         public async Task<UInt64> GetFreeSpace()
@@ -213,6 +213,18 @@ namespace myfoodapp.ViewModel
             mesureBackgroundTask.Stop();
         }
 
+        public void OnPerformSigfoxTestClicked(object sender, RoutedEventArgs args)
+        {
+            IsBusy = true;
+            Messenger.Default.Send(new CloseFlyoutMessage());
+
+            logModel.AppendLog(Log.CreateLog("Sigfox Test started", LogType.Information));
+
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            mesureBackgroundTask.Completed += PerformSigfoxTestBackgroundTask_Completed;
+            mesureBackgroundTask.Stop();
+        }
+
         public void OnSaveClicked(object sender, RoutedEventArgs args)
         {
             IsBusy = true;
@@ -265,6 +277,30 @@ namespace myfoodapp.ViewModel
             finally
             {
                 logModel.AppendLog(Log.CreateLog("Hardware reset ended", LogType.Information));
+                IsBusy = false;
+            }
+        }
+
+        private void PerformSigfoxTestBackgroundTask_Completed(object sender, EventArgs e)
+        {
+            var logModel = LogModel.GetInstance;
+            var mesureBackgroundTask = MeasureBackgroundTask.GetInstance;
+            mesureBackgroundTask.Completed -= PerformSigfoxTestBackgroundTask_Completed;
+
+            try
+            {
+                var sigfoxIntegrationTest = new SigfoxIntegrationTest();
+                sigfoxIntegrationTest.Run();
+
+                mesureBackgroundTask.Run();
+            }
+            catch (Exception ex)
+            {
+                logModel.AppendLog(Log.CreateErrorLog("Exception on Sigfox Integration Test", ex));
+            }
+            finally
+            {
+                logModel.AppendLog(Log.CreateLog("[UTest Done] Sigfox Integration Test", Log.LogType.Information));
                 IsBusy = false;
             }
         }

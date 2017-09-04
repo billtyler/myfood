@@ -9,7 +9,7 @@ using myfoodapp.Model;
 using myfoodapp.Views;
 using myfoodapp.Common;
 using GalaSoft.MvvmLight.Messaging;
-using myfoodapp.WebApp;
+using myfoodapp.WebServer;
 
 namespace myfoodapp
 {
@@ -19,8 +19,8 @@ namespace myfoodapp
     sealed partial class App : Application
     {
         private LogModel logModel = LogModel.GetInstance;
-        private HTTPServer webServer;
-
+        //private HTTPServer webServer;
+        private WebServerEngine webServer;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -35,8 +35,10 @@ namespace myfoodapp
             this.Suspending += OnSuspending;
 
             logModel.AppendLog(Log.CreateLog("Local Webserver starting...", Log.LogType.System));
-            webServer = new HTTPServer();
-            webServer.Initialise();
+
+            webServer = new WebServerEngine();
+            webServer.Run().Wait();
+
             logModel.AppendLog(Log.CreateLog("Local Webserver initialized", Log.LogType.System));
 
             Messenger.Default.Register<RefreshDashboardMessage>(this, (mess) =>

@@ -240,7 +240,7 @@ namespace myfoodapp.Model
         {
             using (await asyncLock.LockAsync())
             {
-                return await (from m in db.Measures.OrderByDescending(m => m.captureDate).Include(m => m.sensor).Take(7 * 24 * 6 * 4)
+                return await (from m in db.Measures.OrderByDescending(m => m.Id).Include(m => m.sensor).Take(7 * 24 * 6 * 4)
                               select m).Where(m => m.sensor.Id == (int)sensorType).ToListAsync();
             }
         }

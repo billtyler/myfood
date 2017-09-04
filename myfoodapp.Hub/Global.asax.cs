@@ -38,7 +38,7 @@ namespace myfoodapp.Hub
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
             //Change from the default of 'en'.
-            i18n.LocalizedApplication.Current.DefaultLanguage = "en";
+            //i18n.LocalizedApplication.Current.DefaultLanguage = "en";
 
             // Change the URL localization scheme from Scheme1.
             i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void;
@@ -171,7 +171,7 @@ namespace myfoodapp.Hub
                 {
                     i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
                     System.Web.HttpContext.Current,
-                    i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description));
+                    i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description), true);
                 }
             }
             else if (HttpContext.Current.User == null && (HttpContext.Current.Request.UrlReferrer != null || !String.IsNullOrEmpty(Request.QueryString["lang"])))
@@ -180,7 +180,7 @@ namespace myfoodapp.Hub
                 {
                     i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
                     System.Web.HttpContext.Current,
-                    i18n.LanguageHelpers.GetMatchingAppLanguage(Request.QueryString["lang"]));
+                    i18n.LanguageHelpers.GetMatchingAppLanguage(Request.QueryString["lang"]), true);
                 }
                 else if ((HttpUtility.ParseQueryString(HttpContext.Current.Request.UrlReferrer.Query).Get("lang") != String.Empty))
                 {
