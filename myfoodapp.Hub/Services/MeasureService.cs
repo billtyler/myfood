@@ -20,7 +20,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<MeasureViewModel> result = new List<MeasureViewModel>();
 
-            result = entities.Measures.OrderByDescending(m => m.captureDate).Take(2000).Select(meas => new MeasureViewModel
+            result = entities.Measures.OrderByDescending(m => m.captureDate).Take(1000).Select(meas => new MeasureViewModel
             {
                 Id = meas.Id,
                 captureDate = meas.captureDate,

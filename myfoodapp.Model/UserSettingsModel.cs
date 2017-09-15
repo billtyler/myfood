@@ -49,7 +49,7 @@ namespace myfoodapp.Model
                         isSleepModeEnable = false,
                         isTempHumiditySensorEnable = true,
                         isDiagnosticModeEnable = false,
-                        measureFrequency = 60000,
+                        measureFrequency = 600000,
                         productionSiteId = "XXXXX",
                         hubMessageAPI = "https://hub.myfood.eu/api/Messages",
                         SSID = "MYFOODPI_AP",

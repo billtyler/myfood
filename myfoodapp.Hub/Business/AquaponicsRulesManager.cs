@@ -1,12 +1,13 @@
-﻿using myfoodapp.Hub.Common;
-using myfoodapp.Hub.Models;
+﻿using myfoodapp.Hub.Models;
 using Newtonsoft.Json;
 using SimpleExpressionEvaluator;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 
@@ -19,14 +20,26 @@ namespace myfoodapp.Hub.Business
             Evaluator evaluator = new Evaluator();
             bool isValid = true;
 
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
 
             var data = File.ReadAllText(HostingEnvironment.MapPath("~/Content/AquaponicsRules.json"));
             var rulesList = JsonConvert.DeserializeObject<List<Rule>>(data);
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.language).Where(p => p.Id == productionUnitId).FirstOrDefault();
             var warningEventType = db.EventTypes.Where(p => p.Id == 1).FirstOrDefault();
+
+            var currentProductionUnitOwner = currentProductionUnit.owner;
+
+            if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
+            {
+
+                i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                System.Web.HttpContext.Current,
+                i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description), true);
+            }
 
             foreach (var rule in rulesList)
             {
@@ -36,11 +49,12 @@ namespace myfoodapp.Hub.Business
                     if (rslt)
                     {
                         var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
-                        var message = String.Format(rule.warningContent, bindingValue);
+                        var messageLocalised = i18n.HttpContextExtensions.ParseAndTranslate(HttpContext.Current, rule.warningContent);
+                        var message = String.Format(messageLocalised, bindingValue);
 
                         if(currentProductionUnit != null)
                         {
-                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit, eventType = warningEventType });
+                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit, eventType = warningEventType, createdBy = "MyFood Bot" });
                             db.SaveChanges();
                         }
 
@@ -62,6 +76,13 @@ namespace myfoodapp.Hub.Business
             {
                 dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Save Events"), ex));
                 dbLog.SaveChanges();
+            }
+
+            if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
+            {
+                i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                System.Web.HttpContext.Current,
+                i18n.LanguageHelpers.GetMatchingAppLanguage("en"), true);
             }
 
             return isValid;

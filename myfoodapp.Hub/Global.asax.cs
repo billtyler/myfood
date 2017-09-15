@@ -1,22 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using myfoodapp.Hub.Business;
+using myfoodapp.Hub.Common;
+using myfoodapp.Hub.Models;
+using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Timers;
+using System.Web;
 using System.Web.Configuration;
 using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Timers;
-using myfoodapp.Hub.Models;
-using System.Text;
-using myfoodapp.Hub.Common;
-using i18n;
-using System.Threading;
-using System.Globalization;
-using System.Data.Entity;
-using Microsoft.AspNet.Identity;
-using System.Web;
-using myfoodapp.Hub.Business;
 
 namespace myfoodapp.Hub
 {
@@ -64,6 +61,15 @@ namespace myfoodapp.Hub
                 return true;
             };
 
+            var db = new ApplicationDbContext();
+
+            var productionUnits = db.ProductionUnits.Include(p => p.owner);
+
+            productionUnits.Where(p => p.owner.notificationPushKey != null).ToList().ForEach(currentProductionUnit => 
+            {
+                NotificationPushManager.PioneerUnitOwnerFeelingMessage(currentProductionUnit);
+            });
+            
             System.Timers.Timer rulesTimer = new System.Timers.Timer(RulesTimerIntervalInMilliseconds);
             rulesTimer.Enabled = true;
             rulesTimer.Elapsed += new ElapsedEventHandler(rulesTimer_Elapsed);
@@ -73,7 +79,6 @@ namespace myfoodapp.Hub
             offineTimer.Enabled = true;
             offineTimer.Elapsed += new ElapsedEventHandler(offlineTimer_Elapsed);
             offineTimer.Start();
-
         }
 
         static void offlineTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -117,7 +122,7 @@ namespace myfoodapp.Hub
 
             if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
             {
-                var db = new ApplicationDbContext();
+            var db = new ApplicationDbContext();
 
             var upRunningStatus = db.ProductionUnitStatus.Where(p => p.Id == 3).FirstOrDefault();
 
@@ -145,8 +150,7 @@ namespace myfoodapp.Hub
                     {
                         dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
                         dbLog.SaveChanges();
-                    }
-                    
+                    }                    
 
                     dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Validation ended for {0}", p.info), Log.LogType.Information));
                     dbLog.SaveChanges();
@@ -208,16 +212,15 @@ namespace myfoodapp.Hub
 
             foreach (var item in groupedEvents)
             {
-                var productionUnitOwnerMail = item.Key.owner.user.Email;
-                var productionUnitOwnerName = item.Key.owner.pioneerCitizenName;
                 var notificationPushKey = item.Key.owner.notificationPushKey;
                 var productionUnitId = item.Key.Id;
                 var productionUnitInfo = item.Key.info;
 
-                var mailSubject = String.Format("[[[Daily Events on your myfood Unit {0}]]]", productionUnitInfo);
-                var mailContent = new StringBuilder();
-
-                NotificationPushManager.PushMessage(mailSubject, "[[[Click to see your production unit's status]]]", productionUnitId, notificationPushKey);
+                var title = String.Format("[[[Daily Events on your myfood Unit {0}]]]", productionUnitInfo);
+                if(notificationPushKey != null)
+                {
+                    NotificationPushManager.PioneerUnitEventMessage(title, "[[[Click to see your production unit's status]]]", productionUnitId, notificationPushKey);
+                } 
             }
         }
 

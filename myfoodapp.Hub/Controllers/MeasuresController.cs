@@ -18,15 +18,12 @@ namespace myfoodapp.Hub.Controllers
     {
         [Authorize]
         // GET: Measures
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             PopulateSensorsTypes();
             PopulateProductionUnit();
-
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
             
-            return View(await db.Measures.ToListAsync());
+            return View();
         }
 
         [Authorize]

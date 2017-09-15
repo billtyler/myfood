@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+using myfoodapp.Hub.Models;
+using myfoodapp.Hub.Services;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using myfoodapp.Hub.Models;
-using Kendo.Mvc.UI;
-using Kendo.Mvc.Extensions;
-using myfoodapp.Hub.Services;
 
 namespace myfoodapp.Hub.Controllers
 {
@@ -18,11 +14,11 @@ namespace myfoodapp.Hub.Controllers
     {
         // GET: Log
         [Authorize]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             var db = new ApplicationDbContext();
 
-            return View(await db.Logs.ToListAsync());
+            return View();
         }
 
         [Authorize]
