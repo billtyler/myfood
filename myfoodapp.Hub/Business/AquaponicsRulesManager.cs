@@ -4,10 +4,8 @@ using SimpleExpressionEvaluator;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 
@@ -15,12 +13,12 @@ namespace myfoodapp.Hub.Business
 {
     public class AquaponicsRulesManager
     {
+        static HttpContext context = HttpContext.Current;
+
         public static bool ValidateRules(GroupedMeasure currentMeasures, int productionUnitId)
         {
             Evaluator evaluator = new Evaluator();
             bool isValid = true;
-
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
 
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationDbContext dbLog = new ApplicationDbContext();
@@ -33,30 +31,35 @@ namespace myfoodapp.Hub.Business
 
             var currentProductionUnitOwner = currentProductionUnit.owner;
 
-            if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
-            {
-
-                i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
-                System.Web.HttpContext.Current,
-                i18n.LanguageHelpers.GetMatchingAppLanguage(currentProductionUnitOwner.language.description), true);
-            }
-
             foreach (var rule in rulesList)
             {
                 try
                 {
                     bool rslt = evaluator.Evaluate(rule.ruleEvaluator, currentMeasures);
+                    var warningContent = rule.warningContent;
+
+                    if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
+                    {
+                        switch (currentProductionUnitOwner.language.description)
+                        {
+                            case "fr":
+                                warningContent = rule.warningContentFR;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
+                    var message = String.Format(warningContent, bindingValue);
+
                     if (rslt)
                     {
-                        var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
-                        var messageLocalised = i18n.HttpContextExtensions.ParseAndTranslate(HttpContext.Current, rule.warningContent);
-                        var message = String.Format(messageLocalised, bindingValue);
-
-                        if(currentProductionUnit != null)
-                        {
-                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit, eventType = warningEventType, createdBy = "MyFood Bot" });
-                            db.SaveChanges();
-                        }
+                            if (currentProductionUnit != null)
+                            {
+                                db.Events.Add(new Event() { date = DateTime.Now, description = message, isOpen = false, productionUnit = currentProductionUnit, eventType = warningEventType, createdBy = "MyFood Bot" });
+                                db.SaveChanges();
+                            }
 
                         isValid = false;
                     }

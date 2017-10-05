@@ -4,9 +4,12 @@ using System;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
 
 namespace myfoodapp.Hub.Controllers.Api
 {
@@ -14,7 +17,7 @@ namespace myfoodapp.Hub.Controllers.Api
     {
         // POST api/<controller>
         //[Authorize]
-        public IHttpActionResult Get(int productionUnitId, int eventTypeId, int eventTypeItemId)
+        public HttpResponseMessage Get(int productionUnitId, int eventTypeId, int eventTypeItemId)
         {
             var db = new ApplicationDbContext();
             var dbLog = new ApplicationDbContext();
@@ -30,7 +33,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     dbLog.Logs.Add(Log.CreateLog("Production Unit not found from Push Message", Log.LogType.Warning));
                     dbLog.SaveChanges();
 
-                    return NotFound();
+                    return null;
                 }
 
                 var currentEventType = db.EventTypes.Where(p => p.Id == eventTypeId).FirstOrDefault();
@@ -40,7 +43,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     dbLog.Logs.Add(Log.CreateLog("Event Type not found from Push Message", Log.LogType.Warning));
                     dbLog.SaveChanges();
 
-                    return NotFound();
+                    return null;
                 }
 
                 var currentEventTypeItem = db.EventTypeItems.Where(p => p.Id == eventTypeItemId).FirstOrDefault();
@@ -50,7 +53,7 @@ namespace myfoodapp.Hub.Controllers.Api
                     dbLog.Logs.Add(Log.CreateLog("Event Type Item not found from Push Message", Log.LogType.Warning));
                     dbLog.SaveChanges();
 
-                    return NotFound();
+                    return null;
                 }
 
                 var currentProductionUnitOwner = currentProductionUnit.owner;
@@ -74,7 +77,21 @@ namespace myfoodapp.Hub.Controllers.Api
                 dbLog.SaveChanges();
             }
 
-            return Ok();
+            // return new JavaScriptResult();
+
+            var response = new HttpResponseMessage();
+            response.Content = new StringContent(@"<html><script type=""text/javascript"">window.close();</script><body></body></html>");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");
+            return response;
+        }
+
+        public class JavaScriptResult : ContentResult
+        {
+            public JavaScriptResult(string script)
+            {
+                this.Content = script;
+                this.ContentType = "application/javascript";
+            }
         }
     }
 }

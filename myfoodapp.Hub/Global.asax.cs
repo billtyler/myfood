@@ -34,9 +34,6 @@ namespace myfoodapp.Hub
 
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
-            //Change from the default of 'en'.
-            //i18n.LocalizedApplication.Current.DefaultLanguage = "en";
-
             // Change the URL localization scheme from Scheme1.
             i18n.UrlLocalizer.UrlLocalizationScheme = i18n.UrlLocalizationScheme.Void;
 
@@ -53,7 +50,8 @@ namespace myfoodapp.Hub
             };
 
             // Blacklist certain URLs from being 'localized' via a callback.
-            i18n.UrlLocalizer.IncomingUrlFilters += delegate (Uri url) {
+            i18n.UrlLocalizer.IncomingUrlFilters += delegate (Uri url)
+            {
                 if (url.LocalPath.EndsWith("sitemap.xml", StringComparison.OrdinalIgnoreCase))
                 {
                     return false;
@@ -61,15 +59,6 @@ namespace myfoodapp.Hub
                 return true;
             };
 
-            var db = new ApplicationDbContext();
-
-            var productionUnits = db.ProductionUnits.Include(p => p.owner);
-
-            productionUnits.Where(p => p.owner.notificationPushKey != null).ToList().ForEach(currentProductionUnit => 
-            {
-                NotificationPushManager.PioneerUnitOwnerFeelingMessage(currentProductionUnit);
-            });
-            
             System.Timers.Timer rulesTimer = new System.Timers.Timer(RulesTimerIntervalInMilliseconds);
             rulesTimer.Enabled = true;
             rulesTimer.Elapsed += new ElapsedEventHandler(rulesTimer_Elapsed);
@@ -90,22 +79,21 @@ namespace myfoodapp.Hub
             {
                 var db = new ApplicationDbContext();
 
-            var devKitType = db.ProductionUnitTypes.Where(s => s.Id == 6).FirstOrDefault();
-            var customType = db.ProductionUnitTypes.Where(s => s.Id == 7).FirstOrDefault();
+                var upRunningStatus = db.ProductionUnitStatus.Where(s => s.Id == 3).FirstOrDefault();
+                var offlineStatus = db.ProductionUnitStatus.Where(s => s.Id == 6).FirstOrDefault();
 
-            var onlineStatus = db.ProductionUnitStatus.Where(s => s.Id == 3).FirstOrDefault();
-            var offlineStatus = db.ProductionUnitStatus.Where(s => s.Id == 6).FirstOrDefault();
+                var upRunningProductionUnits = db.ProductionUnits.Include(p => p.owner.language).Where(p => p.productionUnitStatus.Id == upRunningStatus.Id).ToList();
 
-            var activeProductionUnits = db.ProductionUnits.Where(p => p.productionUnitStatus == onlineStatus 
-                                                             && p.productionUnitType != devKitType
-                                                             && p.productionUnitType != customType).ToList();
+                var currentDate = DateTime.Now;
 
-            var currentDate = DateTime.Now;
-
-            activeProductionUnits.ForEach(p =>
+                upRunningProductionUnits.ForEach(p =>
                 {
-                if (p.lastMeasureReceived == null ||  currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(30))
-                    p.productionUnitStatus = offlineStatus;
+                    if (p.lastMeasureReceived == null ||  currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(30))
+                        p.productionUnitStatus = offlineStatus;
+                        if (p.owner.notificationPushKey != null)
+                        {
+                            NotificationPushManager.PioneerUnitOfflineMessage(p);
+                        }
                 });
 
                 db.SaveChanges();
@@ -118,46 +106,11 @@ namespace myfoodapp.Hub
             DateTime CurrentSystemTime = DateTime.Now;
             DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(RulesTimerIntervalInMilliseconds);
 
-            var dbLog = new ApplicationDbContext();
-
             if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
             {
-            var db = new ApplicationDbContext();
-
-            var upRunningStatus = db.ProductionUnitStatus.Where(p => p.Id == 3).FirstOrDefault();
-
-            var upRunningProductionUnits = db.ProductionUnits.Include(p => p.productionUnitStatus)
-                                                             .Where(p => p.productionUnitStatus.Id == upRunningStatus.Id).ToList();
-
-            dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Processing starts @{0} for {1} Production Units", CurrentSystemTime.ToShortTimeString(), upRunningProductionUnits.Count), Log.LogType.Information));
-            dbLog.SaveChanges();
-
-            upRunningProductionUnits.ForEach(p => 
-                {
-                    dbLog.Logs.Add(Log.CreateLog(String.Format("Measures Processing for {0}", p.info), Log.LogType.Information));
-                    dbLog.SaveChanges();
-
-                    var currentMeasures = AquaponicsRulesManager.MeasuresProcessor(p.Id);
-
-                    dbLog.Logs.Add(Log.CreateLog(String.Format("Measures Validating for {0}", p.info), Log.LogType.Information));
-                    dbLog.SaveChanges();
-
-                    try
-                    {
-                        AquaponicsRulesManager.ValidateRules(currentMeasures, p.Id);
-                    }
-                    catch (Exception ex)
-                    {
-                        dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
-                        dbLog.SaveChanges();
-                    }                    
-
-                    dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Validation ended for {0}", p.info), Log.LogType.Information));
-                    dbLog.SaveChanges();
-                });
-
+                PerformValidationRules();
                 SendDailyMessage();
-         }
+            }
         }
 
         protected void Application_AuthenticateRequest()
@@ -206,22 +159,58 @@ namespace myfoodapp.Hub
 
             var yesterdayDate = DateTime.Now.AddDays(-1);
 
-            var todayEvents = db.Events.Include(e => e.productionUnit.owner.user).Where(ev => ev.date > yesterdayDate).ToList();
+            var todayEvents = db.Events.Include(e => e.productionUnit.owner.user)
+                                       .Include(e => e.productionUnit.owner.language)
+                                       .Where(ev => ev.date > yesterdayDate).ToList();
 
             var groupedEvents = todayEvents.GroupBy(ev => ev.productionUnit);
 
             foreach (var item in groupedEvents)
             {
-                var notificationPushKey = item.Key.owner.notificationPushKey;
-                var productionUnitId = item.Key.Id;
-                var productionUnitInfo = item.Key.info;
-
-                var title = String.Format("[[[Daily Events on your myfood Unit {0}]]]", productionUnitInfo);
-                if(notificationPushKey != null)
+                var currentProductionUnit = item.Key;
+                if(currentProductionUnit.owner.notificationPushKey != null)
                 {
-                    NotificationPushManager.PioneerUnitEventMessage(title, "[[[Click to see your production unit's status]]]", productionUnitId, notificationPushKey);
+                    NotificationPushManager.PioneerUnitEventMessage(currentProductionUnit);
                 } 
             }
+        }
+
+        private static void PerformValidationRules()
+        {
+            var db = new ApplicationDbContext();
+            var dbLog = new ApplicationDbContext();
+
+            var upRunningStatus = db.ProductionUnitStatus.Where(p => p.Id == 3).FirstOrDefault();
+
+            var upRunningProductionUnits = db.ProductionUnits.Include(p => p.productionUnitStatus)
+                                                             .Where(p => p.productionUnitStatus.Id == upRunningStatus.Id).ToList();
+
+            dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Processing starts @{0} for {1} Production Units", DateTime.Now, upRunningProductionUnits.Count), Log.LogType.Information));
+            dbLog.SaveChanges();
+
+            upRunningProductionUnits.ForEach(p =>
+            {
+                dbLog.Logs.Add(Log.CreateLog(String.Format("Measures Processing for {0}", p.info), Log.LogType.Information));
+                dbLog.SaveChanges();
+
+                var currentMeasures = AquaponicsRulesManager.MeasuresProcessor(p.Id);
+
+                dbLog.Logs.Add(Log.CreateLog(String.Format("Measures Validating for {0}", p.info), Log.LogType.Information));
+                dbLog.SaveChanges();
+
+                try
+                {
+                    AquaponicsRulesManager.ValidateRules(currentMeasures, p.Id);
+                }
+                catch (Exception ex)
+                {
+                    dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager Evaluator"), ex));
+                    dbLog.SaveChanges();
+                }
+
+                dbLog.Logs.Add(Log.CreateLog(String.Format("Rules Validation ended for {0}", p.info), Log.LogType.Information));
+                dbLog.SaveChanges();
+            });
         }
 
     }

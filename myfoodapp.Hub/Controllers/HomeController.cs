@@ -1,7 +1,5 @@
-﻿using i18n;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Microsoft.AspNet.Identity;
 using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
@@ -11,7 +9,6 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -19,30 +16,15 @@ namespace myfoodapp.Hub.Controllers
 {
     public class HomeController : Controller
     {
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
+            base.Initialize(requestContext);
+        }
+
         public ActionResult Index()
         {
-            //var db = new ApplicationDbContext();
-
-            //var listMarker = new List<Marker>();
-
-            //db.ProductionUnits.ToList().ForEach(p =>
-            //                            listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
-            //                                                      p.info, p.startDate.ToShortDateString()))
-            //                            { shape = "redMarker" }));
-
-            //var map = new Models.Map()
-            //{
-            //    Name = "map",
-            //    CenterLatitude = 44.0235561,
-            //    CenterLongitude = -10.3640063,
-            //    Zoom = 4,
-            //    TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
-            //    TileSubdomains = new string[] { "a", "b", "c" },
-            //    TileAttribution = "&copy; <a href='http://osm.org/copyright'>OpenStreetMap contributors</a>",
-            //    Markers = listMarker
-            //};
-
-            //return View(map);
             return View();
         }
 
@@ -150,7 +132,7 @@ namespace myfoodapp.Hub.Controllers
 
                 return Json(new
                 {
-                    CurrentIndex = currentProductionUnitIndex
+                   CurrentIndex = currentProductionUnitIndex
                 }, JsonRequestBehavior.AllowGet);
             }
             else

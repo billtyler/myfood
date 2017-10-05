@@ -9,15 +9,16 @@
             autoRegister: false,
             notifyButton: {
                 enable: true
+            },
+            prenotify: true,
+            showCredit: false,
+            size: 'large',
+            welcomeNotification: {
+                "title": "Myfood Smart Push Enabled",
+                "message": "You will received messages from your Prod. Unit",
             }
         }]); 
     }
-
-    //OneSignal.push(function () {
-    //    OneSignal.getUserId(function (userId) {
-    //        console.log("OneSignal User ID:", userId);  
-    //    });
-    //});
 
     OneSignal.push(function () {
         OneSignal.on('subscriptionChange', function (isSubscribed) {

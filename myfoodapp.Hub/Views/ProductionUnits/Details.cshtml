@@ -124,6 +124,25 @@
         chartHumidity.dataSource.read({ id: productionUnitId, range: "thisWeek" });
     }
 
+    function onLastThreeMonthsClick() {
+        $(".toggleButton").removeClass("k-state-active");
+        $(this).addClass("k-state-active");
+
+        var productionUnitId = $('#routeDataId').val();
+
+        var chartPh = $("#chartPh").data("kendoChart");
+        chartPh.dataSource.read({ id: productionUnitId, range: "lastThreeMonths" });
+
+        var chartWatTemp = $("#chartWatTemp").data("kendoChart");
+        chartWatTemp.dataSource.read({ id: productionUnitId, range: "lastThreeMonths" });
+
+        var chartAirTemp = $("#chartAirTemp").data("kendoChart");
+        chartAirTemp.dataSource.read({ id: productionUnitId, range: "lastThreeMonths" });
+
+        var chartHumidity = $("#chartHumidity").data("kendoChart");
+        chartHumidity.dataSource.read({ id: productionUnitId, range: "lastThreeMonths" });
+    }
+
     function onExportCSVClick() {
         var productionUnitId = $('#routeDataId').val();
         window.location.href = "@Url.Action("DownloadCSV", "ProductionUnits")?id=" + productionUnitId;
@@ -177,10 +196,16 @@
         var currentEventypeId = $('#listViewEventType').data("kendoListView").dataSource.view()[currentEventypeIndex].Id;
 
         var currentEventTypeItemIndex = $('#listViewEventTypeItems').data("kendoListView").select().index();
-        if (currentEventTypeItemIndex == -1)
-            return;
+        var currentEventTypeItemId = 0;
 
-        var currentEventTypeItemId = $('#listViewEventTypeItems').data("kendoListView").dataSource.view()[currentEventTypeItemIndex].Id;
+        if (currentEventTypeItemIndex == -1)
+        {
+            currentEventTypeItemId = 0;
+        }
+        else
+        {
+            currentEventTypeItemId = $('#listViewEventTypeItems').data("kendoListView").dataSource.view()[currentEventTypeItemIndex].Id;
+        }
 
         var strNote = $('#descriptionTextBox').val();
 
@@ -225,7 +250,7 @@
 
         <div id="managementButton">
             <p>
-                @(Html.Kendo().Button()
+            @(Html.Kendo().Button()
             .Name("addEventButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Add Event]]]")
@@ -233,7 +258,7 @@
             </p>
 
             <p>
-                @(Html.Kendo().Button()
+            @(Html.Kendo().Button()
             .Name("viewEventsButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[View Events]]]")
@@ -241,7 +266,7 @@
             </p>
 
             <p>
-                @(Html.Kendo().Button()
+            @(Html.Kendo().Button()
             .Name("manageUnitButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Manage Unit]]]")
@@ -253,7 +278,7 @@
 
         <div id="filterButton">
             <p>
-                @(Html.Kendo().Button()
+            @(Html.Kendo().Button()
             .Name("thisWeekButton")
             .HtmlAttributes(new { @class = "toggleButton k-state-active btn-block" })
             .Content("[[[This Last Days]]]")
@@ -261,11 +286,19 @@
             </p>
 
             <p>
-                @(Html.Kendo().Button()
+            @(Html.Kendo().Button()
             .Name("thisMonthButton")
             .HtmlAttributes(new { @class = "toggleButton btn-block" })
             .Content("[[[This Week]]]")
             .Events(ev => ev.Click("onThisMonthClick")))
+            </p>
+
+            <p>
+             @(Html.Kendo().Button()
+            .Name("lastThreeMonthsClick")
+            .HtmlAttributes(new { @class = "toggleButton btn-block" })
+            .Content("[[[Last Three Months]]]")
+            .Events(ev => ev.Click("onLastThreeMonthsClick")))
             </p>
 
         </div>

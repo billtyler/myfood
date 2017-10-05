@@ -42,6 +42,7 @@ namespace myfoodapp.Hub.Models
     {
         public string ruleEvaluator { get; set; }
         public string warningContent { get; set; }
+        public string warningContentFR { get; set; }
         public string bindingPropertyValue { get; set; }
     }
 }

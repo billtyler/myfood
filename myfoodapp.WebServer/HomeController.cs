@@ -277,8 +277,9 @@ namespace myfoodapp.WebServer
 
                     newUserSettings.isDebugLedEnable = args[0];
                     newUserSettings.isDiagnosticModeEnable = args[1];
-                    newUserSettings.isTempHumiditySensorEnable = args[2];
-                    newUserSettings.isSigFoxComEnable = args[3];
+                    newUserSettings.isSigFoxComEnable = args[2];
+                    newUserSettings.isTempHumiditySensorEnable = args[3];
+                    
                     newUserSettings.productionSiteId = productionSiteId;
 
                     newUserSettings.ACCESS_POINT_PWD = currentUserSettings.ACCESS_POINT_PWD;
