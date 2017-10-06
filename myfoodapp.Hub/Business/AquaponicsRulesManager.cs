@@ -1,12 +1,11 @@
-﻿using myfoodapp.Hub.Common;
-using myfoodapp.Hub.Models;
+﻿using myfoodapp.Hub.Models;
 using Newtonsoft.Json;
 using SimpleExpressionEvaluator;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Hosting;
 
@@ -14,6 +13,8 @@ namespace myfoodapp.Hub.Business
 {
     public class AquaponicsRulesManager
     {
+        static HttpContext context = HttpContext.Current;
+
         public static bool ValidateRules(GroupedMeasure currentMeasures, int productionUnitId)
         {
             Evaluator evaluator = new Evaluator();
@@ -25,24 +26,40 @@ namespace myfoodapp.Hub.Business
             var data = File.ReadAllText(HostingEnvironment.MapPath("~/Content/AquaponicsRules.json"));
             var rulesList = JsonConvert.DeserializeObject<List<Rule>>(data);
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.Id == productionUnitId).FirstOrDefault();
+            var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.language).Where(p => p.Id == productionUnitId).FirstOrDefault();
             var warningEventType = db.EventTypes.Where(p => p.Id == 1).FirstOrDefault();
+
+            var currentProductionUnitOwner = currentProductionUnit.owner;
 
             foreach (var rule in rulesList)
             {
                 try
                 {
                     bool rslt = evaluator.Evaluate(rule.ruleEvaluator, currentMeasures);
+                    var warningContent = rule.warningContent;
+
+                    if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
+                    {
+                        switch (currentProductionUnitOwner.language.description)
+                        {
+                            case "fr":
+                                warningContent = rule.warningContentFR;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
+                    var message = String.Format(warningContent, bindingValue);
+
                     if (rslt)
                     {
-                        var bindingValue = currentMeasures.GetType().GetProperty(rule.bindingPropertyValue).GetValue(currentMeasures, null);
-                        var message = String.Format(rule.warningContent, bindingValue);
-
-                        if(currentProductionUnit != null)
-                        {
-                            db.Events.Add(new Event() { date = DateTime.Now, description = message, productionUnit = currentProductionUnit, eventType = warningEventType });
-                            db.SaveChanges();
-                        }
+                            if (currentProductionUnit != null)
+                            {
+                                db.Events.Add(new Event() { date = DateTime.Now, description = message, isOpen = false, productionUnit = currentProductionUnit, eventType = warningEventType, createdBy = "MyFood Bot" });
+                                db.SaveChanges();
+                            }
 
                         isValid = false;
                     }
@@ -62,6 +79,13 @@ namespace myfoodapp.Hub.Business
             {
                 dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Save Events"), ex));
                 dbLog.SaveChanges();
+            }
+
+            if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
+            {
+                i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
+                System.Web.HttpContext.Current,
+                i18n.LanguageHelpers.GetMatchingAppLanguage("en"), true);
             }
 
             return isValid;

@@ -4,7 +4,6 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Business;
-using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
 using System;
@@ -14,10 +13,8 @@ using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -608,14 +605,17 @@ namespace myfoodapp.Hub.Controllers
             };
 
             if (!String.IsNullOrEmpty(note))
-                newEvent.description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note);
+                if (currentEventTypeItem != null)
+                    newEvent.description = String.Format("{0} : {1}", HttpContext.ParseAndTranslate(currentEventTypeItem.name), note);
+                else
+                    newEvent.description = String.Format("{0}", note);
             else
-                newEvent.description = String.Format("{0}", HttpContext.ParseAndTranslate(currentEventTypeItem.name));
+                if (currentEventTypeItem != null)
+                    newEvent.description = String.Format("{0}", HttpContext.ParseAndTranslate(currentEventTypeItem.name));
+            else
+                    newEvent.description = String.Empty;
 
-            UnicodeEncoding unicode = new UnicodeEncoding();
-            Byte[] encodedBytes = unicode.GetBytes(newEvent.description);
-
-            newEvent.description = unicode.GetString(encodedBytes);
+            newEvent.description = System.Web.HttpUtility.HtmlDecode(newEvent.description);
 
             try
             {

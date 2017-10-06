@@ -400,6 +400,7 @@
     <Compile Include="Common\MailManager.cs" />
     <Compile Include="Common\NotificationPushManager.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\API\PushController.cs" />
     <Compile Include="Controllers\API\OpenData\OpenDataController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ProductionUnitOwnerController.cs" />
@@ -1205,6 +1206,8 @@
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\miniLogoWhite.png" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Pictures\Feelings\happy.png" />
+    <Content Include="Content\Pictures\Feelings\needHelp.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningFishTank.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningPermacultureBed.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningTowerGarden.png" />
@@ -1249,9 +1252,11 @@
     <Content Include="Content\Pictures\Sites\BlancMesnilCity.jpg" />
     <Content Include="Content\Pictures\Sites\BoisColombesCity.jpg" />
     <Content Include="Content\Pictures\Sites\BraineFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\BreziersFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\ChanteheuxFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\ChantepieFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\EssenFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\ForgesFamily22.jpg" />

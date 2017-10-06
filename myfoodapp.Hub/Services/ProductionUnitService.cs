@@ -167,15 +167,7 @@ namespace myfoodapp.Hub.Services
 
             entities.ProductionUnits.Add(entity);
 
-            try
-            {
-                entities.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                var ttt = ex;
-                throw;
-            }         
+            entities.SaveChanges();     
 
             productionUnit.Id = entity.Id;
         }

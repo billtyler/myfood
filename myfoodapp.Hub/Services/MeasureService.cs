@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 
@@ -20,7 +21,7 @@ namespace myfoodapp.Hub.Services
         {
             IList<MeasureViewModel> result = new List<MeasureViewModel>();
 
-            result = entities.Measures.OrderByDescending(m => m.captureDate).Take(2000).Select(meas => new MeasureViewModel
+            result = entities.Measures.OrderByDescending(m => m.captureDate).Take(1000).Select(meas => new MeasureViewModel
             {
                 Id = meas.Id,
                 captureDate = meas.captureDate,
@@ -92,9 +93,11 @@ namespace myfoodapp.Hub.Services
         {
             IList<MeasureViewModel> result = new List<MeasureViewModel>();
 
-            var fewDaysAgo = DateTime.Now.AddDays(-4);
+            var fewDaysAgo = DateTime.Now.AddDays(-6);
 
-            var aWeekAgo = DateTime.Now.AddDays(-8);
+            var aWeekAgo = DateTime.Now.AddDays(-14);
+
+            var threeMonthsAgo = DateTime.Now.AddDays(-90);
 
             var selectedTimeFrame = new DateTime();
 
@@ -108,29 +111,64 @@ namespace myfoodapp.Hub.Services
                 selectedTimeFrame = aWeekAgo;
             }
 
-            result = entities.Measures.OrderByDescending(m => m.captureDate)
-                                      .Where(m => m.sensor.Id == (int)sensorType && m.productionUnit.Id == currentProductionUnitId && m.captureDate > selectedTimeFrame)
-                                      .Select(meas => new MeasureViewModel
+            if (range == "lastThreeMonths")
             {
-                Id = meas.Id,
-                captureDate = meas.captureDate,
-                value = meas.value,
-                sensorId = meas.sensor.Id,
-                sensor = new SensorTypeViewModel()
-                {
-                    Id = meas.sensor.Id,
-                    name = meas.sensor.name
-                },
-                productionUnitId = meas.productionUnit.Id,
-                productionUnit = new ProductionUnitViewModel()
-                {
-                    Id = meas.productionUnit.Id,
-                    info = meas.productionUnit.info,
-                    locationLatitude = meas.productionUnit.locationLatitude,
-                    locationLongitude = meas.productionUnit.locationLongitude
-                },
+                selectedTimeFrame = threeMonthsAgo;
+            }
 
-            }).ToList();
+            if (range == "lastThreeMonths")
+            {
+                result = entities.Measures.OrderByDescending(m => m.captureDate)
+                .Where(m => m.sensor.Id == (int)sensorType && m.productionUnit.Id == currentProductionUnitId && m.captureDate > selectedTimeFrame && m.captureDate.Hour == 9 && m.captureDate.Minute < 15)
+                .Select(meas => new MeasureViewModel
+                {
+                    Id = meas.Id,
+                    captureDate = meas.captureDate,
+                    value = meas.value,
+                    sensorId = meas.sensor.Id,
+                    sensor = new SensorTypeViewModel()
+                    {
+                        Id = meas.sensor.Id,
+                        name = meas.sensor.name
+                    },
+                    productionUnitId = meas.productionUnit.Id,
+                    productionUnit = new ProductionUnitViewModel()
+                    {
+                        Id = meas.productionUnit.Id,
+                        info = meas.productionUnit.info,
+                        locationLatitude = meas.productionUnit.locationLatitude,
+                        locationLongitude = meas.productionUnit.locationLongitude
+                    },
+
+                }).ToList();
+            }
+            else
+            {
+               result = entities.Measures.OrderByDescending(m => m.captureDate)
+              .Where(m => m.sensor.Id == (int)sensorType && m.productionUnit.Id == currentProductionUnitId && m.captureDate > selectedTimeFrame)
+              .Select(meas => new MeasureViewModel
+              {
+                  Id = meas.Id,
+                  captureDate = meas.captureDate,
+                  value = meas.value,
+                  sensorId = meas.sensor.Id,
+                  sensor = new SensorTypeViewModel()
+                  {
+                      Id = meas.sensor.Id,
+                      name = meas.sensor.name
+                  },
+                  productionUnitId = meas.productionUnit.Id,
+                  productionUnit = new ProductionUnitViewModel()
+                  {
+                      Id = meas.productionUnit.Id,
+                      info = meas.productionUnit.info,
+                      locationLatitude = meas.productionUnit.locationLatitude,
+                      locationLongitude = meas.productionUnit.locationLongitude
+                  },
+
+              }).ToList();
+
+            }
 
             return result;
         }

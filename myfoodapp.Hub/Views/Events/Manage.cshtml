@@ -59,9 +59,9 @@
             columns.ForeignKey(c => c.eventTypeId, (System.Collections.IEnumerable)ViewData["eventTypes"], "Id", "name").Title("[[[type]]]").Width(80);
             columns.Bound(c => c.date).Format("{0:d}").Width(80);
             columns.Bound(c => c.description).Width(250);
-            columns.Bound(c => c.isOpen).Title("[[[open]]]").Width(80);
+            columns.Bound(c => c.isOpen).Title("[[[isOpen]]]").ClientTemplate("#= isOpen ? '[[[Yes]]]' : '[[[No]]]' #").Width(80);
             columns.Bound(c => c.productionUnit.info).Title("[[[info]]]").Groupable(true).Width(120);
-            columns.Bound(c => c.createdBy).Width(100);
+            columns.Bound(c => c.createdBy).Title("[[[created by]]]").Width(100);
             columns.Command(command => { command.Edit(); command.Destroy();}).Width(150);
         })
         .ToolBar(toolbar =>

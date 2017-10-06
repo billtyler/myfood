@@ -72,6 +72,47 @@ namespace myfoodapp.Hub.Services
             return result;
         }
 
+        public void Create(ProductionUnitOwnerViewModel currentProductionUnitOwnerViewModel)
+        {
+
+            PreferedMoment currentPreferedMoment = new PreferedMoment();
+            currentPreferedMoment = entities.PreferedMoments.Where(p => p.Id == currentProductionUnitOwnerViewModel.preferedMomentId).FirstOrDefault();
+
+            var entity = new ProductionUnitOwner();
+
+            entity.Id = currentProductionUnitOwnerViewModel.Id;
+            entity.pioneerCitizenNumber = currentProductionUnitOwnerViewModel.pioneerCitizenNumber;
+            entity.pioneerCitizenName = currentProductionUnitOwnerViewModel.pioneerCitizenName;
+            entity.contactMail = currentProductionUnitOwnerViewModel.contactMail;
+            entity.phoneNumber = currentProductionUnitOwnerViewModel.phoneNumber;
+            entity.location = currentProductionUnitOwnerViewModel.location;
+            entity.notificationPushKey = currentProductionUnitOwnerViewModel.notificationPushKey;
+
+
+            if (entity.user == null)
+            {
+                var user = entities.Users.Where(p => p.Id == currentProductionUnitOwnerViewModel.userId).FirstOrDefault();
+                entity.user = user;
+            }
+
+            if (entity.language == null)
+            {
+                var language = entities.Languages.Where(p => p.Id == currentProductionUnitOwnerViewModel.languageId).FirstOrDefault();
+                entity.language = language;
+            }
+
+            if (entity.preferedMoment == null)
+            {
+                var preferedMoment = entities.PreferedMoments.Where(p => p.Id == currentProductionUnitOwnerViewModel.preferedMomentId).FirstOrDefault();
+                entity.preferedMoment = preferedMoment;
+            }
+
+            entities.ProductionUnitOwners.Add(entity);
+
+            entities.SaveChanges();
+
+            currentProductionUnitOwnerViewModel.Id = entity.Id;
+        }
 
         public void Update(ProductionUnitOwnerViewModel currentProductionUnitOwnerViewModel)
         {

@@ -1,8 +1,6 @@
 ﻿using myfoodapp.Hub.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace myfoodapp.Hub.Business
 {
@@ -27,12 +25,14 @@ namespace myfoodapp.Hub.Business
         var lastDayCaptureTime = String.Empty;
 
         var lastValue = db.Measures.Where(m => m.productionUnit.Id == currentProductionUnitId
-                                           && m.sensor.Id == (int)sensor)
-                                     .OrderByDescending(m => m.captureDate).FirstOrDefault();
+                                          && m.sensor.Id == (int)sensor)
+                                   .OrderByDescending(m => m.captureDate).FirstOrDefault();
         if (lastValue != null)
         {
+            TimeZoneInfo rst = TimeZoneInfo.FindSystemTimeZoneById("Romance Standard Time");
+            currentCaptureTime = TimeZoneInfo.ConvertTimeFromUtc(lastValue.captureDate, rst).ToShortTimeString();
+
             currentValue = lastValue.value;
-            currentCaptureTime = lastValue.captureDate.ToShortTimeString();
 
             var lastHour = lastValue.captureDate.AddHours(-1);
 

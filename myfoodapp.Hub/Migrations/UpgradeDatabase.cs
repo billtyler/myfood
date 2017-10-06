@@ -13,28 +13,6 @@ namespace myfoodapp.Hub.Migrations
     {
         public static void DoWork(ApplicationDbContext context)
         {
-            var warningEventTypes = context.EventTypes.Where(g => g.Id == 1).FirstOrDefault();
-            var issueEventTypes = context.EventTypes.Where(g => g.Id == 2).FirstOrDefault();
-            var maintenanceEventTypes = context.EventTypes.Where(g => g.Id == 3).FirstOrDefault();
-            var actionEventTypes = context.EventTypes.Where(g => g.Id == 4).FirstOrDefault();
-            var plantHealthEventTypes = context.EventTypes.Where(g => g.Id == 5).FirstOrDefault();
-            var fishHealthEventTypes = context.EventTypes.Where(g => g.Id == 6).FirstOrDefault();
-            var feelingEventTypes = context.EventTypes.Where(g => g.Id == 7).FirstOrDefault();
-            var infoEventTypes = context.EventTypes.Where(g => g.Id == 8).FirstOrDefault();
-            var advicesEventTypes = context.EventTypes.Where(g => g.Id == 9).FirstOrDefault();
-            var improvementEventTypes = context.EventTypes.Where(g => g.Id == 10).FirstOrDefault();
-
-            var harvestEventTypes = context.EventTypes.Where(g => g.Id == 11).FirstOrDefault();
-
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 60, order = 0, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Plants]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 61, order = 1, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Fish]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 62, order = 2, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Performance]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 63, order = 3, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Pest]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 64, order = 3, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Equipment]]]" });
-
-
-            context.SaveChanges();
-
             //var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
             //var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();
             //var towerGardenGardeningType = context.GardeningTypes.Where(g => g.Id == 2).FirstOrDefault();

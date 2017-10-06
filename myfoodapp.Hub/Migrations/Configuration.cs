@@ -20,7 +20,7 @@ namespace myfoodapp.Hub.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
             //UpgradeDatabase.DoWork(context);
-            return;
+            //return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();
@@ -224,8 +224,8 @@ namespace myfoodapp.Hub.Migrations
             context.EventTypeItems.Add(new EventTypeItem() { Id = 23, order = 1, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Gather vegetables]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 24, order = 2, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Plant seedlings]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 25, order = 3, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add rain water]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 26, order = 4, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add iron]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 27, order = 5, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add peat]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 26, order = 4, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add tape water]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 27, order = 5, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add iron]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 28, order = 6, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add magnesium]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 29, order = 7, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Add potassium]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 30, order = 8, eventType = actionEventTypes, isRestrictedForAdmin = false, name = "[[[Use UV filter]]]" });
@@ -268,7 +268,7 @@ namespace myfoodapp.Hub.Migrations
             context.EventTypeItems.Add(new EventTypeItem() { Id = 61, order = 1, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Fish]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 62, order = 2, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Performance]]]" });
             context.EventTypeItems.Add(new EventTypeItem() { Id = 63, order = 3, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Pest]]]" });
-            context.EventTypeItems.Add(new EventTypeItem() { Id = 63, order = 3, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Equipment]]]" });
+            context.EventTypeItems.Add(new EventTypeItem() { Id = 64, order = 4, eventType = advicesEventTypes, isRestrictedForAdmin = true, name = "[[[Equipment]]]" });
 
             var permacultureBedsGardeningType = context.GardeningTypes.Where(g => g.Id == 0).FirstOrDefault();
             var verticalTowersGardeningType = context.GardeningTypes.Where(g => g.Id == 1).FirstOrDefault();

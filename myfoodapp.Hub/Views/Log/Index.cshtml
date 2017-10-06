@@ -36,10 +36,10 @@
         //.Filterable()
         .Groupable()
         //.ColumnMenu()
-        //.Pageable(pageable => pageable
-        //    .Refresh(true)
-        //    .PageSizes(true)
-        //    .ButtonCount(5))
+        .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5))
         //.Events(events => events.DataBound("onDatabound"))
         .DataSource(dataSource => dataSource
             .Ajax()

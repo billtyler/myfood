@@ -18,14 +18,11 @@ namespace myfoodapp.Hub.Controllers
     {
         // GET: Messages
         [Authorize]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             PopulateMessageTypes();
 
-            var db = new ApplicationDbContext();
-            var messageService = new MessageService(db);
-
-            return View(await db.Messages.ToListAsync());
+            return View();
         }
 
         [Authorize]
