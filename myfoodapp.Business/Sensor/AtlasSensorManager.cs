@@ -155,17 +155,19 @@ namespace myfoodapp.Business.Sensor
 
                                     if (r.Contains("*OK"))
                                     {
-                                        var taskAuto = Task.Run(async () =>
-                                        {
-                                            await WriteAsync(disableAutomaticAnswerCommand, newSensor);
-                                        });
-                                        taskAuto.Wait();
-
                                         var taskContinuous = Task.Run(async () =>
                                         {
                                             await WriteAsync(disableContinuousModeCommand, newSensor);
+                                            await Task.Delay(5000);
                                         });
                                         taskContinuous.Wait();
+
+                                        var taskAuto = Task.Run(async () =>
+                                        {
+                                            await WriteAsync(disableAutomaticAnswerCommand, newSensor);
+                                            await Task.Delay(5000);
+                                        });
+                                        taskAuto.Wait();
                                     }
 
                                     //if (isSleepModeActivated)

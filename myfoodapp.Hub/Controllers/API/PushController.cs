@@ -77,8 +77,6 @@ namespace myfoodapp.Hub.Controllers.Api
                 dbLog.SaveChanges();
             }
 
-            // return new JavaScriptResult();
-
             var response = new HttpResponseMessage();
             response.Content = new StringContent(@"<html><script type=""text/javascript"">window.close();</script><body></body></html>");
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/html");

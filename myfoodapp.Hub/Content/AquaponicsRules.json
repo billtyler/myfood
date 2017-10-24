@@ -26,7 +26,7 @@
   {
     "ruleEvaluator": "(lastWeekPHmean != 0) && (lastWeekPHmean >= 8)",
     "warningContent": "High pH level : mean last week {0} - Performances can be improved",
-    "warningContentFR": "Niveau de ph élevé - moyenne semaine dern. {0} - Les performances peuvent être améliorées",
+    "warningContentFR": "Niveau de pH élevé - moyenne semaine dern. {0} - Les performances peuvent être améliorées",
     "bindingPropertyValue": "lastWeekPHmean"
   },
   {

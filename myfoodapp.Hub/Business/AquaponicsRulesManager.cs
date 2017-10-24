@@ -13,8 +13,6 @@ namespace myfoodapp.Hub.Business
 {
     public class AquaponicsRulesManager
     {
-        static HttpContext context = HttpContext.Current;
-
         public static bool ValidateRules(GroupedMeasure currentMeasures, int productionUnitId)
         {
             Evaluator evaluator = new Evaluator();
@@ -79,13 +77,6 @@ namespace myfoodapp.Hub.Business
             {
                 dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Rule Manager - Save Events"), ex));
                 dbLog.SaveChanges();
-            }
-
-            if (currentProductionUnitOwner != null && currentProductionUnitOwner.language != null)
-            {
-                i18n.HttpContextExtensions.SetPrincipalAppLanguageForRequest(
-                System.Web.HttpContext.Current,
-                i18n.LanguageHelpers.GetMatchingAppLanguage("en"), true);
             }
 
             return isValid;
@@ -192,7 +183,6 @@ namespace myfoodapp.Hub.Business
             return currentMeasures;
         }
     }
-
 
     public class GroupedMeasure
     {

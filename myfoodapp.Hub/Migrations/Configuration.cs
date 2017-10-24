@@ -20,7 +20,7 @@ namespace myfoodapp.Hub.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
             //UpgradeDatabase.DoWork(context);
-            //return;
+            return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();

@@ -72,11 +72,11 @@ namespace myfoodapp.Hub
 
         static void offlineTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            DateTime MyScheduledRunTime = DateTime.Parse(WebConfigurationManager.AppSettings["timerStartTime"]);
-            DateTime CurrentSystemTime = DateTime.Now;
-            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(RulesTimerIntervalInMilliseconds);
-            if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
-            {
+            //DateTime MyScheduledRunTime = DateTime.Parse(WebConfigurationManager.AppSettings["timerStartTime"]);
+            //DateTime CurrentSystemTime = DateTime.Now;
+            //DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(OfflineTimerIntervalInMilliseconds);
+            //if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
+            //{
                 var db = new ApplicationDbContext();
 
                 var upRunningStatus = db.ProductionUnitStatus.Where(s => s.Id == 3).FirstOrDefault();
@@ -86,18 +86,37 @@ namespace myfoodapp.Hub
 
                 var currentDate = DateTime.Now;
 
+                var warningEventType = db.EventTypes.Where(p => p.Id == 1).FirstOrDefault();
+
                 upRunningProductionUnits.ForEach(p =>
                 {
-                    if (p.lastMeasureReceived == null ||  currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(30))
+                    if (p.lastMeasureReceived == null || currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(30))
+                    {
                         p.productionUnitStatus = offlineStatus;
+
+                        if (p.owner != null && p.owner.language != null)
+                        {
+                            switch (p.owner.language.description)
+                            {
+                                case "fr":
+                                    db.Events.Add(new Event() { date = DateTime.Now, description = "Serre déconnectée", isOpen = false, productionUnit = p, eventType = warningEventType, createdBy = "MyFood Bot" });
+                                    break;
+                                default:
+                                    db.Events.Add(new Event() { date = DateTime.Now, description = "Smart Greenhouse Offline", isOpen = false, productionUnit = p, eventType = warningEventType, createdBy = "MyFood Bot" });
+                                    break;
+                            }
+                        }
+
                         if (p.owner.notificationPushKey != null)
                         {
                             NotificationPushManager.PioneerUnitOfflineMessage(p);
                         }
+                    }
+                    
                 });
 
                 db.SaveChanges();
-           }
+           //}
         }
 
         static void rulesTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
