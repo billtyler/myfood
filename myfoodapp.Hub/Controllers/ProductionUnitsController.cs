@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -540,6 +541,49 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
+        public ActionResult AddOptionFromProductionUnit(int id, int optionId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            MeasureService measureService = new MeasureService(db);
+
+            var currentProductionUnit = db.ProductionUnits.Where(o => o.Id == id).FirstOrDefault();
+            var currentOption = db.Options.Where(o => o.Id == optionId).FirstOrDefault();
+
+            if(currentOption == null)
+                return HttpNotFound();
+
+            db.OptionLists.Add(new OptionList() {option = currentOption, productionUnit = currentProductionUnit });
+
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [Authorize]
+        public ActionResult RemoveOptionFromProductionUnit(int id, int optionId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            MeasureService measureService = new MeasureService(db);
+
+            var currentOption = db.Options.Where(o => o.Id == optionId).FirstOrDefault();
+
+            if (currentOption == null)
+                return HttpNotFound();
+
+            var currentProductionUnitOptions = db.OptionLists.Include(o => o.productionUnit).Include(o => o.option)
+                            .Where(p => p.productionUnit.Id == id);
+
+            var removeOption = db.OptionLists.Include(o => o.productionUnit)
+                                        .Where(p => p.productionUnit.Id == id && p.option.Id == currentOption.Id).FirstOrDefault();
+
+            db.OptionLists.Remove(removeOption);
+
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [Authorize]
         public ActionResult EventType_Read([DataSourceRequest] DataSourceRequest request)
         {
             var db = new ApplicationDbContext();
@@ -632,6 +676,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(true);
         }
 
+        [Authorize]
         public ActionResult SavePicture(IEnumerable<HttpPostedFileBase> files, string picturePath)
         {
             var fileName = Path.GetFileName(files.FirstOrDefault().FileName);

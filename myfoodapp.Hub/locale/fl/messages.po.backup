@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-10-24 16:36+02:00\n"
-"PO-Revision-Date: 2017-10-24 16:36+02:00\n"
+"POT-Creation-Date: 2017-11-06 14:53+01:00\n"
+"PO-Revision-Date: 2017-11-06 14:53+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -190,7 +190,7 @@ msgstr ""
 #: Views\Events\Index.cshtml:40
 #: Views\Events\Manage.cshtml:37
 #: Views\ProductionUnitOwner\Index.cshtml:30
-#: Views\ProductionUnits\Update.cshtml:41
+#: Views\ProductionUnits\Update.cshtml:70
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:40
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:37
 #: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:30
@@ -247,7 +247,7 @@ msgstr ""
 msgid "Can be planted in:"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:34
+#: Views\ProductionUnits\Update.cshtml:63
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:34
 msgid "Change Production Units Settings"
 msgstr ""
@@ -584,7 +584,7 @@ msgstr ""
 msgid "Install UV filter"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:144
+#: Views\ProductionUnits\Update.cshtml:173
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:144
 msgid "Installed Options"
 msgstr ""
@@ -894,7 +894,7 @@ msgstr ""
 msgid "Open doors"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:136
+#: Views\ProductionUnits\Update.cshtml:165
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:136
 msgid "Option List"
 msgstr ""
@@ -1046,7 +1046,7 @@ msgstr ""
 msgid "prod. unit"
 msgstr ""
 
-#: Controllers\ProductionUnitsController.cs:192
+#: Controllers\ProductionUnitsController.cs:193
 msgid "Production Unit already in use"
 msgstr ""
 
@@ -1073,7 +1073,7 @@ msgstr ""
 
 #: Views\Events\Index.cshtml:27
 #: Views\Events\Manage.cshtml:24
-#: Views\ProductionUnits\Update.cshtml:28
+#: Views\ProductionUnits\Update.cshtml:57
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:27
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:24
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:28
@@ -1108,7 +1108,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:155
+#: Views\ProductionUnits\Update.cshtml:188
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:155
 msgid "Save & Close"
 msgstr ""

@@ -5,7 +5,6 @@ using myfoodapp.Hub.Models;
 using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Timers;
 using System.Web;
 using System.Web.Configuration;
@@ -72,11 +71,6 @@ namespace myfoodapp.Hub
 
         static void offlineTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            //DateTime MyScheduledRunTime = DateTime.Parse(WebConfigurationManager.AppSettings["timerStartTime"]);
-            //DateTime CurrentSystemTime = DateTime.Now;
-            //DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(OfflineTimerIntervalInMilliseconds);
-            //if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
-            //{
                 var db = new ApplicationDbContext();
 
                 var upRunningStatus = db.ProductionUnitStatus.Where(s => s.Id == 3).FirstOrDefault();
@@ -90,7 +84,7 @@ namespace myfoodapp.Hub
 
                 upRunningProductionUnits.ForEach(p =>
                 {
-                    if (p.lastMeasureReceived == null || currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(30))
+                    if (p.lastMeasureReceived == null || currentDate - p.lastMeasureReceived > TimeSpan.FromMinutes(60))
                     {
                         p.productionUnitStatus = offlineStatus;
 
@@ -116,7 +110,6 @@ namespace myfoodapp.Hub
                 });
 
                 db.SaveChanges();
-           //}
         }
 
         static void rulesTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
