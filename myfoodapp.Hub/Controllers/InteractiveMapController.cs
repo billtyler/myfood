@@ -1,17 +1,13 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
-using myfoodapp.Hub.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Data.Entity;
-using System.Web.Mvc;
-using myfoodapp.Hub.Business;
 using System.Globalization;
-using System.Threading;
-using System.Web;
-using i18n;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace myfoodapp.Hub.Controllers
 {
@@ -164,27 +160,14 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult GetNetworkStats()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            MeasureService measureService = new MeasureService(db);
 
-            var rslt = db.ProductionUnits.Include("productionUnitType")
-                                         .Where(p => p.productionUnitType.Id <= 5);
-
-            var productionUnitNumber = rslt.Count();
-
-            var totalBalcony = rslt.Where(p => p.productionUnitType.Id == 1).Count();
-            var totalCity = rslt.Where(p => p.productionUnitType.Id == 2).Count();
-            var totalFamily14 = rslt.Where(p => p.productionUnitType.Id == 3).Count();
-            var totalFamily22 = rslt.Where(p => p.productionUnitType.Id == 4).Count();
-            var totalFarm = rslt.Where(p => p.productionUnitType.Id == 5).Count();
-
-            var totalMonthlyProduction = totalBalcony * 4 + totalCity * 7 + totalFamily14 * 10 + totalFamily22 * 15 + totalFarm * 25;
-            var totalMonthlySparedCO2 = Math.Round(totalMonthlyProduction * 0.3,0);
+            var stats = PerformanceManager.GetNetworkStatistic(db);
 
             return Json(new
             {
-                ProductionUnitNumber = productionUnitNumber,
-                TotalMonthlyProduction = totalMonthlyProduction,
-                TotalMonthlySparedCO2 = totalMonthlySparedCO2,
+                ProductionUnitNumber = stats.productionUnitNumber,
+                TotalMonthlyProduction = stats.totalMonthlyProduction,
+                TotalMonthlySparedCO2 = stats.totalMonthlySparedCO2,
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -192,7 +175,7 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var rslt = db.ProductionUnits.Include("productionUnitStatus").ToList();
+            var rslt = db.ProductionUnits.Include(p => p.productionUnitStatus).ToList();
 
             var waitConfCount = rslt.Where(p => p.productionUnitStatus.Id == 1).Count();
             var setupPlannedCount = rslt.Where(p => p.productionUnitStatus.Id == 2).Count();

@@ -218,27 +218,14 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult GetNetworkStats()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            MeasureService measureService = new MeasureService(db);
 
-            var rslt = db.ProductionUnits.Include(p => p.productionUnitStatus)
-                                         .Where(p => p.productionUnitType.Id <= 5);
-
-            var productionUnitNumber = rslt.Count();
-
-            var totalBalcony = rslt.Where(p => p.productionUnitType.Id == 1).Count();
-            var totalCity = rslt.Where(p => p.productionUnitType.Id == 2).Count();
-            var totalFamily14 = rslt.Where(p => p.productionUnitType.Id == 3).Count();
-            var totalFamily22 = rslt.Where(p => p.productionUnitType.Id == 4).Count();
-            var totalFarm = rslt.Where(p => p.productionUnitType.Id == 5).Count();
-
-            var totalMonthlyProduction = totalBalcony * 4 + totalCity * 7 + totalFamily14 * 10 + totalFamily22 * 15 + totalFarm * 25;
-            var totalMonthlySparedCO2 = Math.Round(totalMonthlyProduction * 0.3);
+            var stats = PerformanceManager.GetNetworkStatistic(db);
 
             return Json(new
             {
-                ProductionUnitNumber = productionUnitNumber,
-                TotalMonthlyProduction = totalMonthlyProduction,
-                TotalMonthlySparedCO2 = totalMonthlySparedCO2,
+                ProductionUnitNumber = stats.productionUnitNumber,
+                TotalMonthlyProduction = stats.totalMonthlyProduction,
+                TotalMonthlySparedCO2 = stats.totalMonthlySparedCO2,
             }, JsonRequestBehavior.AllowGet);
         }  
     }

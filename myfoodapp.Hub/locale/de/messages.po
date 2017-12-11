@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-11-06 14:57+01:00\n"
-"PO-Revision-Date: 2017-11-06 14:57+01:00\n"
+"POT-Creation-Date: 2017-12-05 15:41+01:00\n"
+"PO-Revision-Date: 2017-12-05 15:41+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -73,6 +73,10 @@ msgstr "moderne Überwachungsprozesse "
 #: Migrations\Configuration.cs:114
 msgid "Advices"
 msgstr "Beratungen"
+
+#: Migrations\Configuration.cs:82
+msgid "Aerospring"
+msgstr ""
 
 #: Migrations\Configuration.cs:161
 msgid "Afternoon"
@@ -194,7 +198,7 @@ msgstr "Fantastisch"
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:40
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:37
 #: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:30
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:41
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:70
 msgid "Back to Details"
 msgstr "Zurück zu Details"
 
@@ -221,10 +225,6 @@ msgstr "Schlecht"
 msgid "Bad looking vegetables"
 msgstr "schlecht aussehende Gemüse"
 
-#: Migrations\Configuration.cs:82
-msgid "Balcony"
-msgstr "Balkon"
-
 #: Views\InteractiveMap\Index.cshtml:53
 #: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:53
 msgid "Best to contact:"
@@ -248,7 +248,7 @@ msgid "Can be planted in:"
 msgstr "Kann gepflanzt werden in:"
 
 #: Views\ProductionUnits\Update.cshtml:63
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:34
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:63
 msgid "Change Production Units Settings"
 msgstr "Ändern der Produktionseinheiteneinstellungen"
 
@@ -585,7 +585,7 @@ msgid "Install UV filter"
 msgstr "Installieren UV-Filter"
 
 #: Views\ProductionUnits\Update.cshtml:173
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:144
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:173
 msgid "Installed Options"
 msgstr "Installierte Optionen"
 
@@ -868,7 +868,7 @@ msgid "October"
 msgstr "Oktober"
 
 #: Controllers\HomeController.cs:213
-#: Controllers\InteractiveMapController.cs:211
+#: Controllers\InteractiveMapController.cs:194
 #: Migrations\Configuration.cs:104
 msgid "Offline"
 msgstr "Offline"
@@ -878,7 +878,7 @@ msgid "Old Password"
 msgstr "Altes Passwort"
 
 #: Controllers\HomeController.cs:211
-#: Controllers\InteractiveMapController.cs:209
+#: Controllers\InteractiveMapController.cs:192
 msgid "On Maintenance"
 msgstr "In Wartung"
 
@@ -896,7 +896,7 @@ msgid "Open doors"
 msgstr "Offene Türen"
 
 #: Views\ProductionUnits\Update.cshtml:165
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:136
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:165
 msgid "Option List"
 msgstr "Optionsliste"
 
@@ -1077,7 +1077,7 @@ msgstr "Produktionseinheiten Liste"
 #: Views\ProductionUnits\Update.cshtml:57
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:27
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:24
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:28
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:57
 msgid "Production Units Management"
 msgstr "Produktionseinheiten Management"
 
@@ -1110,7 +1110,7 @@ msgid "Save"
 msgstr "sparen"
 
 #: Views\ProductionUnits\Update.cshtml:188
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:155
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:188
 msgid "Save & Close"
 msgstr "Speichern & Schließen"
 
@@ -1133,7 +1133,7 @@ msgid "September"
 msgstr "September"
 
 #: Controllers\HomeController.cs:209
-#: Controllers\InteractiveMapController.cs:207
+#: Controllers\InteractiveMapController.cs:190
 #: Migrations\Configuration.cs:100
 msgid "Setup Planned"
 msgstr "Einrichten geplant"
@@ -1160,7 +1160,7 @@ msgid "status"
 msgstr "Status"
 
 #: Controllers\HomeController.cs:212
-#: Controllers\InteractiveMapController.cs:210
+#: Controllers\InteractiveMapController.cs:193
 #: Migrations\Configuration.cs:103
 msgid "Stopped"
 msgstr "Gestoppt"
@@ -1228,7 +1228,7 @@ msgstr "Art"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: Controllers\InteractiveMapController.cs:208
+#: Controllers\InteractiveMapController.cs:191
 msgid "Up & Running"
 msgstr "Oben & laufen"
 
@@ -1271,7 +1271,7 @@ msgid "View Logs"
 msgstr "Logs anzeigen"
 
 #: Controllers\HomeController.cs:208
-#: Controllers\InteractiveMapController.cs:206
+#: Controllers\InteractiveMapController.cs:189
 #: Migrations\Configuration.cs:99
 msgid "Wait Confirm."
 msgstr "Wartebestätigung"
@@ -1329,6 +1329,9 @@ msgstr ""
 #: Migrations\Configuration.cs:150
 msgid "Zipgrow Tower"
 msgstr "Zipgrow Turm"
+
+#~ msgid "Balcony"
+#~ msgstr "Balkon"
 
 #~ msgid "open"
 #~ msgstr "öffnen"

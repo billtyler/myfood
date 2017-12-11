@@ -79,7 +79,7 @@ namespace myfoodapp.Hub.Migrations
             context.SensorTypes.Add(new SensorType() { Id = 7, name = "External Air Temperature", description = "From OpenWeatherMap API" });
             context.SensorTypes.Add(new SensorType() { Id = 8, name = "External Air Humidity", description = "From OpenWeatherMap API" });
 
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "[[[Balcony]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "[[[Aerospring]]]" });
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "[[[City]]]" });
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "[[[Family14]]]" });
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "[[[Family22]]]" });

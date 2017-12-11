@@ -437,33 +437,8 @@ namespace myfoodapp.Hub.Controllers
                                           .Include(p => p.options)
                                           .Where(p => p.Id == id).FirstOrDefault();
 
-            var averageMonthlyProduction = 0;
 
-            switch (currentProductionUnit.productionUnitType.Id)
-            {
-                case 1:
-                    //AeroSpring
-                    averageMonthlyProduction = 4;
-                    break;
-                case 2:
-                    //City
-                    averageMonthlyProduction = 7;
-                    break;
-                case 3:
-                    //Family14
-                    averageMonthlyProduction = 10;
-                    break;
-                case 4:
-                    //Family22
-                    averageMonthlyProduction = 15;
-                    break;
-                case 5:
-                    //Farm
-                    averageMonthlyProduction = 25;
-                    break;
-                default:
-                    break;
-            }
+            var averageMonthlyProduction = PerformanceManager.GetEstimatedMonthlyProduction(currentProductionUnit.productionUnitType.Id);
 
             var averageMonthlySparedCO2 = averageMonthlyProduction * 0.3;
 

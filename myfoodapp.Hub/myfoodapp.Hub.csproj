@@ -394,6 +394,7 @@
     <Compile Include="Business\AquaponicsRulesManager.cs" />
     <Compile Include="Business\ExternalAirHumidityManager.cs" />
     <Compile Include="Business\SensorValueSet.cs" />
+    <Compile Include="Business\PerformanceManager.cs" />
     <Compile Include="Common\AuthorizationHeaderHandler.cs" />
     <Compile Include="Common\BrowserJSONFormatter.cs" />
     <Compile Include="Common\DecimalModelBinder.cs" />
@@ -1285,10 +1286,12 @@
     <Content Include="Content\Pictures\Sites\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\PavillyFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\RontignonFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\RoquebruneFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\RueilFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\SaintLaurentDEzeFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SaintPierreFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SanguinetFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\SeppoisFamily22.JPG" />
