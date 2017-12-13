@@ -7,8 +7,21 @@ var markers;
 
 function onEachFeature(feature, layer) {
     layer.on({
-        mouseover: onMouseOver
-    });
+		mouseover: onMouseOver,
+		click: onClick,
+	});
+}
+
+
+function onClick(e)
+{
+	var layer = e.target;
+	if (!$(layer._icon).hasClass('marker-cluster') && window.parent && window.parent.window && 'onClickShow' in window.parent.window) {
+		window.parent.window.onClickShow(layer.feature.geometry.coordinates);
+		if (!layer.getTooltip()) {
+			layer.bindTooltip(layer.feature.properties.name).openTooltip();
+		}
+	}
 }
 
 function onMouseOver(e) {

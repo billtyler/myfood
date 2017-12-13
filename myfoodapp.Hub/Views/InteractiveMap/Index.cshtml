@@ -2,8 +2,6 @@
     Layout = "~/Views/Shared/_EmptyLayout.cshtml";
 }
 
-<link href="~/Content/lightbox/lightbox.css" rel="stylesheet" />
-<script src="~/Scripts/lightbox/lightbox.js"></script>
 
 <link rel="stylesheet" href="~/Content/Swiper/swiper.min.css">
 <script src="~/Scripts/Swiper/swiper.jquery.js"></script>
@@ -12,7 +10,14 @@
 
     var swiper;
 
+	$(document).ready(function () {
+
+		
+	});
+
     window.onload = function onLoad(e) {
+
+		
 
         swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
@@ -21,9 +26,18 @@
             prevButton: '.swiper-button-prev',
             parallax: true,
             lazyLoading: true,
-            speed: 600,
+            speed: 0,
             onSlideChangeEnd: onSlideChangeEnd,
-        });
+		});
+
+		$.ajax({
+			url: "@Url.Action("ProductionUnitStatus_Read", "InteractiveMap")",
+			type: 'POST',
+			cache: false,
+			success: function (result) {
+				pie(result);
+			}
+		});
 
         $.ajax({
             url: "@Url.Action("GetNetworkStats", "InteractiveMap")",
@@ -40,11 +54,41 @@
             url: "@Url.Action("GetProductionUnitDetailList", "InteractiveMap")",
             dataType: "json",
             type: "POST",
-            success: function (response) {
+			success: function (response) {
+				$.each(response, function (index, item) {
 
-                $.each(response, function (index, item) {
-                    if (item.ContactMail !== undefined && item.PhoneNumber !== undefined && item.PreferedMoment !== undefined && item.Location !== undefined)
-                    {
+					if (item.PreferedMoment !== undefined && item.Location !== undefined) {
+						var context = '<table><tr><td align=center class=table-name colspan=2><strong>' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</strong></td></tr><td> </td><tr></tr>' +
+							'<tr><td align=left>Email:</td><td>  <a href=mailto:' + item.ContactMail + '>' + item.ContactMail + '</a></td></tr>' +
+							'<tr><td align=left>Phone:</td><td>  <a href=tel:' + item.ContactMail + '>' + item.PhoneNumber + '</a></td></tr>' +
+							'<tr><td align=left>Best to contact:</td><td>  ' + item.PreferedMoment + '</td></tr>' +
+							'<tr><td align=left>Location:</td><td>  ' + item.Location + '</td></tr>' +
+							'</table>';
+					}
+					else
+					{
+						var context = '<table><tr><td align=center class=table-name colspan=2><strong>' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</strong></td></tr><td> </td><tr></tr>' +
+							'<tr><td align=left>Email:</td><td>  <a href=mailto:' + item.ContactMail + '>' + item.ContactMail + '</a></td></tr>' +
+							'<tr><td align=left>Phone:</td><td>  <a href=tel:' + item.ContactMail + '>' + item.PhoneNumber + '</a></td></tr>' +
+							'</table>';
+					}
+					
+
+                    if (item.PreferedMoment !== undefined && item.Location !== undefined)
+					{
+
+						if (item.PicturePath != 'NoImage.png') {
+							$('.works-slider').append('<a data-fancybox="gallery" data-caption="' + context + '"  href= "/Content/Pictures/Sites/' + item.PicturePath + '" class="img-pop" title= "' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '" tabindex= "0">' +
+								'<figure> <img src="/Content/Pictures/Sites/' + item.PicturePath + '">' +
+								'<figcaption><table><tr><td colspan="2">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</td></tr><td> </td><tr></tr>' +
+								'<tr><td><i class="fa fa-envelope-o" aria-hidden="true"></i></td><td>' + item.ContactMail + '</td></tr>' +
+								'<tr><td><i class="fa fa-phone" aria-hidden="true"></i></td><td>' + item.PhoneNumber + '</td></tr>' +
+								'<tr><td><i class="fa fa-clock-o" aria-hidden="true"></i></td><td>' + item.PreferedMoment + '</td></tr>' +
+								'<tr><td><i class="fa fa-location-arrow" aria-hidden="true"></i> </td><td>' + item.Location + '</td></tr>' +
+								'</table></figcaption> ' +
+								'</figure>' +
+								'</a>');
+						}
                         $('.swiper-wrapper').append(
                             '<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
                                 '<div class="layer">' +
@@ -60,20 +104,68 @@
                     );
                     }
                     else
-                    {
-                    $('.swiper-wrapper').append(
-                        '<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
-                            '<div class="layer">' +
-                            '<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
-                            '<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
-                            '<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
-                                '<p>' + item.ProductionUnitOptions + '</p>' +
-                            '</div>' +
-                            '<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>' +
-                            '</div>' +
-                    '</div>'
-                    );
+					{
+						if (item.PicturePath != 'NoImage.png') {
+							$('.works-slider').append('<a data-fancybox="gallery" data-caption="' + context + '" href= "/Content/Pictures/Sites/' + item.PicturePath + '" class="img-pop" title= "' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '" tabindex= "0">' +
+								'<figure> <img src="/Content/Pictures/Sites/' + item.PicturePath + '">' +
+								'<figcaption><table><tr><td colspan="2">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</td></tr><td> </td><tr></tr>' +
+								'<tr><td><i class="fa fa-envelope-o" aria-hidden="true"></i></td><td>' + item.ContactMail + '</td></tr>' +
+								'<tr><td><i class="fa fa-phone" aria-hidden="true"></i></td><td>' + item.PhoneNumber + '</td></tr>' +
+								'</table></figcaption> ' +
+								'</figure>' +
+								'</a>');
+						}
+						$('.swiper-wrapper').append(
+							'<div class="swiper-slide swiper-lazy" data-background="/Content/Pictures/Sites/' + item.PicturePath + '" style="background-repeat:no-repeat;background-size: cover;background-color: light-gray;">' +
+								'<div class="layer">' +
+								'<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-200">' + item.ProductionUnitType + '</div>' +
+							'<div class="title" style="font-family: Open Sans;" data-swiper-parallax="-100">' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</div>' +
+							'<div class="subtitle" style="font-family: Open Sans;" data-swiper-parallax="-100"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:' + item.ContactMail + '">' + item.ContactMail + '</a><br><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:' + item.PhoneNumber + '">' + item.PhoneNumber + '</a></div>' +
+								'<div class="text" style="font-family: Open Sans;" data-swiper-parallax="-300">' +
+									'<p>' + item.ProductionUnitOptions + '</p>' +
+								'</div>' +
+								'<div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>' +
+								'</div>' +
+						'</div>'
+						);
                     }
+
+
+					setTimeout(function () {
+						$('.works-slider').not('.slick-initialized').slick({
+							infinite: true,
+							slidesToShow: 4,
+							slidesToScroll: 1,
+							dots: false,
+							arrows: true,
+							responsive: [
+								{
+									breakpoint: 1200,
+									settings: {
+										slidesToShow: 3,
+										slidesToScroll: 1,
+
+									}
+								},
+								{
+									breakpoint: 991,
+									settings: {
+										
+										slidesToShow: 2,
+										slidesToScroll: 1,
+										
+									}
+								}, {
+									breakpoint: 600,
+									settings: {
+										slidesToShow: 1,
+										slidesToScroll: 1,
+
+									}
+								},
+							]
+						});
+					}, 0);
 
                     swiper = new Swiper('.swiper-container', {
                         pagination: '.swiper-pagination',
@@ -83,46 +175,88 @@
                         preloadImages: false,
                         parallax: true,
                         lazyLoading: true,
-                        speed: 600,
+                        speed: 0,
                         onSlideChangeEnd: onSlideChangeEnd,
                     });
                 });
             }
         });
 
-        $.ajax({
-            url: "@Url.Action("GetProductionUnitMeasures", "Home")",
-            dataType: "json",
-        data: { id: 0 },
-        type: "POST",
-        success: function (response) {
-            $("#CurrentPhValue").text(response.CurrentPhValue);
-            $("#CurrentPhCaptureTime").text(response.CurrentPhCaptureTime);
-            $("#AverageHourPhValue").text(response.AverageHourPhValue);
-            $("#AverageDayPhValue").text(response.AverageDayPhValue);
-            $("#LastDayPhCaptureTime").text(response.LastDayPhCaptureTime);
-
-            $("#CurrentWaterTempValue").text(response.CurrentWaterTempValue);
-            $("#CurrentWaterTempCaptureTime").text(response.CurrentWaterTempCaptureTime);
-            $("#AverageHourWaterTempValue").text(response.AverageHourWaterTempValue);
-            $("#AverageDayWaterTempValue").text(response.AverageDayWaterTempValue);
-            $("#LastDayWaterTempCaptureTime").text(response.LastDayWaterTempCaptureTime);
-
-            $("#CurrentAirTempValue").text(response.CurrentAirTempValue);
-            $("#CurrentAirTempCaptureTime").text(response.CurrentAirTempCaptureTime);
-            $("#AverageHourAirTempValue").text(response.AverageHourAirTempValue);
-            $("#AverageDayAirTempValue").text(response.AverageDayAirTempValue);
-            $("#LastDayAirTempCaptureTime").text(response.LastDayAirTempCaptureTime);
-
-            $("#CurrentHumidityValue").text(response.CurrentHumidityValue);
-            $("#CurrentHumidityCaptureTime").text(response.CurrentHumidityCaptureTime);
-            $("#AverageHourHumidityValue").text(response.AverageHourHumidityValue);
-            $("#AverageDayHumidityValue").text(response.AverageDayHumidityValue);
-            $("#LastDayHumidityCaptureTime").text(response.LastDayHumidityCaptureTime);
-        }
-        });
 
     }
+
+	function pie(json_str) {
+
+		Highcharts.chart('pie-mobile', {
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+			},
+			title: {
+				text: ' '
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			colors: ['#9de219', '#90cc38', '#068c35', '#006634', '#003F38',
+				'#004d38'],
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: false
+					},
+					showInLegend: true
+				}
+			},
+			series: [{
+				name: 'Brands',
+				colorByPoint: true,
+				data: json_str,
+			}]
+		
+		});
+
+		Highcharts.chart('pie-large', {
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie',
+			},
+			title: {
+				text: ' '
+			},
+			tooltip: {
+				pointFormat: '<b>{point.percentage:.1f}%</b>'
+			},
+			colors: ['#9de219', '#90cc38', '#068c35', '#006634', '#003F38',
+				'#004d38'],
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+						style: {
+							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+						}
+					},
+				}
+			},
+			series: [{
+				name: 'Status',
+				colorByPoint: true,
+				data: json_str,
+			}]
+		});
+		$('.highcharts-credits').remove();
+		$('.highcharts-button').remove();
+	}
 
     function onSlideChangeEnd(ep)
     {
@@ -169,6 +303,59 @@
             swiper.slideTo(response.CurrentIndex);
         }
     });
+	}
+
+	window.onClickShow = function (latLang) {
+
+        var currentProductionUnitLat = latLang[1];
+		var currentProductionUnitLong = latLang[0];
+
+		$.ajax({
+            url: "@Url.Action("GetProductionUnitDetailPopUp", "InteractiveMap")",
+            dataType: "json",
+			data: { SelectedProductionUnitCoord: currentProductionUnitLat + "|" + currentProductionUnitLong },
+			type: "POST",
+			success: function (response) {
+
+				if (response.PreferedMoment != "" && response.Location != "") {
+					var context = '<table><tr><td align=center class=table-name colspan=2><strong>' + response.PioneerCitizenName + ' #' + response.PioneerCitizenNumber + '</strong></td></tr><td> </td><tr></tr>' +
+						'<tr><td align=left>Email:</td><td>  <a href=mailto:' + response.ContactMail + '>' + response.ContactMail + '</a></td></tr>' +
+						'<tr><td align=left>Phone:</td><td>  <a href=tel:' + response.ContactMail + '>' + response.PhoneNumber + '</a></td></tr>' +
+						'<tr><td align=left>Best to contact:</td><td>  ' + response.PreferedMoment + '</td></tr>' +
+						'<tr><td align=left>Location:</td><td>  ' + response.Location + '</td></tr>' +
+						'</table>';
+				}
+				else {
+					var context = '<table><tr><td align=center class=table-name colspan=2><strong>' + response.PioneerCitizenName + ' #' + response.PioneerCitizenNumber + '</strong></td></tr><td> </td><tr></tr>' +
+						'<tr><td align=left>Email:</td><td>  <a href=mailto:' + response.ContactMail + '>' + response.ContactMail + '</a></td></tr>' +
+						'<tr><td align=left>Phone:</td><td>  <a href=tel:' + response.ContactMail + '>' + response.PhoneNumber + '</a></td></tr>' +
+					'</table>';
+				}
+
+
+				
+				$.fancybox.open([
+					{
+						src: "/Content/Pictures/Sites/" + response.PicturePath,
+						opts: {
+							caption: context, 
+						}
+					}
+				], {
+						loop: true,
+						clickContent: false,
+						clickSlide: 'close',
+					});
+
+				
+			}
+		});
+
+
+
+		
+
+
     }
 
     function onShapeCreated(e) {
@@ -190,129 +377,230 @@
 
 </script>
 
-<script type="text/x-kendo-tmpl" id="templateOption">
-    <div class="option">
-        <h2>&bull; #:name#</h2>
-    </div>
-</script>
 
 <div id="pioneer-network" style="height:100%;overflow-y:hidden" class="main-section-content">
-    <div id="map-wrapper" class="row">
-        <div id="picturesContainer" class="col-md-4">
-            <div class="widget picture-widget">
-                <h3><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp; [[[Picture]]]</h3>
-                <div class="swiper-container" style="background-color:white;height:350px">
-                    <div class="parallax-bg"></div>
-                    <div class="swiper-wrapper"></div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination swiper-pagination-white"></div>
-                    <!-- Add Navigation -->
-                    <div class="swiper-button-prev swiper-button-white"></div>
-                    <div class="swiper-button-next swiper-button-white"></div>
-                </div>
-            </div>
-        </div>
-        <div id="map-container" class="col-md-8">
-            <div class="widget large-widget">
-                <h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; [[[Pioneer Citizen Map]]]</h3>
-                <iframe style="height: 350px; width: 100%" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
-            </div>
-        </div>
-    </div>
-    <div id="map-wrapper" class="row">
-        <div id="map-info" class="col-md-4">
-            <div class="widget">
-                <h3><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; [[[Network Info]]]</h3>
-                <div style="margin: 3px;padding-top:25px;">
-                    <div class="column-left">
-                        <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CONNECTED <br />PROD. UNITS]]]</h2>
-                        <h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
-                    </div>
-                    <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                        <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />EST. PROD. <br />PER MONTH]]]</h2>
-                        <h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
-                    </div>
-                    <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                        <h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CO2 SAVED<br />PER MONTH]]]</h2>
-                        <h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="map-details" class="col-md-4">
-            <div class="widget">
-                <h3><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp; [[[Network Info]]]</h3>
-                <div style="text-align: center">
-                    @(Html.Kendo().Chart<myfoodapp.Hub.Models.PieChartViewModel>()
-                    .Name("chart")
-                    .Legend(legend => legend
-                        .Position(ChartLegendPosition.Right).Labels(x => x.Font(font: "12px Open Sans"))
-                    )
-                    .HtmlAttributes(new { @class = "small-chart" })
-                    .ChartArea(chart => chart
-                        .Background("transparent")
-                     )
-                     .DataSource(ds =>
-                     {
-                         ds.Read(read => read.Action("ProductionUnitStatus_Read", "InteractiveMap"));
-                     }
-                        )
-                        .Series(series => series
-                        .Pie(model => model.Value, model => model.Category, model => model.Color)
-                        .StartAngle(150)
-                        .Padding(0)
-                        )
-                    .Tooltip(tooltip => tooltip
-                        .Visible(true)
-                        .Template("#= category # - #= kendo.format('{0:P}', percentage)#")
-                    )
-                    )
-                </div>
+	<div class="row">
+		<div id="map-wrapper" class="col-lg-4">
+			<div id="map-container" class="col-12">
+				<div class="widget large-widget">
+					<h3><i class="fa fa-map" aria-hidden="true"></i>&nbsp; [[[Pioneer Citizen Map]]]</h3>
+					<iframe class="frame" src="@Url.Action("ClusterMap","InteractiveMap")" frameborder="1"></iframe>
+				</div>
+			</div>
+		</div>
+		<div id="map-wrapper" class="col-lg-4">
+			<div id="picturesContainer" class="col-12">
+				<div class="widget picture-widget">
+					<h3><i class="fa fa-picture-o" aria-hidden="true"></i>&nbsp; [[[Picture]]]</h3>
+					<div class="swiper-container" style="background-color:white;height:350px">
+						<div class="parallax-bg"></div>
+						<div class="swiper-wrapper"></div>
+						<!-- Add Pagination -->
+						<!-- Add Navigation -->
+					</div>
+				</div>
+			</div>
+			<div id="map-options" class="col-12">
+				<div class="widget">
+					<h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; [[[Water Temperature (°C)]]]</h3>
+					<div class="sparkline-container">
+						<div style="margin: 3px;padding-top:25px;">
+							<div class="column-left">
+								<h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;&nbsp;[[[CURRENT]]]</h2>
+								<h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+								<h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+							</div>
+							<div class="column-center" style="border-left:1px solid #e2e2e2;">
+								<h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;[[[AVERAGE]]]</h2>
+								<h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+								<h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
+							</div>
+							<div class="column-right" style="border-left:1px solid #e2e2e2;">
+								<h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;&nbsp;[[[AVERAGE]]]</h2>
+								<h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+								<h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            </div>
-        </div>
-        <div id="map-options" class="col-md-4">
-            <div class="widget">
-                <h3><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp; [[[Water Temperature (°C)]]]</h3>
-                <div class="sparkline-container">
-                    <div style="margin: 3px;padding-top:25px;">
-                        <div class="column-left">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
-                            <h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                        <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
-                        </div>
-                        <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+		<div id="map-wrapper" class="col-lg-4">
+			<div class="col-12 widget pie">
+				<h3><i class="fa fa-asterisk" aria-hidden="true"></i>&nbsp; [[[Network Info]]]</h3>
+				<div style="text-align: center">
+					<div id="pie-large" style="min-width: 260px; height: 350px; max-width: 600px; margin: 0 auto"></div>
+					<div id="pie-mobile" style="min-width: 260px; height: 350px; max-width: 600px; margin: 0 auto"></div>
+				</div>
+			</div>
+			<div id="map-info" class="col-12">
+				<div class="widget network">
+					<h3><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; [[[Network Info]]]</h3>
+						<div style="margin: 3px;padding-top:25px;">
+							<div class="column-left">
+								<h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CONNECTED <br />PROD. UNITS]]]</h2>
+								<h1 id="ProductionUnitNumber" style="text-align: center;"></h1>
+							</div>
+							<div class="column-center" style="border-left:1px solid #e2e2e2;">
+								<h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />EST. PROD. <br />PER MONTH]]]</h2>
+								<h1 id="TotalMonthlyProduction" style="text-align: center;"></h1>
+							</div>
+							<div class="column-right" style="border-left:1px solid #e2e2e2;">
+								<h2 class="widget-text" style="text-align: center;">[[[TOTAL<br />CO2 SAVED<br />PER MONTH]]]</h2>
+								<h1 id="TotalMonthlySparedCO2" style="text-align: center;"></h1>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="slider" class="col-md-12">
+			<div class="works-slider">
+				
+			</div>
+		</div>
+	</div>
+		
+		
+    <div id="map-wrapper" class="row">
+        
     </div>
     <div style="text-align: center">
         <h4>.:myfoodapphub is licensed under a <a style="color:forestgreen" href="https://www.gnu.org/licenses/gpl-3.0.en.html"> GPLv3</a>:.</h4>
     </div>
 </div>
 
+	
 <style>
+
+	.table_td{
+		font-weight:bold;
+	}
+
+	.works-slider figure {
+		height: 300px;
+		overflow: hidden;
+		position: relative;
+		width: auto;
+	}
+	.frame {
+		height: 558px;
+		width: 100%
+	}
+		.works-slider figure figcaption {
+			font-size:0.9rem;
+			width: 90%;
+			height: 100%;
+			background-color: rgba(70, 137, 102, 0.8);
+			position: absolute;
+			top: 0;
+			left: 5%;
+			display: -webkit-inline-box;
+			display: -ms-inline-flexbox;
+			color: #fff;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center;
+			opacity: 0;
+			transition-duration: .5s;
+		}
+			.works-slider figure figcaption table tr td {
+				padding-right: 5px;
+			}
+		.works-slider figure:hover figcaption {
+			opacity: 1;
+		}
+
+		.works-slider figure img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			object-fit: cover;
+			width: 90%;
+			height: 100%
+		}
+
+	.works-slider .slick-arrow {
+		width: 44px;
+		height: 44px;
+		background-color: white;
+		border: 1px solid #ccc;
+		font-size: 0;
+		border-radius: 50%;
+		position: absolute;
+		top: calc(50% - 22px)
+	}
+
+	.works-slider .slick-next {
+		right: 0;
+		z-index:10000;
+	}
+
+	.works-slider .slick-prev {
+		left: 0;
+		z-index: 10000;
+	}
+
+	.works-slider .slick-slide img {
+		margin: auto
+	}
+
+	.slick-prev:before, .slick-next:before {
+		background-image: url(/Content/images/sprite.png);
+		background-repeat: no-repeat;
+		width: 8px;
+		height: 13px;
+		display: inline-block;
+		content: '';
+	}
+
+	.slick-next:before {
+		background-position: -132px -95px;
+	}
+
+	.slick-prev:before {
+		background-position: -132px -118px;
+	}
+	#pie-mobile
+	{
+		display:none;
+	}
+	.table-name
+	{
+		font-size: 1.2rem;
+	}
+
+
+	.works-slider
+	{
+		width: 100%;
+		margin: auto;
+	}
+	.white-popup {
+		position: relative;
+		background: #FFF;
+		display:table;
+		padding: 20px;
+		text-align:center;
+		margin: auto;
+	}
             * {
              font-size: 100%;
              font-family: Open Sans;
             }
-
-            .swiper-container {
-                width: 100%;
-                height: 100%;
-                background: #000;
-            }
-
+	.swiper-container {
+		width: 100%;
+		height: 100%;
+		background: #000;
+	}
             .swiper-slide {
                 font-size: 18px;
                 color:#fff;
@@ -327,7 +615,6 @@
                 top: 0;
                 width: 130%;
                 height: 100%;
-                -webkit-background-size: cover;
                 background-size: cover;
                 background-position: center;
             }
@@ -343,7 +630,6 @@
               padding-left:40px;
               
             }
-
             .swiper-slide .subtitle {
               color: white;
               margin: 0;
@@ -385,7 +671,7 @@
 
         /* WIDGETS */
         .widget {
-            margin: 0 0 0px;
+            margin: 0 0 10px 0;
             padding: 0;
             background-color: #ffffff;
             border: 1px solid #e7e7e7;
@@ -500,12 +786,40 @@
                 width: 100%;
                 height: 100%;
        }
+	   .pie{
+		   height:100%;
+	   }
+	
+	   @@media(max-width: 1200px)
+	   {
+		.frame {
+			height: 400px;
+			width: 100%
+		}
+	   }
 
         @@media screen and (max-width: 480px) {
+
+			#pie-large{
+				display:none;
+			}
+			#pie-mobile {
+				display: block;
+			}
+
+			.pie {
+				height: 200px;
+			}
+			.network
+			{
+				height:150px;
+			}
             .image-div {
               height:220px;
             }
-
+			#map-info {
+				padding-top: 200px;
+			}
             .swiper-slide .subtitle {
               color: white;
               margin: 0;
@@ -523,20 +837,7 @@
                 font-size: medium;
             }
 
-            .picture-widget {
-            height:220px;
-            }
 
-            #map-container{
-                visibility:hidden;
-                display:none;
-            }
-
-            #map-details
-            {
-                visibility:hidden;
-                display:none;
-            }
 
             #map-info
             {
@@ -549,3 +850,7 @@
 
 
 
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>

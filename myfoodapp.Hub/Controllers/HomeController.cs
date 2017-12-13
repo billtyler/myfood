@@ -28,23 +28,44 @@ namespace myfoodapp.Hub.Controllers
             return View();
         }
 
-        public ActionResult GetClusterMapData()
-        {
-            var db = new ApplicationDbContext();
-            var measureService = new MeasureService(db);
+		public ActionResult GetClusterMapData()
+		{
+			var db = new ApplicationDbContext();
+			var measureService = new MeasureService(db);
 
-            var listMarker = new List<Marker>();
+			var listMarker = new List<Marker>();
 
-            db.ProductionUnits.ToList().ForEach(p =>
-                                        listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude, String.Format("{0} </br> start since {1}",
-                                                                  p.info, p.startDate.ToShortDateString()))
-                                        { shape = "redMarker" }));
+			db.ProductionUnits.Include(p => p.owner.preferedMoment).ToList().ForEach(p =>
+			{
+				var phone = p.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : p.owner.phoneNumber;
+				var contactMail = p.owner.contactMail == null ? "contact@myfood.eu" : p.owner.contactMail;
+				if (p.owner.location!=null && p.owner.preferedMoment!=null)
+				{
+					listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude,
+											String.Format(@"{0} </br> 
+																start since {1} <br>
+																phone: {2}<br>
+																email: {3}<br>
+																Best to contact: {4}<br>
+																Location: {5}", p.info, p.startDate.ToShortDateString(), p.owner.contactMail, phone, p.owner.preferedMoment.name, p.owner.location))
+					{ shape = "redMarker" });
+				}
+				else
+				{
+					listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude,
+											String.Format(@"{0} </br> start since: {1} <br> phone: {2} <br> email: {3}", p.info, p.startDate.ToShortDateString(), phone, contactMail))
+					{ shape = "redMarker" });
+				}
+				
+
+			});
+		
 
             var map = new Models.ClusterMap()
             {
                 Name = "map",
                 CenterLatitude = 44.0235561,
-                CenterLongitude = -10.3640063,
+                CenterLongitude = 0.3640063,
                 Zoom = 4,
                 TileUrlTemplate = "http://#= subdomain #.tile.openstreetmap.org/#= zoom #/#= x #/#= y #.png",
                 TileSubdomains = new string[] { "a", "b", "c" },
