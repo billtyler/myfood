@@ -17,6 +17,17 @@
         window.location = window.location.origin + "/Admin/Index/";
     }
 
+    function onFeelingRequestClick() {
+        $.ajax({
+            url: "@Url.Action("SendFeelingRequest", "ProductionUnits")",
+            dataType: "json",
+            type: "POST",
+            success: function (response) {
+                alert("Message Sent");
+        }
+    });
+    }
+
 </script>
 
 <div id="main-section-header" class="row">
@@ -53,6 +64,14 @@
             .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
             .Content("[[[Manage Users]]]")
             .Events(ev => ev.Click("onManageUserClick")))
+            </p>
+
+            <p>
+                @(Html.Kendo().Button()
+            .Name("sendFeelingRequestButton")
+            .HtmlAttributes(new { @class = "toggleButton btn-block", @style = "height: 50px; color: #FFFFFF; background-color: #018001;" })
+            .Content("[[[Send Feeling Request]]]")
+            .Events(ev => ev.Click("onFeelingRequestClick")))
             </p>
         </div>
     </div>

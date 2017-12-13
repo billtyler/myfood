@@ -38,12 +38,20 @@ namespace myfoodapp.Hub.Controllers
 
             var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
 
-            return Json(new { 
-                             CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
-                             CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
-                             AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
-                             AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
-                             LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+            var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
+
+            return Json(new {
+                            CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
+                            CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
+                            AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
+                            AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
+                            LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+
+                            CurrentpHValue = pHSensorValueSet.CurrentValue,
+                            CurrentpHCaptureTime = pHSensorValueSet.CurrentCaptureTime,
+                            AverageHourpHValue = pHSensorValueSet.AverageHourValue,
+                            AverageDaypHValue = pHSensorValueSet.AverageDayValue,
+                            LastDaypHCaptureTime = pHSensorValueSet.LastDayCaptureTime,
             }, JsonRequestBehavior.AllowGet);
         }
 

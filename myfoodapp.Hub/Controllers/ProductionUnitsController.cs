@@ -4,6 +4,7 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Business;
+using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
 using System;
@@ -530,6 +531,25 @@ namespace myfoodapp.Hub.Controllers
             db.OptionLists.Add(new OptionList() {option = currentOption, productionUnit = currentProductionUnit });
 
             db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [Authorize]
+        public ActionResult SendFeelingRequest()
+        {
+            var db = new ApplicationDbContext();
+
+            var upRunningStatus = db.ProductionUnitStatus.Where(s => s.Id == 3).FirstOrDefault();
+            var upRunningProductionUnits = db.ProductionUnits.Include(p => p.owner.language).Where(p => p.productionUnitStatus.Id == upRunningStatus.Id).ToList();
+
+            upRunningProductionUnits.ForEach(p =>
+            {
+                if (p.owner.notificationPushKey != null)
+                {
+                    NotificationPushManager.PioneerUnitOwnerFeelingMessage(p);
+                }
+            });
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }

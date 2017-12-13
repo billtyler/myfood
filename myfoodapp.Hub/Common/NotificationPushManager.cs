@@ -315,5 +315,4 @@ namespace myfoodapp.Hub.Common
         }
 
     }
-
 }
