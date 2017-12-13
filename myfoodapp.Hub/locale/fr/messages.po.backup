@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-12-13 15:33+01:00\n"
-"PO-Revision-Date: 2017-12-13 15:33+01:00\n"
+"POT-Creation-Date: 2017-12-13 15:50+01:00\n"
+"PO-Revision-Date: 2017-12-13 15:50+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -377,7 +377,7 @@ msgstr "Description détaillée"
 msgid "Detailed information"
 msgstr "Informations détaillée"
 
-#: Views\ProductionUnits\Index.cshtml:90
+#: Views\ProductionUnits\Index.cshtml:91
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:72
 msgid "Details"
 msgstr "Détails"
@@ -617,7 +617,7 @@ msgstr "Juin"
 msgid "lang"
 msgstr "lang"
 
-#: Views\ProductionUnits\Index.cshtml:88
+#: Views\ProductionUnits\Index.cshtml:89
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:70
 msgid "last measure"
 msgstr "dernière mesure"
@@ -694,19 +694,19 @@ msgstr "Gérez les Mesures provenant des capteurs"
 msgid "Manage Production Unit Events"
 msgstr "Gérer les Evénements de l'Unité de Prod."
 
-#: Views\ProductionUnits\Index.cshtml:56
+#: Views\ProductionUnits\Index.cshtml:57
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:46
 msgid "Manage Production Unit Owners"
 msgstr "Gérer Propriétaires des Unit. de Prod."
 
 #: Views\Events\Manage.cshtml:30
-#: Views\ProductionUnits\Index.cshtml:48
+#: Views\ProductionUnits\Index.cshtml:49
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:30
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:38
 msgid "Manage Production Units Events"
 msgstr "Gérez les événements de l'Unité de Production"
 
-#: Views\ProductionUnits\Index.cshtml:39
+#: Views\ProductionUnits\Index.cshtml:40
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:29
 msgid "Manage Production Units from Pioneer Citizen Network"
 msgstr "Gérez les Unités de Production du Réseau des Citoyens Pionniers"
@@ -729,7 +729,7 @@ msgstr "Gérer Unité"
 #: Views\Admin\EditRoles.cshtml:18
 #: Views\Admin\EditUser.cshtml:18
 #: Views\Admin\Index.cshtml:24
-#: Views\ProductionUnits\Index.cshtml:64
+#: Views\ProductionUnits\Index.cshtml:65
 #: obj\Release\Package\PackageTmp\Views\Admin\EditRoles.cshtml:18
 #: obj\Release\Package\PackageTmp\Views\Admin\EditUser.cshtml:18
 #: obj\Release\Package\PackageTmp\Views\Admin\Index.cshtml:24
@@ -907,7 +907,7 @@ msgid "Outdoor"
 msgstr "Extérieur"
 
 #: Viewmodels\ProductionUnitViewModel.cs:33
-#: Views\ProductionUnits\Index.cshtml:82
+#: Views\ProductionUnits\Index.cshtml:83
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:64
 msgid "owner"
 msgstr "respo."
@@ -1036,7 +1036,7 @@ msgstr "Faible"
 msgid "prod. lvl"
 msgstr "niveau de prod."
 
-#: Views\ProductionUnits\Index.cshtml:85
+#: Views\ProductionUnits\Index.cshtml:86
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:67
 msgid "prod. type"
 msgstr "type de prod."
@@ -1065,7 +1065,7 @@ msgid "Production Units"
 msgstr "Unités de Prod."
 
 #: Views\ProductionUnitOwner\Index.cshtml:15
-#: Views\ProductionUnits\Index.cshtml:33
+#: Views\ProductionUnits\Index.cshtml:34
 #: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:15
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:23
 msgid "Production Units List"
@@ -1118,7 +1118,7 @@ msgstr "Enregistrer et Fermer"
 msgid "See Recommandations for my Production Unit:"
 msgstr "Voir les Recommandations pour mon Unité de Production"
 
-#: Views\ProductionUnits\Index.cshtml:72
+#: Views\ProductionUnits\Index.cshtml:73
 msgid "Send Feeling Request"
 msgstr ""
 
@@ -1157,7 +1157,7 @@ msgstr "Printemps"
 msgid "Sprinkler cleaning"
 msgstr "Nettoyer les émetteurs"
 
-#: Views\ProductionUnits\Index.cshtml:86
+#: Views\ProductionUnits\Index.cshtml:87
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:68
 msgid "status"
 msgstr "status"

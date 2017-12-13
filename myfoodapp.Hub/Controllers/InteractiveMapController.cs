@@ -2,6 +2,8 @@
 using Kendo.Mvc.UI;
 using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
+using myfoodapp.Hub.Services;
+using myfoodapp.Hub.Viewmodels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,11 +19,13 @@ namespace myfoodapp.Hub.Controllers
         {
             ViewBag.Title = "Interactive Map Page";
 
-            if(lang != String.Empty)
+            if (lang != String.Empty)
                 System.Web.HttpContext.Current.Session["UserLang"] = lang;
 
             return View();
         }
+
+
 
         public ActionResult ClusterMap()
         {
@@ -34,24 +38,26 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList()[id];                                         
+            var currentProductionUnit = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).ToList()[id];
 
             var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
 
             var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
 
-            return Json(new {
-                            CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
-                            CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
-                            AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
-                            AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
-                            LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
 
-                            CurrentpHValue = pHSensorValueSet.CurrentValue,
-                            CurrentpHCaptureTime = pHSensorValueSet.CurrentCaptureTime,
-                            AverageHourpHValue = pHSensorValueSet.AverageHourValue,
-                            AverageDaypHValue = pHSensorValueSet.AverageDayValue,
-                            LastDaypHCaptureTime = pHSensorValueSet.LastDayCaptureTime,
+            return Json(new
+            {
+                CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
+                CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
+                AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
+                AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
+                LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+
+                CurrentpHValue = pHSensorValueSet.CurrentValue,
+                CurrentpHCaptureTime = pHSensorValueSet.CurrentCaptureTime,
+                AverageHourpHValue = pHSensorValueSet.AverageHourValue,
+                AverageDaypHValue = pHSensorValueSet.AverageDayValue,
+                LastDaypHCaptureTime = pHSensorValueSet.LastDayCaptureTime,
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -73,7 +79,7 @@ namespace myfoodapp.Hub.Controllers
 
             if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                var currentProductionUnit = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).ToList();
+                var currentProductionUnit = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).ToList();
 
                 var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
                                                                                  p.locationLongitude == longitude);
@@ -87,20 +93,54 @@ namespace myfoodapp.Hub.Controllers
                 return null;
         }
 
+        public ActionResult GetProductionUnitDetailPopUp(string SelectedProductionUnitCoord)
+        {
+            var db = new ApplicationDbContext();
+
+            var strLat = Double.Parse(SelectedProductionUnitCoord.Split('|')[0]);
+            var strLong = Double.Parse(SelectedProductionUnitCoord.Split('|')[1]);
+
+            var responseData = db.ProductionUnits.Where(p => p.locationLatitude == strLat && p.locationLongitude == strLong)
+                                         .Include(p => p.owner.preferedMoment)
+                                         .Include(p => p.productionUnitType)
+                                         .Include(p => p.productionUnitStatus).ToList();
+
+            var lst = new object();
+            lst = new
+            {
+                PioneerCitizenName = responseData[0].owner.pioneerCitizenName,
+                PioneerCitizenNumber = responseData[0].owner.pioneerCitizenNumber,
+                ProductionUnitStartDate = responseData[0].startDate,
+                ProductionUnitInfo = responseData[0].info,
+                ProductionUnitType = responseData[0].productionUnitType.name,
+                ProductionUnitStatus = responseData[0].productionUnitStatus.name,
+                PhoneNumber = responseData[0].owner.phoneNumber == null ? "00 33 3 67 37 00 56" : responseData[0].owner.phoneNumber,
+                ContactMail = responseData[0].owner.contactMail == null ? "contact@nyfood.eu" : responseData[0].owner.contactMail,
+                PicturePath = responseData[0].picturePath == null ? "NoImage.png" : responseData[0].picturePath,
+
+                PreferedMoment = responseData[0].owner.preferedMoment == null ? "" : responseData[0].owner.preferedMoment.name,
+                Location = responseData[0].owner.location == null ? "" : responseData[0].owner.location,
+            };
+
+            return Json(lst);
+        }
+
         public ActionResult GetProductionUnitDetailList()
         {
             var db = new ApplicationDbContext();
 
+            //TODO uncomment
             var prodUnitListCount = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).Count();
+            //var prodUnitListCount = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).Count();
 
             if (prodUnitListCount == 0)
                 return null;
 
+            //TODO uncomment
             var currentProductionUnitList = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null)
                                          .Include(p => p.owner.preferedMoment)
                                          .Include(p => p.productionUnitType)
-                                         .Include(p => p.productionUnitStatus)
-                                         .Where(p => p.picturePath != null).ToList();
+                                         .Include(p => p.productionUnitStatus).ToList();
 
             var lst = new List<object>();
 
@@ -118,7 +158,7 @@ namespace myfoodapp.Hub.Controllers
                     options.ToList().ForEach(o => { optionList += o.name + " / "; });
                 }
 
-                if (p.owner.preferedMoment != null && p.owner.phoneNumber != String.Empty && p.owner.contactMail != String.Empty)
+                if (p.owner.preferedMoment != null)
                 {
                     lst.Add(new
                     {
@@ -128,9 +168,10 @@ namespace myfoodapp.Hub.Controllers
                         ProductionUnitStartDate = p.startDate,
                         ProductionUnitType = p.productionUnitType.name,
                         ProductionUnitStatus = p.productionUnitStatus.name,
-                        PhoneNumber = p.owner.phoneNumber,
-                        ContactMail = p.owner.contactMail,
-                        PicturePath = p.picturePath,
+
+                        PhoneNumber = p.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : p.owner.phoneNumber,
+                        ContactMail = p.owner.contactMail == null ? "contact@myfood.eu" : p.owner.contactMail,
+                        PicturePath = p.picturePath == null ? "NoImage.png" : p.picturePath,
                         PreferedMoment = p.owner.preferedMoment.name,
                         Location = p.owner.location,
 
@@ -150,8 +191,12 @@ namespace myfoodapp.Hub.Controllers
                         ProductionUnitVersion = p.version,
                         ProductionUnitStartDate = p.startDate,
                         ProductionUnitType = p.productionUnitType.name,
+
                         ProductionUnitStatus = p.productionUnitStatus.name,
-                        PicturePath = p.picturePath,
+
+                        PhoneNumber = p.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : p.owner.phoneNumber,
+                        ContactMail = p.owner.contactMail == null ? "contact@myfood.eu" : p.owner.contactMail,
+                        PicturePath = p.picturePath == null ? "NoImage.png" : p.picturePath,
 
                         LocationLatitude = p.locationLatitude,
                         LocationLongitude = p.locationLongitude,
@@ -168,14 +213,27 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult GetNetworkStats()
         {
             ApplicationDbContext db = new ApplicationDbContext();
+            MeasureService measureService = new MeasureService(db);
 
-            var stats = PerformanceManager.GetNetworkStatistic(db);
+            var rslt = db.ProductionUnits.Include("productionUnitType")
+                                         .Where(p => p.productionUnitType.Id <= 5);
+
+            var productionUnitNumber = rslt.Count();
+
+            var totalBalcony = rslt.Where(p => p.productionUnitType.Id == 1).Count();
+            var totalCity = rslt.Where(p => p.productionUnitType.Id == 2).Count();
+            var totalFamily14 = rslt.Where(p => p.productionUnitType.Id == 3).Count();
+            var totalFamily22 = rslt.Where(p => p.productionUnitType.Id == 4).Count();
+            var totalFarm = rslt.Where(p => p.productionUnitType.Id == 5).Count();
+
+            var totalMonthlyProduction = totalBalcony * 4 + totalCity * 7 + totalFamily14 * 10 + totalFamily22 * 15 + totalFarm * 25;
+            var totalMonthlySparedCO2 = Math.Round(totalMonthlyProduction * 0.3, 0);
 
             return Json(new
             {
-                ProductionUnitNumber = stats.productionUnitNumber,
-                TotalMonthlyProduction = stats.totalMonthlyProduction,
-                TotalMonthlySparedCO2 = stats.totalMonthlySparedCO2,
+                ProductionUnitNumber = productionUnitNumber,
+                TotalMonthlyProduction = totalMonthlyProduction,
+                TotalMonthlySparedCO2 = totalMonthlySparedCO2,
             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -183,7 +241,7 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
 
-            var rslt = db.ProductionUnits.Include(p => p.productionUnitStatus).ToList();
+            var rslt = db.ProductionUnits.Include("productionUnitStatus").ToList();
 
             var waitConfCount = rslt.Where(p => p.productionUnitStatus.Id == 1).Count();
             var setupPlannedCount = rslt.Where(p => p.productionUnitStatus.Id == 2).Count();
@@ -192,15 +250,14 @@ namespace myfoodapp.Hub.Controllers
             var stoppedCount = rslt.Where(p => p.productionUnitStatus.Id == 5).Count();
             var offineCount = rslt.Where(p => p.productionUnitStatus.Id == 6).Count();
 
-            var statusList = new List<PieChartViewModel>();
+            var statusList = new List<NewPieModel>();
 
-            statusList.Add(new PieChartViewModel() { Category = "[[[Wait Confirm.]]]", Value = waitConfCount, Color = "#9de219" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[Setup Planned]]]", Value = setupPlannedCount, Color = "#90cc38" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[Up & Running]]]", Value = upRunningCount, Color = "#068c35" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[On Maintenance]]]", Value = onMaintenanceCount, Color = "#006634" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[Stopped]]]", Value = stoppedCount, Color = "#004d38" });
-            statusList.Add(new PieChartViewModel() { Category = "[[[Offline]]]", Value = offineCount, Color = "#003F38" });
-
+            statusList.Add(new NewPieModel() { name = "[[[Wait Confirm.]]]", y = waitConfCount });
+            statusList.Add(new NewPieModel() { name = "[[[Setup Planned]]]", y = setupPlannedCount });
+            statusList.Add(new NewPieModel() { name = "[[[Up & Running]]]", y = upRunningCount });
+            statusList.Add(new NewPieModel() { name = "[[[On Maintenance]]]", y = onMaintenanceCount });
+            statusList.Add(new NewPieModel() { name = "[[[Stopped]]]", y = stoppedCount });
+            statusList.Add(new NewPieModel() { name = "[[[Offline]]]", y = offineCount });
             return Json(statusList);
         }
     }
