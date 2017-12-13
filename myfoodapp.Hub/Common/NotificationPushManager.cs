@@ -40,7 +40,7 @@ namespace myfoodapp.Hub.Common
                             headings = new { en = String.Format("Evénements reçu de votre Unité de Prod. {0}", currentProductionUnit.info) },
                             contents = new { en = "voir les recommandations sur le Hub" },
                             include_player_ids = new string[] { currentProductionUnit.owner.notificationPushKey },
-                            url = String.Format(WebAppUrl + @"ProductionUnits/Events/Index/{0}", currentProductionUnit.Id),
+                            url = String.Format(WebAppUrl + @"ProductionUnits/Details/{0}", currentProductionUnit.Id),
                             chrome_web_icon = WebAppUrl + "Content/favicon.ico"
                         };
                         break;
@@ -51,7 +51,7 @@ namespace myfoodapp.Hub.Common
                             headings = new { en = String.Format("Events received from your Production Unit {0}", currentProductionUnit.info) },
                             contents = new { en = "see the recommandations on the Hub" },
                             include_player_ids = new string[] { currentProductionUnit.owner.notificationPushKey },
-                            url = String.Format(WebAppUrl + @"ProductionUnits/Events/Index/{0}", currentProductionUnit.Id),
+                            url = String.Format(WebAppUrl + @"ProductionUnits/Details/{0}", currentProductionUnit.Id),
                             chrome_web_icon = WebAppUrl + "Content/favicon.ico"
                         };
                         break;
@@ -195,8 +195,8 @@ namespace myfoodapp.Hub.Common
                         obj = new
                         {
                             app_id = OneSignalAPIId,
-                            headings = String.Format("Aucun message reçu depuis 30 min {0}", currentProductionUnit.info),
-                            contents = "envoyé depuis votre Unité de Prod. | Serre Connectée",
+                            headings = new { en = String.Format("Aucun message reçu depuis 30 min {0}", currentProductionUnit.info) },
+                            contents = new { en = "envoyé depuis votre Unité de Prod. | Serre Connectée" },
                             include_player_ids = new string[] { currentProductionUnit.owner.notificationPushKey },
                             url = WebAppUrl + "&_osp=do_not_open",
                             chrome_web_icon = WebAppUrl + "Content/favicon.ico"
@@ -206,8 +206,79 @@ namespace myfoodapp.Hub.Common
                         obj = new
                         {
                             app_id = OneSignalAPIId,
-                            headings = String.Format("No message received since 30 min {0}", currentProductionUnit.info),
-                            contents = "from your Production Unit | Smart Greenhouse",
+                            headings = new { en = String.Format("No message received since 30 min {0}", currentProductionUnit.info) },
+                            contents = new { en = "from your Production Unit | Smart Greenhouse" },
+                            include_player_ids = new string[] { currentProductionUnit.owner.notificationPushKey },
+                            url = WebAppUrl + "&_osp=do_not_open",
+                            chrome_web_icon = WebAppUrl + "Content/favicon.ico"
+                        };
+                        break;
+                }
+            }
+
+            var param = serializer.Serialize(obj);
+            byte[] byteArray = Encoding.UTF8.GetBytes(param);
+
+            string responseContent = null;
+
+            try
+            {
+                using (var writer = request.GetRequestStream())
+                {
+                    writer.Write(byteArray, 0, byteArray.Length);
+                }
+
+                using (var response = request.GetResponse() as HttpWebResponse)
+                {
+                    using (var reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        responseContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            catch (WebException ex)
+            {
+                dbLog.Logs.Add(Log.CreateErrorLog(String.Format("Error with Onesignal Push Notification"), ex));
+                dbLog.SaveChanges();
+            }
+        }
+
+        public static void PioneerUnitOnlineMessage(ProductionUnit currentProductionUnit)
+        {
+            var dbLog = new ApplicationDbContext();
+            var request = WebRequest.Create("https://onesignal.com/api/v1/notifications") as HttpWebRequest;
+
+            request.KeepAlive = true;
+            request.Method = "POST";
+            request.ContentType = "application/json; charset=utf-8";
+
+            request.Headers.Add("authorization", String.Format("Basic {0}", OneSignalAPIKey));
+
+            var serializer = new JavaScriptSerializer();
+
+            var obj = new object();
+
+            if (currentProductionUnit.owner != null && currentProductionUnit.owner.language != null)
+            {
+                switch (currentProductionUnit.owner.language.description)
+                {
+                    case "fr":
+                        obj = new
+                        {
+                            app_id = OneSignalAPIId,
+                            headings = new { en = String.Format("Message reçu à l'instant {0}", currentProductionUnit.info) },
+                            contents = new { en = "envoyé depuis votre Unité de Prod. | Serre Connectée" },
+                            include_player_ids = new string[] { currentProductionUnit.owner.notificationPushKey },
+                            url = WebAppUrl + "&_osp=do_not_open",
+                            chrome_web_icon = WebAppUrl + "Content/favicon.ico"
+                        };
+                        break;
+                    default:
+                        obj = new
+                        {
+                            app_id = OneSignalAPIId,
+                            headings = new { en = String.Format("Message received just now {0}", currentProductionUnit.info) },
+                            contents = new { en = "from your Production Unit | Smart Greenhouse" },
                             include_player_ids = new string[] { currentProductionUnit.owner.notificationPushKey },
                             url = WebAppUrl + "&_osp=do_not_open",
                             chrome_web_icon = WebAppUrl + "Content/favicon.ico"

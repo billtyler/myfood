@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Web.Http;
 using System.Globalization;
 using System.Threading;
+using myfoodapp.Hub.Common;
 
 namespace myfoodapp.Hub.Controllers.Api
 {
@@ -49,6 +50,7 @@ namespace myfoodapp.Hub.Controllers.Api
             try
             {
                 var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user)
+                                                              .Include(p => p.owner.language)
                                                               .Include(p => p.hydroponicType)
                                                               .Include(p => p.productionUnitStatus)
                                                               .Include(p => p.productionUnitType)
@@ -60,12 +62,36 @@ namespace myfoodapp.Hub.Controllers.Api
                     db.SaveChanges();
                 }
 
+                var infoEventType = db.EventTypes.Where(p => p.Id == 8).FirstOrDefault();
+
                 var upRunningStatus = db.ProductionUnitStatus.Where(p => p.Id == 3).FirstOrDefault();
+                var offlineStatus = db.ProductionUnitStatus.Where(p => p.Id == 6).FirstOrDefault();
+
+                if(currentProductionUnit.productionUnitStatus.Id == offlineStatus.Id)
+                {
+                    if (currentProductionUnit.owner != null && currentProductionUnit.owner.language != null)
+                    {
+                        switch (currentProductionUnit.owner.language.description)
+                        {
+                            case "fr":
+                                db.Events.Add(new Event() { date = DateTime.Now, description = "Serre connectée", isOpen = false, productionUnit = currentProductionUnit, eventType = infoEventType, createdBy = "MyFood Bot" });
+                                break;
+                            default:
+                                db.Events.Add(new Event() { date = DateTime.Now, description = "Smart Greenhouse Online", isOpen = false, productionUnit = currentProductionUnit, eventType = infoEventType, createdBy = "MyFood Bot" });
+                                break;
+                        }
+
+                        db.SaveChanges();
+                    }
+
+                    if (currentProductionUnit.owner.notificationPushKey != null)
+                    {
+                        NotificationPushManager.PioneerUnitOnlineMessage(currentProductionUnit);
+                    }
+                }
 
                 currentProductionUnit.lastMeasureReceived = date;
                 currentProductionUnit.productionUnitStatus = upRunningStatus;
-
-                //var productionUnitOwnerMail = currentProductionUnit.owner.user.Email;
 
                 var currentMeasures = new GroupedMeasure();
                 currentMeasures.hydroponicTypeName = currentProductionUnit.hydroponicType.name;

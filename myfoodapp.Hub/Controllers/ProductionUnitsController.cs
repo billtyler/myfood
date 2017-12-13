@@ -13,6 +13,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -436,33 +437,8 @@ namespace myfoodapp.Hub.Controllers
                                           .Include(p => p.options)
                                           .Where(p => p.Id == id).FirstOrDefault();
 
-            var averageMonthlyProduction = 0;
 
-            switch (currentProductionUnit.productionUnitType.Id)
-            {
-                case 1:
-                    //AeroSpring
-                    averageMonthlyProduction = 4;
-                    break;
-                case 2:
-                    //City
-                    averageMonthlyProduction = 7;
-                    break;
-                case 3:
-                    //Family14
-                    averageMonthlyProduction = 10;
-                    break;
-                case 4:
-                    //Family22
-                    averageMonthlyProduction = 15;
-                    break;
-                case 5:
-                    //Farm
-                    averageMonthlyProduction = 25;
-                    break;
-                default:
-                    break;
-            }
+            var averageMonthlyProduction = PerformanceManager.GetEstimatedMonthlyProduction(currentProductionUnit.productionUnitType.Id);
 
             var averageMonthlySparedCO2 = averageMonthlyProduction * 0.3;
 
@@ -537,6 +513,49 @@ namespace myfoodapp.Hub.Controllers
                                      .Select(p => p.option);
 
             return Json(rslt.ToDataSourceResult(request));
+        }
+
+        [Authorize]
+        public ActionResult AddOptionFromProductionUnit(int id, int optionId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            MeasureService measureService = new MeasureService(db);
+
+            var currentProductionUnit = db.ProductionUnits.Where(o => o.Id == id).FirstOrDefault();
+            var currentOption = db.Options.Where(o => o.Id == optionId).FirstOrDefault();
+
+            if(currentOption == null)
+                return HttpNotFound();
+
+            db.OptionLists.Add(new OptionList() {option = currentOption, productionUnit = currentProductionUnit });
+
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        [Authorize]
+        public ActionResult RemoveOptionFromProductionUnit(int id, int optionId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            MeasureService measureService = new MeasureService(db);
+
+            var currentOption = db.Options.Where(o => o.Id == optionId).FirstOrDefault();
+
+            if (currentOption == null)
+                return HttpNotFound();
+
+            var currentProductionUnitOptions = db.OptionLists.Include(o => o.productionUnit).Include(o => o.option)
+                            .Where(p => p.productionUnit.Id == id);
+
+            var removeOption = db.OptionLists.Include(o => o.productionUnit)
+                                        .Where(p => p.productionUnit.Id == id && p.option.Id == currentOption.Id).FirstOrDefault();
+
+            db.OptionLists.Remove(removeOption);
+
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
         [Authorize]
@@ -632,6 +651,7 @@ namespace myfoodapp.Hub.Controllers
             return Json(true);
         }
 
+        [Authorize]
         public ActionResult SavePicture(IEnumerable<HttpPostedFileBase> files, string picturePath)
         {
             var fileName = Path.GetFileName(files.FirstOrDefault().FileName);

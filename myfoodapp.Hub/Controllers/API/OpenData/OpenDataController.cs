@@ -1,20 +1,14 @@
 ﻿using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Linq;
-using System.Data.Entity;
-using System.Web.Http;
-using System.Globalization;
-using System.Threading;
-using System.Collections.Generic;
-using myfoodapp.Hub.Services;
-using myfoodapp.Hub.Services.OpenData;
 using myfoodapp.Hub.Models.OpenData;
+using myfoodapp.Hub.Services.OpenData;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Http;
 
 namespace myfoodapp.Hub.Controllers.Api
 {
-    public class OpendDataController : ApiController
+    public class OpenDataController : ApiController
     {
         [HttpGet]
         [Route("opendata/productionunits/")]
@@ -41,7 +35,7 @@ namespace myfoodapp.Hub.Controllers.Api
         }
 
         [HttpGet]
-        [Route("opendata/productionunits/{Id:int}/Measures")]
+        [Route("opendata/productionunits/{Id:int}/measures")]
         public List<OpenMeasureViewModel> GetMeasures(int Id)
         {
             var db = new ApplicationDbContext();
@@ -50,6 +44,16 @@ namespace myfoodapp.Hub.Controllers.Api
             var measures = openDataService.GetMeasures(Id);
 
             return measures.ToList();
+        }
+
+        [HttpGet]
+        [Route("opendata/productionunits/stats")]
+        public OpenProductionUnitsStatsViewModel GetProductionUnitStats()
+        {
+            var db = new ApplicationDbContext();
+            var stats = PerformanceManager.GetNetworkStatistic(db);
+
+            return stats;
         }
     }
 }

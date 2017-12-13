@@ -2,18 +2,47 @@
 @model ProductionUnitViewModel
 
 <script type="text/javascript">
-    window.onload = function onLoad(e) {
-
-        var Events = $("#Events").data("kendoGrid");
-
-        var productionUnitId = $('#routeDataId').val();
-
-        Events.dataSource.read({ id: productionUnitId });
-    }
 
     function onBackClick() {
         var productionUnitId = $('#routeDataId').val();
         window.location = window.location.origin + "/ProductionUnits/Details/" + productionUnitId;
+    }
+
+    function onAdd(e) {
+        var productionUnitId = $('#routeDataId').val();
+
+        if (e.dataItems[0] == null)
+            return;
+
+        var currentOptionId = e.dataItems[0].Id;
+
+        $.ajax({
+            url: "@Url.Action("AddOptionFromProductionUnit", "ProductionUnits")",
+            dataType: "json",
+            data: { id: productionUnitId, optionId: currentOptionId },
+            type: "POST",
+            success: function (response) {
+
+            }
+        });
+    }
+
+    function onRemove(e) {
+        var productionUnitId = $('#routeDataId').val();
+        var currentOptionId = e.dataItems[0].Id;
+
+        if (e.dataItems[0] == null)
+            return;
+
+        $.ajax({
+            url: "@Url.Action("RemoveOptionFromProductionUnit", "ProductionUnits")",
+            dataType: "json",
+            data: { id: productionUnitId, optionId: currentOptionId },
+            type: "POST",
+            success: function (response) {
+
+            }
+        });
     }
 
     function onSuccess() {
@@ -146,6 +175,10 @@
                                         .DataValueField("Id")
                                         .DataTextField("name")
                                         .Selectable(ListBoxSelectable.Single)
+                                        .Events(events => events
+                                            .Add("onAdd")
+                                            .Remove("onRemove")
+                                        )
                                     )
                                 </div>
                        </div>

@@ -1,12 +1,8 @@
 ﻿using myfoodapp.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
-using Windows.Foundation;
 
 namespace myfoodapp.Business.Sensor.HumidityTemperature
 {

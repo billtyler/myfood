@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-10-06 07:30+02:00\n"
-"PO-Revision-Date: 2017-10-06 07:30+02:00\n"
+"POT-Creation-Date: 2017-12-04 12:12+01:00\n"
+"PO-Revision-Date: 2017-12-04 12:12+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -190,11 +190,11 @@ msgstr ""
 #: Views\Events\Index.cshtml:40
 #: Views\Events\Manage.cshtml:37
 #: Views\ProductionUnitOwner\Index.cshtml:30
-#: Views\ProductionUnits\Update.cshtml:41
+#: Views\ProductionUnits\Update.cshtml:70
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:40
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:37
 #: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:30
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:41
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:70
 msgid "Back to Details"
 msgstr ""
 
@@ -247,8 +247,8 @@ msgstr ""
 msgid "Can be planted in:"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:34
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:34
+#: Views\ProductionUnits\Update.cshtml:63
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:63
 msgid "Change Production Units Settings"
 msgstr ""
 
@@ -584,8 +584,8 @@ msgstr ""
 msgid "Install UV filter"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:144
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:144
+#: Views\ProductionUnits\Update.cshtml:173
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:173
 msgid "Installed Options"
 msgstr ""
 
@@ -867,7 +867,7 @@ msgid "October"
 msgstr ""
 
 #: Controllers\HomeController.cs:213
-#: Controllers\InteractiveMapController.cs:234
+#: Controllers\InteractiveMapController.cs:194
 #: Migrations\Configuration.cs:104
 msgid "Offline"
 msgstr ""
@@ -877,7 +877,7 @@ msgid "Old Password"
 msgstr ""
 
 #: Controllers\HomeController.cs:211
-#: Controllers\InteractiveMapController.cs:232
+#: Controllers\InteractiveMapController.cs:192
 msgid "On Maintenance"
 msgstr ""
 
@@ -894,8 +894,8 @@ msgstr ""
 msgid "Open doors"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:136
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:136
+#: Views\ProductionUnits\Update.cshtml:165
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:165
 msgid "Option List"
 msgstr ""
 
@@ -1046,7 +1046,7 @@ msgstr ""
 msgid "prod. unit"
 msgstr ""
 
-#: Controllers\ProductionUnitsController.cs:192
+#: Controllers\ProductionUnitsController.cs:193
 msgid "Production Unit already in use"
 msgstr ""
 
@@ -1073,10 +1073,10 @@ msgstr ""
 
 #: Views\Events\Index.cshtml:27
 #: Views\Events\Manage.cshtml:24
-#: Views\ProductionUnits\Update.cshtml:28
+#: Views\ProductionUnits\Update.cshtml:57
 #: obj\Release\Package\PackageTmp\Views\Events\Index.cshtml:27
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:24
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:28
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:57
 msgid "Production Units Management"
 msgstr ""
 
@@ -1108,8 +1108,8 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: Views\ProductionUnits\Update.cshtml:155
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:155
+#: Views\ProductionUnits\Update.cshtml:188
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Update.cshtml:188
 msgid "Save & Close"
 msgstr ""
 
@@ -1132,7 +1132,7 @@ msgid "September"
 msgstr ""
 
 #: Controllers\HomeController.cs:209
-#: Controllers\InteractiveMapController.cs:230
+#: Controllers\InteractiveMapController.cs:190
 #: Migrations\Configuration.cs:100
 msgid "Setup Planned"
 msgstr ""
@@ -1159,7 +1159,7 @@ msgid "status"
 msgstr ""
 
 #: Controllers\HomeController.cs:212
-#: Controllers\InteractiveMapController.cs:233
+#: Controllers\InteractiveMapController.cs:193
 #: Migrations\Configuration.cs:103
 msgid "Stopped"
 msgstr ""
@@ -1227,7 +1227,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: Controllers\InteractiveMapController.cs:231
+#: Controllers\InteractiveMapController.cs:191
 msgid "Up & Running"
 msgstr ""
 
@@ -1270,7 +1270,7 @@ msgid "View Logs"
 msgstr ""
 
 #: Controllers\HomeController.cs:208
-#: Controllers\InteractiveMapController.cs:229
+#: Controllers\InteractiveMapController.cs:189
 #: Migrations\Configuration.cs:99
 msgid "Wait Confirm."
 msgstr ""
