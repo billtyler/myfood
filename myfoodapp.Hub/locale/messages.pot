@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-12-20 12:06+01:00\n"
+"POT-Creation-Date: 2017-12-13 16:42+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,9 +24,9 @@ msgid "36 towers"
 msgstr ""
 
 #: Views\About\Index.cshtml:8
-#: Views\Shared\_Layout.cshtml:70
+#: Views\Shared\_Layout.cshtml:68
 #: obj\Release\Package\PackageTmp\Views\About\Index.cshtml:8
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:70
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:68
 msgid "About"
 msgstr ""
 
@@ -655,8 +655,8 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:76
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:76
+#: Views\Shared\_Layout.cshtml:74
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:74
 msgid "Log off"
 msgstr ""
 
@@ -665,8 +665,8 @@ msgstr ""
 msgid "Log your Actions / Events here"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:81
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:81
+#: Views\Shared\_Layout.cshtml:79
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:79
 msgid "Login"
 msgstr ""
 
@@ -748,8 +748,8 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:64
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
+#: Views\Shared\_Layout.cshtml:62
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:62
 msgid "Measures"
 msgstr ""
 
@@ -767,8 +767,8 @@ msgstr ""
 msgid "message type"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:63
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
+#: Views\Shared\_Layout.cshtml:61
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
 msgid "Messages"
 msgstr ""
 
@@ -798,9 +798,9 @@ msgid "Morning"
 msgstr ""
 
 #: Views\MyInfo\Update.cshtml:44
-#: Views\Shared\_Layout.cshtml:68
+#: Views\Shared\_Layout.cshtml:66
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:68
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:66
 msgid "My Information"
 msgstr ""
 
@@ -963,8 +963,8 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:66
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:66
+#: Views\Shared\_Layout.cshtml:64
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
 msgid "Performance &amp; Health"
 msgstr ""
 
@@ -1058,8 +1058,8 @@ msgstr ""
 msgid "Production Unit Owner already in use"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:65
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
+#: Views\Shared\_Layout.cshtml:63
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
 msgid "Production Units"
 msgstr ""
 
@@ -1080,9 +1080,9 @@ msgid "Production Units Management"
 msgstr ""
 
 #: Views\Recipes\Index.cshtml:78
-#: Views\Shared\_Layout.cshtml:67
+#: Views\Shared\_Layout.cshtml:65
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:78
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:67
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
 msgid "Recipes"
 msgstr ""
 
@@ -1249,8 +1249,8 @@ msgstr ""
 msgid "user"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:61
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
+#: Views\Shared\_Layout.cshtml:59
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:59
 msgid "User Management"
 msgstr ""
 

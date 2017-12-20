@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-12-15 18:06+01:00\n"
-"PO-Revision-Date: 2017-12-15 18:06+01:00\n"
+"POT-Creation-Date: 2017-12-13 15:50+01:00\n"
+"PO-Revision-Date: 2017-12-13 15:50+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,9 +25,9 @@ msgid "36 towers"
 msgstr "36 Türme"
 
 #: Views\About\Index.cshtml:8
-#: Views\Shared\_Layout.cshtml:70
+#: Views\Shared\_Layout.cshtml:68
 #: obj\Release\Package\PackageTmp\Views\About\Index.cshtml:8
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:70
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:68
 msgid "About"
 msgstr "Über"
 
@@ -378,7 +378,7 @@ msgid "Detailed information"
 msgstr "Genaue Information"
 
 #: Views\ProductionUnits\Index.cshtml:91
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:91
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:72
 msgid "Details"
 msgstr "Details"
 
@@ -618,7 +618,7 @@ msgid "lang"
 msgstr "Lang"
 
 #: Views\ProductionUnits\Index.cshtml:89
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:89
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:70
 msgid "last measure"
 msgstr "letztes Maß"
 
@@ -656,8 +656,8 @@ msgstr "Ort:"
 msgid "Log in"
 msgstr "Einloggen"
 
-#: Views\Shared\_Layout.cshtml:76
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:76
+#: Views\Shared\_Layout.cshtml:74
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:74
 msgid "Log off"
 msgstr "Abmelden"
 
@@ -666,8 +666,8 @@ msgstr "Abmelden"
 msgid "Log your Actions / Events here"
 msgstr "Melden Sie hier Ihre Aktionen / Veranstaltungen"
 
-#: Views\Shared\_Layout.cshtml:81
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:81
+#: Views\Shared\_Layout.cshtml:79
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:79
 msgid "Login"
 msgstr "Anmeldung"
 
@@ -695,19 +695,19 @@ msgid "Manage Production Unit Events"
 msgstr "Verwalten von Produktion Veranstaltungen"
 
 #: Views\ProductionUnits\Index.cshtml:57
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:57
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:46
 msgid "Manage Production Unit Owners"
 msgstr "Verwalten der Produktion gentümer"
 
 #: Views\Events\Manage.cshtml:30
 #: Views\ProductionUnits\Index.cshtml:49
 #: obj\Release\Package\PackageTmp\Views\Events\Manage.cshtml:30
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:49
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:38
 msgid "Manage Production Units Events"
 msgstr "Verwalten von Produktion Veranstaltungen"
 
 #: Views\ProductionUnits\Index.cshtml:40
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:40
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:29
 msgid "Manage Production Units from Pioneer Citizen Network"
 msgstr "Produktions von Pioneer Citizen Network verwalten"
 
@@ -733,7 +733,7 @@ msgstr "Einheit verwalten"
 #: obj\Release\Package\PackageTmp\Views\Admin\EditRoles.cshtml:18
 #: obj\Release\Package\PackageTmp\Views\Admin\EditUser.cshtml:18
 #: obj\Release\Package\PackageTmp\Views\Admin\Index.cshtml:24
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:65
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:54
 msgid "Manage Users"
 msgstr "Benutzer verwalten"
 
@@ -749,8 +749,8 @@ msgstr "Maximal"
 msgid "May"
 msgstr "Mai"
 
-#: Views\Shared\_Layout.cshtml:64
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
+#: Views\Shared\_Layout.cshtml:62
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:62
 msgid "Measures"
 msgstr "Maßnahmen"
 
@@ -768,8 +768,8 @@ msgstr "Mittel"
 msgid "message type"
 msgstr "Nachrichtentyp"
 
-#: Views\Shared\_Layout.cshtml:63
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
+#: Views\Shared\_Layout.cshtml:61
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
 msgid "Messages"
 msgstr "Meldungen"
 
@@ -800,9 +800,9 @@ msgid "Morning"
 msgstr "Morgen"
 
 #: Views\MyInfo\Update.cshtml:44
-#: Views\Shared\_Layout.cshtml:68
+#: Views\Shared\_Layout.cshtml:66
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:68
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:66
 msgid "My Information"
 msgstr "Meine Information"
 
@@ -868,7 +868,7 @@ msgid "October"
 msgstr "Oktober"
 
 #: Controllers\HomeController.cs:234
-#: Controllers\InteractiveMapController.cs:260
+#: Controllers\InteractiveMapController.cs:202
 #: Migrations\Configuration.cs:104
 msgid "Offline"
 msgstr "Offline"
@@ -878,7 +878,7 @@ msgid "Old Password"
 msgstr "Altes Passwort"
 
 #: Controllers\HomeController.cs:232
-#: Controllers\InteractiveMapController.cs:258
+#: Controllers\InteractiveMapController.cs:200
 msgid "On Maintenance"
 msgstr "In Wartung"
 
@@ -909,7 +909,7 @@ msgstr "Draussen"
 
 #: Viewmodels\ProductionUnitViewModel.cs:33
 #: Views\ProductionUnits\Index.cshtml:83
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:83
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:64
 msgid "owner"
 msgstr "Eigentümer"
 
@@ -965,8 +965,8 @@ msgstr "PH-Kalibrieren durchführen"
 msgid "Performance"
 msgstr "Leistung"
 
-#: Views\Shared\_Layout.cshtml:66
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:66
+#: Views\Shared\_Layout.cshtml:64
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
 msgid "Performance &amp; Health"
 msgstr "Leistung & amp; Gesundheit"
 
@@ -1038,7 +1038,7 @@ msgid "prod. lvl"
 msgstr "Produktionsniveau"
 
 #: Views\ProductionUnits\Index.cshtml:86
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:86
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:67
 msgid "prod. type"
 msgstr "Herstellungsart"
 
@@ -1060,15 +1060,15 @@ msgstr "Details der Produktionseinheit"
 msgid "Production Unit Owner already in use"
 msgstr "Produktionsbereich Eigentümer bereits im Einsatz"
 
-#: Views\Shared\_Layout.cshtml:65
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
+#: Views\Shared\_Layout.cshtml:63
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
 msgid "Production Units"
 msgstr "Produktionseinheiten"
 
 #: Views\ProductionUnitOwner\Index.cshtml:15
 #: Views\ProductionUnits\Index.cshtml:34
 #: obj\Release\Package\PackageTmp\Views\ProductionUnitOwner\Index.cshtml:15
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:34
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:23
 msgid "Production Units List"
 msgstr "Produktionseinheiten Liste"
 
@@ -1082,9 +1082,9 @@ msgid "Production Units Management"
 msgstr "Produktionseinheiten Management"
 
 #: Views\Recipes\Index.cshtml:78
-#: Views\Shared\_Layout.cshtml:67
+#: Views\Shared\_Layout.cshtml:65
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:78
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:67
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
 msgid "Recipes"
 msgstr "Rezepte"
 
@@ -1120,7 +1120,6 @@ msgid "See Recommandations for my Production Unit:"
 msgstr "Siehe Empfehlungen für meine Produktion:"
 
 #: Views\ProductionUnits\Index.cshtml:73
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:73
 msgid "Send Feeling Request"
 msgstr ""
 
@@ -1138,7 +1137,7 @@ msgid "September"
 msgstr "September"
 
 #: Controllers\HomeController.cs:230
-#: Controllers\InteractiveMapController.cs:256
+#: Controllers\InteractiveMapController.cs:198
 #: Migrations\Configuration.cs:100
 msgid "Setup Planned"
 msgstr "Einrichten geplant"
@@ -1160,12 +1159,12 @@ msgid "Sprinkler cleaning"
 msgstr "Sprinklerreinigung"
 
 #: Views\ProductionUnits\Index.cshtml:87
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:87
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Index.cshtml:68
 msgid "status"
 msgstr "Status"
 
 #: Controllers\HomeController.cs:233
-#: Controllers\InteractiveMapController.cs:259
+#: Controllers\InteractiveMapController.cs:201
 #: Migrations\Configuration.cs:103
 msgid "Stopped"
 msgstr "Gestoppt"
@@ -1233,7 +1232,7 @@ msgstr "Art"
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: Controllers\InteractiveMapController.cs:257
+#: Controllers\InteractiveMapController.cs:199
 msgid "Up & Running"
 msgstr "Oben & laufen"
 
@@ -1251,8 +1250,8 @@ msgstr "Verwenden UV-Filter"
 msgid "user"
 msgstr "Benutzer"
 
-#: Views\Shared\_Layout.cshtml:61
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
+#: Views\Shared\_Layout.cshtml:59
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:59
 msgid "User Management"
 msgstr "Benutzerverwaltung"
 
@@ -1276,7 +1275,7 @@ msgid "View Logs"
 msgstr "Logs anzeigen"
 
 #: Controllers\HomeController.cs:229
-#: Controllers\InteractiveMapController.cs:255
+#: Controllers\InteractiveMapController.cs:197
 #: Migrations\Configuration.cs:99
 msgid "Wait Confirm."
 msgstr "Wartebestätigung"
