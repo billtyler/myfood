@@ -34,32 +34,7 @@ namespace myfoodapp.Hub.Controllers
             return View();
         }
 
-        public ActionResult GetProductionUnitMeasures(int id)
-        {
-            var db = new ApplicationDbContext();
-
-            var currentProductionUnit = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).ToList()[id];
-
-            var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.waterTemperature, db);
-
-            var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
-
-
-            return Json(new
-            {
-                CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
-                CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
-                AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
-                AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
-                LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
-
-                CurrentpHValue = pHSensorValueSet.CurrentValue,
-                CurrentpHCaptureTime = pHSensorValueSet.CurrentCaptureTime,
-                AverageHourpHValue = pHSensorValueSet.AverageHourValue,
-                AverageDaypHValue = pHSensorValueSet.AverageDayValue,
-                LastDaypHCaptureTime = pHSensorValueSet.LastDayCaptureTime,
-            }, JsonRequestBehavior.AllowGet);
-        }
+        
 
         public ActionResult GetProductionUnitIndex(string SelectedProductionUnitCoord)
         {
@@ -79,7 +54,7 @@ namespace myfoodapp.Hub.Controllers
 
             if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                var currentProductionUnit = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).ToList();
+                var currentProductionUnit = db.ProductionUnits/*.Where(p => p.lastMeasureReceived != null)*/.ToList();
 
                 var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
                                                                                  p.locationLongitude == longitude);
@@ -93,7 +68,7 @@ namespace myfoodapp.Hub.Controllers
                 return null;
         }
 
-        public ActionResult GetProductionUnitDetailPopUp(string SelectedProductionUnitCoord)
+        public ActionResult GetProductionUnitDetail(string SelectedProductionUnitCoord)
         {
             var db = new ApplicationDbContext();
 
@@ -103,41 +78,71 @@ namespace myfoodapp.Hub.Controllers
             var responseData = db.ProductionUnits.Where(p => p.locationLatitude == strLat && p.locationLongitude == strLong)
                                          .Include(p => p.owner.preferedMoment)
                                          .Include(p => p.productionUnitType)
-                                         .Include(p => p.productionUnitStatus).ToList();
+                                         .Include(p => p.productionUnitStatus).ToList()[0];
 
+
+            var options = db.OptionLists.Include(o => o.productionUnit)
+                .Include(o => o.option)
+                .Where(o => o.productionUnit.Id == responseData.Id)
+                .Select(o => o.option);
+
+            var optionList = string.Empty;
+
+            if (options.Count() > 0)
+            {
+                options.ToList().ForEach(o => { optionList += o.name + "/"; });
+            }
+
+            var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(responseData.Id, SensorTypeEnum.waterTemperature, db);
+            var pHSensorValueSet = SensorValueManager.GetSensorValueSet(responseData.Id, SensorTypeEnum.ph, db);
             var lst = new object();
             lst = new
             {
-                PioneerCitizenName = responseData[0].owner.pioneerCitizenName,
-                PioneerCitizenNumber = responseData[0].owner.pioneerCitizenNumber,
-                ProductionUnitStartDate = responseData[0].startDate,
-                ProductionUnitInfo = responseData[0].info,
-                ProductionUnitType = responseData[0].productionUnitType.name,
-                ProductionUnitStatus = responseData[0].productionUnitStatus.name,
-                PhoneNumber = responseData[0].owner.phoneNumber == null ? "00 33 3 67 37 00 56" : responseData[0].owner.phoneNumber,
-                ContactMail = responseData[0].owner.contactMail == null ? "contact@nyfood.eu" : responseData[0].owner.contactMail,
-                PicturePath = responseData[0].picturePath == null ? "NoImage.png" : responseData[0].picturePath,
 
-                PreferedMoment = responseData[0].owner.preferedMoment == null ? "" : responseData[0].owner.preferedMoment.name,
-                Location = responseData[0].owner.location == null ? "" : responseData[0].owner.location,
+                CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
+                CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
+                AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
+                AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
+                LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+
+                CurrentpHValue = pHSensorValueSet.CurrentValue,
+                CurrentpHCaptureTime = pHSensorValueSet.CurrentCaptureTime,
+                AverageHourpHValue = pHSensorValueSet.AverageHourValue,
+                AverageDaypHValue = pHSensorValueSet.AverageDayValue,
+                LastDaypHCaptureTime = pHSensorValueSet.LastDayCaptureTime,
+
+                PioneerCitizenName = responseData.owner.pioneerCitizenName,
+                PioneerCitizenNumber = responseData.owner.pioneerCitizenNumber,
+                ProductionUnitStartDate = responseData.startDate,
+                ProductionUnitInfo = responseData.info,
+                ProductionUnitType = responseData.productionUnitType.name,
+                ProductionUnitStatus = responseData.productionUnitStatus.name,
+
+                PhoneNumber = responseData.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : responseData.owner.phoneNumber,
+                ContactMail = responseData.owner.contactMail == null ? "contact@nyfood.eu" : responseData.owner.contactMail,
+                PicturePath = responseData.picturePath == null ? "NoImage.png" : responseData.picturePath,
+                
+                PreferedMoment = responseData.owner.preferedMoment == null ? "" : responseData.owner.preferedMoment.name,
+                Location = responseData.owner.location == null ? "" : responseData.owner.location,
+
+                ProductionUnitOptions = optionList,
             };
 
             return Json(lst);
         }
 
-        public ActionResult GetProductionUnitDetailList()
+        public ActionResult GetProductionUnitDetailListSlider()
         {
             var db = new ApplicationDbContext();
 
             //TODO uncomment
-            var prodUnitListCount = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null).Count();
-            //var prodUnitListCount = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).Count();
+            var prodUnitListCount = db.ProductionUnits/*.Where(p => p.lastMeasureReceived != null)*/.Count();
 
             if (prodUnitListCount == 0)
                 return null;
 
             //TODO uncomment
-            var currentProductionUnitList = db.ProductionUnits.Where(p => p.picturePath != null && p.lastMeasureReceived != null)
+            var currentProductionUnitList = db.ProductionUnits.Where(p => p.picturePath!= null/*p.lastMeasureReceived != null*/)
                                          .Include(p => p.owner.preferedMoment)
                                          .Include(p => p.productionUnitType)
                                          .Include(p => p.productionUnitStatus).ToList();
@@ -155,11 +160,15 @@ namespace myfoodapp.Hub.Controllers
 
                 if (options.Count() > 0)
                 {
-                    options.ToList().ForEach(o => { optionList += o.name + " / "; });
+                    options.ToList().ForEach(o => { optionList += o.name + "/"; });
                 }
 
-                if (p.owner.preferedMoment != null)
-                {
+
+                var waterTempSensorValueSet = SensorValueManager.GetSensorValueSet(p.Id, SensorTypeEnum.waterTemperature, db);
+
+                var pHSensorValueSet = SensorValueManager.GetSensorValueSet(p.Id, SensorTypeEnum.ph, db);
+                
+                
                     lst.Add(new
                     {
                         PioneerCitizenName = p.owner.pioneerCitizenName,
@@ -167,44 +176,33 @@ namespace myfoodapp.Hub.Controllers
                         ProductionUnitVersion = p.version,
                         ProductionUnitStartDate = p.startDate,
                         ProductionUnitType = p.productionUnitType.name,
+
                         ProductionUnitStatus = p.productionUnitStatus.name,
 
                         PhoneNumber = p.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : p.owner.phoneNumber,
                         ContactMail = p.owner.contactMail == null ? "contact@myfood.eu" : p.owner.contactMail,
-                        PicturePath = p.picturePath == null ? "NoImage.png" : p.picturePath,
-                        PreferedMoment = p.owner.preferedMoment.name,
-                        Location = p.owner.location,
+                        PicturePath = p.picturePath,
 
                         LocationLatitude = p.locationLatitude,
                         LocationLongitude = p.locationLongitude,
+                        PreferedMoment = p.owner.preferedMoment == null ? "" : p.owner.preferedMoment.name,
+                        Location = p.owner.location == null ? "" : p.owner.location,
 
                         ProductionUnitOptions = optionList,
+
+                        CurrentWaterTempValue = waterTempSensorValueSet.CurrentValue,
+                        CurrentWaterTempCaptureTime = waterTempSensorValueSet.CurrentCaptureTime,
+                        AverageHourWaterTempValue = waterTempSensorValueSet.AverageHourValue,
+                        AverageDayWaterTempValue = waterTempSensorValueSet.AverageDayValue,
+                        LastDayWaterTempCaptureTime = waterTempSensorValueSet.LastDayCaptureTime,
+
+                        CurrentpHValue = pHSensorValueSet.CurrentValue,
+                        CurrentpHCaptureTime = pHSensorValueSet.CurrentCaptureTime,
+                        AverageHourpHValue = pHSensorValueSet.AverageHourValue,
+                        AverageDaypHValue = pHSensorValueSet.AverageDayValue,
+                        LastDaypHCaptureTime = pHSensorValueSet.LastDayCaptureTime,
                     });
-
-                }
-                else
-                {
-                    lst.Add(new
-                    {
-                        PioneerCitizenName = p.owner.pioneerCitizenName,
-                        PioneerCitizenNumber = p.owner.pioneerCitizenNumber,
-                        ProductionUnitVersion = p.version,
-                        ProductionUnitStartDate = p.startDate,
-                        ProductionUnitType = p.productionUnitType.name,
-
-                        ProductionUnitStatus = p.productionUnitStatus.name,
-
-                        PhoneNumber = p.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : p.owner.phoneNumber,
-                        ContactMail = p.owner.contactMail == null ? "contact@myfood.eu" : p.owner.contactMail,
-                        PicturePath = p.picturePath == null ? "NoImage.png" : p.picturePath,
-
-                        LocationLatitude = p.locationLatitude,
-                        LocationLongitude = p.locationLongitude,
-
-                        ProductionUnitOptions = optionList,
-                    }
-                    );
-                }
+                
             });
 
             return Json(lst, JsonRequestBehavior.AllowGet);

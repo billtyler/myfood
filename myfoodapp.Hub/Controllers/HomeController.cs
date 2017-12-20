@@ -39,23 +39,10 @@ namespace myfoodapp.Hub.Controllers
 			{
 				var phone = p.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : p.owner.phoneNumber;
 				var contactMail = p.owner.contactMail == null ? "contact@myfood.eu" : p.owner.contactMail;
-				if (p.owner.location!=null && p.owner.preferedMoment!=null)
-				{
-					listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude,
-											String.Format(@"{0} </br> 
-																start since {1} <br>
-																phone: {2}<br>
-																email: {3}<br>
-																Best to contact: {4}<br>
-																Location: {5}", p.info, p.startDate.ToShortDateString(), p.owner.contactMail, phone, p.owner.preferedMoment.name, p.owner.location))
+				listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude,
+											String.Format(@"Click for view details"))
 					{ shape = "redMarker" });
-				}
-				else
-				{
-					listMarker.Add(new Marker(p.locationLatitude, p.locationLongitude,
-											String.Format(@"{0} </br> start since: {1} <br> phone: {2} <br> email: {3}", p.info, p.startDate.ToShortDateString(), phone, contactMail))
-					{ shape = "redMarker" });
-				}
+				
 				
 
 			});
