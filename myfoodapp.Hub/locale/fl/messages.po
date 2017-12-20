@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-12-13 16:42+01:00\n"
-"PO-Revision-Date: 2017-12-13 16:42+01:00\n"
+"POT-Creation-Date: 2017-12-20 22:34+01:00\n"
+"PO-Revision-Date: 2017-12-20 22:34+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -156,8 +156,10 @@ msgstr ""
 #: Views\Home\Index.cshtml:214
 #: Views\Home\Index.cshtml:231
 #: Views\Home\Index.cshtml:236
-#: Views\InteractiveMap\Index.cshtml:414
-#: Views\InteractiveMap\Index.cshtml:419
+#: Views\InteractiveMap\Index.cshtml:366
+#: Views\InteractiveMap\Index.cshtml:371
+#: Views\InteractiveMap\Index.cshtml:390
+#: Views\InteractiveMap\Index.cshtml:395
 #: Views\ProductionUnits\Details.cshtml:473
 #: Views\ProductionUnits\Details.cshtml:478
 #: Views\ProductionUnits\Details.cshtml:526
@@ -174,8 +176,10 @@ msgstr ""
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:214
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:231
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:236
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:414
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:419
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:366
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:371
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:390
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:395
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:473
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:478
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:526
@@ -223,11 +227,6 @@ msgstr ""
 
 #: Migrations\Configuration.cs:202
 msgid "Bad looking vegetables"
-msgstr ""
-
-#: Views\InteractiveMap\Index.cshtml:97
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:97
-msgid "Best to contact:"
 msgstr ""
 
 #: Migrations\Configuration.cs:91
@@ -314,7 +313,8 @@ msgstr ""
 #: Views\Home\Index.cshtml:182
 #: Views\Home\Index.cshtml:204
 #: Views\Home\Index.cshtml:226
-#: Views\InteractiveMap\Index.cshtml:409
+#: Views\InteractiveMap\Index.cshtml:361
+#: Views\InteractiveMap\Index.cshtml:385
 #: Views\ProductionUnits\Details.cshtml:468
 #: Views\ProductionUnits\Details.cshtml:521
 #: Views\ProductionUnits\Details.cshtml:573
@@ -323,7 +323,8 @@ msgstr ""
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:182
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:204
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:226
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:409
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:361
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:385
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:468
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:521
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:573
@@ -646,11 +647,6 @@ msgstr ""
 msgid "Light"
 msgstr ""
 
-#: Views\InteractiveMap\Index.cshtml:97
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:97
-msgid "Location:"
-msgstr ""
-
 #: Views\Account\Login.cshtml:49
 #: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:49
 msgid "Log in"
@@ -814,11 +810,11 @@ msgid "Need support"
 msgstr ""
 
 #: Views\Home\Index.cshtml:282
-#: Views\InteractiveMap\Index.cshtml:434
-#: Views\InteractiveMap\Index.cshtml:442
+#: Views\InteractiveMap\Index.cshtml:344
+#: Views\InteractiveMap\Index.cshtml:406
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:282
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:434
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:442
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:344
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:406
 msgid "Network Info"
 msgstr ""
 
@@ -866,8 +862,8 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: Controllers\HomeController.cs:234
-#: Controllers\InteractiveMapController.cs:260
+#: Controllers\HomeController.cs:221
+#: Controllers\InteractiveMapController.cs:258
 #: Migrations\Configuration.cs:104
 msgid "Offline"
 msgstr ""
@@ -876,8 +872,8 @@ msgstr ""
 msgid "Old Password"
 msgstr ""
 
-#: Controllers\HomeController.cs:232
-#: Controllers\InteractiveMapController.cs:258
+#: Controllers\HomeController.cs:219
+#: Controllers\InteractiveMapController.cs:256
 msgid "On Maintenance"
 msgstr ""
 
@@ -920,7 +916,8 @@ msgstr ""
 #: Views\Home\Index.cshtml:189
 #: Views\Home\Index.cshtml:211
 #: Views\Home\Index.cshtml:233
-#: Views\InteractiveMap\Index.cshtml:416
+#: Views\InteractiveMap\Index.cshtml:368
+#: Views\InteractiveMap\Index.cshtml:392
 #: Views\ProductionUnits\Details.cshtml:475
 #: Views\ProductionUnits\Details.cshtml:528
 #: Views\ProductionUnits\Details.cshtml:580
@@ -928,7 +925,8 @@ msgstr ""
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:189
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:211
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:233
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:416
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:368
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:392
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:475
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:528
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:580
@@ -944,6 +942,11 @@ msgstr ""
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:444
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:449
 msgid "PER MONTH"
+msgstr ""
+
+#: Views\InteractiveMap\Index.cshtml:191
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:191
+msgid "Percentage"
 msgstr ""
 
 #: Migrations\Configuration.cs:121
@@ -990,18 +993,15 @@ msgstr ""
 msgid "Pest"
 msgstr ""
 
+#: Views\InteractiveMap\Index.cshtml:357
 #: Views\ProductionUnits\Details.cshtml:464
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:357
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:464
 msgid "pH"
 msgstr ""
 
-#: Views\InteractiveMap\Index.cshtml:394
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:394
-msgid "Picture"
-msgstr ""
-
-#: Views\InteractiveMap\Index.cshtml:386
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:386
+#: Views\InteractiveMap\Index.cshtml:337
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:337
 msgid "Pioneer Citizen Map"
 msgstr ""
 
@@ -1136,8 +1136,8 @@ msgstr ""
 msgid "September"
 msgstr ""
 
-#: Controllers\HomeController.cs:230
-#: Controllers\InteractiveMapController.cs:256
+#: Controllers\HomeController.cs:217
+#: Controllers\InteractiveMapController.cs:254
 #: Migrations\Configuration.cs:100
 msgid "Setup Planned"
 msgstr ""
@@ -1163,8 +1163,8 @@ msgstr ""
 msgid "status"
 msgstr ""
 
-#: Controllers\HomeController.cs:233
-#: Controllers\InteractiveMapController.cs:259
+#: Controllers\HomeController.cs:220
+#: Controllers\InteractiveMapController.cs:257
 #: Migrations\Configuration.cs:103
 msgid "Stopped"
 msgstr ""
@@ -1196,23 +1196,23 @@ msgid "Too much algeas"
 msgstr ""
 
 #: Views\Home\Index.cshtml:293
-#: Views\InteractiveMap\Index.cshtml:453
+#: Views\InteractiveMap\Index.cshtml:417
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:293
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:453
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:417
 msgid "TOTAL<br />CO2 SAVED<br />PER MONTH"
 msgstr ""
 
 #: Views\Home\Index.cshtml:285
-#: Views\InteractiveMap\Index.cshtml:445
+#: Views\InteractiveMap\Index.cshtml:409
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:285
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:445
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:409
 msgid "TOTAL<br />CONNECTED <br />PROD. UNITS"
 msgstr ""
 
 #: Views\Home\Index.cshtml:289
-#: Views\InteractiveMap\Index.cshtml:449
+#: Views\InteractiveMap\Index.cshtml:413
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:289
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:449
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:413
 msgid "TOTAL<br />EST. PROD. <br />PER MONTH"
 msgstr ""
 
@@ -1232,11 +1232,11 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: Controllers\InteractiveMapController.cs:257
+#: Controllers\InteractiveMapController.cs:255
 msgid "Up & Running"
 msgstr ""
 
-#: Controllers\HomeController.cs:231
+#: Controllers\HomeController.cs:218
 #: Migrations\Configuration.cs:101
 msgid "Up and Running"
 msgstr ""
@@ -1274,8 +1274,8 @@ msgstr ""
 msgid "View Logs"
 msgstr ""
 
-#: Controllers\HomeController.cs:229
-#: Controllers\InteractiveMapController.cs:255
+#: Controllers\HomeController.cs:216
+#: Controllers\InteractiveMapController.cs:253
 #: Migrations\Configuration.cs:99
 msgid "Wait Confirm."
 msgstr ""
@@ -1297,10 +1297,10 @@ msgid "Water purge"
 msgstr ""
 
 #: Views\Home\Index.cshtml:178
-#: Views\InteractiveMap\Index.cshtml:405
+#: Views\InteractiveMap\Index.cshtml:381
 #: Views\ProductionUnits\Details.cshtml:517
 #: obj\Release\Package\PackageTmp\Views\Home\Index.cshtml:178
-#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:405
+#: obj\Release\Package\PackageTmp\Views\InteractiveMap\Index.cshtml:381
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:517
 msgid "Water Temperature (°C)"
 msgstr ""
@@ -1358,6 +1358,9 @@ msgstr ""
 #~ msgid "Balcony"
 #~ msgstr ""
 
+#~ msgid "Best to contact:"
+#~ msgstr ""
+
 #~ msgid "Click to see your production unit's status"
 #~ msgstr ""
 
@@ -1409,6 +1412,9 @@ msgstr ""
 #~ msgid "It's too hot inside ({0}°C) : {0} - Open the doors and add a shadows cloths"
 #~ msgstr ""
 
+#~ msgid "Location:"
+#~ msgstr ""
+
 #~ msgid "Manage Production Unit Owner"
 #~ msgstr ""
 
@@ -1419,6 +1425,9 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Permaculture beds & biochar"
+#~ msgstr ""
+
+#~ msgid "Picture"
 #~ msgstr ""
 
 #~ msgid "pioneerCitizenName"

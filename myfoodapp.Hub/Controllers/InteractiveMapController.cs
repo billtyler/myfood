@@ -54,7 +54,7 @@ namespace myfoodapp.Hub.Controllers
 
             if (double.TryParse(strLat, style, culture, out latitude) && double.TryParse(strLong, style, culture, out longitude))
             {
-                var currentProductionUnit = db.ProductionUnits/*.Where(p => p.lastMeasureReceived != null)*/.ToList();
+                var currentProductionUnit = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).ToList();
 
                 var currentProductionUnitIndex = currentProductionUnit.FindIndex(p => p.locationLatitude == latitude &&
                                                                                  p.locationLongitude == longitude);
@@ -136,13 +136,13 @@ namespace myfoodapp.Hub.Controllers
             var db = new ApplicationDbContext();
 
             //TODO uncomment
-            var prodUnitListCount = db.ProductionUnits/*.Where(p => p.lastMeasureReceived != null)*/.Count();
+            var prodUnitListCount = db.ProductionUnits.Where(p => p.lastMeasureReceived != null).Count();
 
             if (prodUnitListCount == 0)
                 return null;
 
             //TODO uncomment
-            var currentProductionUnitList = db.ProductionUnits.Where(p => p.picturePath!= null/*p.lastMeasureReceived != null*/)
+            var currentProductionUnitList = db.ProductionUnits.Where(p => p.picturePath!= null && p.lastMeasureReceived != null)
                                          .Include(p => p.owner.preferedMoment)
                                          .Include(p => p.productionUnitType)
                                          .Include(p => p.productionUnitStatus).ToList();
