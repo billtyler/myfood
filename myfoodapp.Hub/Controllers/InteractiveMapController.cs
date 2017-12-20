@@ -119,7 +119,7 @@ namespace myfoodapp.Hub.Controllers
                 ProductionUnitStatus = responseData.productionUnitStatus.name,
 
                 PhoneNumber = responseData.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : responseData.owner.phoneNumber,
-                ContactMail = responseData.owner.contactMail == null ? "contact@nyfood.eu" : responseData.owner.contactMail,
+                ContactMail = responseData.owner.contactMail == null ? "contact@myfood.eu" : responseData.owner.contactMail,
                 PicturePath = responseData.picturePath == null ? "NoImage.png" : responseData.picturePath,
                 
                 PreferedMoment = responseData.owner.preferedMoment == null ? "" : responseData.owner.preferedMoment.name,
