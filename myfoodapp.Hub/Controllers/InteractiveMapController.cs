@@ -9,12 +9,20 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace myfoodapp.Hub.Controllers
 {
     public class InteractiveMapController : Controller
     {
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+
+            base.Initialize(requestContext);
+        }
+
         public ActionResult Index(string lang)
         {
             ViewBag.Title = "Interactive Map Page";
@@ -25,16 +33,12 @@ namespace myfoodapp.Hub.Controllers
             return View();
         }
 
-
-
         public ActionResult ClusterMap()
         {
             ViewBag.Title = "Interactive Map Page";
 
             return View();
-        }
-
-        
+        }       
 
         public ActionResult GetProductionUnitIndex(string SelectedProductionUnitCoord)
         {

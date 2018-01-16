@@ -1,5 +1,7 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
 using System;
@@ -7,8 +9,10 @@ using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 
 namespace myfoodapp.Hub.Controllers
@@ -20,6 +24,19 @@ namespace myfoodapp.Hub.Controllers
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
             base.Initialize(requestContext);
+        }
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
         }
 
         [Authorize]
@@ -85,9 +102,23 @@ namespace myfoodapp.Hub.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
+            var currentUser = this.User.Identity.GetUserName();
+
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
             if (currentEvent != null)
             {
-                eventService.Update(currentEvent);
+                if (isAdmin)
+                    eventService.Update(currentEvent);
+                else
+                {
+                    var currentOwner = db.ProductionUnitOwners.Include(p => p.user)
+                                       .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+
+                    if (currentOwner != null && currentOwner.pioneerCitizenName == currentEvent.createdBy)
+                        eventService.Update(currentEvent);
+                }
             }
 
             return Json(new[] { currentEvent }.ToDataSourceResult(request, ModelState));
@@ -100,9 +131,23 @@ namespace myfoodapp.Hub.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             EventService eventService = new EventService(db);
 
+            var currentUser = this.User.Identity.GetUserName();
+
+            var userId = UserManager.FindByName(currentUser).Id;
+            var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+
             if (currentEvent != null)
             {
+                if(isAdmin)
                     eventService.Destroy(currentEvent);
+                else
+                {
+                    var currentOwner = db.ProductionUnitOwners.Include(p => p.user)
+                                       .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+
+                    if(currentOwner != null && currentOwner.pioneerCitizenName == currentEvent.createdBy)
+                        eventService.Destroy(currentEvent);
+                }
             }
 
             return Json(new[] { currentEvent }.ToDataSourceResult(request, ModelState));

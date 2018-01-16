@@ -1156,7 +1156,6 @@
     <Content Include="Content\marker-icon-2x-green.png" />
     <Content Include="Content\marker-shadow.png" />
     <Content Include="Content\miniLogo.png" />
-    <Content Include="Content\miniLogoWhite.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Pictures\Feelings\happy.png" />
     <Content Include="Content\Pictures\Feelings\needHelp.png" />
@@ -1225,6 +1224,7 @@
     <Content Include="Content\Pictures\Sites\LauterbourgFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LeCeillierFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\LeHowaldFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\LesAlluetsLeRoiFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LilleFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\MarseilleFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\Marseille_2_Family22.jpg" />
@@ -1252,6 +1252,7 @@
     <Content Include="Content\Pictures\Sites\TarragonaFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\VauvenarguesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\VerriereFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\VillarselSurMarlyFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\VillevaudeFamily22.jpg" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\Swiper\swiper.css" />

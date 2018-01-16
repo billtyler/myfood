@@ -89,7 +89,7 @@ namespace myfoodapp.Hub.Controllers
             else
             {
                 ApplicationDbContext db = new ApplicationDbContext();
-                var currentProductionUnit = db.ProductionUnits.Include("owner.user").Where(p => p.Id == id).FirstOrDefault();
+                var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user).Where(p => p.Id == id).FirstOrDefault();
                 if(currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser)
                 {
                     ViewBag.DisplayManagementBtn = "All";
