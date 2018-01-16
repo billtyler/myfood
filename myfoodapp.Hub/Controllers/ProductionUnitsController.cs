@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
@@ -316,10 +317,70 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
-
-            return Json(measureService.Read(SensorTypeEnum.ph, id, range), JsonRequestBehavior.AllowGet);
+            var json = new List<List<object>>();
+            foreach (var PHMeasure in measureService.Read(SensorTypeEnum.ph, id, range))
+            {
+                var list = new List<object>();
+                list.Add(PHMeasure.captureDate.ToString("R"));
+                list.Add(PHMeasure.value);
+                json.Add(list);
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
+           // return Json(measureService.Read(SensorTypeEnum.ph, id, range), JsonRequestBehavior.AllowGet);
         }
 
+        [Authorize]
+        public ActionResult GetProductionUnitDetailPopUp(int id)
+        {
+            var db = new ApplicationDbContext();
+            
+
+            var responseData = db.ProductionUnits.Where(p => p.Id == id)
+                                         .Include(p => p.owner.preferedMoment)
+                                         .Include(p => p.productionUnitType)
+                                         .Include(p => p.productionUnitStatus).ToList()[0];
+
+
+            var options = db.OptionLists.Include(o => o.productionUnit)
+                .Include(o => o.option)
+                .Where(o => o.productionUnit.Id == responseData.Id)
+                .Select(o => o.option);
+
+            var optionList = string.Empty;
+
+            if (options.Count() > 0)
+            {
+                options.ToList().ForEach(o => { optionList += o.name + "/"; });
+            }
+            var averageMonthlyProduction = PerformanceManager.GetEstimatedMonthlyProduction(responseData.productionUnitType.Id);
+            var onlineSinceWeeks = Math.Round((DateTime.Now - responseData.startDate).TotalDays / 7);
+            var averageMonthlySparedCO2 = averageMonthlyProduction * 0.3;
+
+            var lst = new object();
+            lst = new
+            {
+                AverageMonthlySparedCO2 = averageMonthlySparedCO2,
+                OnlineSinceWeeks = onlineSinceWeeks,
+                AverageMonthlyProduction = averageMonthlyProduction,
+                PioneerCitizenName = responseData.owner.pioneerCitizenName,
+                PioneerCitizenNumber = responseData.owner.pioneerCitizenNumber,
+                ProductionUnitStartDate = responseData.startDate,
+                ProductionUnitInfo = responseData.info,
+                ProductionUnitType = responseData.productionUnitType.name,
+                ProductionUnitStatus = responseData.productionUnitStatus.name,
+
+                PhoneNumber = responseData.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : responseData.owner.phoneNumber,
+                ContactMail = responseData.owner.contactMail == null ? "contact@myfood.eu" : responseData.owner.contactMail,
+                PicturePath = responseData.picturePath == null ? "NoImage.png" : responseData.picturePath,
+
+                PreferedMoment = responseData.owner.preferedMoment == null ? "" : responseData.owner.preferedMoment.name,
+                Location = responseData.owner.location == null ? "" : responseData.owner.location,
+
+                ProductionUnitOptions = optionList,
+            };
+
+            return Json(lst);
+        }
 
         [Authorize]
         public ActionResult WaterTempMeasure_Read([DataSourceRequest] DataSourceRequest request, int id, string range)
@@ -327,7 +388,16 @@ namespace myfoodapp.Hub.Controllers
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
 
-            return Json(measureService.Read(SensorTypeEnum.waterTemperature, id, range), JsonRequestBehavior.AllowGet);
+            var json = new List<List<object>>();
+            foreach (var WaterTempMeasure in measureService.Read(SensorTypeEnum.waterTemperature, id, range))
+            {
+                var list = new List<object>();
+                list.Add(WaterTempMeasure.captureDate.ToString("R"));
+                list.Add(WaterTempMeasure.value);
+                json.Add(list);
+            }
+            return Json(json, JsonRequestBehavior.AllowGet);
+            //return Json(measureService.Read(SensorTypeEnum.waterTemperature, id, range), JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -335,8 +405,7 @@ namespace myfoodapp.Hub.Controllers
         {
             var db = new ApplicationDbContext();
             var measureService = new MeasureService(db);
-
-
+            
             return Json(measureService.Read(SensorTypeEnum.airTemperature, id, range), JsonRequestBehavior.AllowGet);
         }
 
@@ -348,26 +417,29 @@ namespace myfoodapp.Hub.Controllers
 
             var measuresList = new List<MeasureViewModel>();
 
-            measuresList.AddRange(measureService.Read(SensorTypeEnum.airTemperature, id, range));
-            measuresList.AddRange(measureService.Read(SensorTypeEnum.externalAirTemperature, id, range));
-
-            var groupedMesuresList = new List<GroupedMeasureViewModel>();
-
-            measuresList.GroupBy(m => m.captureDate).ToList().ForEach(m =>
+            var air = new List<List<object>>();
+            foreach (var airTemperature in measureService.Read(SensorTypeEnum.airTemperature, id, range))
             {
-                var groupedMeasures = new GroupedMeasureViewModel();
-                groupedMeasures.captureDate = m.Key;
+                var list = new List<object>();
+                list.Add(airTemperature.captureDate.ToString("R"));
+                list.Add(airTemperature.value);
+                air.Add(list);
+            }
 
-                if(m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.airTemperature).FirstOrDefault() != null)
-                    groupedMeasures.airTemperatureValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.airTemperature).FirstOrDefault().value;
+            var externalAir = new List<List<object>>();
+            foreach (var externalAirTemperature in measureService.Read(SensorTypeEnum.externalAirTemperature, id, range))
+            {
+                var list = new List<object>();
+                list.Add(externalAirTemperature.captureDate.ToString("R"));
+                list.Add(externalAirTemperature.value);
+                externalAir.Add(list);
+            }
+            var json = new List<List<List<object>>>();
+                json.Add(air);
+                json.Add(externalAir);
 
-                if (m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalAirTemperature).FirstOrDefault() != null)
-                    groupedMeasures.externalAirTemperatureValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalAirTemperature).FirstOrDefault().value;
 
-                groupedMesuresList.Add(groupedMeasures);
-            });
-
-            return Json(groupedMesuresList, JsonRequestBehavior.AllowGet);
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -387,26 +459,31 @@ namespace myfoodapp.Hub.Controllers
 
             var measuresList = new List<MeasureViewModel>();
 
-            measuresList.AddRange(measureService.Read(SensorTypeEnum.humidity, id, range));
-            measuresList.AddRange(measureService.Read(SensorTypeEnum.externalHumidity, id, range));
 
-            var groupedMesuresList = new List<GroupedMeasureViewModel>();
 
-            measuresList.GroupBy(m => m.captureDate).ToList().ForEach(m =>
+            var hum = new List<List<object>>();
+            foreach (var airTemperature in measureService.Read(SensorTypeEnum.humidity, id, range))
             {
-                var groupedMeasures = new GroupedMeasureViewModel();
-                groupedMeasures.captureDate = m.Key;
+                var list = new List<object>();
+                list.Add(airTemperature.captureDate.ToString("R"));
+                list.Add(airTemperature.value);
+                hum.Add(list);
+            }
 
-                if (m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.humidity).FirstOrDefault() != null)
-                    groupedMeasures.humidityValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.humidity).FirstOrDefault().value;
+            var externalHum = new List<List<object>>();
+            foreach (var externalHumidity in measureService.Read(SensorTypeEnum.externalHumidity, id, range))
+            {
+                var list = new List<object>();
+                list.Add(externalHumidity.captureDate.ToString("R"));
+                list.Add(externalHumidity.value);
+                externalHum.Add(list);
+            }
+            var json = new List<List<List<object>>>();
+            json.Add(hum);
+            json.Add(externalHum);
 
-                if (m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalHumidity).FirstOrDefault() != null)
-                    groupedMeasures.externalHumidityValue = m.ToList().Where(i => i.sensorId == (int)SensorTypeEnum.externalHumidity).FirstOrDefault().value;
 
-                groupedMesuresList.Add(groupedMeasures);
-            });
-
-            return Json(groupedMesuresList, JsonRequestBehavior.AllowGet);
+            return Json(json, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -440,7 +517,7 @@ namespace myfoodapp.Hub.Controllers
 
 
             var averageMonthlyProduction = PerformanceManager.GetEstimatedMonthlyProduction(currentProductionUnit.productionUnitType.Id);
-
+            var onlineSinceWeeks = Math.Round((DateTime.Now - currentProductionUnit.startDate).TotalDays / 7);
             var averageMonthlySparedCO2 = averageMonthlyProduction * 0.3;
 
             var pHSensorValueSet = SensorValueManager.GetSensorValueSet(currentProductionUnit.Id, SensorTypeEnum.ph, db);
@@ -460,7 +537,6 @@ namespace myfoodapp.Hub.Controllers
                 options.ToList().ForEach(o => { optionList += o.name + " / "; });
             }
 
-            var onlineSinceWeeks = Math.Round((DateTime.Now - currentProductionUnit.startDate).TotalDays / 7);
 
             return Json(new
             {
