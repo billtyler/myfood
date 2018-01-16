@@ -101,7 +101,7 @@ namespace myfoodapp.Hub.Services
 
             var selectedTimeFrame = new DateTime();
 
-            if(range == "thisLastDays" || range == null)
+            if(range == "thisLastDays" || range == null || range == "")
             {
                 selectedTimeFrame = fewDaysAgo;
             }
