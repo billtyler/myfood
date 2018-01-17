@@ -20,7 +20,7 @@ namespace myfoodapp.Hub.Migrations
         protected override void Seed(ApplicationDbContext context)
         {
             //UpgradeDatabase.DoWork(context);
-            return;
+            //return;
 
             //if (System.Diagnostics.Debugger.IsAttached == false)
             //    System.Diagnostics.Debugger.Launch();
@@ -2149,52 +2149,60 @@ namespace myfoodapp.Hub.Migrations
 
             context.SaveChanges();
 
-            //if (!context.Measures.Any())
-            //{
-            //    var phSensor = context.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
-            //    var waterTemperatureSensor = context.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
-            //    var dissolvedOxySensor = context.SensorTypes.Where(s => s.Id == 3).FirstOrDefault();
-            //    var ORPSensor = context.SensorTypes.Where(s => s.Id == 4).FirstOrDefault();
-            //    var airTemperatureSensor = context.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
-            //    var airHumidity = context.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
+            if (!context.Measures.Any())
+            {
+                var phSensor = context.SensorTypes.Where(s => s.Id == 1).FirstOrDefault();
+                var waterTemperatureSensor = context.SensorTypes.Where(s => s.Id == 2).FirstOrDefault();
+                var dissolvedOxySensor = context.SensorTypes.Where(s => s.Id == 3).FirstOrDefault();
+                var ORPSensor = context.SensorTypes.Where(s => s.Id == 4).FirstOrDefault();
+                var airTemperatureSensor = context.SensorTypes.Where(s => s.Id == 5).FirstOrDefault();
+                var airHumidity = context.SensorTypes.Where(s => s.Id == 6).FirstOrDefault();
+                var extAirTemperatureSensor = context.SensorTypes.Where(s => s.Id == 7).FirstOrDefault();
+                var extAirHumidity = context.SensorTypes.Where(s => s.Id == 8).FirstOrDefault();
 
-            //    var productionUnitList = context.ProductionUnits;
+                var productionUnitList = context.ProductionUnits;
 
-            //    foreach (ProductionUnit productionUnit in productionUnitList)
-            //    {
-            //        for (int i = 0; i < 6 * 2; i++)
-            //        {
-            //            Random rnd = new Random();
-            //            var currentDate = DateTime.Now;
-            //            currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
+                foreach (ProductionUnit productionUnit in productionUnitList)
+                {
+                    for (int i = 0; i < 6 * 2; i++)
+                    {
+                        Random rnd = new Random();
+                        var currentDate = DateTime.Now;
+                        currentDate = currentDate.AddTicks(-(currentDate.Ticks % TimeSpan.TicksPerSecond)).AddMinutes(-10 * i);
 
-            //            context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
-            //            context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
-            //            context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
+                        context.Messages.Add(new Message() { date = currentDate, content = "007002190082248902680400", device = productionUnit.reference, messageType = messMeasure });
+                        context.Messages.Add(new Message() { date = currentDate, content = "006802340082248902680400", device = productionUnit.reference, messageType = messMeasure });
+                        context.Messages.Add(new Message() { date = currentDate, content = "006702540082248902680400", device = productionUnit.reference, messageType = messMeasure });
 
-            //            decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
-            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
+                        decimal phValue = Convert.ToDecimal(Math.Round(7 + Math.Sin(0.5 * i) + 0.1 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = phValue, sensor = phSensor, productionUnit = productionUnit });
 
-            //            decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
-            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
+                        decimal waterTemperatureValue = Convert.ToDecimal(Math.Round(15 + Math.Sin(0.1 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = waterTemperatureValue, sensor = waterTemperatureSensor, productionUnit = productionUnit });
 
-            //            decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
-            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
+                        decimal dissolvedOxyValue = Convert.ToDecimal(Math.Round(250 + Math.Sin(0.01 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = dissolvedOxyValue, sensor = dissolvedOxySensor, productionUnit = productionUnit });
 
-            //            decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
-            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
+                        decimal ORPValue = Convert.ToDecimal(Math.Round(500 + Math.Sin(0.01 * i) + 0.7 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = ORPValue, sensor = ORPSensor, productionUnit = productionUnit });
 
-            //            decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
+                        decimal airTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = airTemperatureValue, sensor = airTemperatureSensor, productionUnit = productionUnit });
 
-            //            decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
-            //            context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
-            //        };
+                        decimal humidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = humidityValue, sensor = airHumidity, productionUnit = productionUnit });
 
-            //    }
-            //    context.SaveChanges();
-            //}
-        }
+                        decimal extAirTemperatureValue = Convert.ToDecimal(Math.Round(20 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = extAirTemperatureValue, sensor = extAirTemperatureSensor, productionUnit = productionUnit });
+
+                        decimal extHumidityValue = Convert.ToDecimal(Math.Round(50 + Math.Sin(0.001 * i) + 0.5 * rnd.Next(-1, 1), 3));
+                        context.Measures.Add(new Measure() { captureDate = currentDate, value = extHumidityValue, sensor = extAirHumidity, productionUnit = productionUnit });
+                    };
+
+                }
+                context.SaveChanges();
+                }
+            }
 
     }
 }
