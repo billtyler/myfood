@@ -447,12 +447,15 @@ namespace myfoodapp.Hub.Controllers
                 list.Add(externalAirTemperature.value);
                 externalAir.Add(list);
             }
-            var json = new List<List<List<object>>>();
-                json.Add(air);
-                json.Add(externalAir);
 
+            var obj = new object();
+            obj = new
+            {
+                air = air,
+                externalAir = externalAir,
+            };
 
-            return Json(json, JsonRequestBehavior.AllowGet);
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]
@@ -489,7 +492,7 @@ namespace myfoodapp.Hub.Controllers
 
             var resultHumidiy = measureService.Read(SensorTypeEnum.externalHumidity, id, range).ToList();
             var filteredResultHumidiy = FilterArrayForGraph(resultHumidiy);
-            
+
             var externalHum = new List<List<object>>();
             foreach (var externalHumidity in filteredResultHumidiy)
             {
@@ -498,12 +501,16 @@ namespace myfoodapp.Hub.Controllers
                 list.Add(externalHumidity.value);
                 externalHum.Add(list);
             }
-            var json = new List<List<List<object>>>();
-            json.Add(hum);
-            json.Add(externalHum);
+
+            var obj = new object();
+            obj = new
+            {
+                humidity = hum,
+                externalHumidity = externalHum,
+            };
 
 
-            return Json(json, JsonRequestBehavior.AllowGet);
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
         private List<MeasureViewModel> FilterArrayForGraph(List<MeasureViewModel> result)

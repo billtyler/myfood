@@ -60,6 +60,8 @@
                         alternateGridColor: null,
                     },
                     yAxis: {
+                        min: 4,
+                        max: 10,
                         title: {
                             text: ''
                         },
@@ -184,13 +186,14 @@
             data: { id: productId, range: ProductRange },
             type: "POST",
             success: function (response) {
-                response.forEach(function (item, i, response) {
-                    response[i].forEach(function (item, i, response) {
-                        var date = new Date(response[i][0].toString());
-                        response[i][0] = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-                    });
+                response.air.forEach(function (item, i, response) {
+                    var date = new Date(response[i][0].toString());
+                    response[i][0] = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
                 });
-
+                response.externalAir.forEach(function (item, i, response) {
+                    var date = new Date(response[i][0].toString());
+                    response[i][0] = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+                });
                 Highcharts.chart('airtemp-chart', {
                     chart: {
                         type: 'spline',
@@ -237,20 +240,22 @@
                     series: [
                         {
                             name: 'Air Temp',
-                            data: response[0],
+                            data: response.air,
                             color: '#8ebc00',
                             label: {
                                 enabled: false,
-                            }
+                            },
                         },
+
                         {
                             name: 'External Air Temp',
-                            data: response[1],
+                            data: response.externalAir,
                             color: '#309b46',
                             label: {
                                 enabled: false,
                             }
-                        }],
+                        }
+                    ],
                     navigation: {
                         menuItemStyle: {
                             fontSize: '10px'
@@ -259,6 +264,10 @@
                 });
                 $('.highcharts-contextbutton').remove();
                 $('.highcharts-credits').remove();
+            },
+            error: function(response)
+            {
+                console.log('hmm');
             }
         });
     }
@@ -269,12 +278,13 @@
             data: { id: productId, range: ProductRange },
             type: "POST",
             success: function (response) {
-
-                response.forEach(function (item, i, response) {
-                    response[i].forEach(function (item, i, response) {
-                        var date = new Date(response[i][0].toString());
-                        response[i][0] = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-                    });
+                response.humidity.forEach(function (item, i, response) {
+                    var date = new Date(response[i][0].toString());
+                    response[i][0] = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+                });
+                response.externalHumidity.forEach(function (item, i, response) {
+                    var date = new Date(response[i][0].toString());
+                    response[i][0] = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
                 });
 
                 Highcharts.chart('humidity-chart', {
@@ -322,7 +332,7 @@
                     },
                     series: [{
                         name: 'Humidity',
-                        data: response[0],
+                        data: response.humidity,
                         color: '#8ebc00',
                         label: {
                             enabled: false,
@@ -330,7 +340,7 @@
                     },
                         {
                             name: 'External Humidity',
-                            data: response[1],
+                            data: response.externalHumidity,
                             color: '#309b46',
                             label: {
                                 enabled: false,
@@ -411,9 +421,13 @@
         var productionUnitId = $('#routeDataId').val();
 
         PHMeasureChart(productionUnitId, null);
+        console.log(true);
         WaterTempMeasureChart(productionUnitId, null);
+        console.log(true);
         AirTempMeasureChart(productionUnitId, null);
+        console.log(true);
         HumidityMeasureChart(productionUnitId, null);
+        console.log(true);
         $.ajax({
             url: "@Url.Action("GetProductionUnitDetail", "ProductionUnits")",
             dataType: "json",
@@ -615,107 +629,107 @@
     <div id="measures-container" class="col-md-12" style="padding-bottom:40px">
         <div id="dialog">
             @(Html.Kendo().Dialog()
-                                                                                                .Name("dialog")
-                                                                                                .Title("[[[Add Event]]]")
-                                                                                                .Width(720)
-                                                                                                .Height(780)
-                                                                                                .Animation(c => c.Open(a => a.Fade(FadeDirection.In).Zoom(ZoomDirection.In)).Close(a => a.Fade(FadeDirection.Out).Zoom(ZoomDirection.Out)))
-                                                                                                .Modal(true)
-                                                                                                .Visible(false)
-                                                                                                .Closable(true)
-                                                                                                .Content(" " +
+                        .Name("dialog")
+                        .Title("[[[Add Event]]]")
+                        .Width(720)
+                        .Height(780)
+                        .Animation(c => c.Open(a => a.Fade(FadeDirection.In).Zoom(ZoomDirection.In)).Close(a => a.Fade(FadeDirection.Out).Zoom(ZoomDirection.Out)))
+                        .Modal(true)
+                        .Visible(false)
+                        .Closable(true)
+                        .Content(" " +
 
-                                                                                  Html.Kendo().TabStrip()
-                                                                                  .Name("tabstrip")
-                                                                                  .HtmlAttributes(new { style = "border-width:0px; height:500px;" })
-                                                                                  .Animation(animation =>
-                                                                                      animation.Open(effect =>
-                                                                                          effect.Fade(FadeDirection.In)))
-                                                                                  .Items(tabstrip =>
-                                                                                  {
-                                                                                      tabstrip.Add().Text("Basic Info")
-                                                                                          .ContentHtmlAttributes(new { style = "height:560px;" })
-                                                                                          .Selected(true)
-                                                                                          .Content(
-                                                                                    "<p>[[[Log your Actions / Events here]]]<p>" +
+            Html.Kendo().TabStrip()
+            .Name("tabstrip")
+            .HtmlAttributes(new { style = "border-width:0px; height:500px;" })
+            .Animation(animation =>
+                animation.Open(effect =>
+                    effect.Fade(FadeDirection.In)))
+            .Items(tabstrip =>
+            {
+                tabstrip.Add().Text("Basic Info")
+                    .ContentHtmlAttributes(new { style = "height:560px;" })
+                    .Selected(true)
+                    .Content(
+            "<p>[[[Log your Actions / Events here]]]<p>" +
 
-                                                                                                "<div id='listViewEventTypeDiv'>" +
+                        "<div id='listViewEventTypeDiv'>" +
 
-                                                                                                 Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
-                                                                                                .Name("listViewEventType")
-                                                                                                .TagName("div")
-                                                                                                .ClientTemplateId("template")
-                                                                                                .DataSource(dataSource =>
-                                                                                                {
-                                                                                                    dataSource.Read(read => read.Action("EventType_Read", "ProductionUnits"));
-                                                                                                })
-                                                                                                .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
-                                                                                                .Events(events => events.Change("onEventTypeChange"))
+                            Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
+                        .Name("listViewEventType")
+                        .TagName("div")
+                        .ClientTemplateId("template")
+                        .DataSource(dataSource =>
+                        {
+                            dataSource.Read(read => read.Action("EventType_Read", "ProductionUnits"));
+                        })
+                        .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
+                        .Events(events => events.Change("onEventTypeChange"))
 
-                                                                                                + "</div>"
+                        + "</div>"
 
-                                                                                                + " <div id='listViewEventTypeItemsDiv'>" +
+                        + " <div id='listViewEventTypeItemsDiv'>" +
 
-                                                                                                Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
-                                                                                                .Name("listViewEventTypeItems")
-                                                                                                .TagName("div")
-                                                                                                .ClientTemplateId("template")
-                                                                                                .DataSource(dataSource =>
-                                                                                                {
-                                                                                                    dataSource.Read(read => read.Action("EventTypeItem_Read", "ProductionUnits"));
-                                                                                                })
-                                                                                                .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
-                                                                                                .Events(events => events.Change("onEventTypeItemChange"))
+                        Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
+                        .Name("listViewEventTypeItems")
+                        .TagName("div")
+                        .ClientTemplateId("template")
+                        .DataSource(dataSource =>
+                        {
+                            dataSource.Read(read => read.Action("EventTypeItem_Read", "ProductionUnits"));
+                        })
+                        .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
+                        .Events(events => events.Change("onEventTypeItemChange"))
 
-                                                                                                + "</div>"
+                        + "</div>"
 
-                                                                                                + " <div id='noteDateDiv'>" +
+                        + " <div id='noteDateDiv'>" +
 
-                                                                                                Html.Kendo().TextBox()
-                                                                                                .Name("descriptionTextBox")
-                                                                                                .HtmlAttributes(new { placeholder = "Note", required = "required", style = "width:100%; height:40px;" })
+                        Html.Kendo().TextBox()
+                        .Name("descriptionTextBox")
+                        .HtmlAttributes(new { placeholder = "Note", required = "required", style = "width:100%; height:40px;" })
 
-                                                                                                +
+                        +
 
-                                                                                                Html.Kendo().DatePicker()
-                                                                                               .Name("datePicker")
-                                                                                               .Value(DateTime.Today)
-                                                                                               .HtmlAttributes(new { style = "width: 100%;", title = "datepicker" })
+                        Html.Kendo().DatePicker()
+                        .Name("datePicker")
+                        .Value(DateTime.Today)
+                        .HtmlAttributes(new { style = "width: 100%;", title = "datepicker" })
 
-                                                                                                + "</div>"
+                        + "</div>"
 
-                                                                                      );
+                );
 
-                                                                                      tabstrip.Add().Text("Detailed")
-                                                                                          .ContentHtmlAttributes(new { style = "height:560px;" })
-                                                                                          .Content(
-                                                                                        "<p>[[[Detailed event description]]]<p>" +
+                tabstrip.Add().Text("Detailed")
+                    .ContentHtmlAttributes(new { style = "height:560px;" })
+                    .Content(
+                "<p>[[[Detailed event description]]]<p>" +
 
-                                                                                        " <div id='detailsDiv'>" +
-                                                                                                 Html.TextArea("detailsTextArea", "", new { @class = "k-textbox", style = "width: 100%; height: 500px" })
+                " <div id='detailsDiv'>" +
+                            Html.TextArea("detailsTextArea", "", new { @class = "k-textbox", style = "width: 100%; height: 500px" })
 
-                                                                                       + "</div>"
-                                                                                      );
+                + "</div>"
+                );
 
-                                                                                  })
+            })
 
-                                                                                                )
-                                                                                                .Actions(actions =>
-                                                                                                {
-                                                                                                    actions.Add()
-                                                                                                    .Text("Cancel")
-                                                                                                    .Action("onCancel");
-                                                                                                    actions.Add().Text("OK")
-                                                                                                    .Primary(true)
-                                                                                                    .Action("onOK");
-                                                                                                })
-                                                                                                .Events(ev => ev
-                                                                                                .InitOpen("onInitOpen")
-                                                                                                .Open("onOpen")
-                                                                                                .Show("onShow")
-                                                                                                .Close("onClose")
-                                                                                                .Hide("onHide")
-                                                                                                )
+                        )
+                        .Actions(actions =>
+                        {
+                            actions.Add()
+                            .Text("Cancel")
+                            .Action("onCancel");
+                            actions.Add().Text("OK")
+                            .Primary(true)
+                            .Action("onOK");
+                        })
+                        .Events(ev => ev
+                        .InitOpen("onInitOpen")
+                        .Open("onOpen")
+                        .Show("onShow")
+                        .Close("onClose")
+                        .Hide("onHide")
+                        )
             )
         </div>
        
@@ -1114,7 +1128,16 @@
         .btn-group-vertical{
             display: none;
         }
-        
+
+        .exportButton {
+            background-color: #018001;
+        }
+
+        .toggleButtons {
+            background-color: #47A43E;
+            border: 1px solid #398439;
+            color: #fff;
+        }
         
         @@media (max-width: 990px) {
             .m-buttons{
@@ -1126,14 +1149,6 @@
             .radiobtn
             {
                 width: auto;
-            }
-            .exportButton {
-                background-color: #018001;
-            }
-            .toggleButtons {
-                background-color: #47A43E;
-                border: 1px solid #398439;
-                color: #fff;
             }
         }
 
