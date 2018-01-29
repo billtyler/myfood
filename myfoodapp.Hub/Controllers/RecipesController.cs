@@ -31,7 +31,13 @@ namespace myfoodapp.Hub.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public async Task<ActionResult> Gallery()
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
@@ -46,13 +52,13 @@ namespace myfoodapp.Hub.Controllers
                                     .ToListAsync();
 
             rstl.ForEach(r =>
-                            {
-                                if(r.plantingIndoorMonths.Where(p => p.order == currentMonths).FirstOrDefault() != null)
-                                  r.isRecommended = true;
-                            }    
+            {
+                if (r.plantingIndoorMonths.Where(p => p.order == currentMonths).FirstOrDefault() != null)
+                    r.isRecommended = true;
+            }
                         );
 
-            return View(rstl);
+            return Json(rstl);
         }
 
         [Authorize]

@@ -1191,6 +1191,7 @@
     <Content Include="Content\Pictures\Recipes\lettuce.jpg" />
     <Content Include="Content\Pictures\Recipes\mache.jpg" />
     <Content Include="Content\Pictures\Recipes\parsley.jpg" />
+    <Content Include="Content\Pictures\Recipes\recommended.png" />
     <Content Include="Content\Pictures\Recipes\strawberries.jpg" />
     <Content Include="Content\Pictures\Recipes\tilapia.jpg" />
     <Content Include="Content\Pictures\Recipes\tomatoes.jpg" />
@@ -1861,6 +1862,9 @@
     <Content Include="Scripts\Swiper\swiper.jquery.umd.min.js" />
     <Content Include="Scripts\Swiper\swiper.js" />
     <Content Include="Scripts\Swiper\swiper.min.js" />
+    <Content Include="Scripts\unitgallery\ug-theme-tiles.js" />
+    <Content Include="Scripts\unitgallery\unite-gallery.css" />
+    <Content Include="Scripts\unitgallery\unitegallery.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
