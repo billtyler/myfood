@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-01-17 15:54+01:00\n"
-"PO-Revision-Date: 2018-01-17 15:54+01:00\n"
+"POT-Creation-Date: 2018-01-29 18:41+01:00\n"
+"PO-Revision-Date: 2018-01-29 18:41+01:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,7 @@ msgid "36 towers"
 msgstr ""
 
 #: Views\About\Index.cshtml:8
-#: Views\Shared\_Layout.cshtml:70
+#: Views\Shared\_Layout.cshtml:72
 #: obj\Debug\Package\PackageTmp\Views\About\Index.cshtml:8
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:70
 #: obj\Release\Package\PackageTmp\Views\About\Index.cshtml:8
@@ -281,7 +281,8 @@ msgstr ""
 msgid "Call Pioneer"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:35
+#: Views\Recipes\Index.cshtml:40
+#: Views\Recipes\Index.cshtml:150
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:35
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:35
 msgid "Can be planted in:"
@@ -305,7 +306,7 @@ msgstr ""
 msgid "Choose the application default language"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:84
+#: Views\Recipes\Index.cshtml:90
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:84
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:84
 msgid "Choose the suitable recipes for your greenhouse"
@@ -407,13 +408,21 @@ msgstr ""
 msgid "date"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:24
+#: Views\Recipes\Index.cshtml:147
+msgid "DAY OF GERMINATION<br />FROM SEED"
+msgstr ""
+
+#: Views\Recipes\Index.cshtml:147
+msgid "DAY OF HARVEST<br />FROM SOW."
+msgstr ""
+
+#: Views\Recipes\Index.cshtml:29
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:24
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:24
 msgid "DAY OF<br />GERMINATION<br />FROM SEED"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:28
+#: Views\Recipes\Index.cshtml:33
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:28
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:28
 msgid "DAY OF<br />HARVEST<br />FROM SOW."
@@ -443,7 +452,11 @@ msgstr ""
 msgid "Development Kit"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:32
+#: Views\Recipes\Index.cshtml:147
+msgid "DISTANCE BETWEEN<br />PLANTS (CM)"
+msgstr ""
+
+#: Views\Recipes\Index.cshtml:37
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:32
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:32
 msgid "DISTANCE<br />BETWEEN<br />PLANTS (CM)"
@@ -719,7 +732,7 @@ msgstr ""
 msgid "Log in"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:76
+#: Views\Shared\_Layout.cshtml:78
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:76
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:76
 msgid "Log off"
@@ -731,7 +744,7 @@ msgstr ""
 msgid "Log your Actions / Events here"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:81
+#: Views\Shared\_Layout.cshtml:83
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:81
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:81
 msgid "Login"
@@ -832,7 +845,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:64
+#: Views\Shared\_Layout.cshtml:66
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:64
 msgid "Measures"
@@ -854,7 +867,7 @@ msgstr ""
 msgid "message type"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:63
+#: Views\Shared\_Layout.cshtml:65
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
 msgid "Messages"
@@ -887,7 +900,7 @@ msgid "Morning"
 msgstr ""
 
 #: Views\MyInfo\Update.cshtml:44
-#: Views\Shared\_Layout.cshtml:68
+#: Views\Shared\_Layout.cshtml:70
 #: obj\Debug\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:68
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
@@ -1058,7 +1071,7 @@ msgstr ""
 msgid "Performance"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:66
+#: Views\Shared\_Layout.cshtml:68
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:66
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:66
 msgid "Performance &amp; Health"
@@ -1161,7 +1174,7 @@ msgstr ""
 msgid "Production Unit Owner already in use"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:65
+#: Views\Shared\_Layout.cshtml:67
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:65
 msgid "Production Units"
@@ -1188,8 +1201,8 @@ msgstr ""
 msgid "Production Units Management"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:78
-#: Views\Shared\_Layout.cshtml:67
+#: Views\Recipes\Index.cshtml:83
+#: Views\Shared\_Layout.cshtml:69
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:78
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:67
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:78
@@ -1225,7 +1238,6 @@ msgstr ""
 msgid "Save & Close"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:86
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:86
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:86
 msgid "See Recommandations for my Production Unit:"
@@ -1385,7 +1397,7 @@ msgstr ""
 msgid "user"
 msgstr ""
 
-#: Views\Shared\_Layout.cshtml:61
+#: Views\Shared\_Layout.cshtml:63
 #: obj\Debug\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:61
 msgid "User Management"
@@ -1456,7 +1468,8 @@ msgstr ""
 msgid "Water Temperature (°C)"
 msgstr ""
 
-#: Views\Recipes\Index.cshtml:70
+#: Views\Recipes\Index.cshtml:75
+#: Views\Recipes\Index.cshtml:151
 #: obj\Debug\Package\PackageTmp\Views\Recipes\Index.cshtml:70
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:70
 msgid "Watering Level:"
