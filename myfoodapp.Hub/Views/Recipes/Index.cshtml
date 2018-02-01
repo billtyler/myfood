@@ -10,74 +10,6 @@
     }
 </script>
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-@*<script>
-        function onSelect(e) {
-            var dataItem = this.dataItem(e.item);
-        }
-    </script>
-
-    <script type="text/x-kendo-tmpl" id="template">
-        <div class="recipes">
-            <img src="@Url.Content("~/content/pictures/recipes/")#:picturePath#" alt="#:name# image" />
-            #if (isRecommended == true){#
-            <img src="@Url.Content("~/content/pictures/recommandated.png")" alt="recommandated image" />
-            #}#
-            <div class="inner">
-                <div class="title">#:name# - #:reference#</div>
-                <div class="info" style="margin: 8px;">
-                    <div class="column-left">
-                        <h2 class="widget-text" style="text-align: center;">[[[DAY OF<br />GERMINATION<br />FROM SEED]]]</h2>
-                        <h1 style="text-align: center;font-size:x-large;">#:daysOfGermination#</h1>
-                    </div>
-                    <div class="column-center" style="border-left:1px;border-color:white;">
-                        <h2 class="widget-text" style="text-align: center;border-left:1px;">[[[DAY OF<br />HARVEST<br />FROM SOW.]]]</h2>
-                        <h1 style="text-align: center;font-size:x-large;">#:daysOfHarvestFromSowing#</h1>
-                    </div>
-                    <div class="column-right" style="border-left:1px;border-color:white;">
-                        <h2 class="widget-text" style="text-align: center;border-left:1px;">[[[DISTANCE<br />BETWEEN<br />PLANTS (CM)]]]</h2>
-                        <h1 style="text-align: center;font-size:x-large;">#:minimumSpaceBetweenPlantInTower#</h1>
-                    </div>
-                    <div class="title" style="font-size:medium;font-weight:normal;margin-top:120px;">[[[Can be planted in:]]]</div>
-                    <div class="thumbs">
-                        #if (gardeningType.name === "Permaculture Bed" ){#
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningPermacultureBed.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
-                        </div>
-                        #}#
-                        #if (gardeningType.name === "Zipgrow Tower" ){#
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningZipgrowTower.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
-                        </div>
-                        #}#
-                        #if (gardeningType.name === "Tower Garden" ){#
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningTowerGarden.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
-                        </div>
-                        #}#
-                        #if (gardeningType.name === "Fish Tank" ){#
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningFishTank.png")" title="#:gardeningType.name#" alt="#:gardeningType.name#" />
-                        </div>
-                        #}#
-                        #if (gardeningType.name === "All" ){#
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningZipgrowTower.png")" title="Zipgrow Tower" alt="Zipgrow Tower" />
-                        </div>
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningTowerGarden.png")" title="Tower Garden" alt="Tower Garden" />
-                        </div>
-                        <div>
-                            <img class="gardeningType" src="@Url.Content("~/content/pictures/gardeningtype/gardeningPermacultureBed.png")" title="Permaculture Bed" alt="Permaculture Bed" />
-                        </div>
-                        #}#
-                        <span class="stretch"></span>
-                    </div>
-                    <div class="title" style="font-size:medium;font-weight:normal;margin-top:230px;">[[[Watering Level:]]]</div>
-                    <div class="title" style="font-size:medium;font-weight:normal;margin-top:250px;">#:wateringLevel.name#</div>
-                </div>
-            </div>
-        </div>
-    </script>*@
 
 <div id="main-section-header" class="row">
     <h2 id="title" class="col-md-3">[[[Recipes]]]</h2>
@@ -143,7 +75,7 @@
                     else {
                         gardeningType = "<img class=gardeningType src=/Content/Pictures/GardeningType/" + item.gardeningType.imagePath + " />";
                     }
-                    var context = "<div class=col-md-1></div><div class=col-md-3>" +
+					var context = "<div class=col-md-1></div><div class=col-md-3><div class=captionTypeName>" + item.name + " - " + item.reference + "</div>" +
                         "<table class=table-pop><tr><td>[[[DAY OF GERMINATION<br />FROM SEED]]]</td><td>[[[DAY OF HARVEST<br />FROM SOW.]]]</td><td>[[[DISTANCE BETWEEN<br />PLANTS (CM)]]]</td></tr>" +
                         "<tr><td>" + item.daysOfGermination + "</td><td>" + item.daysOfHarvestFromSowing + "</td><td>" + item.minimumSpaceBetweenPlantInTower + "</td></tr>" +
                         "</table></div>" +
@@ -154,7 +86,7 @@
                     var $grid_item = $("<div class='grid-item " + rec + "'>" + rec_img +
                         "<a data-fancybox='gallery' data-caption='" + context + "' href='/Content/Pictures/Recipes/" + item.picturePath + "'>" +
                         "<figure><img src='/Content/Pictures/Recipes/" + item.picturePath + "'/>" +
-                        "<figcaption>" + item.name + " - " + item.reference + "</figcaption>" +
+                        "<figcaption><p>" + item.name + "<br><span class=reference> " + item.reference + "</span></p></figcaption>" +
                         "</figure></a></div>");
 
                     $('#grid-container').masonry({
@@ -185,6 +117,11 @@
 
 </script>
 <style>
+	
+	.reference {
+		font-size: 0.9rem;
+		margin: 0;
+	}
     .waterlevel {
         font-weight: 400;
         font-size: 1.5rem;
@@ -196,7 +133,14 @@
         font-weight: bold;
         font-size: 1rem;
         margin-left: 15px;
+		margin-bottom: 15px;
     }
+	.captionTypeName {
+		font-size: 1.1rem;
+		margin-left: 15px;
+		margin-bottom: 15px;
+		font-weight: bold;
+	}
     .fancybox-caption {
         padding: 15px 0;
     }
@@ -206,14 +150,15 @@
         border-radius: 50%;
         margin: 15px;
     }
-    
-    .table-pop {
-        text-align: center;
-        border: 1px solid #d9d9d9;
-        margin-bottom: 25px;
-        margin-top: 15px;
-        width: 100%;
-    }
+
+	.table-pop {
+		text-align: center;
+		border: 1px solid #d9d9d9;
+		margin-bottom: 25px;
+		margin-left: 15px;
+		/*margin-top: 15px;*/
+		width: 100%;
+	}
 
     .table-pop tr {
         height: 25px;
@@ -344,6 +289,7 @@
         justify-content: center;
         opacity: 0;
         color: #fff;
+		text-align: center;
     }
 
     .grid-item:hover figure:before, .grid-item figure:hover figcaption {
