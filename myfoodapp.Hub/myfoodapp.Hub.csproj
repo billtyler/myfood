@@ -1157,6 +1157,7 @@
     <Content Include="Content\marker-shadow.png" />
     <Content Include="Content\miniLogo.png" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\Pictures\login-bg.png" />
     <Content Include="Content\Pictures\Feelings\happy.png" />
     <Content Include="Content\Pictures\Feelings\needHelp.png" />
     <Content Include="Content\Pictures\GardeningType\gardeningFishTank.png" />
