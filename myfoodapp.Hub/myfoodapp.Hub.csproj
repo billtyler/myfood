@@ -1152,6 +1152,7 @@
     <Content Include="Content\kendo\Uniform\sprite_kpi_2x.png" />
     <Content Include="Content\lightbox\lightbox.css" />
     <Content Include="Content\logoMyfood.png" />
+    <Content Include="Content\logoMyfoodLogin.png" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\marker-icon-2x-green.png" />
     <Content Include="Content\marker-shadow.png" />
