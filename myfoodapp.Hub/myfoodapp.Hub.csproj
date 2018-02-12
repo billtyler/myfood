@@ -1201,6 +1201,7 @@
     <Content Include="Content\Pictures\recommandated.png" />
     <Content Include="Content\Pictures\Sites\AndancetteFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\AnnouvilleVilmesnilFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\BeauneFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\BivilleFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\BlancMesnilCity.jpg" />
     <Content Include="Content\Pictures\Sites\BoisColombesCity.jpg" />
@@ -1217,6 +1218,7 @@
     <Content Include="Content\Pictures\Sites\ForgesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GrenobleCity.jpg" />
+    <Content Include="Content\Pictures\Sites\GrenobleFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\GrosbuschFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\HertainFamily22.jpg" />

@@ -371,34 +371,32 @@
 
                 if (item.PreferedMoment != "" && item.Location != "") {
                     var context = '<div class=col-md-6><div class=description><p class=table-name><strong>' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</strong></p><br>' +
-                        '<div class=col-md-12><span>Email: <a href=mailto:' + item.ContactMail + '>' + item.ContactMail + '</a></span></div>' +
-                        '<div class=col-xs-7><span>Phone: <a href=tel:' + item.PhoneNumber.replace(" ", "") + '>' + item.PhoneNumber + '</a></span></div>' +
+                        '<div class=col-md-12><span>[[[Email:]]] <a href=mailto:' + item.ContactMail + '>' + item.ContactMail + '</a></span></div>' +
+                        '<div class=col-xs-7><span>[[[Phone:]]] <a href=tel:' + item.PhoneNumber.replace(" ", "") + '>' + item.PhoneNumber + '</a></span></div>' +
                         '<div class=col-md-5><span class=prodtype><strong>' + item.ProductionUnitType + '</strong></span></div>' +
-                        '<div class=col-xs-12><span>Best to contact: ' + item.PreferedMoment + '</span></div>' +
-                        '<div class=col-md-12><span>Location: ' + item.Location + '</span></div>' +
+                        '<div class=col-xs-12><span>[[[Best to contact:]]] ' + item.PreferedMoment + '</span></div>' +
+                        '<div class=col-md-12><span>[[[Location:]]] ' + item.Location + '</span></div>' +
                         '<div class=col-md-10><p class=option>' + item.ProductionUnitOptions + '</p></div>' +
                         '</table></div></div>' +
                         '<div class=col-md-6><div class=col-md-4></div><div class=col-md-6><p class=table-name><strong>PERFORMANCE</strong></p>' +
-                        '<table class=table-pop><tr><td>EST. PROD.</td><td>CO2 SAVED</td><td>ONLINE SINCE</td></tr>' +
-                        '<tr><td>' + item.AverageMonthlyProduction + '</td><td>' + item.AverageMonthlySparedCO2 + '</td><td>' + item.OnlineSinceWeeks + '</td></tr>' +
-                        '<tr><td>PER MONTH</td><td>PER MONTH</td><td>WEEKS</td></tr>' +
+                        '<table class=table-pop><tr><td>[[[EST. PROD.]]]</td><td>CO2 SAVED</td><td>ONLINE SINCE</td></tr>' +
+                        '<tr><td>' + item.AverageMonthlyProduction + 'kg</td><td>' + item.AverageMonthlySparedCO2 + 'kg</td><td>' + item.OnlineSinceWeeks + '</td></tr>' +
+                        '<tr><td>[[[PER MONTH]]]</td><td>[[[PER MONTH]]]</td><td>[[[WEEKS]]]</td></tr>' +
                         '</table></div>';
                 }
                 else {
                     var context = '<div class=col-md-6><div class=description><p class=table-name><strong>' + item.PioneerCitizenName + ' #' + item.PioneerCitizenNumber + '</strong></p><br>' +
-                        '<div class=col-md-12>Email: <a href=mailto:' + item.ContactMail + '>' + item.ContactMail + '</a></div>' +
-                        '<div class=col-xs-7><span>Phone: <a href=tel:' + item.PhoneNumber.replace(" ", "") + '>' + item.PhoneNumber + '</a></span></div>' +
+                        '<div class=col-md-12>[[[Email:]]] <a href=mailto:' + item.ContactMail + '>' + item.ContactMail + '</a></div>' +
+                        '<div class=col-xs-7><span>[[[Phone:]]] <a href=tel:' + item.PhoneNumber.replace(" ", "") + '>' + item.PhoneNumber + '</a></span></div>' +
                         '<div class=col-md-5><span class=prodtype><strong>' + item.ProductionUnitType + '</strong></span></div>' +
                         '<div class=col-md-10><p class=option>' + item.ProductionUnitOptions + '</p></div>' +
                         '</table></div></div>' +
                         '<div class=col-md-6><div class=col-md-4></div><div class=col-md-6><p class=table-name><strong>PERFORMANCE</strong></p>' +
-                        '<table class=table-pop><tr><td>EST. PROD.</td><td>CO2 SAVED</td><td>ONLINE SINCE</td></tr>' +
+                        '<table class=table-pop><tr><td>[[[EST. PROD.]]]</td><td>[[[CO2 SAVED]]]</td><td>[[[ONLINE SINCE]]]</td></tr>' +
                         '<tr><td>' + item.AverageMonthlyProduction + '</td><td>' + item.AverageMonthlySparedCO2 + '</td><td>' + item.OnlineSinceWeeks + '</td></tr>' +
-                        '<tr><td>PER MONTH</td><td>PER MONTH</td><td>WEEKS</td></tr>' +
+                        '<tr><td>[[[PER MONTH]]]</td><td>[[[PER MONTH]]]</td><td>[[[WEEKS]]]</td></tr>' +
                         '</table></div>';
                 }
-
-
 
                 $.fancybox.open([
                     {
@@ -735,37 +733,37 @@
        
         <div class="row">
             <div class="col-md-2 m-buttons">
-                <button class="btn btn-success btn-lg toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
+                <button class="btn btn-success toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
             </div>
             <div class="col-md-2 m-buttons">
-                <button class="btn btn-success btn-lg toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
+                <button class="btn btn-success toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
             </div>
             <div class="col-md-2 m-buttons">
-                <button class="btn btn-success btn-lg toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
+                <button class="btn btn-success toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
             </div>
             <div class="col-md-2 col-md-offset-10 view-detail">
-                <button class="btn btn-success btn-lg exportButton" onclick="viewInfo()">[[[View Info]]]</button>
+                <button class="btn btn-success exportButton" onclick="viewInfo()">[[[View Info]]]</button>
             </div>
             <div class="radio-buttons">
                 <div class="btn-group btn-group-lg" data-toggle="buttons">
-                    <label class="btn btn-lg btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
+                    <label class="btn btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
                         <input type="radio" name="options" id="option1" autocomplete="off" checked> [[[This Last Days]]]
                     </label>
-                    <label class="btn btn-lg btn-lg-xs radiobtn" onclick="onThisMonthClick()">
+                    <label class="btn btn-lg-xs radiobtn" onclick="onThisMonthClick()">
                         <input type="radio" name="options" id="option2" autocomplete="off"> [[[This Week]]]
                     </label>
-                    <label class="btn btn-lg btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
+                    <label class="btn btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
                         <input type="radio" name="options" id="option3" autocomplete="off"> [[[Last Three Months]]]
                     </label>
                 </div>
                 <div class="btn-group-vertical" data-toggle="buttons">
-                    <label class="btn btn-lg btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
+                    <label class="btn btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
                         <input type="radio" name="options" id="option1" autocomplete="off" checked> [[[This Last Days]]]
                     </label>
-                    <label class="btn btn-lg btn-lg-xs radiobtn" onclick="onThisMonthClick()">
+                    <label class="btn btn-lg-xs radiobtn" onclick="onThisMonthClick()">
                         <input type="radio" name="options" id="option2" autocomplete="off"> [[[This Week]]]
                     </label>
-                    <label class="btn btn-lg btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
+                    <label class="btn btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
                         <input type="radio" name="options" id="option3" autocomplete="off"> [[[Last Three Months]]]
                     </label>
                 </div>
@@ -875,17 +873,17 @@
         <div class="row buttons-section-full">
             <div id="managementButton" class="col-md-12">
                 <div class="col-md-2 s-buttons">
-                    <button class="btn btn-success btn-lg toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
+                    <button class="btn btn-success toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
                 </div>
                 <div class="col-md-2 s-buttons">
-                    <button class="btn btn-success btn-lg toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
+                    <button class="btn btn-success toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
                 </div>
 
                 <div class="col-md-2 s-buttons">
-                    <button class="btn btn-success btn-lg toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
+                    <button class="btn btn-success toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
                 </div>
                 <div class="col-md-2 col-md-offset-4">
-                    <button class="btn btn-success btn-lg exportButton" onclick="onExportCSVClick()">[[[Export CSV]]]</button>
+                    <button class="btn btn-success exportButton" onclick="onExportCSVClick()">[[[Export CSV]]]</button>
                 </div>
                 </div>
             </div>
