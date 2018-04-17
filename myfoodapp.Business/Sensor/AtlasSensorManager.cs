@@ -139,6 +139,23 @@ namespace myfoodapp.Business.Sensor
 
                                     //taskWakeUp.Wait(20000);
 
+                                    var taskContinuous = Task.Run(async () =>
+                                    {
+                                        await WriteAsync(disableContinuousModeCommand, newSensor);
+                                        await Task.Delay(5000);
+                                    });
+                                    taskContinuous.Wait();
+
+                                    if (r.Contains("*OK"))
+                                    {
+                                        var taskAuto = Task.Run(async () =>
+                                        {
+                                            await WriteAsync(disableAutomaticAnswerCommand, newSensor);
+                                            await Task.Delay(5000);
+                                        });
+                                        taskAuto.Wait();
+                                    }
+
                                     var taskStatus = Task.Run(async () =>
                                     {
                                         await WriteAsync(getStatusCommand, newSensor)
@@ -152,23 +169,6 @@ namespace myfoodapp.Business.Sensor
                                              .ContinueWith((are) => r = ReadAsync(ReadCancellationTokenSource.Token, newSensor).Result);
                                     });
                                     taskInformation.Wait();
-
-                                    if (r.Contains("*OK"))
-                                    {
-                                        var taskContinuous = Task.Run(async () =>
-                                        {
-                                            await WriteAsync(disableContinuousModeCommand, newSensor);
-                                            await Task.Delay(5000);
-                                        });
-                                        taskContinuous.Wait();
-
-                                        var taskAuto = Task.Run(async () =>
-                                        {
-                                            await WriteAsync(disableAutomaticAnswerCommand, newSensor);
-                                            await Task.Delay(5000);
-                                        });
-                                        taskAuto.Wait();
-                                    }
 
                                     //if (isSleepModeActivated)
                                     //{
@@ -350,7 +350,7 @@ namespace myfoodapp.Business.Sensor
             if (!isInitialized)
                 return;
 
-            foreach (AtlasSensor currentSensor in sensorsList)
+            foreach(AtlasSensor currentSensor in sensorsList)
             {
                 string strResult = String.Empty;
 
@@ -364,14 +364,17 @@ namespace myfoodapp.Business.Sensor
                 var taskAuto = Task.Run(async () =>
                 {
                     await WriteAsync(disableAutomaticAnswerCommand, currentSensor);
+                    await Task.Delay(5000);
                 });
                 taskAuto.Wait();
 
                 var taskContinuous = Task.Run(async () =>
                 {
                     await WriteAsync(disableContinuousModeCommand, currentSensor);
+                    await Task.Delay(5000);
                 });
                 taskContinuous.Wait();
+
             }
         }
 

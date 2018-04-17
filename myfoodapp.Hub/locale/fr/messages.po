@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-02-07 09:28+01:00\n"
-"PO-Revision-Date: 2018-02-07 09:28+01:00\n"
+"POT-Creation-Date: 2018-04-15 16:06+02:00\n"
+"PO-Revision-Date: 2018-04-15 16:06+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -751,9 +751,9 @@ msgstr "Lumière"
 msgid "Location:"
 msgstr "Location:"
 
-#: Views\Account\Login.cshtml:49
+#: Views\Account\Login.cshtml:95
 #: obj\Debug\Package\PackageTmp\Views\Account\Login.cshtml:49
-#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:49
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:95
 msgid "Log in"
 msgstr "Se Connecter"
 
@@ -1180,9 +1180,9 @@ msgstr "Planter les semis"
 msgid "Plants"
 msgstr "Plantes"
 
-#: Views\Account\Login.cshtml:22
+#: Views\Account\Login.cshtml:79
 #: obj\Debug\Package\PackageTmp\Views\Account\Login.cshtml:22
-#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:22
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:79
 msgid "Please Sign In"
 msgstr "Connectez-vous"
 

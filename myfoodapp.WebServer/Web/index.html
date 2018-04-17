@@ -718,7 +718,7 @@
                         var year = date.getFullYear();
                         var month = date.getMonth() + 1;
                         var day = date.getDate();
-                        var fileName = "data_" + year + "-" + month + "-" + day + ".csv";
+                        var fileName = "data_" + year + "-" + month + "-" + day;
 
                         var data = JSON.parse(xhr.responseText);
                         exportCSVFile(headersMeasures, data, fileName);
@@ -743,7 +743,7 @@
                         var year = date.getFullYear();
                         var month = date.getMonth() + 1;
                         var day = date.getDate();
-                        var fileName = "data_" + year + "-" + month + "-" + day + ".csv";
+                        var fileName = "data_" + year + "-" + month + "-" + day;
 
                         var data = JSON.parse(xhr.responseText);
                         exportCSVFile(headersLogs, data, fileName);

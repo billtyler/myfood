@@ -1213,12 +1213,15 @@
     <Content Include="Content\Pictures\Sites\BronFamily14.JPG" />
     <Content Include="Content\Pictures\Sites\BrumathFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\CannesFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\CerelaRondeFamily.jpg" />
     <Content Include="Content\Pictures\Sites\ChanteheuxFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\ChantepieFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\ChatillonFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\ClamartCitySignature.jpg" />
     <Content Include="Content\Pictures\Sites\EssenFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\FenetrangeCity.jpg" />
     <Content Include="Content\Pictures\Sites\ForgesFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\GenvalFamilyProduction.jpg" />
     <Content Include="Content\Pictures\Sites\GertwillerFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GrenobleCity.jpg" />
     <Content Include="Content\Pictures\Sites\GrenobleFamily14.jpg" />
@@ -1233,6 +1236,7 @@
     <Content Include="Content\Pictures\Sites\LeHowaldFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LesAlluetsLeRoiFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LilleFamily14.JPG" />
+    <Content Include="Content\Pictures\Sites\LissesFamilySignature.jpg" />
     <Content Include="Content\Pictures\Sites\MarseilleFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\Marseille_2_Family22.jpg" />
     <Content Include="Content\Pictures\Sites\MartelangeFamily22.jpg" />
@@ -1249,6 +1253,7 @@
     <Content Include="Content\Pictures\Sites\RontignonFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\RoquebruneFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\RueilFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\Saint-Jean-de-SavignyFamily.jpg" />
     <Content Include="Content\Pictures\Sites\SaintDenisFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SainteBarbeFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\SaintLaurentDEzeFamily22.jpg" />
