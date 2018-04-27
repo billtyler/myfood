@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<myfoodapp.Hub.Models.ProductionUnit>
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Details";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -606,654 +606,662 @@
     });
 
     }
-	
-			
+
+
 
 </script>
 
 <script type="text/x-kendo-tmpl" id="templateOption">
-    <div class="option">
-        <span>&bull; #:name#</span>
-    </div>
+	<div class="option">
+		<span>&bull; #:name#</span>
+	</div>
 </script>
 
-<input type="hidden" value='@ViewContext.RouteData.Values["id"]' id="routeDataId" />
+<input type="hidden" value='@ViewBag.CurrentUser' id="routeDataId" />
 <input type="hidden" id="displayManagementBtn" value="@ViewBag.DisplayManagementBtn" />
 
 <div id="main-section-header" class="row">
-    <h2 id="title" class="col-md-3">[[[Production Unit Details]]]</h2>
-    <div style="clear:both;"></div>
+	<h2 id="title" class="col-md-3">[[[Production Unit Details]]]</h2>
+	<div style="clear:both;"></div>
 </div>
 
 <div id="productionUnits-grid" class="main-section-content row">
-    <div id="measures-container" class="col-md-12" style="padding-bottom:40px">
-        <div id="dialog">
-            @(Html.Kendo().Dialog()
-                        .Name("dialog")
-                        .Title("[[[Add Event]]]")
-                        .Width(720)
-                        .Height(780)
-                        .Animation(c => c.Open(a => a.Fade(FadeDirection.In).Zoom(ZoomDirection.In)).Close(a => a.Fade(FadeDirection.Out).Zoom(ZoomDirection.Out)))
-                        .Modal(true)
-                        .Visible(false)
-                        .Closable(true)
-                        .Content(" " +
-
-            Html.Kendo().TabStrip()
-            .Name("tabstrip")
-            .HtmlAttributes(new { style = "border-width:0px; height:500px;" })
-            .Animation(animation =>
-                animation.Open(effect =>
-                    effect.Fade(FadeDirection.In)))
-            .Items(tabstrip =>
-            {
-                tabstrip.Add().Text("Basic Info")
-                    .ContentHtmlAttributes(new { style = "height:560px;" })
-                    .Selected(true)
-                    .Content(
-            "<p>[[[Log your Actions / Events here]]]<p>" +
-
-                        "<div id='listViewEventTypeDiv'>" +
-
-                            Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
-                        .Name("listViewEventType")
-                        .TagName("div")
-                        .ClientTemplateId("template")
-                        .DataSource(dataSource =>
-                        {
-                            dataSource.Read(read => read.Action("EventType_Read", "ProductionUnits"));
-                        })
-                        .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
-                        .Events(events => events.Change("onEventTypeChange"))
-
-                        + "</div>"
-
-                        + " <div id='listViewEventTypeItemsDiv'>" +
-
-                        Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
-                        .Name("listViewEventTypeItems")
-                        .TagName("div")
-                        .ClientTemplateId("template")
-                        .DataSource(dataSource =>
-                        {
-                            dataSource.Read(read => read.Action("EventTypeItem_Read", "ProductionUnits"));
-                        })
-                        .Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
-                        .Events(events => events.Change("onEventTypeItemChange"))
-
-                        + "</div>"
-
-                        + " <div id='noteDateDiv'>" +
-
-                        Html.Kendo().TextBox()
-                        .Name("descriptionTextBox")
-                        .HtmlAttributes(new { placeholder = "Note", required = "required", style = "width:100%; height:40px;" })
-
-                        +
-
-                        Html.Kendo().DatePicker()
-                        .Name("datePicker")
-                        .Value(DateTime.Today)
-                        .HtmlAttributes(new { style = "width: 100%;", title = "datepicker" })
-
-                        + "</div>"
-
-                );
-
-                tabstrip.Add().Text("Detailed")
-                    .ContentHtmlAttributes(new { style = "height:560px;" })
-                    .Content(
-                "<p>[[[Detailed event description]]]<p>" +
-
-                " <div id='detailsDiv'>" +
-                            Html.TextArea("detailsTextArea", "", new { @class = "k-textbox", style = "width: 100%; height: 500px" })
-
-                + "</div>"
-                );
-
-            })
-
-                        )
-                        .Actions(actions =>
-                        {
-                            actions.Add()
-                            .Text("Cancel")
-                            .Action("onCancel");
-                            actions.Add().Text("OK")
-                            .Primary(true)
-                            .Action("onOK");
-                        })
-                        .Events(ev => ev
-                        .InitOpen("onInitOpen")
-                        .Open("onOpen")
-                        .Show("onShow")
-                        .Close("onClose")
-                        .Hide("onHide")
-                        )
-            )
-        </div>
-       
-        <div class="row">
-            <div class="col-md-2 m-buttons">
-                <button class="btn btn-success toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
-            </div>
-            <div class="col-md-2 m-buttons">
-                <button class="btn btn-success toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
-            </div>
-            <div class="col-md-2 m-buttons">
-                <button class="btn btn-success toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
-            </div>
-            <div class="col-md-2 col-md-offset-10 view-detail">
-                <button class="btn btn-success exportButton" onclick="viewInfo()">[[[View Info]]]</button>
-            </div>
-            <div class="radio-buttons">
-                <div class="btn-group btn-group-lg" data-toggle="buttons">
-                    <label class="btn btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> [[[This Last Days]]]
-                    </label>
-                    <label class="btn btn-lg-xs radiobtn" onclick="onThisMonthClick()">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> [[[This Week]]]
-                    </label>
-                    <label class="btn btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> [[[Last Three Months]]]
-                    </label>
-                </div>
-                <div class="btn-group-vertical" data-toggle="buttons">
-                    <label class="btn btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked> [[[This Last Days]]]
-                    </label>
-                    <label class="btn btn-lg-xs radiobtn" onclick="onThisMonthClick()">
-                        <input type="radio" name="options" id="option2" autocomplete="off"> [[[This Week]]]
-                    </label>
-                    <label class="btn btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
-                        <input type="radio" name="options" id="option3" autocomplete="off"> [[[Last Three Months]]]
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div id="statsContainerTop" class="row">
-            <div id="pHContainer" class="col-md-6">
-                <h3 class="section-header" style="text-align:center;font-size:larger">[[[pH]]]</h3>
-                <div class="sparkline-container">
-                    <div style="margin: 3px;">
-                        <div class="column-left">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
-                            <h1 id="CurrentPhValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="CurrentPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                        <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageHourPhValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
-                        </div>
-                        <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageDayPhValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="LastDayPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                    </div>
-                </div>
-                <div id="ph-chart"></div>
-
-            </div>
-            <div id="WaterTempContainer" class="col-md-6">
-                <h3 class="section-header" style="text-align:center;font-size:larger">[[[Water Temperature (°C)]]]</h3>
-                <div class="sparkline-container">
-                    <div style="margin: 3px;">
-                        <div class="column-left">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
-                            <h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                        <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
-                        </div>
-                        <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="watertemp-chart"></div>
-
-            </div>
-            <div id="AirTempContainer" class="col-md-6">
-                <h3 class="section-header" style="text-align:center;font-size:larger">[[[Air Temperature (°C)]]]</h3>
-                <div class="sparkline-container">
-                    <div style="margin: 3px;">
-                        <div class="column-left">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
-                            <h1 id="CurrentAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="CurrentAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                        <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageHourAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
-                        </div>
-                        <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageDayAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="LastDayAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                    </div>
-                </div>
-                <div id="airtemp-chart"></div>
-
-            </div>
-            <div id="HumidityContainer" class="col-md-6">
-                <h3 class="section-header" style="text-align:center;font-size:larger">[[[Humidity (%)]]]</h3>
-                <div class="sparkline-container">
-                    <div style="margin: 3px;">
-                        <div class="column-left">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
-                            <h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                        <div class="column-center" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
-                        </div>
-                        <div class="column-right" style="border-left:1px solid #e2e2e2;">
-                            <h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
-                            <h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
-                            <h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
-                        </div>
-                    </div>
-                </div>
-                <div id="humidity-chart"></div>
-
-            </div>
-        </div>
-
-        <div class="row buttons-section-full">
-            <div id="managementButton" class="col-md-12">
-                <div class="col-md-2 s-buttons">
-                    <button class="btn btn-success toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
-                </div>
-                <div class="col-md-2 s-buttons">
-                    <button class="btn btn-success toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
-                </div>
-
-                <div class="col-md-2 s-buttons">
-                    <button class="btn btn-success toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
-                </div>
-                <div class="col-md-2 col-md-offset-4">
-                    <button class="btn btn-success exportButton" onclick="onExportCSVClick()">[[[Export CSV]]]</button>
-                </div>
-                </div>
-            </div>
-
-    </div>
-    </div>
-
-    <script type="text/x-kendo-tmpl" id="template">
-        <div class="eventType">
-            <h2>#:name#</h2>
-            <h3 style="visibility:hidden">#:Id#</h3>
-        </div>
-    </script>
-
-    <style>
-        .k-window.k-dialog {
-            position: absolute;
-        }
-
-        .m-buttons{
-            display: none;
-        }
-        .fancybox-caption .col-md-6 .col-md-6:first-child {
-            padding-right: 30px;
-        }
-
-        .fancybox-caption .col-md-6 .col-md-6:last-child {
-            padding-left: 30px;
-        }
-
-        #slider {
-            margin-top: 15px;
-        }
-
-        .description .col-md-6 span {
-            display: inline-flex;
-            text-align: left;
-        }
-
-        .description .option {
-            margin-bottom: 10px;
-            margin-top: 15px;
-        }
-
-        .description .option_2 {
-            margin-top: 40px;
-        }
-
-        .description .col-md-6 {
-            padding: 3px;
-        }
-
-        .description {
-            font-size: 1.1rem;
-            text-align: left;
-        }
-
-
-        .table-name {
-            font-weight: bold;
-            font-size: 1.3rem;
-            padding-left: 7%;
-        }
-
-        .fancybox-caption .col-md-6 .col-md-6 .table-name {
-            font-size: 1.1rem;
-        }
-        .prodtype {
-            font-weight: bold;
-            font-size: 1.3rem;
-            text-align: right;
-            display: block;
-            padding-left: 7%;
-        }
-        .table-header {
-            font-size: 1.1rem;
-            text-align: left;
-            padding-left: 10px;
-            padding-bottom: 4px;
-        }
-
-        .table-pop {
-            border: 1px solid #d9d9d9;
-            text-align: center;
-            width: 100%;
-            margin-top: 5px;
-            margin-bottom: 25px;
-            margin-right: 50px;
-        }
-
-            .table-pop tr:nth-child(2) {
-                font-size: 1.5rem;
-            }
-
-            .table-pop tr {
-                height: 25px;
-            }
-
-        .table_td {
-            font-weight: bold;
-        }
-        .exportButton {
-            margin: 5px 0px;
-            color: #fff;
-            background-color: #47a447;
-            border-color: #398439;
-            width: 100%;
-        }
-
-        .radio-buttons {
-            text-align: center;
-            padding-left: 15px;
-            padding-right: 15px;
-            margin-top: 25px;
-            width:100%;
-        }
-
-        .radiobtn {
-            background-color: transparent;
-            width: 220px;
-            border: 1px solid #689F38;
-        }
-
-            .radiobtn.active {
-                background-color: #7CB342;
-                color: white;
-            }
-
-        .toggleButtons {
-            margin: 5px 0px;
-            width: 100%;
-            color: #000;
-            border-radius: .25rem;
-            background-color: transparent;
-            background-image: none;
-            border-color: #28a745;
-            cursor: pointer;
-        }
-
-
-        #ph-chart, #watertemp-chart, #airtemp-chart, #humidity-chart {
-            height: 400px;
-        }
-
-        .box {
-            width: 467px !important;
-            height: 350px !important;
-        }
-
-        .k-chart {
-            height: 200px;
-        }
-
-        .text p {
-            bottom: 20px;
-            left: 20px;
-            color: white;
-            font-size: 1rem;
-            margin: 0;
-            word-wrap: break-word;
-            padding-left: 20px;
-            padding-top: 20px;
-        }
-
-        .text h3 {
-            color: white;
-            margin: 0;
-            font-size: 1rem;
-            padding: 20px;
-        }
-
-        .text h2 {
-            font-weight: 900;
-            color: white;
-            text-transform: uppercase;
-            word-wrap: break-word;
-            margin: 0;
-            padding-top: 40px;
-            font-size: 2rem;
-            padding-left: 20px;
-        }
-
-        .box {
-            width: 320px;
-            height: 240px;
-            background-size: contain;
-        }
-
-        .k-button {
-            height: 50px;
-        }
-
-        #OptionList {
-            background: transparent;
-            border-color: transparent;
-            color: #333;
-        }
-
-        .k-loading-mask {
-            opacity: 0;
-        }
-
-        h1 {
-            font-size: xx-large;
-        }
-
-        .widget-text {
-            margin: 7px;
-        }
-
-        .column-left {
-            float: left;
-            width: 33%;
-        }
-
-        .column-right {
-            float: right;
-            width: 33%;
-        }
-
-        .column-center {
-            display: inline-block;
-            width: 33%;
-        }
-
-        .eventType {
-            float: left;
-            width: 120px;
-            height: 60px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            padding: 5px;
-            cursor: pointer;
-        }
-
-        #listViewEventTypeDiv {
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-        #listViewEventTypeItemsDiv {
-            margin-top: 200px;
-            margin-bottom: 10px;
-        }
-        .btn-group-vertical{
-            display: none;
-        }
-
-        .exportButton {
-            background-color: #018001;
-        }
-
-        .toggleButtons {
-            background-color: #47A43E;
-            border: 1px solid #398439;
-            color: #fff;
-        }
-        
-        @@media (max-width: 990px) {
-            .m-buttons{
-                display: block;
-            }
-            .s-buttons{
-                display: none;
-            }
-            .radiobtn
-            {
-                width: auto;
-            }
-        }
-
-        @@media (max-width: 514px) {
-            .radiobtn {
-                width: 100%;
-            }
-            #ph-chart, #watertemp-chart, #airtemp-chart, #humidity-chart {
-                height: 300px;
-            }
-            .btn-group-vertical
-            {
-                display: block;
-            }
-            .btn-group-lg{
-                display: none;
-            }
-            
-
-        }
-        @@media screen and (max-width: 800px) {
-            /*.widget-text {
-                 font-size: xx-small;
-                 margin:2px;
-            }*/
-            h1 {
-                font-size: medium;
-            }
-
-            .box {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            #containerPicture {
-                background-color: white;
-                margin-left: -10%;
-                margin-right: -10%;
-            }
-
-            .eventType {
-                float: left;
-                width: 90px;
-                height: 25px;
-                margin-top: 5px;
-                margin-bottom: 5px;
-                padding: 5px;
-                cursor: pointer;
-            }
-
-            #listViewEventTypeDiv {
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
-
-            #listViewEventTypeItemsDiv {
-                margin-top: 160px;
-                margin-bottom: 10px;
-            }
-        }
-
-        @@media(max-width: 1200px) {
-
-            .frame {
-                height: 448px;
-                width: 100%
-            }
-
-            .fancybox-caption .col-md-6 .col-md-6 {
-                display: none;
-            }
-        }
-
-        @@media screen and (max-width: 480px) {
-            .col-xs-7 {
-                width: 100%;
-            }
-
-            .option {
-                display: none;
-            }
-
-            .prodtype {
-                display: none;
-            }
-        }
-    </style>
-
-    <script type="text/javascript">
-        function error_handler(e) {
-            if (e.errors) {
-                var measure = "Errors:\n";
-                $.each(e.errors, function (key, value) {
-                    if ('errors' in value) {
-                        $.each(value.errors, function () {
-                            measure += this + "\n";
-                        });
-                    }
-                });
-                alert(measure);
-            }
-        }
-    </script>
+	<div id="measures-container" class="col-md-12" style="padding-bottom:40px">
+		<div id="dialog">
+			@(Html.Kendo().Dialog()
+								.Name("dialog")
+								.Title("[[[Add Event]]]")
+								.Width(720)
+								.Height(780)
+								.Animation(c => c.Open(a => a.Fade(FadeDirection.In).Zoom(ZoomDirection.In)).Close(a => a.Fade(FadeDirection.Out).Zoom(ZoomDirection.Out)))
+								.Modal(true)
+								.Visible(false)
+								.Closable(true)
+								.Content(" " +
+
+					Html.Kendo().TabStrip()
+					.Name("tabstrip")
+					.HtmlAttributes(new { style = "border-width:0px; height:500px;" })
+					.Animation(animation =>
+						animation.Open(effect =>
+							effect.Fade(FadeDirection.In)))
+					.Items(tabstrip =>
+					{
+						tabstrip.Add().Text("Basic Info")
+							.ContentHtmlAttributes(new { style = "height:560px;" })
+							.Selected(true)
+							.Content(
+					"<p>[[[Log your Actions / Events here]]]<p>" +
+
+								"<div id='listViewEventTypeDiv'>" +
+
+									Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
+								.Name("listViewEventType")
+								.TagName("div")
+								.ClientTemplateId("template")
+								.DataSource(dataSource =>
+								{
+									dataSource.Read(read => read.Action("EventType_Read", "ProductionUnits"));
+								})
+								.Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
+								.Events(events => events.Change("onEventTypeChange"))
+
+								+ "</div>"
+
+								+ " <div id='listViewEventTypeItemsDiv'>" +
+
+								Html.Kendo().ListView<myfoodapp.Hub.Models.EventTypeViewModel>()
+								.Name("listViewEventTypeItems")
+								.TagName("div")
+								.ClientTemplateId("template")
+								.DataSource(dataSource =>
+								{
+									dataSource.Read(read => read.Action("EventTypeItem_Read", "ProductionUnits"));
+								})
+								.Selectable(selectable => selectable.Mode(ListViewSelectionMode.Single))
+								.Events(events => events.Change("onEventTypeItemChange"))
+
+								+ "</div>"
+
+								+ " <div id='noteDateDiv'>" +
+
+								Html.Kendo().TextBox()
+								.Name("descriptionTextBox")
+								.HtmlAttributes(new { placeholder = "Note", required = "required", style = "width:100%; height:40px;" })
+
+								+
+
+								Html.Kendo().DatePicker()
+								.Name("datePicker")
+								.Value(DateTime.Today)
+								.HtmlAttributes(new { style = "width: 100%;", title = "datepicker" })
+
+								+ "</div>"
+
+						);
+
+						tabstrip.Add().Text("Detailed")
+							.ContentHtmlAttributes(new { style = "height:560px;" })
+							.Content(
+						"<p>[[[Detailed event description]]]<p>" +
+
+						" <div id='detailsDiv'>" +
+									Html.TextArea("detailsTextArea", "", new { @class = "k-textbox", style = "width: 100%; height: 500px" })
+
+						+ "</div>"
+						);
+
+					})
+
+								)
+								.Actions(actions =>
+								{
+									actions.Add()
+									.Text("Cancel")
+									.Action("onCancel");
+									actions.Add().Text("OK")
+									.Primary(true)
+									.Action("onOK");
+								})
+								.Events(ev => ev
+								.InitOpen("onInitOpen")
+								.Open("onOpen")
+								.Show("onShow")
+								.Close("onClose")
+								.Hide("onHide")
+								)
+			)
+		</div>
+
+		<div class="row">
+			<div class="col-md-2 m-buttons">
+				<button class="btn btn-success toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
+			</div>
+			<div class="col-md-2 m-buttons">
+				<button class="btn btn-success toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
+			</div>
+			<div class="col-md-2 m-buttons">
+				<button class="btn btn-success toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
+			</div>
+			<div class="col-md-2 col-md-offset-10 view-detail">
+				<button class="btn btn-success exportButton" onclick="viewInfo()">[[[View Info]]]</button>
+			</div>
+			<div class="radio-buttons">
+				<div class="btn-group btn-group-lg" data-toggle="buttons">
+					<label class="btn btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
+						<input type="radio" name="options" id="option1" autocomplete="off" checked> [[[This Last Days]]]
+					</label>
+					<label class="btn btn-lg-xs radiobtn" onclick="onThisMonthClick()">
+						<input type="radio" name="options" id="option2" autocomplete="off"> [[[This Week]]]
+					</label>
+					<label class="btn btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
+						<input type="radio" name="options" id="option3" autocomplete="off"> [[[Last Three Months]]]
+					</label>
+				</div>
+				<div class="btn-group-vertical" data-toggle="buttons">
+					<label class="btn btn-lg-xs radiobtn active" onclick="onThisWeekClick()">
+						<input type="radio" name="options" id="option1" autocomplete="off" checked> [[[This Last Days]]]
+					</label>
+					<label class="btn btn-lg-xs radiobtn" onclick="onThisMonthClick()">
+						<input type="radio" name="options" id="option2" autocomplete="off"> [[[This Week]]]
+					</label>
+					<label class="btn btn-lg-xs radiobtn" onclick="onLastThreeMonthsClick()">
+						<input type="radio" name="options" id="option3" autocomplete="off"> [[[Last Three Months]]]
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div id="statsContainerTop" class="row">
+			<div id="pHContainer" class="col-md-6">
+				<h3 class="section-header" style="text-align:center;font-size:larger">[[[pH]]]</h3>
+				<div class="sparkline-container">
+					<div style="margin: 3px;">
+						<div class="column-left">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
+							<h1 id="CurrentPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="CurrentPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+						<div class="column-center" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageHourPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
+						</div>
+						<div class="column-right" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageDayPhValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="LastDayPhCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+					</div>
+				</div>
+				<div id="ph-chart"></div>
+
+			</div>
+			<div id="WaterTempContainer" class="col-md-6">
+				<h3 class="section-header" style="text-align:center;font-size:larger">[[[Water Temperature (°C)]]]</h3>
+				<div class="sparkline-container">
+					<div style="margin: 3px;">
+						<div class="column-left">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
+							<h1 id="CurrentWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="CurrentWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+						<div class="column-center" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageHourWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
+						</div>
+						<div class="column-right" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageDayWaterTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="LastDayWaterTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+					</div>
+				</div>
+
+				<div id="watertemp-chart"></div>
+
+			</div>
+			<div id="AirTempContainer" class="col-md-6">
+				<h3 class="section-header" style="text-align:center;font-size:larger">[[[Air Temperature (°C)]]]</h3>
+				<div class="sparkline-container">
+					<div style="margin: 3px;">
+						<div class="column-left">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
+							<h1 id="CurrentAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="CurrentAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+						<div class="column-center" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageHourAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 style="margin:7px;text-align: center;">[[[PAST HOUR]]]</h2>
+						</div>
+						<div class="column-right" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageDayAirTempValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="LastDayAirTempCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+					</div>
+				</div>
+				<div id="airtemp-chart"></div>
+
+			</div>
+			<div id="HumidityContainer" class="col-md-6">
+				<h3 class="section-header" style="text-align:center;font-size:larger">[[[Humidity (%)]]]</h3>
+				<div class="sparkline-container">
+					<div style="margin: 3px;">
+						<div class="column-left">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[CURRENT]]]</h2>
+							<h1 id="CurrentHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="CurrentHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+						<div class="column-center" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageHourHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 style="margin:7px;text-align: center;">PAST HOUR</h2>
+						</div>
+						<div class="column-right" style="border-left:1px solid #e2e2e2;">
+							<h2 style="margin:7px;text-align: center;"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp; [[[AVERAGE]]]</h2>
+							<h1 id="AverageDayHumidityValue" style="font-size:xx-large;text-align: center;">-</h1>
+							<h2 id="LastDayHumidityCaptureTime" style="margin:7px;text-align: center;">-</h2>
+						</div>
+					</div>
+				</div>
+				<div id="humidity-chart"></div>
+
+			</div>
+		</div>
+
+		<div class="row buttons-section-full">
+			<div id="managementButton" class="col-md-12">
+				<div class="col-md-2 s-buttons">
+					<button class="btn btn-success toggleButtons" onclick="onAddEventClick()">[[[Add Event]]]</button>
+				</div>
+				<div class="col-md-2 s-buttons">
+					<button class="btn btn-success toggleButtons" onclick="onViewEventsClick()">[[[View Events]]]</button>
+				</div>
+
+				<div class="col-md-2 s-buttons">
+					<button class="btn btn-success toggleButtons" onclick="onManageUnitClick()">[[[Manage Unit]]]</button>
+				</div>
+				<div class="col-md-2 col-md-offset-4">
+					<button class="btn btn-success exportButton" onclick="onExportCSVClick()">[[[Export CSV]]]</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="template">
+	<div class="eventType">
+		<h2>#:name#</h2>
+		<h3 style="visibility:hidden">#:Id#</h3>
+	</div>
+</script>
+
+<style>
+	.k-window.k-dialog {
+		position: absolute;
+	}
+
+	.m-buttons {
+		display: none;
+	}
+
+	.fancybox-caption .col-md-6 .col-md-6:first-child {
+		padding-right: 30px;
+	}
+
+	.fancybox-caption .col-md-6 .col-md-6:last-child {
+		padding-left: 30px;
+	}
+
+	#slider {
+		margin-top: 15px;
+	}
+
+	.description .col-md-6 span {
+		display: inline-flex;
+		text-align: left;
+	}
+
+	.description .option {
+		margin-bottom: 10px;
+		margin-top: 15px;
+	}
+
+	.description .option_2 {
+		margin-top: 40px;
+	}
+
+	.description .col-md-6 {
+		padding: 3px;
+	}
+
+	.description {
+		font-size: 1.1rem;
+		text-align: left;
+	}
+
+
+	.table-name {
+		font-weight: bold;
+		font-size: 1.3rem;
+		padding-left: 7%;
+	}
+
+	.fancybox-caption .col-md-6 .col-md-6 .table-name {
+		font-size: 1.1rem;
+	}
+
+	.prodtype {
+		font-weight: bold;
+		font-size: 1.3rem;
+		text-align: right;
+		display: block;
+		padding-left: 7%;
+	}
+
+	.table-header {
+		font-size: 1.1rem;
+		text-align: left;
+		padding-left: 10px;
+		padding-bottom: 4px;
+	}
+
+	.table-pop {
+		border: 1px solid #d9d9d9;
+		text-align: center;
+		width: 100%;
+		margin-top: 5px;
+		margin-bottom: 25px;
+		margin-right: 50px;
+	}
+
+		.table-pop tr:nth-child(2) {
+			font-size: 1.5rem;
+		}
+
+		.table-pop tr {
+			height: 25px;
+		}
+
+	.table_td {
+		font-weight: bold;
+	}
+
+	.exportButton {
+		margin: 5px 0px;
+		color: #fff;
+		background-color: #47a447;
+		border-color: #398439;
+		width: 100%;
+	}
+
+	.radio-buttons {
+		text-align: center;
+		padding-left: 15px;
+		padding-right: 15px;
+		margin-top: 25px;
+		width: 100%;
+	}
+
+	.radiobtn {
+		background-color: transparent;
+		width: 220px;
+		border: 1px solid #689F38;
+	}
+
+		.radiobtn.active {
+			background-color: #7CB342;
+			color: white;
+		}
+
+	.toggleButtons {
+		margin: 5px 0px;
+		width: 100%;
+		color: #000;
+		border-radius: .25rem;
+		background-color: transparent;
+		background-image: none;
+		border-color: #28a745;
+		cursor: pointer;
+	}
+
+
+	#ph-chart, #watertemp-chart, #airtemp-chart, #humidity-chart {
+		height: 400px;
+	}
+
+	.box {
+		width: 467px !important;
+		height: 350px !important;
+	}
+
+	.k-chart {
+		height: 200px;
+	}
+
+	.text p {
+		bottom: 20px;
+		left: 20px;
+		color: white;
+		font-size: 1rem;
+		margin: 0;
+		word-wrap: break-word;
+		padding-left: 20px;
+		padding-top: 20px;
+	}
+
+	.text h3 {
+		color: white;
+		margin: 0;
+		font-size: 1rem;
+		padding: 20px;
+	}
+
+	.text h2 {
+		font-weight: 900;
+		color: white;
+		text-transform: uppercase;
+		word-wrap: break-word;
+		margin: 0;
+		padding-top: 40px;
+		font-size: 2rem;
+		padding-left: 20px;
+	}
+
+	.box {
+		width: 320px;
+		height: 240px;
+		background-size: contain;
+	}
+
+	.k-button {
+		height: 50px;
+	}
+
+	#OptionList {
+		background: transparent;
+		border-color: transparent;
+		color: #333;
+	}
+
+	.k-loading-mask {
+		opacity: 0;
+	}
+
+	h1 {
+		font-size: xx-large;
+	}
+
+	.widget-text {
+		margin: 7px;
+	}
+
+	.column-left {
+		float: left;
+		width: 33%;
+	}
+
+	.column-right {
+		float: right;
+		width: 33%;
+	}
+
+	.column-center {
+		display: inline-block;
+		width: 33%;
+	}
+
+	.eventType {
+		float: left;
+		width: 120px;
+		height: 60px;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		padding: 5px;
+		cursor: pointer;
+	}
+
+	#listViewEventTypeDiv {
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+
+	#listViewEventTypeItemsDiv {
+		margin-top: 200px;
+		margin-bottom: 10px;
+	}
+
+	.btn-group-vertical {
+		display: none;
+	}
+
+	.exportButton {
+		background-color: #018001;
+	}
+
+	.toggleButtons {
+		background-color: #47A43E;
+		border: 1px solid #398439;
+		color: #fff;
+	}
+
+	@@media (max-width: 990px) {
+		.m-buttons {
+			display: block;
+		}
+
+		.s-buttons {
+			display: none;
+		}
+
+		.radiobtn {
+			width: auto;
+		}
+	}
+
+	@@media (max-width: 514px) {
+		.radiobtn {
+			width: 100%;
+		}
+
+		#ph-chart, #watertemp-chart, #airtemp-chart, #humidity-chart {
+			height: 300px;
+		}
+
+		.btn-group-vertical {
+			display: block;
+		}
+
+		.btn-group-lg {
+			display: none;
+		}
+	}
+
+	@@media screen and (max-width: 800px) {
+		/*.widget-text {
+				 font-size: xx-small;
+				 margin:2px;
+			}*/
+		h1 {
+			font-size: medium;
+		}
+
+		.box {
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		#containerPicture {
+			background-color: white;
+			margin-left: -10%;
+			margin-right: -10%;
+		}
+
+		.eventType {
+			float: left;
+			width: 90px;
+			height: 25px;
+			margin-top: 5px;
+			margin-bottom: 5px;
+			padding: 5px;
+			cursor: pointer;
+		}
+
+		#listViewEventTypeDiv {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+
+		#listViewEventTypeItemsDiv {
+			margin-top: 160px;
+			margin-bottom: 10px;
+		}
+	}
+
+	@@media(max-width: 1200px) {
+
+		.frame {
+			height: 448px;
+			width: 100%
+		}
+
+		.fancybox-caption .col-md-6 .col-md-6 {
+			display: none;
+		}
+	}
+
+	@@media screen and (max-width: 480px) {
+		.col-xs-7 {
+			width: 100%;
+		}
+
+		.option {
+			display: none;
+		}
+
+		.prodtype {
+			display: none;
+		}
+	}
+</style>
+
+<script type="text/javascript">
+	function error_handler(e) {
+		if (e.errors) {
+			var measure = "Errors:\n";
+			$.each(e.errors, function (key, value) {
+				if ('errors' in value) {
+					$.each(value.errors, function () {
+						measure += this + "\n";
+					});
+				}
+			});
+			alert(measure);
+		}
+	}
+</script>
 

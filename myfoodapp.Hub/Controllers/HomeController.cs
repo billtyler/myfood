@@ -1,5 +1,7 @@
 ﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Models;
 using myfoodapp.Hub.Services;
@@ -9,6 +11,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
@@ -16,7 +19,21 @@ namespace myfoodapp.Hub.Controllers
 {
     public class HomeController : Controller
     {
-        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+
+		private ApplicationUserManager _userManager;
+		public ApplicationUserManager UserManager
+		{
+			get
+			{
+				return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+			}
+			private set
+			{
+				_userManager = value;
+			}
+		}
+
+		protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
@@ -25,7 +42,23 @@ namespace myfoodapp.Hub.Controllers
 
         public ActionResult Index()
         {
-            return View();
+			var currentUser = this.User.Identity.GetUserName();
+			if (currentUser=="")
+			{
+				return View();
+			}
+			var db = new ApplicationDbContext();
+
+			var userId = UserManager.FindByName(currentUser).Id;
+			var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+			if (isAdmin)
+			{
+				return View();
+			}
+			else
+			{
+				return Redirect("/ProductionUnits");
+			}
         }
 
 		public ActionResult GetClusterMapData()

@@ -55,77 +55,85 @@
             </a>
         </h1>
         <div class="collapse navbar-collapse" id="sidebar-nav" role="navigation">
-            <ul class="nav">
-                @if (Request.IsAuthenticated)
-                {
-                    @*if (User.IsInRole("Admin"))
-                    {
-                        <li><a href="@(Url.Action("Index", "Admin"))"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; [[[User Management]]]</a></li>
-                    }*@
-                        <li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; [[[Messages]]]</a></li>
-                        <li><a href="@(Url.Action("Index", "Measures"))"><i class="fa fa-thermometer-full" aria-hidden="true"></i>&nbsp; [[[Measures]]]</a></li>
-                        <li><a href="@(Url.Action("Index", "ProductionUnits"))"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; [[[Production Units]]]</a></li>
-                        <li><a href="@(Url.Action("Index", "PerformanceHealth"))"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[Performance &amp; Health]]]</a></li>
-                        <li><a href="@(Url.Action("Index", "Recipes"))"><i class="fa fa-book" aria-hidden="true"></i>&nbsp; [[[Recipes]]]</a></li>
-                        <li><a href="@(Url.Action("Update", "MyInfo"))"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp; [[[My Information]]]</a></li>
-                }
-                <li id="About"><a href="@(Url.Action("Index", "About"))"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; [[[About]]]</a></li>
-                @if (Request.IsAuthenticated)
-                {
-                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; [[[Log off]]]</a></li>
-                    }
-                }
-                else
-                {
-                    <li><a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; [[[Login]]]</a></li>
-                }
-            </ul>
-            <div id="rights">
-                <img width="50" height="60" src="~/Content/miniLogo.png" />
-                <p>.:myfoodapphub is licensed under a GPLv3:.</p>
-            </div>
-        </div>
-    </div><!--close left column-->
-    <div id="main-section" class="col-md-12 column">
-        <!--open main column-->
-        @RenderBody()
-    </div><!--close main column-->
-    @*</div><!--close row-->
-        </div><!--close container-->*@
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle=offcanvas]').click(function () {
-                $('.row-offcanvas').toggleClass('active');
-            });
-        });
-    </script>
-    <style type="text/css">
-        @@media screen and (max-width: 480px) {
-            #rights {
-                visibility: hidden;
-                display: none;
-            }
-        }
+			<ul class="nav">
+				@if (Request.IsAuthenticated)
+				{
+					@*if (User.IsInRole("Admin"))
+					{
+						<li><a href="@(Url.Action("Index", "Admin"))"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; [[[User Management]]]</a></li>
+					}*@
+					if (User.IsInRole("Admin"))
+					{
+						<li><a href="@(Url.Action("Index", "Messages"))"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp; [[[Messages]]]</a></li>
+						<li><a href="@(Url.Action("Index", "Measures"))"><i class="fa fa-thermometer-full" aria-hidden="true"></i>&nbsp; [[[Measures]]]</a></li>
+						<li><a href="@(Url.Action("Index", "ProductionUnits"))"><i class="fa fa-building-o" aria-hidden="true"></i>&nbsp; [[[Production Units]]]</a></li>
+						<li><a href="@(Url.Action("Index", "PerformanceHealth"))"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp; [[[Performance &amp; Health]]]</a></li>
+					}
+					<li><a href="@(Url.Action("Index", "Recipes"))"><i class="fa fa-book" aria-hidden="true"></i>&nbsp; [[[Recipes]]]</a></li>
+					<li><a href="@(Url.Action("Update", "MyInfo"))"><i class="fa fa-id-card" aria-hidden="true"></i>&nbsp; [[[My Information]]]</a></li>
+				}
 
-        a:link {
-            color: #ffffff;
-        }
-        /* normal link */
-        a:visited {
-            color: #ffffff;
-        }
-        /* visited link */
-        a:hover {
-            color: #ffffff;
-        }
-        /* mouse over link */
-        a:active {
-            color: #ffffff;
-        }
-        /* selected link */
-    </style>
+				@if (User.IsInRole("Admin"))
+				{
+				<li id="About"><a href="@(Url.Action("Index", "About"))"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp; [[[About]]]</a></li>
+				}
+
+				@if (Request.IsAuthenticated)
+				{
+					using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav" }))
+				{
+			@Html.AntiForgeryToken()
+			<li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp; [[[Log off]]]</a></li>
+}
+}
+else
+{
+			<li><a href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp; [[[Login]]]</a></li>
+}
+			</ul>
+			<div id="rights">
+				<img width="50" height="60" src="~/Content/miniLogo.png" />
+				<p>.:myfoodapphub is licensed under a GPLv3:.</p>
+			</div>
+		</div>
+	</div><!--close left column-->
+	<div id="main-section" class="col-md-12 column">
+		<!--open main column-->
+		@RenderBody()
+	</div><!--close main column-->
+	@*</div><!--close row-->
+		</div><!--close container-->*@
+			<script>
+				$(document).ready(function () {
+					$('[data-toggle=offcanvas]').click(function () {
+						$('.row-offcanvas').toggleClass('active');
+					});
+				});
+			</script>
+			<style type="text/css">
+				@@media screen and (max-width: 480px) {
+					#rights {
+						visibility: hidden;
+						display: none;
+					}
+				}
+
+				a:link {
+					color: #ffffff;
+				}
+				/* normal link */
+				a:visited {
+					color: #ffffff;
+				}
+				/* visited link */
+				a:hover {
+					color: #ffffff;
+				}
+				/* mouse over link */
+				a:active {
+					color: #ffffff;
+				}
+				/* selected link */
+			</style>
 </body>
 </html>

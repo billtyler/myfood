@@ -67,16 +67,50 @@ namespace myfoodapp.Hub.Controllers
             {
                 var currentProductionUnits = db.ProductionUnits.Include(p => p.owner.user)
                                                .Where(p => p.owner.user.UserName == currentUser).ToList();
-                if (currentProductionUnits != null)
+
+				if (currentProductionUnits != null)
                 {
-                    return RedirectToAction("Details", "ProductionUnits", new { Id = currentProductionUnits.FirstOrDefault().Id });
+					if (isAdmin)
+						return RedirectToAction("Details", "ProductionUnits", new { Id = currentProductionUnits.FirstOrDefault().Id });
+					else
+						return RedirectToAction("UserUnit", "ProductionUnits");
                 }
                 else
                     return View("Home");
             }
         }
 
-        [Authorize]
+		[Authorize]
+		public ActionResult UserUnit()
+		{
+			ViewBag.DisplayManagementBtn = "None";
+
+			var currentUser = this.User.Identity.GetUserName();
+			var userId = UserManager.FindByName(currentUser).Id;
+			var isAdmin = this.UserManager.IsInRole(userId, "Admin");
+			if (isAdmin)
+				ViewBag.DisplayManagementBtn = "All";
+			else
+			{
+				ApplicationDbContext db = new ApplicationDbContext();
+
+				var userProductionUnit = db.ProductionUnits.Include(p => p.owner.user).Where(p => p.owner.user.UserName == currentUser).ToList().FirstOrDefault();
+
+
+				ViewBag.CurrentUser = userProductionUnit.Id;
+
+				if (userProductionUnit != null && userProductionUnit.owner.user.UserName == currentUser)
+				{
+					ViewBag.DisplayManagementBtn = "All";
+				}
+			}
+			ViewBag.Title = "Production Unit Detail Page";
+
+			return View();
+		}
+
+
+		[Authorize]
         public ActionResult Details(int id)
         {
             ViewBag.DisplayManagementBtn = "None";
@@ -84,22 +118,24 @@ namespace myfoodapp.Hub.Controllers
             var currentUser = this.User.Identity.GetUserName();
             var userId = UserManager.FindByName(currentUser).Id;
             var isAdmin = this.UserManager.IsInRole(userId, "Admin");
-
-            if (isAdmin)
+			
+			if (isAdmin)
                 ViewBag.DisplayManagementBtn = "All";
             else
             {
                 ApplicationDbContext db = new ApplicationDbContext();
-                var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user).Where(p => p.Id == id).FirstOrDefault();
+				
+				var currentProductionUnit = db.ProductionUnits.Include(p => p.owner.user).Where(p => p.Id == id).FirstOrDefault();
+				
+
                 if(currentProductionUnit != null && currentProductionUnit.owner.user.UserName == currentUser)
                 {
                     ViewBag.DisplayManagementBtn = "All";
                 }
             }
-
             ViewBag.Title = "Production Unit Detail Page";
 
-            return View();
+			return View();
         }
 
         [Authorize]
