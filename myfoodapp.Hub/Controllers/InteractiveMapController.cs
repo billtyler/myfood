@@ -258,8 +258,8 @@ namespace myfoodapp.Hub.Controllers
             statusList.Add(new NewPieModel() { name = "[[[Setup Planned]]]", y = setupPlannedCount });
             statusList.Add(new NewPieModel() { name = "[[[Up & Running]]]", y = upRunningCount });
             statusList.Add(new NewPieModel() { name = "[[[On Maintenance]]]", y = onMaintenanceCount });
-            statusList.Add(new NewPieModel() { name = "[[[Stopped]]]", y = stoppedCount });
-            statusList.Add(new NewPieModel() { name = "[[[Offline]]]", y = offineCount });
+            //statusList.Add(new NewPieModel() { name = "[[[Stopped]]]", y = stoppedCount });
+            //statusList.Add(new NewPieModel() { name = "[[[Offline]]]", y = offineCount });
             return Json(statusList);
         }
     }

@@ -1,18 +1,14 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using myfoodapp.Hub.Models;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Security;
-using System.Data.Entity;
-using System.Linq;
-using System.Globalization;
-using System.Threading;
 
 namespace myfoodapp.Hub.Controllers
-{   
+{
     [Authorize]
     public class AccountController : Controller
     {        
