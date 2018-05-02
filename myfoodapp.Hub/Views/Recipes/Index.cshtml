@@ -67,10 +67,9 @@
                     var rec_img = item.isRecommended ? "<img class='rec-img' src='/Content/Pictures/Recipes/recommended.png'/>" : "";
                     var gardeningType;
                     if (item.gardeningType.name == "All") {
-                        gardeningType = "<img class=gardeningType src=/Content/Pictures/GardeningType/gardeningPermacultureBed.png />" +
-                            "<img class=gardeningType src=/Content/Pictures/GardeningType/gardeningZipgrowTower.png />" +
-                            "<img class=gardeningType src=/Content/Pictures/GardeningType/gardeningTowerGarden.png />" +
-                            "<img class=gardeningType src=/Content/Pictures/GardeningType/gardeningFishTank.png />";
+						gardeningType = "<img class=gardeningType src=/Content/Pictures/GardeningType/aerospring.svg />" +
+							"<img class=gardeningType src=/Content/Pictures/GardeningType/zipgrow.svg />" +
+							"<img class=gardeningType src=/Content/Pictures/GardeningType/perma.svg />";
                     }
                     else {
                         gardeningType = "<img class=gardeningType src=/Content/Pictures/GardeningType/" + item.gardeningType.imagePath + " />";
