@@ -405,7 +405,8 @@ namespace myfoodapp.Hub.Controllers
                 PioneerCitizenNumber = responseData.owner.pioneerCitizenNumber,
                 ProductionUnitStartDate = responseData.startDate,
                 ProductionUnitInfo = responseData.info,
-                ProductionUnitType = responseData.productionUnitType.imagePath,
+                ProductionUnitTypeName = responseData.productionUnitType.name,
+                ProductionUnitTypeImage = responseData.productionUnitType.imagePath,
                 ProductionUnitStatus = responseData.productionUnitStatus.name,
 
                 PhoneNumber = responseData.owner.phoneNumber == null ? "00 33 3 67 37 00 56" : responseData.owner.phoneNumber,

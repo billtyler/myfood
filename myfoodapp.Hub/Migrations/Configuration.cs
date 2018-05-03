@@ -80,12 +80,17 @@ namespace myfoodapp.Hub.Migrations
             context.SensorTypes.Add(new SensorType() { Id = 8, name = "External Air Humidity", description = "From OpenWeatherMap API" });
 
             context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 1, name = "[[[Aerospring]]]" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "[[[City]]]" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "[[[Family14]]]" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "[[[Family22]]]" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "[[[Farm]]]" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "[[[Development Kit]]]" });
-            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "[[[Custom Lab]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 2, name = "[[[City - Original]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 3, name = "[[[City - Signature]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 4, name = "[[[Family14 - Original]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 5, name = "[[[Family22 - Original]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 6, name = "[[[Family22 - Production]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 7, name = "[[[Family22 - 4 Seasons]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 8, name = "[[[Family22 - Autonomy]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 9, name = "[[[Family22 - Signature]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 10, name = "[[[Farm]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 11, name = "[[[Development Kit]]]" });
+            context.ProductionUnitTypes.Add(new ProductionUnitType() { Id = 12, name = "[[[Custom Lab]]]" });
 
             context.HydroponicTypes.Add(new HydroponicType() { Id = 1, name = "[[[Not applicable]]]" });
             context.HydroponicTypes.Add(new HydroponicType() { Id = 2, name = "[[[Bioponics]]]" });
