@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <title>myfoodpi Local Manager</title>
 
-    <link rel="icon" href="content/logoMyFoodTiny.png">
+    <link rel="icon" href="content/favicon.ico">
 
     <!-- JS -->
     <script src="js/jquery-3.2.1.min.js"></script>
@@ -190,7 +190,7 @@
           </button>
 
           <a class="navbar-image pull-left" href="/">
-              <img src="content/logoOwnFoodTiny.png"/>
+              <img src="content/logoMyFoodTiny.png"/>
           </a>
 
         </div>
@@ -336,6 +336,7 @@
 				</div>
 				<div class="gpl-text">
                     <p style="padding-top:20px">.:myfoodapp is licensed under a GPLv3:.</p>
+                    <p id="strPackageVersion"></p>
 				 </div>
 			</div>
 			<div class="footerlogo">
@@ -435,7 +436,10 @@
             xhr.onload = function (e) {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
+
                         var data = JSON.parse(xhr.responseText);
+
+                        $('#strPackageVersion').text(data.PackageVersion);
 
                         if (data.isDiagnosticModeEnable === true)
                             $('#enableDiagnosticToogle').attr('checked', true);

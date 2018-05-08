@@ -9,8 +9,8 @@ using Restup.Webserver.Models.Schemas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 
 namespace myfoodapp.WebServer
 {
@@ -166,6 +166,10 @@ namespace myfoodapp.WebServer
 
             var taskFile = Task.Run(async () => { currentUserSettings = await userSettingsModel.GetUserSettingsAsync(); });
             taskFile.Wait();
+
+            var strVersion = GetAppVersion();
+
+            currentUserSettings.PackageVersion = String.Format("v.{0}", strVersion);
 
             return new GetResponse(
               GetResponse.ResponseStatus.OK, currentUserSettings);
@@ -440,6 +444,16 @@ namespace myfoodapp.WebServer
             {
                 logModel.AppendLog(Log.CreateLog("[UTest Done] Sigfox Integration Test", Log.LogType.Information));
             }
+        }
+
+        public static string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}.{3}", version.Major, version.Minor, version.Build, version.Revision);
+
         }
 
     }

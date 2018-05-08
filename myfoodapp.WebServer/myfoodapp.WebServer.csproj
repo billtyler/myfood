@@ -120,6 +120,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Web\content\favicon.ico" />
     <Content Include="Web\content\gpl.png" />
     <Content Include="Web\content\logoMyFoodFooter.png" />
     <Content Include="Web\content\logoMyFoodTiny.png" />

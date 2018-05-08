@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web.Http;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace myfoodapp.Hub
@@ -14,8 +15,6 @@ namespace myfoodapp.Hub
 				url: "PioneerProductionSite",
 				defaults: new { controller = "ProductionUnits", action = "UserUnit" }
 				);
-			
-			
 
 			routes.MapRoute(
                 name: "Default",
@@ -23,7 +22,6 @@ namespace myfoodapp.Hub
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
-
-		}
+        }
     }
 }

@@ -13,5 +13,6 @@
         public string hubMessageAPI { get; set; }
         public string SSID { get; set; }
         public string ACCESS_POINT_PWD { get; set; }
+        public string PackageVersion { get; set; }
     }
 }

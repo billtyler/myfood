@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using myfoodapp.Hub.App_Start;
 using myfoodapp.Hub.Business;
 using myfoodapp.Hub.Common;
 using myfoodapp.Hub.Models;
@@ -30,6 +31,8 @@ namespace myfoodapp.Hub
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             // Disable the HTTP Header X-Frame-Options: SAMEORIGIN
             AntiForgeryConfig.SuppressXFrameOptionsHeader = true;
+            //Enable JSONP
+            FormatterConfig.RegisterFormatters(GlobalConfiguration.Configuration.Formatters);
 
             GlobalConfiguration.Configuration.MessageHandlers.Add(new AuthorizationHeaderHandler());
 
