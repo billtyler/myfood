@@ -73,7 +73,9 @@ namespace myfoodapp.Hub.Controllers
 					if (isAdmin)
 						return RedirectToAction("Details", "ProductionUnits", new { Id = currentProductionUnits.FirstOrDefault().Id });
 					else
+					{
 						return RedirectToAction("UserUnit", "ProductionUnits");
+					}
                 }
                 else
                     return View("Home");
@@ -104,6 +106,7 @@ namespace myfoodapp.Hub.Controllers
 					ViewBag.DisplayManagementBtn = "All";
 				}
 			}
+			
 			ViewBag.Title = "Production Unit Detail Page";
 
 			return View();
