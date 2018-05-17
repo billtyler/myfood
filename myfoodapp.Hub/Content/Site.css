@@ -43,7 +43,41 @@ body,
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face {
+	font-family: 'Roboto-Thin';
+	src: url('/fonts/Roboto-Light.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
 
+@font-face {
+	font-family: 'AktivGroteskBold';
+	src: url('/fonts/AktivGroteskBold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Roboto-Bold';
+	src: url('/fonts/Roboto-Bold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Roboto-Regular';
+	src: url('/fonts/Roboto-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'Roboto-Light';
+	src: url('/fonts/Roboto-Light.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
 [class^="icon-"], [class*=" icon-"] {
 	font-family: 'icomoon';
 	speak: none;
@@ -52,7 +86,6 @@ body,
 	font-variant: normal;
 	text-transform: none;
 	line-height: 1;
-
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
@@ -97,33 +130,41 @@ body,
 /* Nav section */
 #nav-section{    
   height:100%;
-  background-color: #35373d;
-  width: 220px;
+  width: 300px;
   float: left;
+  background-color: #EDE6DB;
 }
 
 #nav-section li {
-    border-bottom: 1px solid #4a4b51;
+	font-family: Roboto-Bold;
+	font-weight: 900;
     white-space:nowrap;
     font-size: 11px; 
     line-height: 11px; 
 }
-
-#nav-section li a {
-    color: #b8bbc2;
-    text-transform: uppercase;
-    text-decoration: none;
-    margin-left: 1em;
-    font-size: 12px;
-    padding: 3em 1.2em;
+#nav-section ul{
+	margin-top: 100px;
 }
+	#nav-section li a {
+		color: currentColor;
+		text-decoration: none;
+		font-weight:600;
+		
+			margin-left: 1em;
+		font-size: 16px;
+		padding: 1.3em 1.2em;
+	}
 
 #nav-section li:hover {
-    background-color: #212329; 
+	color:#2ea636;
+}
+
+#nav-section li {
+	color:#939393;
 }
 
 #nav-section li.active {
-    background-color: #0d1016;
+	color: #2ea636;
 }
 
 .nav > li > a:hover, 
@@ -132,9 +173,9 @@ body,
 }
 
 #dash-logo {
-    color: #fff;
-    background-color: #018001;
-    text-align: center;
+	color: #fff;
+	background-color: #2EA636;
+	text-align: center;
 }
 
 #sidebar-nav{
@@ -183,16 +224,53 @@ a.k-grid-filter {
 }
 
 #title {
-    padding-left: 30px !important;
+    padding-left: 100px !important;
+
+}
+
+#title-buttons {
+	line-height: 120px;
+	text-align: center;
+}
+.btn-green:hover{
+	color: white;
+}
+
+.btn-green-sm,
+.btn-green {
+	border: 2px solid #2EA636;
+	background-color: #2EA636;
+	border-radius: 15px 15px;
+	color: white;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.btn-green-sm {
+	border-radius: 20px 20px;
+	padding: 0.6em 1em;
+}
+.btn-transparent {
+	background-color: transparent;
+	border: 2px solid #2EA636;
+	border-radius: 15px 15px;
+	color: #707070;
+	width: 120px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.btn-transparent:hover {
+	color: #707070;
 }
 
 #dash-logo,
 #main-section-header > h2 {
-    font-size: 30px;
-    text-transform: uppercase;
-    line-height: 63px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+	font-size: 36px;
+	line-height: 63px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+	color: #707070;
+	font-family: 'Roboto-Thin';
 }
 
 #main-section-header > h2 {
@@ -381,7 +459,6 @@ a.k-grid-filter {
     .column {
         height: auto;
     }
-
     #title {
         padding-left: 0px !important;
     }
@@ -458,7 +535,12 @@ a.k-grid-filter {
         display: none;
     }
 }
-
+@media (max-width: 991px){
+	#title{
+		text-align: center;
+		padding-left: 0 !important;
+	}
+}
 /* custom */
 @media screen and (min-width: 525px) and (max-width: 557px) {
     #employee-list h3 {
@@ -485,7 +567,11 @@ a.k-grid-filter {
     }
 }
 
-@media screen and (min-width: 768px) and (max-width:1204px) {
+@media screen and (max-width: 768px) {
+
+	#nav-section ul {
+		margin-top: 0;
+	}
    
 }
 
@@ -503,7 +589,7 @@ a.k-grid-filter {
 @media screen and (max-width: 863px) {
    #main-section-header h2 {
        padding-right: 0;
-       font-size: 20px;
+       font-size: 30px;
     }
 }
 
@@ -516,10 +602,9 @@ a.k-grid-filter {
         font-size: 24px;
     }
 }
-
 @media screen and (min-width: 863px) and (max-width:1040px)  { 
     #main-section-header h2 {
-        font-size: 14px;
+        font-size: 30px;
     }
 }
 
@@ -607,3 +692,132 @@ a.k-grid-filter {
     clear:both;
     display: block;
 }
+
+
+.nav svg {
+	width: 25px;
+}
+
+.nav svg {
+	margin-right: 15px;
+}
+
+li [class*="cls"] {
+	fill: #707070;
+}
+
+li a:hover [class*="cls"] {
+	fill: #2ea636;
+}
+li.active [class*="cls"] {
+	fill: #2ea636;
+}
+
+  .menu-item{
+	  display: flex !important;
+  }
+  .menu-img,
+  .menu-text {
+    display: flex;
+  }
+  .menu-img,
+  .menu-text {
+    align-items: center;
+  }
+
+#performanceModal a {
+	color: #6C7A73;
+}
+
+#performanceModal .modal-dialog {
+	z-index: 10000;
+	max-width: 500px;
+	color: #707070;
+}
+
+#performanceModal .modal-content {
+	border: 0;
+	border-radius: 22px;
+	font-family: Roboto-Regular;
+	font-size: 14px;
+}
+.pl-pr-0{
+	padding-left:0;
+	padding-right:0;
+}
+#performanceModal .modal-header {
+	border: 0;
+	padding: 0;
+}
+
+#performanceModal .modal-body {
+	padding: 40px;
+}
+
+#performanceModal .company-logo .img-responsive{
+	max-width: 60%;
+
+}
+
+#performanceModal .modal-footer {
+	border: 0;
+	background: url('/Content/images/footer-dots.png') repeat-x;
+}
+
+
+	#performanceModal .modal-footer .btn-link {
+		color: #6C7A73;
+		outline: none;
+	}
+
+#performanceModal .image-container img {
+	border-radius: 22px 22px 0 0;
+}
+
+#performanceModal .company-logo {
+	margin-bottom: 15px;
+}
+
+#performanceModal .contacts .title {
+	text-align: center;
+	font-size: 18px;
+	font-weight: 900;
+	color: #2EA636;
+	margin-bottom: 5px;
+}
+
+#performanceModal .contacts ul {
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+	#performanceModal .contacts ul li {
+		list-style: none;
+		margin-bottom: 5px;
+	}
+
+		#performanceModal .contacts ul li a {
+			text-decoration: underline;
+		}
+
+			#performanceModal .contacts ul li a:hover {
+				text-decoration: none;
+			}
+
+#performanceModal .performance-box .title {
+	text-align: center;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+#performanceModal .performance-box .stats {
+	padding: 10px;
+	text-align: center;
+	font-size: 12px;
+}
+
+	#performanceModal .performance-box .stats span {
+		font-size: 27px;
+		line-height: 38px;
+		color: #2EA636;
+	}

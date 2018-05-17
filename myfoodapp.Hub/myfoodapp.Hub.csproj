@@ -481,7 +481,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cluster.css" />
     <Content Include="Content\images\close.png" />
+    <Content Include="Content\images\dots_anim.svg" />
+    <Content Include="Content\images\footer-dots.png" />
     <Content Include="Content\images\loading.gif" />
+    <Content Include="Content\images\myfood-logo.svg" />
     <Content Include="Content\images\next.png" />
     <Content Include="Content\images\prev.png" />
     <Content Include="Content\images\sprite.png" />
@@ -905,7 +908,9 @@
     <Content Include="Content\kendo\Flat\sprite_kpi.png" />
     <Content Include="Content\kendo\Flat\sprite_kpi_2x.png" />
     <Content Include="Content\kendo\fonts\DejaVu\LICENSE.txt" />
-    <Content Include="Content\kendo\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="Content\kendo\fonts\glyphs\KendoUIGlyphs.svg">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Content\kendo\HighContrast\editor.png" />
     <Content Include="Content\kendo\HighContrast\imagebrowser.png" />
     <Content Include="Content\kendo\HighContrast\indeterminate.gif" />
@@ -1521,6 +1526,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="fonts\Berthold-Akzidenz-Grotesk-Bold.otf" />
+    <Content Include="fonts\Roboto-Thin.ttf" />
+    <Content Include="fonts\Roboto-Light.ttf" />
+    <Content Include="fonts\Roboto-Bold.ttf" />
+    <Content Include="fonts\AktivGroteskBold.ttf" />
+    <Content Include="fonts\Roboto-Regular.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\myfoodapphub - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />

@@ -375,7 +375,6 @@ namespace myfoodapp.Hub.Controllers
         public ActionResult GetProductionUnitDetailPopUp(int id)
         {
             var db = new ApplicationDbContext();
-            
 
             var responseData = db.ProductionUnits.Where(p => p.Id == id)
                                          .Include(p => p.owner.preferedMoment)
