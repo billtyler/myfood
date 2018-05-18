@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-05-18 23:24+02:00\n"
+"POT-Creation-Date: 2018-05-19 01:36+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: Views\About\Index.cshtml:8
 #: Views\Shared\_Layout.cshtml:220
 #: obj\Release\Package\PackageTmp\Views\About\Index.cshtml:8
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:197
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:220
 msgid "About"
 msgstr ""
 
@@ -727,7 +727,7 @@ msgid "Log in"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:242
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:216
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:242
 msgid "Log off"
 msgstr ""
 
@@ -739,7 +739,7 @@ msgid "Log your Actions / Events here"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:260
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:232
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:260
 msgid "Login"
 msgstr ""
 
@@ -824,7 +824,7 @@ msgid "May"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:119
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:110
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:119
 msgid "Measures"
 msgstr ""
 
@@ -843,7 +843,7 @@ msgid "message type"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:91
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:84
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:91
 msgid "Messages"
 msgstr ""
 
@@ -875,7 +875,7 @@ msgstr ""
 #: Views\MyInfo\Update.cshtml:44
 #: Views\Shared\_Layout.cshtml:197
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:180
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:197
 msgid "My Information"
 msgstr ""
 
@@ -959,7 +959,6 @@ msgstr ""
 msgid "Onboard touchscreen"
 msgstr ""
 
-#: Views\ProductionUnits\Details.cshtml:936
 #: Views\ProductionUnits\UserUnit.cshtml:936
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:936
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\UserUnit.cshtml:936
@@ -1059,7 +1058,7 @@ msgid "PERFORMANCE"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:157
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:144
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:157
 msgid "Performance &amp; Health"
 msgstr ""
 
@@ -1162,7 +1161,7 @@ msgid "Production Unit Owner already in use"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:138
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:127
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:138
 msgid "Production Units"
 msgstr ""
 
@@ -1185,7 +1184,7 @@ msgstr ""
 #: Views\Recipes\Index.cshtml:15
 #: Views\Shared\_Layout.cshtml:177
 #: obj\Release\Package\PackageTmp\Views\Recipes\Index.cshtml:15
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:162
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:177
 msgid "Recipes"
 msgstr ""
 
@@ -1241,6 +1240,10 @@ msgstr ""
 
 #: Migrations\Configuration.cs:145
 msgid "Sigfox connectivity kit"
+msgstr ""
+
+#: Views\ProductionUnits\Details.cshtml:936
+msgid "SINCE"
 msgstr ""
 
 #: Migrations\Configuration.cs:139
@@ -1341,7 +1344,7 @@ msgid "user"
 msgstr ""
 
 #: Views\Shared\_Layout.cshtml:67
-#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:63
+#: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:67
 msgid "User Management"
 msgstr ""
 

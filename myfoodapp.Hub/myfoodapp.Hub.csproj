@@ -1233,6 +1233,7 @@
     <Content Include="Content\Pictures\Sites\GrenobleFamily14.jpg" />
     <Content Include="Content\Pictures\Sites\GrosbuschFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\GuerpontFamily22.jpg" />
+    <Content Include="Content\Pictures\Sites\HambachFamilySignature.jpg" />
     <Content Include="Content\Pictures\Sites\HertainFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\HouillesFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\LaChapelleFamily22.jpg" />
@@ -1255,6 +1256,7 @@
     <Content Include="Content\Pictures\Sites\OberpallenFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\OuzoueFamily22.JPG" />
     <Content Include="Content\Pictures\Sites\PavillyFamily22.JPG" />
+    <Content Include="Content\Pictures\Sites\RemillyFamilyProduction.jpg" />
     <Content Include="Content\Pictures\Sites\RoeselareFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\RontignonFamily22.jpg" />
     <Content Include="Content\Pictures\Sites\RoquebruneFamily22.jpg" />
