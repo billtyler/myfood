@@ -755,7 +755,8 @@ li.active [class*="cls"] {
 }
 
 #performanceModal .company-logo .img-responsive{
-	max-width: 60%;
+	max-width: 50%;
+	margin: auto;
 
 }
 
@@ -821,3 +822,7 @@ li.active [class*="cls"] {
 		line-height: 38px;
 		color: #2EA636;
 	}
+	#performanceModal .company-name{
+		text-align: center;
+	}
+
