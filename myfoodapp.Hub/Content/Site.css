@@ -753,11 +753,16 @@ li.active [class*="cls"] {
 #performanceModal .modal-body {
 	padding: 40px;
 }
-
 #performanceModal .company-logo .img-responsive{
 	max-width: 50%;
 	margin: auto;
 
+}
+@media (max-width: 768px) {
+	#performanceModal .company-logo .img-responsive {
+		max-width: 30%;
+		margin: auto;
+	}
 }
 
 #performanceModal .modal-footer {

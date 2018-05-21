@@ -32,39 +32,46 @@
     <link rel="manifest" href="~/manifest.txt">
 </head>
 <body>
-    @using Microsoft.AspNet.Identity
-  
-    <!-- End Google Tag Manager -->
-    @*<div class="container-fluid" style="background-color:aqua">
+	@using Microsoft.AspNet.Identity
 
-        <!--open container-->
-        <div  class="row row-offcanvas row-offcanvas-left" style="background-color:orangered">
-            <!--open row-->*@
-    <div id="nav-section" class="col-md-12 column">
-        <!--open nav column-->
-        <div class="navbar-default">
-            <button id="toggle-button" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <h1 id="dash-logo" class="center-block" style="font-size: 20px">
-            <a href="@(Url.Action("Index", "Home"))">
-                <img height="60" src="~/Content/images/myfood-logo.svg" />
-            </a>
-        </h1>
-        <div class="collapse navbar-collapse" id="sidebar-nav" role="navigation">
+	<!-- End Google Tag Manager -->
+	@*<div class="container-fluid" style="background-color:aqua">
+
+		<!--open container-->
+		<div  class="row row-offcanvas row-offcanvas-left" style="background-color:orangered">
+			<!--open row-->*@
+	<div id="nav-section" class="col-md-12 column">
+		<!--open nav column-->
+		<div class="navbar-default">
+			<button id="toggle-button" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+		<h1 id="dash-logo" class="center-block" style="font-size: 20px">
+			<a href="@(Url.Action("Index", "Home"))">
+				<img height="60" src="~/Content/images/myfood-logo.svg" />
+			</a>
+		</h1>
+		<div class="collapse navbar-collapse" id="sidebar-nav" role="navigation">
 			<ul class="nav">
+
 				@if (Request.IsAuthenticated)
 				{
+
+
+
 					@*if (User.IsInRole("Admin"))
-					{
-						<li><a href="@(Url.Action("Index", "Admin"))"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; [[[User Management]]]</a></li>
-					}*@
-					if (User.IsInRole("Admin"))
-					{
-						<li><a class="menu-item" href="@(Url.Action("Index", "Messages"))">
+						{
+							<li><a href="@(Url.Action("Index", "Admin"))"><i class="fa fa-address-card" aria-hidden="true"></i>&nbsp; [[[User Management]]]</a></li>
+						}*@
+				var manager = new UserManager<myfoodapp.Hub.Models.ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<myfoodapp.Hub.Models.ApplicationUser>(new myfoodapp.Hub.Models.ApplicationDbContext()));
+				var user = manager.FindByName(User.Identity.GetUserName());
+				if (user != null && manager.IsInRole(user.Id, "Admin"))
+				{
+						<li>
+							<a class="menu-item" href="@(Url.Action("Index", "Messages"))">
 								<div class="menu-img">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.286 22.218">
 										<defs>
@@ -79,12 +86,14 @@
 											<path id="Fill_323" data-name="Fill 323" class="cls-2" d="M2.343,1.157A1.165,1.165,0,0,1,1.172,2.314,1.165,1.165,0,0,1,0,1.157,1.165,1.165,0,0,1,1.172,0,1.165,1.165,0,0,1,2.343,1.157" transform="translate(5.223 8.707)" />
 										</g>
 									</svg>
-									</div>
+								</div>
 								<div class="menu-text">
 									[[[Messages]]]
 								</div>
-</a></li>
-						<li><a class="menu-item" href="@(Url.Action("Index", "Measures"))">
+							</a>
+						</li>
+						<li>
+							<a class="menu-item" href="@(Url.Action("Index", "Measures"))">
 								<div class="menu-img">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.286 20.286">
 										<defs>
@@ -109,8 +118,10 @@
 								<div class="menu-text">
 									[[[Measures]]]
 								</div>
-								</a></li>
-						<li><a class="menu-item" href="@(Url.Action("Index", "ProductionUnits"))">
+							</a>
+						</li>
+						<li>
+							<a class="menu-item" href="@(Url.Action("Index", "ProductionUnits"))">
 								<div class="menu-img">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.286 20.286">
 										<defs>
@@ -126,8 +137,10 @@
 								<div class="menu-text">
 									[[[Production Units]]]
 								</div>
-							</a></li>
-						<li><a class="menu-item" href="@(Url.Action("Index", "PerformanceHealth"))">
+							</a>
+						</li>
+						<li>
+							<a class="menu-item" href="@(Url.Action("Index", "PerformanceHealth"))">
 								<div class="menu-img">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.286 18.354">
 										<defs>
@@ -143,9 +156,11 @@
 								<div class="menu-text">
 									[[[Performance &amp; Health]]]
 								</div>
-							</a></li>
+							</a>
+						</li>
 					}
-					<li><a class="menu-item" href="@(Url.Action("Index", "Recipes"))">
+					<li>
+						<a class="menu-item" href="@(Url.Action("Index", "Recipes"))">
 							<div class="menu-img">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.286 16.66">
 									<defs>
@@ -161,8 +176,10 @@
 							<div class="menu-text">
 								[[[Recipes]]]
 							</div>
-						</a></li>
-					<li><a class="menu-item" href="@(Url.Action("Update", "MyInfo"))">
+						</a>
+					</li>
+					<li>
+						<a class="menu-item" href="@(Url.Action("Update", "MyInfo"))">
 							<div class="menu-img">
 								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.286 20.286">
 									<defs>
@@ -178,61 +195,73 @@
 								</svg>
 							</div>
 							<div class="menu-text">[[[My Information]]]</div>
-						</a></li>
+						</a>
+					</li>
 				}
 
-				@if (User.IsInRole("Admin"))
+				@if (Request.IsAuthenticated)
 				{
-				<li id="About"><a class="menu-item" href="@(Url.Action("Index", "About"))">
-								   <div class="menu-img">
-								   	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
-								   		<defs>
-								   		</defs>
-								   		<path id="Path_43" data-name="Path 43" class="cls-1" d="M0,2.1V18.9A2.1,2.1,0,0,0,2.1,21H18.9A2.1,2.1,0,0,0,21,18.9V2.1A2.1,2.1,0,0,0,18.9,0H2.1A2.1,2.1,0,0,0,0,2.1Zm17.85,16.8H3.146A1.051,1.051,0,0,1,2.1,17.85V3.15A1.051,1.051,0,0,1,3.146,2.1h14.7A1.051,1.051,0,0,1,18.9,3.15v14.7A1.051,1.051,0,0,1,17.846,18.9ZM6.062,5.25A1.051,1.051,0,0,1,7.113,4.2h6A1.588,1.588,0,0,1,14.7,5.787V8.4a2.106,2.106,0,0,1-2.1,2.1H11.03a.535.535,0,0,0-.535.535v1.053a1.05,1.05,0,1,1-2.1,0V10.266A1.866,1.866,0,0,1,10.262,8.4h1.05a1.05,1.05,0,0,0,0-2.1h-4.2A1.051,1.051,0,0,1,6.062,5.25Zm4.2,9.987a1.05,1.05,0,1,1-1.049-1.049A1.05,1.05,0,0,1,10.262,15.237Z" transform="translate(0.004)" />
-								   	</svg>
+					var manager = new UserManager<myfoodapp.Hub.Models.ApplicationUser>(new Microsoft.AspNet.Identity.EntityFramework.UserStore<myfoodapp.Hub.Models.ApplicationUser>(new myfoodapp.Hub.Models.ApplicationDbContext()));
+					var user = manager.FindByName(User.Identity.GetUserName());
+					if (user != null && manager.IsInRole(user.Id, "Admin"))
+					{
+						<li id="About">
+							<a class="menu-item" href="@(Url.Action("Index", "About"))">
+								<div class="menu-img">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
+										<defs>
+										</defs>
+										<path id="Path_43" data-name="Path 43" class="cls-1" d="M0,2.1V18.9A2.1,2.1,0,0,0,2.1,21H18.9A2.1,2.1,0,0,0,21,18.9V2.1A2.1,2.1,0,0,0,18.9,0H2.1A2.1,2.1,0,0,0,0,2.1Zm17.85,16.8H3.146A1.051,1.051,0,0,1,2.1,17.85V3.15A1.051,1.051,0,0,1,3.146,2.1h14.7A1.051,1.051,0,0,1,18.9,3.15v14.7A1.051,1.051,0,0,1,17.846,18.9ZM6.062,5.25A1.051,1.051,0,0,1,7.113,4.2h6A1.588,1.588,0,0,1,14.7,5.787V8.4a2.106,2.106,0,0,1-2.1,2.1H11.03a.535.535,0,0,0-.535.535v1.053a1.05,1.05,0,1,1-2.1,0V10.266A1.866,1.866,0,0,1,10.262,8.4h1.05a1.05,1.05,0,0,0,0-2.1h-4.2A1.051,1.051,0,0,1,6.062,5.25Zm4.2,9.987a1.05,1.05,0,1,1-1.049-1.049A1.05,1.05,0,0,1,10.262,15.237Z" transform="translate(0.004)" />
+									</svg>
 
 
-								   </div>
-								   <div class="menu-text">
-								   		[[[About]]]
-								   </div>
-								 </a></li>
+								</div>
+								<div class="menu-text">
+									[[[About]]]
+								</div>
+							</a>
+						</li>
+					}
 				}
 
 				@if (Request.IsAuthenticated)
 				{
 					using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "nav" }))
-				{
-			@Html.AntiForgeryToken()
-			<li><a class="menu-item" href="javascript:document.getElementById('logoutForm').submit()">
-					<div class="menu-img">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
-							<defs>
-							</defs>
-							<path id="Path_42" data-name="Path 42" class="cls-1" d="M1.859,21H8.625a1.866,1.866,0,0,0,1.867-1.866V17.842A1.043,1.043,0,0,0,9.449,16.8H9.435a1.043,1.043,0,0,0-1.043,1.043v.015A1.042,1.042,0,0,1,7.349,18.9H3.135a1.042,1.042,0,0,1-1.043-1.042V3.142A1.043,1.043,0,0,1,3.135,2.1H7.349A1.043,1.043,0,0,1,8.392,3.142v.014A1.043,1.043,0,0,0,9.435,4.2h.015a1.043,1.043,0,0,0,1.043-1.043V1.866A1.867,1.867,0,0,0,8.625,0H1.859A1.867,1.867,0,0,0-.008,1.866V19.133A1.866,1.866,0,0,0,1.859,21Zm12.126-6.012,0,0a1.043,1.043,0,0,0,.052-1.478l-1-1.073a.525.525,0,0,1,.384-.883h6.522a1.05,1.05,0,0,0,1.05-1.051h0a1.049,1.049,0,0,0-1.05-1.049H13.435a.525.525,0,0,1-.381-.888L14.03,7.54a1.043,1.043,0,0,0-.041-1.481h0a1.043,1.043,0,0,0-1.472.045L9.694,9.094A2.1,2.1,0,0,0,9.7,11.985l2.82,2.956A1.043,1.043,0,0,0,13.985,14.987Z" transform="translate(0.008 0.001)" />
-						</svg>
-					</div>
-					<div class="menu-text">
-						[[[Log off]]]
-					</div>
+					{
+						@Html.AntiForgeryToken()
+						<li>
+							<a class="menu-item" href="javascript:document.getElementById('logoutForm').submit()">
+								<div class="menu-img">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
+										<defs>
+										</defs>
+										<path id="Path_42" data-name="Path 42" class="cls-1" d="M1.859,21H8.625a1.866,1.866,0,0,0,1.867-1.866V17.842A1.043,1.043,0,0,0,9.449,16.8H9.435a1.043,1.043,0,0,0-1.043,1.043v.015A1.042,1.042,0,0,1,7.349,18.9H3.135a1.042,1.042,0,0,1-1.043-1.042V3.142A1.043,1.043,0,0,1,3.135,2.1H7.349A1.043,1.043,0,0,1,8.392,3.142v.014A1.043,1.043,0,0,0,9.435,4.2h.015a1.043,1.043,0,0,0,1.043-1.043V1.866A1.867,1.867,0,0,0,8.625,0H1.859A1.867,1.867,0,0,0-.008,1.866V19.133A1.866,1.866,0,0,0,1.859,21Zm12.126-6.012,0,0a1.043,1.043,0,0,0,.052-1.478l-1-1.073a.525.525,0,0,1,.384-.883h6.522a1.05,1.05,0,0,0,1.05-1.051h0a1.049,1.049,0,0,0-1.05-1.049H13.435a.525.525,0,0,1-.381-.888L14.03,7.54a1.043,1.043,0,0,0-.041-1.481h0a1.043,1.043,0,0,0-1.472.045L9.694,9.094A2.1,2.1,0,0,0,9.7,11.985l2.82,2.956A1.043,1.043,0,0,0,13.985,14.987Z" transform="translate(0.008 0.001)" />
+									</svg>
+								</div>
+								<div class="menu-text">
+									[[[Log off]]]
+								</div>
 
-</a></li>
-}
-}
-else
-{
-			<li><a class="menu-item" href="@Url.Action("Login", "Account")">
-				<div class="menu-img"></div>
-				<div class="menu-text">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
-						<defs>
-						</defs>
-						<path id="Path_42" data-name="Path 42" class="cls-1" d="M1.859,21H8.625a1.866,1.866,0,0,0,1.867-1.866V17.842A1.043,1.043,0,0,0,9.449,16.8H9.435a1.043,1.043,0,0,0-1.043,1.043v.015A1.042,1.042,0,0,1,7.349,18.9H3.135a1.042,1.042,0,0,1-1.043-1.042V3.142A1.043,1.043,0,0,1,3.135,2.1H7.349A1.043,1.043,0,0,1,8.392,3.142v.014A1.043,1.043,0,0,0,9.435,4.2h.015a1.043,1.043,0,0,0,1.043-1.043V1.866A1.867,1.867,0,0,0,8.625,0H1.859A1.867,1.867,0,0,0-.008,1.866V19.133A1.866,1.866,0,0,0,1.859,21Zm12.126-6.012,0,0a1.043,1.043,0,0,0,.052-1.478l-1-1.073a.525.525,0,0,1,.384-.883h6.522a1.05,1.05,0,0,0,1.05-1.051h0a1.049,1.049,0,0,0-1.05-1.049H13.435a.525.525,0,0,1-.381-.888L14.03,7.54a1.043,1.043,0,0,0-.041-1.481h0a1.043,1.043,0,0,0-1.472.045L9.694,9.094A2.1,2.1,0,0,0,9.7,11.985l2.82,2.956A1.043,1.043,0,0,0,13.985,14.987Z" transform="translate(0.008 0.001)" />
-					</svg>
-					[[[Login]]]
-				</div>
-				</a></li>
-}
+							</a>
+						</li>
+					}
+				}
+				else
+				{
+					<li>
+						<a class="menu-item" href="@Url.Action("Login", "Account")">
+							<div class="menu-img"></div>
+							<div class="menu-text">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21">
+									<defs>
+									</defs>
+									<path id="Path_42" data-name="Path 42" class="cls-1" d="M1.859,21H8.625a1.866,1.866,0,0,0,1.867-1.866V17.842A1.043,1.043,0,0,0,9.449,16.8H9.435a1.043,1.043,0,0,0-1.043,1.043v.015A1.042,1.042,0,0,1,7.349,18.9H3.135a1.042,1.042,0,0,1-1.043-1.042V3.142A1.043,1.043,0,0,1,3.135,2.1H7.349A1.043,1.043,0,0,1,8.392,3.142v.014A1.043,1.043,0,0,0,9.435,4.2h.015a1.043,1.043,0,0,0,1.043-1.043V1.866A1.867,1.867,0,0,0,8.625,0H1.859A1.867,1.867,0,0,0-.008,1.866V19.133A1.866,1.866,0,0,0,1.859,21Zm12.126-6.012,0,0a1.043,1.043,0,0,0,.052-1.478l-1-1.073a.525.525,0,0,1,.384-.883h6.522a1.05,1.05,0,0,0,1.05-1.051h0a1.049,1.049,0,0,0-1.05-1.049H13.435a.525.525,0,0,1-.381-.888L14.03,7.54a1.043,1.043,0,0,0-.041-1.481h0a1.043,1.043,0,0,0-1.472.045L9.694,9.094A2.1,2.1,0,0,0,9.7,11.985l2.82,2.956A1.043,1.043,0,0,0,13.985,14.987Z" transform="translate(0.008 0.001)" />
+								</svg>
+								[[[Login]]]
+							</div>
+						</a>
+					</li>
+				}
 			</ul>
 		</div>
 	</div><!--close left column-->
@@ -242,37 +271,37 @@ else
 	</div><!--close main column-->
 	@*</div><!--close row-->
 		</div><!--close container-->*@
-			<script>
-				$(document).ready(function () {
-					$('[data-toggle=offcanvas]').click(function () {
-						$('.row-offcanvas').toggleClass('active');
-					});
-				});
-			</script>
-			<style type="text/css">
-				@@media screen and (max-width: 480px) {
-					#rights {
-						visibility: hidden;
-						display: none;
-					}
-				}
+	<script>
+		$(document).ready(function () {
+			$('[data-toggle=offcanvas]').click(function () {
+				$('.row-offcanvas').toggleClass('active');
+			});
+		});
+	</script>
+	<style type="text/css">
+		@@media screen and (max-width: 480px) {
+			#rights {
+				visibility: hidden;
+				display: none;
+			}
+		}
 
-				a:link {
-					color: #ffffff;
-				}
-				/* normal link */
-				a:visited {
-					color: #ffffff;
-				}
-				/* visited link */
-				a:hover {
-					color: #ffffff;
-				}
-				/* mouse over link */
-				a:active {
-					color: #ffffff;
-				}
-				/* selected link */
-			</style>
+		a:link {
+			color: #ffffff;
+		}
+		/* normal link */
+		a:visited {
+			color: #ffffff;
+		}
+		/* visited link */
+		a:hover {
+			color: #ffffff;
+		}
+		/* mouse over link */
+		a:active {
+			color: #ffffff;
+		}
+		/* selected link */
+	</style>
 </body>
 </html>
