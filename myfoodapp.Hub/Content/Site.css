@@ -731,7 +731,7 @@ li.active [class*="cls"] {
 
 #performanceModal .modal-dialog {
 	z-index: 10000;
-	max-width: 500px;
+	max-width: 620px;
 	color: #707070;
 }
 
@@ -783,7 +783,9 @@ li.active [class*="cls"] {
 #performanceModal .company-logo {
 	margin-bottom: 15px;
 }
-
+#performanceModal .contacts{
+	text-align: center;
+}
 #performanceModal .contacts .title {
 	text-align: center;
 	font-size: 18px;
@@ -797,19 +799,21 @@ li.active [class*="cls"] {
 	padding: 0;
 }
 
-	#performanceModal .contacts ul li {
-		list-style: none;
-		margin-bottom: 5px;
-	}
+#performanceModal .contacts ul li {
+	list-style: none;
+	margin-bottom: 5px;
+}
 
-		#performanceModal .contacts ul li a {
-			text-decoration: underline;
-		}
+#performanceModal .contacts ul li a {
+	text-decoration: underline;
+}
 
-			#performanceModal .contacts ul li a:hover {
-				text-decoration: none;
-			}
-
+#performanceModal .contacts ul li a:hover {
+	text-decoration: none;
+}
+#performanceModal .performance-box{
+	margin-top: 20px;
+}
 #performanceModal .performance-box .title {
 	text-align: center;
 	font-size: 18px;
