@@ -37,3 +37,34 @@ __Get the Production Units list:__
  __Get the Production Units measures (last 1000):__
  
  ```https://hub.myfood.eu/opendata/productionunits/{id}/measures ```
+ 
+ __Full list of Components - Bill of Materials__
+ 
+-	Raspberry Pi 3 Model B 1.00 Unit(s)
+-	EZO RTD temperature acquisition card from Atlas Scientific 1.00 Unit(s)
+-	EZO PH temperature acquisition card from Atlas Scientific 1.00 Unit(s)
+-	Atlas Scientific pH Probe 1.00 Unit(s)
+-	Atlas Scientific Water Temperature Sensor (PT1000) 1.00 Unit(s)
+-	Atlas Scientific USB isolation board 2.00 Unit(s)
+-	Temperature / Humidity Sensor (HTU21D-F I2C) 1.00 Unit(s)
+-	Battery CR2032 1.00 Unit(s)
+-	Retention pins 0.1 "36 - male right angle - 5 units 2.00 Unit(s)
+-	Clock for Raspberry RTC Zero 1.00 Unit(s)
+-	F-F Color Cable for Temp / Humidity - 300mm 4.00 Unit(s)
+-	Cable 3g 10 cm 1.00 Unit(s)
+-	Stainless steel nut (DIN 934) (4mm) 2.00 Unit(s) Labor preparation case 1.00 Unit(s)
+-	Component sensors provided by SNOC 1.00 Unit(s)
+-	SanDisk Ultra 16GB micro SDHC Memory Card (80MB / s - Class 10 FFP) 1.00 Unit(s) 
+-	SigFox communication board kit for Raspberry Pi with DIN enclosure 1.00 Unit(s)
+-	Micro USB angled 1.00 Unit(s)
+-	Electrical box - 1 row, 6 modules 1.00 Unit(s)
+-	Tube for protection (PVC - 32mm diameter - 6cm long) 1.00 Unit(s)
+-	Wago (3 x 0.08-4 mm) 2.00 Unit(s)
+-	DC-DC Regulator Converter (5-30V to 0.8-28V - 5A) 1.00 Unit(s)
+-	TF M4X35 INOX A2 DIN 963 2.00 Unit(s)
+-	DC Pump Controller 1.00 Unit(s)
+-	Cable Power Connector 1.00 Unit(s)
+-	USB joint Iso 2.00 Unit(s)
+-	Cable glands 2.00 Unit(s)
+
+ 
