@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-05-19 01:18+02:00\n"
+"POT-Creation-Date: 2018-05-23 08:54+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -960,7 +960,6 @@ msgid "Onboard touchscreen"
 msgstr ""
 
 #: Views\ProductionUnits\UserUnit.cshtml:936
-#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:936
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\UserUnit.cshtml:936
 msgid "ONLINE SINCE"
 msgstr ""
@@ -1243,6 +1242,7 @@ msgid "Sigfox connectivity kit"
 msgstr ""
 
 #: Views\ProductionUnits\Details.cshtml:936
+#: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:936
 msgid "SINCE"
 msgstr ""
 

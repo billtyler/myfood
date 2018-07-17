@@ -393,9 +393,10 @@ namespace myfoodapp.Hub.Controllers
             {
                 options.ToList().ForEach(o => { optionList += o.name + "/"; });
             }
+
             var averageMonthlyProduction = PerformanceManager.GetEstimatedMonthlyProduction(responseData.productionUnitType.Id);
             var onlineSinceWeeks = Math.Round((DateTime.Now - responseData.startDate).TotalDays / 7);
-            var averageMonthlySparedCO2 = averageMonthlyProduction * 0.3;
+            var averageMonthlySparedCO2 = PerformanceManager.GetEstimatedMonthlySparedCO2(averageMonthlyProduction);
 
             var lst = new object();
             lst = new

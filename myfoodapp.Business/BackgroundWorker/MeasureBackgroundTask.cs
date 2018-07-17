@@ -467,7 +467,7 @@ namespace myfoodapp.Business
                                 {
                                     try
                                     {
-                                        var response = await client.PostAsync(userSettings.hubMessageAPI,
+                                       var response = await client.PostAsync(userSettings.hubMessageAPI,
                                        new StringContent(JsonConvert.SerializeObject(request).ToString(),
                                        Encoding.UTF8, "application/json"));
 

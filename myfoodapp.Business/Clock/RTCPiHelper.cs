@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Devices.I2c;
 
 namespace myfoodapp.Business.Clock
@@ -63,8 +59,6 @@ namespace myfoodapp.Business.Clock
             // internal method for reading the value of a single bit within a byte
             return (value & (1 << position)) != 0;
         }
-
-
 
         /// <summary>
         /// Writes a single byte to an I2C device.
