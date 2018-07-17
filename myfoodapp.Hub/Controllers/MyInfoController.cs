@@ -54,12 +54,11 @@ namespace myfoodapp.Hub.Controllers
 
             var currentProductOwner = db.ProductionUnitOwners.Include(p => p.language)
                                                              .Where(p => p.user.UserName == currentUser).FirstOrDefault();
+			var currentLanguageId = 1;
 
-            if (currentProductOwner.language == null)
-                return View(); 
-
-            var currentLanguageId = currentProductOwner.language.Id;
-
+			if (currentProductOwner.language != null)
+              currentLanguageId = currentProductOwner.language.Id;
+			ViewBag.ReturnError = "error";
             return View(new UserViewModel() { Email = applicationUser.Email, Language = currentLanguageId });
         }
 
@@ -82,31 +81,37 @@ namespace myfoodapp.Hub.Controllers
             {
                 var applicationUser = UserManager.FindByEmail(currentUser);
 
-                if (model.Email != applicationUser.Email)
-                {
-                    applicationUser.Email = model.Email;
-                    applicationUser.UserName = model.Email;
-                    var resultMailChanged = await UserManager.UpdateAsync(applicationUser);
-                    if(!resultMailChanged.Succeeded)
-                    {
-                        AddErrors(resultMailChanged);
-                        return View(model);
-                    }
-                }
+				if (model.Email != applicationUser.Email)
+				{
+					applicationUser.Email = model.Email;
+					applicationUser.UserName = model.Email;
+					var resultMailChanged = await UserManager.UpdateAsync(applicationUser);
+					if (!resultMailChanged.Succeeded)
+					{
+						AddErrors(resultMailChanged);
+						return RedirectToAction("Update", "MyInfo", new { error = resultMailChanged.Errors.FirstOrDefault() });
+					}
+				}
 
-                if(model.OldPassword != null && model.NewPassword != null)
+				if (model.OldPassword != null && model.NewPassword != null)
                 {
                     var resultPasswordChanged = await UserManager.ChangePasswordAsync(applicationUser.Id, model.OldPassword, model.NewPassword);
-                    if (resultPasswordChanged.Succeeded)
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
-                    AddErrors(resultPasswordChanged);
+					if (resultPasswordChanged.Succeeded)
+					{
+						return RedirectToAction("Index", "Home");
+					}
+					else
+					{
+						AddErrors(resultPasswordChanged);
+						return RedirectToAction("Update", "MyInfo", new { error = resultPasswordChanged.Errors.FirstOrDefault() });
+					}
+
                 }
             }
 
-            return View(model);
-        }
+			return RedirectToAction("Update");
+
+		}
 
         [Authorize]
         public ActionResult AddPushNotification(string id)

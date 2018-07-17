@@ -2,7 +2,39 @@
 @model UserViewModel
 
 <script type="text/javascript">
-    window.onload = function onLoad(e) {
+
+	$.urlParam = function (name) {
+		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		if (results == null) {
+			return null;
+		}
+		else {
+			return decodeURI(results[1]) || 0;
+		}
+	}
+
+	window.onload = function onLoad(e) {
+
+		var get = decodeURIComponent($.urlParam('error')); 
+		if (get != "null") {
+			$(".error").text(get);
+		}
+
+		$.ajax({
+			url: "@Url.Action("Languages_Read", "MyInfo")",
+			dataType: "json",
+			data: { },
+			type: "POST",
+			success: function (response) {
+				$.each(response, function () {
+					$("#language-dropdown").append($("<option />").val(this.Id).text(this.name));
+				});
+				$("#language-dropdown").val(@Model.Language);
+				
+			}
+		});
+
+
         var OneSignal = window.OneSignal || [];
         OneSignal.push(["init", {
             appId: "674761cf-c65d-4eaa-adc7-960d13fe4e54",
@@ -17,7 +49,7 @@
                 "title": "Myfood Smart Push Enabled",
                 "message": "You will received messages from your Prod. Unit",
             }
-        }]); 
+        }]);
     }
 
     OneSignal.push(function () {
@@ -37,117 +69,166 @@
             });
         });
     });
-   
+
+	$(".btn-infosave").on("click", function () {
+		document.getElementsByClassName("update-form").submit();
+	})
+
 </script>
 
 <div id="main-section-header" class="row">
-    <h2 id="title" class="col-md-3">[[[My Information]]]</h2>
-    <div style="clear:both;"></div>
+	<h2 id="title" class="col-md-3">[[[My Information]]]</h2>
+	<div style="clear:both;"></div>
 </div>
 
-<div id="productionUnits-grid" class="main-section-content row">
-    <div id="productionUnits-details" class="col-md-2">
-        <h3 class="section-header">[[[Change User Settings]]]</h3>
-    </div>
-    <div id="grid-container" class="col-xs-10">
-        <div id="center">
-            <div class="row">
-                <div>
-                    <section id="loginForm">
-                        @using (Html.BeginForm("Update", "MyInfo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                                <div class="col-md-10">
-                                    @(Html.Kendo().TextBoxFor(model => model.Email)
-                                                                .Name("info")
-                                                                .HtmlAttributes(new { @style = "width:100%" })
-                                    )
-                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
-                                <div class="col-md-10">
-                                    @(Html.Kendo().TextBoxFor(model => model.OldPassword)
-                                                                .Name("info")
-                                                                .HtmlAttributes(new { @style = "width:100%", type = "password" })
-                                    )
-                                    @Html.ValidationMessageFor(m => m.OldPassword, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
-                                <div class="col-md-10">
-                                    @(Html.Kendo().TextBoxFor(model => model.NewPassword)
-                                                                .Name("info")
-                                                                .HtmlAttributes(new { @style = "width:100%", type = "password" })
-                                    )
-                                    @Html.ValidationMessageFor(m => m.NewPassword, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <h3 class="col-md-2 control-label">[[[Choose the application default language]]]</h3>
-                                <div class="col-md-10">
-                                    @(Html.Kendo().DropDownListFor(m => m.Language)
-                                  .DataTextField("name")
-                                  .DataValueField("Id")
-                                  .AutoBind(true)
-                                  .HtmlAttributes(new { @style = "width:100%" })
-                                  .DataSource(source =>
-                                  {
-                                      source.Read(read =>
-                                      {
-                                          read.Action("Languages_Read", "MyInfo");
-                                      });
-                                  })
-                                    )
-                                </div>
-                                   
-                                </div>
-                           
-                            <div>
-                                <div style="text-align:right">
-                                    <input type="submit" value="[[[Save]]]" class="btn btn-default" />
-                                </div>
-                            </div>
-                        }
-                    </section>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+<div class="flex-block">
+	<form action="/MyInfo/Update" class="update-form" method="post" role="form">
 
+		@using (Html.BeginForm("Update", "MyInfo", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+		{
+
+			@Html.AntiForgeryToken()
+		<div class="error">
+		</div>
+			<div class="i-wrapper">
+				<label class="input-caption">[[[Email]]]</label>
+				<input class="default-input" type="email" name="Email" value="@Model.Email" />
+			</div>
+			<div class="i-wrapper">
+				<label class="input-caption">[[[Old Password]]]</label>
+				<input class="default-input" type="password" name="OldPassword" />
+			</div>
+			<div class="i-wrapper">
+				<label class="input-caption">[[[New Password]]]</label>
+				<input class="default-input" type="password" name="NewPassword" />
+			</div>
+			<div class="i-wrapper">
+				<label class="input-caption">[[[Choose the application default language]]]</label>
+				<select name="Language" class="default-input" id="language-dropdown">
+				</select>
+			</div>
+			<div class="i-wrapper-btn">
+				<button class="btn-infosave">[[[Save]]]</button>
 </div>
 
-<style type="text/css">
-    @@media screen and (max-width: 800px) {
+				}
+		</form>
+		</div>
 
-        #center {
-            margin: auto;
-            width: 80%;
-            border: 1px solid green;
-            padding: 10px;
-            position: relative;
-            top: 10%;
-            transform: translateY(10%);
-        }
 
-        #grid-container {
-            width: 100%
-        }
-    }
+		<style type="text/css">
+			.error{
+				text-align:center;
+				color: red;
+			}
+			.flex-block {
+				margin-top: 50px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.i-wrapper{
+				margin: 20px 0 20px 0;
+			}
+			#main-section {
+				background: none;
+			}
 
-    #center {
-    margin: auto;
-    width: 80%;
-    border: 1px solid green;
-    padding: 10px;
-    position: relative;
-    top: 50%;
-    transform: translateY(50%);
-}
-</style>
+			.update-form {
+				font-family: 'Roboto-Thin';
+				margin-top: 300px;
+				font-size: 16px;
+				width: 80%;
+				margin: auto;
+				box-shadow: 0 0 20px #F3F6F8;
+				border-radius: 10px;
+				padding: 40px;
+			}
+			.i-wrapper .default-input {
+				padding-left: 15px;
+				font-weight: bold;
+				color: #2EA636;
+				height: 50px;
+				width: 100%;
+				border: 3px solid #F3F6F8;
+				border-radius: 7px;
+			}
+			.i-wrapper-btn {
+				margin: 20px 0 20px 0;
+				text-align: right;
+			}
+			.btn-infosave {
+				position: relative;
+				background: none;
+				border-radius: 25px;
+				padding: 10px 60px 10px 60px;
+				border: 2px solid rgba(46,166,54, .5);
+				color: #2EA636;
+				margin-top: 25px;
+			}
+			.input-caption {
+				color: #6C7A73;
+				display: block;
+				margin: 10px 0 10px 0;
+			}
+
+			.btn-infosave::after {
+				content: "";
+				position: absolute;
+				display: block;
+				left: 50%;
+				top: 50%;
+				width: 90px;
+				height: 90px;
+				margin: -45px;
+				-webkit-border-radius: 50%;
+				border-radius: 50%;
+				background-image: url(/Content/images/dots_anim.svg);
+				-webkit-animation: infinite-rotate 15s infinite linear;
+				animation: infinite-rotate 15s infinite linear;
+				transition: .5s;
+			}
+
+			.btn-infosave:hover,
+			.btn-infosave:focus {
+				outline: none;
+				border-radius: 20px 20px;
+				box-shadow: inset 0 0 0 2em rgba(46,166,54, .5);
+			}
+
+			@@-webkit-keyframes infinite-rotate {
+				from {
+					-webkit-transform: rotate(0deg);
+				}
+
+				to {
+					-webkit-transform: rotate(359deg);
+				}
+			}
+
+			@@media screen and (max-width: 800px) {
+				#center {
+					margin: auto;
+					width: 80%;
+					border: 1px solid green;
+					padding: 10px;
+					position: relative;
+					top: 10%;
+					transform: translateY(10%);
+				}
+
+				#grid-container {
+					width: 100%
+				}
+			}
+
+			#center {
+				margin: auto;
+				width: 80%;
+				border: 1px solid green;
+				padding: 10px;
+				position: relative;
+				top: 50%;
+				transform: translateY(50%);
+			}
+		</style>
