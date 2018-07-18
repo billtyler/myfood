@@ -162,9 +162,10 @@
 				background: none;
 				border-radius: 25px;
 				padding: 10px 60px 10px 60px;
-				border: 2px solid rgba(46,166,54, .5);
 				color: #2EA636;
+				border: 2px solid rgba(46,166,54, .5);
 				margin-top: 25px;
+				transition: .5s;
 			}
 			.input-caption {
 				color: #6C7A73;
@@ -172,6 +173,29 @@
 				margin: 10px 0 10px 0;
 			}
 
+			input:-webkit-autofill,
+			input:-webkit-autofill:hover,
+			input:-webkit-autofill:focus
+			textarea:-webkit-autofill,
+			textarea:-webkit-autofill:hover
+			textarea:-webkit-autofill:focus,
+			select:-webkit-autofill,
+			select:-webkit-autofill:hover,
+			select:-webkit-autofill:focus {
+				border: 0;
+				-webkit-text-fill-color: #2EA636;
+				transition: background-color 5000s ease-in-out 0s;
+			}
+			.default-input:focus {
+				outline: none;
+			}
+
+			.btn-infosave:hover,
+			.btn-infosave:focus {
+				outline: none;
+				border-radius: 20px 20px;
+				box-shadow: inset 0 0 0 2em rgba(46,166,54, .5);
+			}
 			.btn-infosave::after {
 				content: "";
 				position: absolute;
@@ -187,13 +211,6 @@
 				-webkit-animation: infinite-rotate 15s infinite linear;
 				animation: infinite-rotate 15s infinite linear;
 				transition: .5s;
-			}
-
-			.btn-infosave:hover,
-			.btn-infosave:focus {
-				outline: none;
-				border-radius: 20px 20px;
-				box-shadow: inset 0 0 0 2em rgba(46,166,54, .5);
 			}
 
 			@@-webkit-keyframes infinite-rotate {

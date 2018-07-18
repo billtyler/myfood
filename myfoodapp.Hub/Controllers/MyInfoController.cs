@@ -58,7 +58,6 @@ namespace myfoodapp.Hub.Controllers
 
 			if (currentProductOwner.language != null)
               currentLanguageId = currentProductOwner.language.Id;
-			ViewBag.ReturnError = "error";
             return View(new UserViewModel() { Email = applicationUser.Email, Language = currentLanguageId });
         }
 

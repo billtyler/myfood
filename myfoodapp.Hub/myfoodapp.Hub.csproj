@@ -481,11 +481,15 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\cluster.css" />
     <Content Include="Content\images\close.png" />
-    <Content Include="Content\images\dots_anim.svg" />
+    <Content Include="Content\images\email.svg" />
+    <Content Include="Content\images\eye.svg" />
     <Content Include="Content\images\footer-dots.png" />
     <Content Include="Content\images\loading.gif" />
-    <Content Include="Content\images\myfood-logo.svg" />
+    <Content Include="Content\images\login-bg.svg" />
+    <Content Include="Content\images\logo.svg" />
+    <Content Include="Content\images\message-alt.svg" />
     <Content Include="Content\images\next.png" />
+    <Content Include="Content\images\password.svg" />
     <Content Include="Content\images\prev.png" />
     <Content Include="Content\images\sprite.png" />
     <Content Include="Content\jquery.fancybox.min.css" />
@@ -2257,6 +2261,7 @@
     <Content Include="Scripts\kendo\2017.2.621\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\2017.2.621\kendo.window.min.js.map" />
     <Content Include="Views\ProductionUnits\UserUnit.cshtml" />
+    <Content Include="Views\Shared\_FullEmptyLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
