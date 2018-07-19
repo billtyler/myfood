@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-06-13 21:17+02:00\n"
-"PO-Revision-Date: 2018-06-13 21:17+02:00\n"
+"POT-Creation-Date: 2018-07-18 17:02+02:00\n"
+"PO-Revision-Date: 2018-07-18 17:02+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -280,13 +280,8 @@ msgstr "Can be planted in:"
 msgid "Change Production Units Settings"
 msgstr "Change Production Units Settings"
 
-#: Views\MyInfo\Update.cshtml:50
-#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:50
-msgid "Change User Settings"
-msgstr "Change User Settings"
-
-#: Views\MyInfo\Update.cshtml:92
-#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:92
+#: Views\MyInfo\Update.cshtml:106
+#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:106
 msgid "Choose the application default language"
 msgstr "Choose the application default language"
 
@@ -324,6 +319,16 @@ msgstr ""
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\UserUnit.cshtml:931
 msgid "CO2 SAVED"
 msgstr "CO2 SAVED"
+
+#: Views\Account\Login.cshtml:559
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:559
+msgid "Connect with your Smart Greenhouse"
+msgstr ""
+
+#: Views\Account\Login.cshtml:590
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:590
+msgid "Contact Us"
+msgstr ""
 
 #: Views\Messages\Index.cshtml:108
 #: obj\Release\Package\PackageTmp\Views\Messages\Index.cshtml:108
@@ -453,6 +458,8 @@ msgstr "Edit Users"
 
 #: Viewmodels\AccountViewModels.cs:8
 #: Viewmodels\AccountViewModels.cs:32
+#: Views\MyInfo\Update.cshtml:94
+#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:94
 msgid "Email"
 msgstr "Email"
 
@@ -551,6 +558,11 @@ msgstr "Fish Tank"
 #: obj\Release\Package\PackageTmp\Views\Messages\Index.cshtml:88
 msgid "Follow Messages sent by Sigfox from Production Units"
 msgstr "Follow Messages sent by Sigfox from Production Units"
+
+#: Views\Account\Login.cshtml:593
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:593
+msgid "For any informations or suggestions"
+msgstr ""
 
 #: Migrations\Configuration.cs:229
 msgid "Gather vegetables"
@@ -722,8 +734,8 @@ msgstr "Light"
 msgid "Location:"
 msgstr "Location:"
 
-#: Views\Account\Login.cshtml:95
-#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:95
+#: Views\Account\Login.cshtml:695
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:695
 msgid "Log in"
 msgstr "Log in"
 
@@ -873,12 +885,17 @@ msgstr "Monitoring kit v.2"
 msgid "Morning"
 msgstr "Morning"
 
-#: Views\MyInfo\Update.cshtml:44
+#: Views\MyInfo\Update.cshtml:80
 #: Views\Shared\_Layout.cshtml:197
-#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
+#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:80
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:197
 msgid "My Information"
 msgstr "My Information"
+
+#: Views\Account\Login.cshtml:565
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:565
+msgid "myfoodhub is licensed under a GPLv3"
+msgstr ""
 
 #: Viewmodels\AccountViewModels.cs:23
 msgid "Name"
@@ -887,6 +904,11 @@ msgstr "Name"
 #: Migrations\Configuration.cs:265
 msgid "Need support"
 msgstr "Need support"
+
+#: Views\Account\Login.cshtml:577
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:577
+msgid "Need Support?"
+msgstr ""
 
 #: Views\Home\Index.cshtml:282
 #: Views\InteractiveMap\Index.cshtml:344
@@ -903,6 +925,8 @@ msgid "Network Status"
 msgstr "Network Status"
 
 #: Viewmodels\AccountViewModels.cs:41
+#: Views\MyInfo\Update.cshtml:102
+#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:102
 msgid "New Password"
 msgstr "New Password"
 
@@ -948,6 +972,8 @@ msgid "Offline"
 msgstr "Offline"
 
 #: Viewmodels\AccountViewModels.cs:37
+#: Views\MyInfo\Update.cshtml:98
+#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:98
 msgid "Old Password"
 msgstr "Old Password"
 
@@ -1121,8 +1147,8 @@ msgstr "Plant seedlings"
 msgid "Plants"
 msgstr "Plants"
 
-#: Views\Account\Login.cshtml:79
-#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:79
+#: Views\Account\Login.cshtml:679
+#: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:679
 msgid "Please Sign In"
 msgstr "Please Sign In"
 
@@ -1204,8 +1230,8 @@ msgstr "Root vegetables - more than 200gr"
 msgid "Satify"
 msgstr "Satisfy"
 
-#: Views\MyInfo\Update.cshtml:113
-#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:113
+#: Views\MyInfo\Update.cshtml:111
+#: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:111
 msgid "Save"
 msgstr "Save"
 
@@ -1437,6 +1463,9 @@ msgstr "Zipgrow Tower"
 #~ msgid "Balcony"
 #~ msgstr "Balcony"
 
+#~ msgid "Change User Settings"
+#~ msgstr "Change User Settings"
+
 #~ msgid "City"
 #~ msgstr "City"
 
@@ -1469,6 +1498,9 @@ msgstr "Zipgrow Tower"
 
 #~ msgid "Last Three Months"
 #~ msgstr "Last Three Months"
+
+#~ msgid "myfoodapp is licensed under a GPLv3"
+#~ msgstr ""
 
 #~ msgid "Outdoor"
 #~ msgstr "Outdoor"

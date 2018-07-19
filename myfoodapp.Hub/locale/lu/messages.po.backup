@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2018-05-23 08:54+02:00\n"
-"PO-Revision-Date: 2018-05-23 08:54+02:00\n"
+"POT-Creation-Date: 2018-07-18 16:48+02:00\n"
+"PO-Revision-Date: 2018-07-18 16:48+02:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -280,12 +280,11 @@ msgstr ""
 msgid "Change Production Units Settings"
 msgstr ""
 
-#: Views\MyInfo\Update.cshtml:50
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:50
 msgid "Change User Settings"
 msgstr ""
 
-#: Views\MyInfo\Update.cshtml:92
+#: Views\MyInfo\Update.cshtml:106
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:92
 msgid "Choose the application default language"
 msgstr ""
@@ -323,6 +322,14 @@ msgstr ""
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\Details.cshtml:931
 #: obj\Release\Package\PackageTmp\Views\ProductionUnits\UserUnit.cshtml:931
 msgid "CO2 SAVED"
+msgstr ""
+
+#: Views\Account\Login.cshtml:559
+msgid "Connect with your Smart Greenhouse"
+msgstr ""
+
+#: Views\Account\Login.cshtml:590
+msgid "Contact Us"
 msgstr ""
 
 #: Views\Messages\Index.cshtml:108
@@ -453,6 +460,7 @@ msgstr ""
 
 #: Viewmodels\AccountViewModels.cs:8
 #: Viewmodels\AccountViewModels.cs:32
+#: Views\MyInfo\Update.cshtml:94
 msgid "Email"
 msgstr ""
 
@@ -550,6 +558,10 @@ msgstr ""
 #: Views\Messages\Index.cshtml:88
 #: obj\Release\Package\PackageTmp\Views\Messages\Index.cshtml:88
 msgid "Follow Messages sent by Sigfox from Production Units"
+msgstr ""
+
+#: Views\Account\Login.cshtml:593
+msgid "For any informations or suggestions"
 msgstr ""
 
 #: Migrations\Configuration.cs:229
@@ -722,7 +734,7 @@ msgstr ""
 msgid "Location:"
 msgstr ""
 
-#: Views\Account\Login.cshtml:95
+#: Views\Account\Login.cshtml:695
 #: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:95
 msgid "Log in"
 msgstr ""
@@ -873,11 +885,15 @@ msgstr ""
 msgid "Morning"
 msgstr ""
 
-#: Views\MyInfo\Update.cshtml:44
+#: Views\MyInfo\Update.cshtml:80
 #: Views\Shared\_Layout.cshtml:197
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:44
 #: obj\Release\Package\PackageTmp\Views\Shared\_Layout.cshtml:197
 msgid "My Information"
+msgstr ""
+
+#: Views\Account\Login.cshtml:565
+msgid "myfoodhub is licensed under a GPLv3"
 msgstr ""
 
 #: Viewmodels\AccountViewModels.cs:23
@@ -886,6 +902,10 @@ msgstr ""
 
 #: Migrations\Configuration.cs:265
 msgid "Need support"
+msgstr ""
+
+#: Views\Account\Login.cshtml:577
+msgid "Need Support?"
 msgstr ""
 
 #: Views\Home\Index.cshtml:282
@@ -903,6 +923,7 @@ msgid "Network Status"
 msgstr ""
 
 #: Viewmodels\AccountViewModels.cs:41
+#: Views\MyInfo\Update.cshtml:102
 msgid "New Password"
 msgstr ""
 
@@ -942,17 +963,18 @@ msgid "October"
 msgstr ""
 
 #: Controllers\HomeController.cs:254
-#: Controllers\InteractiveMapController.cs:262
+#: Controllers\InteractiveMapController.cs:247
 #: Migrations\Configuration.cs:109
 msgid "Offline"
 msgstr ""
 
 #: Viewmodels\AccountViewModels.cs:37
+#: Views\MyInfo\Update.cshtml:98
 msgid "Old Password"
 msgstr ""
 
 #: Controllers\HomeController.cs:252
-#: Controllers\InteractiveMapController.cs:260
+#: Controllers\InteractiveMapController.cs:245
 msgid "On Maintenance"
 msgstr ""
 
@@ -1121,7 +1143,7 @@ msgstr ""
 msgid "Plants"
 msgstr ""
 
-#: Views\Account\Login.cshtml:79
+#: Views\Account\Login.cshtml:679
 #: obj\Release\Package\PackageTmp\Views\Account\Login.cshtml:79
 msgid "Please Sign In"
 msgstr ""
@@ -1204,7 +1226,7 @@ msgstr ""
 msgid "Satify"
 msgstr ""
 
-#: Views\MyInfo\Update.cshtml:113
+#: Views\MyInfo\Update.cshtml:111
 #: obj\Release\Package\PackageTmp\Views\MyInfo\Update.cshtml:113
 msgid "Save"
 msgstr ""
@@ -1233,7 +1255,7 @@ msgid "September"
 msgstr ""
 
 #: Controllers\HomeController.cs:250
-#: Controllers\InteractiveMapController.cs:258
+#: Controllers\InteractiveMapController.cs:243
 #: Migrations\Configuration.cs:105
 msgid "Setup Planned"
 msgstr ""
@@ -1265,7 +1287,7 @@ msgid "status"
 msgstr ""
 
 #: Controllers\HomeController.cs:253
-#: Controllers\InteractiveMapController.cs:261
+#: Controllers\InteractiveMapController.cs:246
 #: Migrations\Configuration.cs:108
 msgid "Stopped"
 msgstr ""
@@ -1326,7 +1348,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: Controllers\InteractiveMapController.cs:259
+#: Controllers\InteractiveMapController.cs:244
 msgid "Up & Running"
 msgstr ""
 
@@ -1371,7 +1393,7 @@ msgid "View Logs"
 msgstr ""
 
 #: Controllers\HomeController.cs:249
-#: Controllers\InteractiveMapController.cs:257
+#: Controllers\InteractiveMapController.cs:242
 #: Migrations\Configuration.cs:104
 msgid "Wait Confirm."
 msgstr ""
@@ -1543,6 +1565,9 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Message from your Prodution Unit"
+#~ msgstr ""
+
+#~ msgid "myfoodapp is licensed under a GPLv3"
 #~ msgstr ""
 
 #~ msgid "open"
