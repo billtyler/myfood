@@ -48,10 +48,10 @@ namespace myfoodapp.Model
                         isSigFoxComEnable = false,
                         isSleepModeEnable = false,
                         isTempHumiditySensorEnable = true,
-                        isDiagnosticModeEnable = false,
+                        isDiagnosticModeEnable = true,
                         measureFrequency = 600000,
-                        productionSiteId = "XXXXX",
-                        hubMessageAPI = "https://hub.myfood.eu/api/Messages",
+                        productionSiteId = "tyler1",
+                        hubMessageAPI = "https://tl-myfoodapphub.azurewebsites.net/api/Messages",
                         SSID = "MYFOODPI_AP",
                         ACCESS_POINT_PWD = "myfoodpi"
                     };
@@ -67,8 +67,8 @@ namespace myfoodapp.Model
                         isTempHumiditySensorEnable = false,
                         isDiagnosticModeEnable = false,
                         measureFrequency = 600000,
-                        productionSiteId = "XXXXX",
-                        hubMessageAPI = "https://hub.myfood.eu/api/Messages",
+                        productionSiteId = "tyler1",
+                        hubMessageAPI = "https://tl-myfoodapphub.azurewebsites.net/api/Messages",
                         SSID = "MYFOODPI_AP",
                         ACCESS_POINT_PWD = "myfoodpi"
                     };
